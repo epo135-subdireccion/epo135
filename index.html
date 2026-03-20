@@ -4,910 +4,1345 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EPO 135 · Río Frío de Juárez</title>
-<meta name="description" content="Escuela Preparatoria Oficial 135 · Río Frío de Juárez, Ixtapaluca · BG 046">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:       #f7f5f0;
-    --surface:  #ffffff;
-    --surface2: #f0ede6;
-    --border:   #e2ddd4;
-    --border2:  #ccc7bc;
-    --text:     #181714;
-    --muted:    #645f57;
-    --hint:     #9c978e;
-    --accent:   #1b4d7a;
-    --accent2:  #0f3154;
-    --green:    #1a6b3c;
-    --green-bg: #edf7f2;
-    --green-b:  #a8d9be;
-    --amber:    #7a4500;
-    --amber-bg: #fef8e8;
-    --amber-b:  #eecf6a;
-    --red:      #8b1a1a;
-    --red-bg:   #fdf2f2;
-    --red-b:    #f0aaaa;
-  }
-
-  * { margin:0; padding:0; box-sizing:border-box; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 15px;
-    line-height: 1.7;
-  }
-
-  a { color: inherit; text-decoration: none; }
-
-  /* ── HERO ── */
-  .hero {
-    background: var(--accent2);
-    color: #fff;
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .hero-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 3.5rem 2rem 3rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 1rem;
-  }
-
-  .hero-title {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
-    font-weight: 600;
-    line-height: 1.08;
-    color: #fff;
-    margin-bottom: 0.6rem;
-    letter-spacing: -0.01em;
-  }
-
-  .hero-title em {
-    font-style: italic;
-    font-weight: 300;
-    color: rgba(255,255,255,0.75);
-  }
-
-  .hero-sub {
-    font-size: 14px;
-    color: rgba(255,255,255,0.6);
-    font-weight: 300;
-    margin-bottom: 2rem;
-  }
-
-  .hero-chips {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .chip {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 4px 12px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.75);
-    background: rgba(255,255,255,0.08);
-    white-space: nowrap;
-  }
-
-  .hero-accent-bar {
-    height: 3px;
-    background: linear-gradient(90deg, #5ba3d9 0%, #a8d4f5 60%, transparent 100%);
-    opacity: 0.4;
-  }
-
-  /* ── NAV ── */
-  .nav {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .nav-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0;
-  }
-
-  .nav-links {
-    display: flex;
-    overflow-x: auto;
-  }
-
-  .nav-item {
-    padding: 0.8rem 1rem;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--muted);
-    white-space: nowrap;
-    border-bottom: 2px solid transparent;
-    transition: color .15s, border-color .15s;
-  }
-
-  .nav-item:hover { color: var(--text); border-color: var(--border2); }
-  .nav-item.active { color: var(--accent); border-color: var(--accent); }
-
-  .nav-gestion {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--hint);
-    padding: 0.4rem 0.8rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    white-space: nowrap;
-    flex-shrink: 0;
-    transition: color .15s, border-color .15s;
-  }
-
-  .nav-gestion:hover { color: var(--accent); border-color: var(--accent); }
-
-  /* ── LAYOUT ── */
-  .main { max-width: 960px; margin: 0 auto; padding: 0 2rem 5rem; }
-
-  .section {
-    padding: 3rem 0 2rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .section:first-child { border-top: none; padding-top: 3rem; }
-
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--hint);
-    margin-bottom: 0.4rem;
-  }
-
-  .section-title {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(1.4rem, 2.8vw, 2rem);
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 0.3rem;
-    line-height: 1.15;
-  }
-
-  .section-desc {
-    font-size: 13px;
-    color: var(--muted);
-    font-weight: 300;
-    margin-bottom: 1.8rem;
-    max-width: 560px;
-  }
-
-  /* ── AVISOS ── */
-  .avisos-list { display: flex; flex-direction: column; gap: 8px; }
-
-  .aviso {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    padding: 12px 16px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    transition: border-color .15s;
-  }
-
-  .aviso:hover { border-color: var(--border2); }
-
-  .aviso-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 6px;
-  }
-
-  .dot-red    { background: var(--red); }
-  .dot-amber  { background: #d4860a; }
-  .dot-green  { background: var(--green); }
-  .dot-blue   { background: var(--accent); }
-
-  .aviso-body { flex: 1; }
-  .aviso-text { font-size: 13px; color: var(--text); line-height: 1.5; }
-  .aviso-meta { font-size: 11px; color: var(--hint); margin-top: 3px; font-family: 'DM Mono', monospace; }
-
-  .badge {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 500;
-    padding: 2px 8px;
-    border-radius: 20px;
-    border: 1px solid;
-    white-space: nowrap;
-    margin-left: 6px;
-    vertical-align: middle;
-  }
-
-  .badge-red   { background: var(--red-bg);   border-color: var(--red-b);   color: var(--red); }
-  .badge-amber { background: var(--amber-bg); border-color: var(--amber-b); color: var(--amber); }
-  .badge-green { background: var(--green-bg); border-color: var(--green-b); color: var(--green); }
-  .badge-blue  { background: #eef4fb;         border-color: #a8c4e0;        color: var(--accent); }
-
-  /* ── CARDS GRID ── */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 10px;
-  }
-
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.1rem 1.25rem;
-    transition: border-color .15s, transform .15s;
-  }
-
-  .card:hover { border-color: var(--border2); transform: translateY(-1px); }
-
-  .card-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-
-  .card-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-
-  .card-body {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.55;
-    font-weight: 300;
-  }
-
-  .card-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--accent);
-    margin-top: 10px;
-    transition: gap .15s;
-  }
-
-  .card-link:hover { gap: 6px; }
-
-  /* ── EQUIPO ── */
-  .equipo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 6px;
-  }
-
-  .equipo-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 14px;
-  }
-
-  .equipo-role {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--hint);
-    margin-bottom: 3px;
-  }
-
-  .equipo-name {
-    font-size: 13px;
-    color: var(--text);
-    font-weight: 400;
-  }
-
-  .equipo-dir-card {
-    border-left: 3px solid var(--accent);
-    border-radius: 0 8px 8px 0;
-  }
-
-  /* ── CONTACTO ── */
-  .contacto-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 10px;
-  }
-
-  .contacto-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1rem 1.25rem;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
-  .contacto-icon {
-    font-size: 18px;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .contacto-label {
-    font-size: 11px;
-    color: var(--hint);
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 2px;
-  }
-
-  .contacto-val {
-    font-size: 14px;
-    color: var(--text);
-    font-weight: 400;
-  }
-
-  .contacto-sub {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 300;
-  }
-
-  /* ── HORARIOS ── */
-  .horario-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .horario-table th {
-    text-align: left;
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--hint);
-    padding: 9px 14px;
-    background: var(--surface2);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .horario-table td {
-    padding: 9px 14px;
-    border-bottom: 1px solid var(--border);
-    color: var(--muted);
-    vertical-align: top;
-  }
-
-  .horario-table td:first-child { color: var(--text); font-weight: 500; }
-  .horario-table tr:last-child td { border-bottom: none; }
-
-  /* ── CALLOUT ── */
-  .callout {
-    border-radius: 8px;
-    padding: 10px 14px;
-    margin: 1rem 0;
-    font-size: 13px;
-    line-height: 1.6;
-    display: flex;
-    gap: 10px;
-    border: 1px solid;
-    font-weight: 300;
-  }
-
-  .callout-blue  { background: #eef4fb; border-color: #a8c4e0; color: var(--accent2); }
-  .callout-green { background: var(--green-bg); border-color: var(--green-b); color: var(--green); }
-
-  /* ── FOOTER ── */
-  .footer {
-    border-top: 1px solid var(--border);
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .footer p { font-size: 11px; color: var(--hint); }
-
-  .footer-logo {
-    font-family: 'Fraunces', serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--muted);
-  }
-
-  /* ── LINKS BAR ── */
-  .links-bar {
-    background: var(--accent2);
-    border-top: 1px solid rgba(255,255,255,0.08);
-    padding: 2rem 0 1.5rem;
-  }
-
-  .links-bar-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  .links-bar-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
-    margin-bottom: 1rem;
-  }
-
-  .links-bar-cols {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem 2rem;
-  }
-
-  .links-col-title {
-    font-size: 10px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .links-col a {
-    display: block;
-    font-size: 12px;
-    color: rgba(255,255,255,0.65);
-    padding: 3px 0;
-    transition: color .15s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .links-col a:hover { color: rgba(255,255,255,1); }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 600px) {
-    .main, .hero-inner, .nav-inner { padding-left: 1rem; padding-right: 1rem; }
-    .nav-gestion { display: none; }
-    .footer { flex-direction: column; align-items: flex-start; }
-    .links-bar-cols { grid-template-columns: 1fr; gap: 1.2rem; }
-    .links-bar-inner { padding-left: 1rem; padding-right: 1rem; }
-  }
+:root {
+  --verde: #0f5e2f;
+  --verde-med: #1a7a3f;
+  --verde-claro: #2ea84f;
+  --verde-palo: #e8f5ed;
+  --azul: #0d3b6e;
+  --azul-med: #1a5ca0;
+  --azul-claro: #2e80d8;
+  --azul-palo: #e6f0fb;
+  --blanco: #ffffff;
+  --gris-fondo: #f5f7f6;
+  --gris-borde: #d8e2dc;
+  --texto: #0f1f17;
+  --texto-suave: #3d5248;
+  --dorado: #c8860a;
+  --dorado-palo: #fef6e4;
+  --rojo: #c0392b;
+  --rojo-palo: #fdecea;
+  --morado: #5c3a9e;
+  --morado-palo: #f0ecfb;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--gris-fondo);
+  color: var(--texto);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--azul);
+  color: #fff;
+  font-size: 11.5px;
+  padding: 6px 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 0.03em;
+}
+.topbar a { color: rgba(255,255,255,0.75); text-decoration: none; }
+.topbar a:hover { color: #fff; }
+
+/* ── NAVBAR ── */
+.navbar {
+  background: var(--verde);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.nav-logo-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--blanco);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.nav-logo-icon svg { width: 26px; height: 26px; }
+.nav-logo-text { line-height: 1.1; }
+.nav-logo-title {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  display: block;
+}
+.nav-logo-sub {
+  font-size: 10.5px;
+  color: rgba(255,255,255,0.7);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+}
+.nav-links a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: background .15s, color .15s;
+}
+.nav-links a:hover, .nav-links a.active {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+.btn-padres {
+  background: var(--dorado) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  padding: 7px 16px !important;
+}
+.btn-padres:hover { background: #a86e06 !important; }
+
+/* ── HERO CAROUSEL ── */
+.hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--azul);
+}
+.slides-wrapper {
+  display: flex;
+  transition: transform .55s cubic-bezier(.4,0,.2,1);
+}
+.slide {
+  min-width: 100%;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 3rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.slide-1 { background: linear-gradient(135deg, #0d3b6e 60%, #0f5e2f); }
+.slide-2 { background: linear-gradient(135deg, #0f5e2f 60%, #c8860a 120%); }
+.slide-3 { background: linear-gradient(135deg, #7a1020 60%, #0d3b6e); }
+.slide-4 { background: linear-gradient(135deg, #0d4a3b 60%, #c8860a 120%); }
+
+.slide-deco {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.09;
+}
+.slide-deco svg { width: 100%; height: 100%; }
+
+.slide-content { position: relative; z-index: 2; max-width: 600px; }
+.slide-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+.slide-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 0.8rem;
+}
+.slide-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  max-width: 480px;
+}
+.slide-btn {
+  display: inline-block;
+  background: var(--blanco);
+  color: var(--azul);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform .15s, box-shadow .15s;
+}
+.slide-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+.slide-btn-alt {
+  display: inline-block;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  color: #fff;
+  font-weight: 500;
+  font-size: 13px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-left: 10px;
+  transition: background .15s;
+}
+.slide-btn-alt:hover { background: rgba(255,255,255,0.1); }
+
+/* carousel controls */
+.carousel-controls {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+  border: none;
+  outline: none;
+}
+.dot.active { background: #fff; transform: scale(1.3); }
+.carousel-prev, .carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+}
+.carousel-prev { left: 1.2rem; }
+.carousel-next { right: 1.2rem; }
+.carousel-prev:hover, .carousel-next:hover { background: rgba(255,255,255,0.25); }
+
+/* ── PADRES BANNER ── */
+.padres-banner {
+  background: var(--dorado);
+  padding: 0;
+}
+.padres-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  min-height: 56px;
+}
+.padres-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+  white-space: nowrap;
+}
+.padres-links {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+.padres-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background .15s;
+}
+.padres-link:hover { background: rgba(255,255,255,0.3); }
+.padres-link svg { width: 14px; height: 14px; }
+
+/* ── MAIN CONTENT ── */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* ── SECTION HEADER ── */
+.sec-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.2rem;
+}
+.sec-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--verde-med);
+  font-weight: 500;
+}
+.sec-line { flex: 1; height: 1px; background: var(--gris-borde); }
+.sec-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--texto);
+  margin-bottom: 1rem;
+}
+
+/* ── ANUNCIOS GRID ── */
+.anuncios-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 2.5rem;
+}
+.anuncio {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform .15s, box-shadow .15s;
+  cursor: pointer;
+}
+.anuncio:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+.anuncio-color {
+  height: 5px;
+}
+.anuncio-body { padding: 14px 16px; }
+.anuncio-cat {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.anuncio-titulo {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto);
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+.anuncio-desc {
+  font-size: 12.5px;
+  color: var(--texto-suave);
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+.anuncio-fecha {
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  color: #8a9e92;
+}
+
+/* ── CALENDARIO ── */
+.calendario {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+.cal-header {
+  background: var(--verde);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cal-mes {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+.cal-nav { display: flex; gap: 6px; }
+.cal-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+}
+.cal-btn:hover { background: rgba(255,255,255,0.28); }
+.cal-grid { padding: 12px 14px; }
+.cal-dias-semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 4px;
+}
+.cal-dia-sem {
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #8a9e92;
+  padding: 4px;
+}
+.cal-dias {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.cal-dia {
+  text-align: center;
+  padding: 5px 2px;
+  font-size: 12.5px;
+  border-radius: 6px;
+  cursor: default;
+  line-height: 1;
+  color: var(--texto);
+}
+.cal-dia.otro-mes { color: #c0cdc5; }
+.cal-dia.hoy { background: var(--azul); color: #fff; font-weight: 600; }
+.cal-dia.evento { background: var(--verde-palo); color: var(--verde); font-weight: 600; cursor: pointer; position: relative; }
+.cal-dia.evento::after {
+  content: '';
+  display: block;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--verde-med);
+  margin: 2px auto 0;
+}
+.cal-dia.evento-dorado { background: var(--dorado-palo); color: var(--dorado); font-weight: 600; cursor: pointer; }
+.cal-dia.evento-dorado::after {
+  content: '';
+  display: block;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--dorado);
+  margin: 2px auto 0;
+}
+.cal-dia.evento-rojo { background: var(--rojo-palo); color: var(--rojo); font-weight: 600; cursor: pointer; }
+.cal-dia.evento-rojo::after {
+  content: '';
+  display: block;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--rojo);
+  margin: 2px auto 0;
+}
+.cal-dia.evento-morado { background: var(--morado-palo); color: var(--morado); font-weight: 600; cursor: pointer; }
+.cal-dia.evento-morado::after {
+  content: '';
+  display: block;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--morado);
+  margin: 2px auto 0;
+}
+.cal-leyenda {
+  padding: 8px 14px 12px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--gris-borde);
+}
+.ley-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--texto-suave);
+}
+.ley-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.cal-eventos-list { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 6px; }
+.cal-evento-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--gris-fondo);
+  border: 1px solid var(--gris-borde);
+}
+.cal-evento-fecha {
+  background: var(--verde);
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 8px;
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  line-height: 1.2;
+  flex-shrink: 0;
+  min-width: 40px;
+}
+.cal-evento-dia { font-size: 14px; font-weight: 600; }
+.cal-evento-info { font-size: 12.5px; }
+.cal-evento-nombre { font-weight: 600; color: var(--texto); }
+.cal-evento-sub { color: var(--texto-suave); font-size: 11.5px; }
+
+/* ── SIDEBAR ── */
+.sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+
+/* Accesos para padres */
+.padres-card {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.padres-card-header {
+  background: var(--dorado);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.padres-card-header h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+.padres-icon { font-size: 18px; }
+.padres-accesos { padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+.acceso-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 1px solid var(--gris-borde);
+  background: var(--gris-fondo);
+  transition: background .15s, border-color .15s;
+  color: var(--texto);
+}
+.acceso-btn:hover { background: var(--verde-palo); border-color: var(--verde-claro); }
+.acceso-btn-icon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.acceso-btn-text { flex: 1; }
+.acceso-btn-titulo { font-size: 13px; font-weight: 600; color: var(--texto); display: block; }
+.acceso-btn-sub { font-size: 11px; color: var(--texto-suave); display: block; }
+.acceso-arrow { color: var(--gris-borde); font-size: 14px; }
+
+/* Directorio */
+.directorio {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.dir-header {
+  background: var(--azul);
+  padding: 14px 16px;
+}
+.dir-header h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+.dir-list { padding: 10px; display: flex; flex-direction: column; gap: 4px; }
+.dir-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background .12s;
+}
+.dir-item:hover { background: var(--azul-palo); }
+.dir-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+  color: #fff;
+}
+.dir-info { flex: 1; }
+.dir-nombre { font-size: 13px; font-weight: 500; color: var(--texto); }
+.dir-rol { font-size: 11px; color: var(--texto-suave); }
+.dir-ext { font-family: 'DM Mono', monospace; font-size: 10px; color: #8a9e92; }
+
+/* Semáforo mini */
+.semaforo-mini {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.sem-header {
+  background: var(--verde);
+  padding: 14px 16px;
+}
+.sem-header h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+.sem-body { padding: 12px 14px; }
+.sem-descripcion {
+  font-size: 12.5px;
+  color: var(--texto-suave);
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+.sem-items { display: flex; flex-direction: column; gap: 6px; }
+.sem-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid;
+  font-size: 12.5px;
+}
+.sem-verde { background: #eaf7ee; border-color: #a8d9b8; }
+.sem-amarillo { background: #fef8e7; border-color: #f0d080; }
+.sem-rojo { background: #fdecea; border-color: #f0aaaa; }
+.sem-item-label { font-weight: 600; flex: 1; }
+.sem-item-desc { font-size: 11.5px; color: var(--texto-suave); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--azul);
+  color: rgba(255,255,255,0.8);
+  padding: 2.5rem 2rem;
+}
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2rem;
+}
+.footer-brand { }
+.footer-logo-txt {
+  font-family: 'Fraunces', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.footer-brand p { font-size: 12.5px; line-height: 1.6; max-width: 280px; }
+.footer-col h4 {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 10px;
+}
+.footer-col a {
+  display: block;
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  margin-bottom: 6px;
+  transition: color .12s;
+}
+.footer-col a:hover { color: #fff; }
+.footer-bottom {
+  max-width: 1100px;
+  margin: 1.5rem auto 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .main { grid-template-columns: 1fr; }
+  .sidebar { display: grid; grid-template-columns: repeat(2, 1fr); }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+  .nav-links { display: none; }
+  .slide { padding: 2rem 1.5rem; min-height: 320px; }
+}
+@media (max-width: 540px) {
+  .anuncios-grid { grid-template-columns: 1fr; }
+  .padres-inner { flex-direction: column; align-items: flex-start; padding: 10px 1rem; gap: 8px; }
+  .sidebar { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<header class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Bachillerato General · BG 046 · Ixtapaluca</div>
-    <h1 class="hero-title">Escuela Preparatoria<br><em>Oficial 135</em></h1>
-    <p class="hero-sub">Río Frío de Juárez, Ixtapaluca · Estado de México</p>
-    <div class="hero-chips">
-      <span class="chip">186 estudiantes</span>
-      <span class="chip">6 semestres</span>
-      <span class="chip">Ciclo 2025–2026</span>
-      <span class="chip">BG 046</span>
-    </div>
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>EPO 135 · Subsistema de Preparatorias Oficiales · BG 046</span>
+  <div style="display:flex;gap:1.5rem">
+    <a href="#">Intranet docente</a>
+    <a href="#">Correo institucional</a>
+    <a href="#">Contacto</a>
   </div>
-  <div class="hero-accent-bar"></div>
-</header>
+</div>
 
-<!-- NAV -->
-<nav class="nav">
+<!-- NAVBAR -->
+<nav class="navbar">
   <div class="nav-inner">
-    <div class="nav-links">
-      <a href="#avisos"   class="nav-item active">Avisos</a>
-      <a href="#recursos" class="nav-item">Docentes</a>
-      <a href="#familias" class="nav-item">Familias</a>
-      <a href="#equipo"   class="nav-item">Equipo</a>
-      <a href="#contacto" class="nav-item">Contacto</a>
-    </div>
-    <a href="gestion.html" class="nav-gestion">↗ Gestión</a>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="20" height="20" rx="3" fill="#0d3b6e"/>
+          <path d="M7 19 L13 7 L19 19" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9.5 14.5 H16.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="13" cy="7" r="1.5" fill="#c8860a"/>
+        </svg>
+      </div>
+      <div class="nav-logo-text">
+        <span class="nav-logo-title">EPO 135</span>
+        <span class="nav-logo-sub">Río Frío de Juárez · Ixtapaluca</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Inicio</a></li>
+      <li><a href="#">Académico</a></li>
+      <li><a href="#">Actividades</a></li>
+      <li><a href="#">Comunidad</a></li>
+      <li><a href="#">Contacto</a></li>
+      <li><a href="#padres" class="btn-padres">Para padres</a></li>
+    </ul>
   </div>
 </nav>
 
-<main class="main">
+<!-- HERO CAROUSEL -->
+<section class="hero">
+  <div class="slides-wrapper" id="slidesWrapper">
 
-<!-- ═══ AVISOS ═══ -->
-<section class="section" id="avisos">
-  <div class="section-label">Comunicación escolar</div>
-  <h2 class="section-title">Avisos y comunicados</h2>
-  <p class="section-desc">Información relevante para la comunidad EPO 135. Actualizado al inicio de cada semana.</p>
-
-  <div class="avisos-list">
-
-    <div class="aviso">
-      <span class="aviso-dot dot-red"></span>
-      <div class="aviso-body">
-        <div class="aviso-text">
-          <strong>Torneo Interprepas BG 046</strong> — EPO 135 es sede de frontón varonil.
-          <span class="badge badge-red">17 abr 2026</span>
-        </div>
-        <div class="aviso-meta">Junta previa: 16 abr · 9:40 am · EPO 141 · Coordinadores: Luis Mónico Pérez y Alfonso Osorno García</div>
+    <!-- Slide 1: Torneo Interprepas -->
+    <div class="slide slide-1">
+      <div class="slide-deco">
+        <svg viewBox="0 0 400 400" fill="none">
+          <circle cx="200" cy="200" r="180" stroke="white" stroke-width="2"/>
+          <circle cx="200" cy="200" r="120" stroke="white" stroke-width="2"/>
+          <circle cx="200" cy="200" r="60" stroke="white" stroke-width="2"/>
+          <line x1="20" y1="200" x2="380" y2="200" stroke="white" stroke-width="1.5"/>
+          <line x1="200" y1="20" x2="200" y2="380" stroke="white" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="slide-content">
+        <span class="slide-tag">Próximamente · 17 Abril 2026</span>
+        <h2 class="slide-title">Torneo Interprepas<br>BG 046</h2>
+        <p class="slide-desc">EPO 135 es sede del frontón varonil y participa en fútbol y básquetbol. ¡Apoya a nuestra escuela!</p>
+        <a href="#anuncios" class="slide-btn">Ver detalles</a>
+        <a href="#calendario" class="slide-btn-alt">Calendario</a>
       </div>
     </div>
 
-    <div class="aviso">
-      <span class="aviso-dot dot-amber"></span>
-      <div class="aviso-body">
-        <div class="aviso-text">
-          <strong>Jornada de Trabajo Colegiado</strong> — Sesión académica de 4.5 horas con todos los docentes.
-          <span class="badge badge-amber">26 mar 2026</span>
-        </div>
-        <div class="aviso-meta">9:00 – 13:40 hrs · Agenda: permanencia, indicadores, herramientas IA y salud docente</div>
+    <!-- Slide 2: Jornada Colegiada -->
+    <div class="slide slide-2">
+      <div class="slide-deco">
+        <svg viewBox="0 0 400 400" fill="none">
+          <rect x="60" y="60" width="280" height="280" rx="8" stroke="white" stroke-width="2"/>
+          <rect x="100" y="100" width="80" height="80" rx="4" stroke="white" stroke-width="1.5"/>
+          <rect x="220" y="100" width="80" height="80" rx="4" stroke="white" stroke-width="1.5"/>
+          <rect x="100" y="220" width="80" height="80" rx="4" stroke="white" stroke-width="1.5"/>
+          <rect x="220" y="220" width="80" height="80" rx="4" stroke="white" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="slide-content">
+        <span class="slide-tag">Jornada de trabajo · 26 Marzo 2026</span>
+        <h2 class="slide-title">Colegiado Docente<br><em style="font-style:italic;font-weight:400">Permanencia y bienestar</em></h2>
+        <p class="slide-desc">Estrategias de permanencia, indicadores académicos, herramientas digitales y vida saludable para nuestra comunidad.</p>
+        <a href="#" class="slide-btn">Programa completo</a>
       </div>
     </div>
 
-    <div class="aviso">
-      <span class="aviso-dot dot-amber"></span>
-      <div class="aviso-body">
-        <div class="aviso-text">
-          <strong>Salida didáctica a Zacatlán</strong> — Actividad de enriquecimiento académico y cultural.
-          <span class="badge badge-amber">30 abr 2026</span>
-        </div>
-        <div class="aviso-meta">Cuota de participación: $500 MXN · Se priorizará a alumnos con seguimiento activo · Más información próximamente</div>
+    <!-- Slide 3: Sistema de seguimiento -->
+    <div class="slide slide-3">
+      <div class="slide-deco">
+        <svg viewBox="0 0 400 400" fill="none">
+          <path d="M200 50 L350 300 L50 300 Z" stroke="white" stroke-width="2"/>
+          <path d="M200 120 L300 300 L100 300 Z" stroke="white" stroke-width="1.5"/>
+          <circle cx="200" cy="50" r="6" fill="white"/>
+          <circle cx="100" cy="300" r="6" fill="white"/>
+          <circle cx="300" cy="300" r="6" fill="white"/>
+        </svg>
+      </div>
+      <div class="slide-content">
+        <span class="slide-tag">Sistema activo · Desde Marzo 2026</span>
+        <h2 class="slide-title">Semáforo de<br>Asistencia EPO 135</h2>
+        <p class="slide-desc">Monitoreo semanal automatizado para detectar a tiempo a estudiantes en riesgo y acompañarlos.</p>
+        <a href="#" class="slide-btn">Conocer más</a>
+        <a href="#padres" class="slide-btn-alt">Para padres</a>
       </div>
     </div>
 
-    <div class="aviso">
-      <span class="aviso-dot dot-blue"></span>
-      <div class="aviso-body">
-        <div class="aviso-text">
-          <strong>Sistema de permanencia activo</strong> — Monitoreo semanal de asistencia con semáforo de riesgo.
-          <span class="badge badge-blue">En operación</span>
-        </div>
-        <div class="aviso-meta">Los docentes reportan cada lunes · Orientadores dan seguimiento en 48 horas · Familias serán contactadas en casos detectados</div>
+    <!-- Slide 4: Salida Zacatlán -->
+    <div class="slide slide-4">
+      <div class="slide-deco">
+        <svg viewBox="0 0 400 400" fill="none">
+          <path d="M50 300 Q100 200 200 180 Q300 160 350 100" stroke="white" stroke-width="2"/>
+          <path d="M50 340 Q150 280 200 220 Q260 160 350 140" stroke="white" stroke-width="1.5"/>
+          <circle cx="200" cy="180" r="12" stroke="white" stroke-width="2"/>
+          <circle cx="350" cy="100" r="8" fill="white" opacity=".4"/>
+        </svg>
       </div>
-    </div>
-
-    <div class="aviso">
-      <span class="aviso-dot dot-green"></span>
-      <div class="aviso-body">
-        <div class="aviso-text">
-          <strong>Generador de exámenes con IA disponible</strong> — Herramienta para docentes en el sitio de la subdirección.
-          <span class="badge badge-green">Activo</span>
-        </div>
-        <div class="aviso-meta">Acceso en: epo135subdireccion.weebly.com · Requiere cuenta de correo institucional</div>
+      <div class="slide-content">
+        <span class="slide-tag">Salida didáctica · 30 Abril 2026</span>
+        <h2 class="slide-title">Visita educativa<br>Zacatlán, Puebla</h2>
+        <p class="slide-desc">Una experiencia de aprendizaje fuera del aula para fortalecer vínculos y ampliar perspectivas. Cuota: $500 MXN.</p>
+        <a href="#" class="slide-btn">Más información</a>
       </div>
     </div>
 
   </div>
+
+  <!-- Controls -->
+  <button class="carousel-prev" id="prevBtn">&#8249;</button>
+  <button class="carousel-next" id="nextBtn">&#8250;</button>
+  <div class="carousel-controls" id="dots"></div>
 </section>
 
-<!-- ═══ RECURSOS DOCENTES ═══ -->
-<section class="section" id="recursos">
-  <div class="section-label">Para el cuerpo docente</div>
-  <h2 class="section-title">Recursos y herramientas</h2>
-  <p class="section-desc">Materiales de apoyo para la práctica docente. Todos los recursos son de acceso libre para el personal de EPO 135.</p>
-
-  <div class="cards-grid">
-
-    <div class="card">
-      <div class="card-icon">📝</div>
-      <div class="card-title">Generador de exámenes con IA</div>
-      <div class="card-body">Crea reactivos por asignatura, tema y nivel de dificultad usando inteligencia artificial. Ahorra tiempo de planeación.</div>
-      <a href="https://epo135subdireccion.weebly.com" target="_blank" class="card-link">Abrir herramienta →</a>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">📋</div>
-      <div class="card-title">Fichas de seguimiento de riesgo</div>
-      <div class="card-body">Reporta alumnos en situación de riesgo académico o emocional. El sistema notifica automáticamente a orientación y subdirección.</div>
-      <a href="https://epo135subdireccion.weebly.com" target="_blank" class="card-link">Abrir formulario →</a>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">🟡</div>
-      <div class="card-title">Semáforo semanal de asistencia</div>
-      <div class="card-body">Reporte de asistencia cada lunes. El sistema clasifica automáticamente a los alumnos en verde, amarillo o rojo según sus faltas acumuladas.</div>
-      <a href="https://epo135subdireccion.weebly.com" target="_blank" class="card-link">Ir al formulario →</a>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">🤖</div>
-      <div class="card-title">Claude + NotebookLM</div>
-      <div class="card-body">Introducción práctica a herramientas de IA para docentes. Cómo usarlas para preparar clases, materiales y evaluaciones sin reemplazar el juicio profesional.</div>
-      <div class="card-body" style="margin-top:6px;font-size:11px;color:var(--hint)">Taller en colegiado · 26 mar 2026</div>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">📅</div>
-      <div class="card-title">Estrategia de permanencia</div>
-      <div class="card-body">Protocolo institucional para reducir la deserción. Roles, plazos y acciones concretas para cada miembro del equipo escolar.</div>
-      <div class="card-body" style="margin-top:6px;font-size:11px;color:var(--hint)">Documentos disponibles en colegiado · 26 mar</div>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">💬</div>
-      <div class="card-title">Canal Telegram EPO 135</div>
-      <div class="card-body">Notificaciones automáticas del semáforo de asistencia cada lunes por la mañana. Solicita acceso al subdirector.</div>
-      <div class="card-body" style="margin-top:6px;font-size:11px;color:var(--hint)">Activo desde 15 mar 2026</div>
-    </div>
-
-  </div>
-
-  <div class="callout callout-blue" style="margin-top:1.5rem">
-    <span>ℹ</span>
-    <span>¿Tienes una propuesta de recurso o herramienta para el equipo? Compártela directamente con el subdirector o en el próximo colegiado.</span>
-  </div>
-</section>
-
-<!-- ═══ FAMILIAS ═══ -->
-<section class="section" id="familias">
-  <div class="section-label">Para padres y tutores</div>
-  <h2 class="section-title">Información para familias</h2>
-  <p class="section-desc">Todo lo que necesitas saber para acompañar a tu estudiante en EPO 135.</p>
-
-  <h3 style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:10px">Horarios escolares</h3>
-  <table class="horario-table" style="margin-bottom:1.5rem">
-    <thead>
-      <tr>
-        <th>Semestres</th>
-        <th>Días</th>
-        <th>Horario</th>
-        <th>Observaciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1°, 3° y 5°</td>
-        <td>Lunes a viernes</td>
-        <td>7:00 – 14:00 hrs</td>
-        <td>Turno matutino</td>
-      </tr>
-      <tr>
-        <td>2°, 4° y 6°</td>
-        <td>Lunes a viernes</td>
-        <td>7:00 – 14:00 hrs</td>
-        <td>Turno matutino</td>
-      </tr>
-      <tr>
-        <td>Todos los semestres</td>
-        <td>26 mar 2026</td>
-        <td>Sin clases para alumnos</td>
-        <td>Jornada de trabajo colegiado docente</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3 style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:10px">Sistema de permanencia y seguimiento</h3>
-  <div class="cards-grid" style="grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); margin-bottom:1.5rem">
-    <div class="card" style="border-left: 3px solid var(--green); border-radius: 0 10px 10px 0;">
-      <div style="font-size:22px;margin-bottom:6px">🟢</div>
-      <div class="card-title">Verde — Sin riesgo</div>
-      <div class="card-body">Asistencia regular, sin señales de alerta. El estudiante avanza con normalidad.</div>
-    </div>
-    <div class="card" style="border-left: 3px solid #d4860a; border-radius: 0 10px 10px 0;">
-      <div style="font-size:22px;margin-bottom:6px">🟡</div>
-      <div class="card-title">Amarillo — Atención</div>
-      <div class="card-body">3 a 5 faltas acumuladas o una señal de alerta. Orientación hace contacto con la familia en 48 horas.</div>
-    </div>
-    <div class="card" style="border-left: 3px solid var(--red); border-radius: 0 10px 10px 0;">
-      <div style="font-size:22px;margin-bottom:6px">🔴</div>
-      <div class="card-title">Rojo — Seguimiento activo</div>
-      <div class="card-body">6 o más faltas o dos señales de alerta. Se abre ficha formal y se acuerda un plan de acompañamiento con la familia.</div>
-    </div>
-  </div>
-
-  <div class="callout callout-green">
-    <span>✓</span>
-    <span>Si recibes una llamada o mensaje de orientación, es parte del protocolo de acompañamiento — no indica una situación grave. Es la escuela trabajando contigo para apoyar a tu estudiante.</span>
-  </div>
-
-  <h3 style="font-size:14px;font-weight:500;color:var(--text);margin:1.5rem 0 10px">Próximas actividades</h3>
-  <table class="horario-table">
-    <thead><tr><th>Fecha</th><th>Actividad</th><th>Dirigida a</th></tr></thead>
-    <tbody>
-      <tr><td>26 mar 2026</td><td>Jornada Colegiado Docente — sin clases</td><td>Familias (aviso)</td></tr>
-      <tr><td>17 abr 2026</td><td>Torneo Interprepas BG 046 — EPO 135 es sede</td><td>Toda la comunidad</td></tr>
-      <tr><td>30 abr 2026</td><td>Salida didáctica Zacatlán</td><td>Alumnos inscritos · cuota $500 MXN</td></tr>
-      <tr><td>Mayo 2026</td><td>Feria de ciencias</td><td>Toda la comunidad</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- ═══ EQUIPO ═══ -->
-<section class="section" id="equipo">
-  <div class="section-label">Personal escolar</div>
-  <h2 class="section-title">Equipo EPO 135</h2>
-  <p class="section-desc">186 estudiantes · 6 semestres · Ciclo 2025–2026</p>
-
-  <h3 style="font-size:13px;font-weight:500;color:var(--muted);margin-bottom:10px;letter-spacing:0.05em">Dirección y orientación</h3>
-  <div class="equipo-grid" style="margin-bottom:1.5rem">
-    <div class="equipo-card equipo-dir-card">
-      <div class="equipo-role">Directora</div>
-      <div class="equipo-name">Mtra. Gloria Rosiles Estrada</div>
-    </div>
-    <div class="equipo-card equipo-dir-card">
-      <div class="equipo-role">Subdirector Escolar</div>
-      <div class="equipo-name">Profr. Fernando Felipe Cortés Reyes</div>
-    </div>
-    <div class="equipo-card">
-      <div class="equipo-role">Supervisora BG 046</div>
-      <div class="equipo-name">Mtra. Gabriela Lara Juárez</div>
-    </div>
-    <div class="equipo-card">
-      <div class="equipo-role">Orientadora</div>
-      <div class="equipo-name">Nallely Anabel Rojas Gómez</div>
-    </div>
-    <div class="equipo-card">
-      <div class="equipo-role">Orientador</div>
-      <div class="equipo-name">Armando Villalpando Vázquez</div>
-    </div>
-  </div>
-
-  <h3 style="font-size:13px;font-weight:500;color:var(--muted);margin-bottom:10px;letter-spacing:0.05em">Cuerpo docente</h3>
-  <div class="equipo-grid">
-    <div class="equipo-card"><div class="equipo-name">Alfonso Osorno García</div></div>
-    <div class="equipo-card"><div class="equipo-name">Ana Lidia Pineda González</div></div>
-    <div class="equipo-card"><div class="equipo-name">César Andrés Ramírez Mendoza</div></div>
-    <div class="equipo-card"><div class="equipo-name">Darling Jennyfer Quintero Palma</div></div>
-    <div class="equipo-card"><div class="equipo-name">Erik Caballero Huerta</div></div>
-    <div class="equipo-card"><div class="equipo-name">Erika Marbella Elizalde Palacios</div></div>
-    <div class="equipo-card"><div class="equipo-name">Joaquín Eladio Mendoza Jiménez</div></div>
-    <div class="equipo-card"><div class="equipo-name">José Emmanuel Hernández Calderón</div></div>
-    <div class="equipo-card"><div class="equipo-name">Juan Carlos Morales Morales</div></div>
-    <div class="equipo-card"><div class="equipo-name">Liliana Marlyn Figueroa Ibarra</div></div>
-    <div class="equipo-card"><div class="equipo-name">Luis Mónico Pérez</div></div>
-    <div class="equipo-card"><div class="equipo-name">Marcos Martínez Bolaños</div></div>
-    <div class="equipo-card"><div class="equipo-name">María Concepción Gurrusquieta Navarro</div></div>
-    <div class="equipo-card"><div class="equipo-name">Minerva Lazcano de la Luz</div></div>
-    <div class="equipo-card"><div class="equipo-name">Paulina Sánchez Domínguez</div></div>
-    <div class="equipo-card"><div class="equipo-name">Priscila López Tecomateco</div></div>
-    <div class="equipo-card"><div class="equipo-name">Verónica Rodríguez Ambrosio</div></div>
-    <div class="equipo-card"><div class="equipo-name">Yaina Ivanova Rodríguez Sánchez</div></div>
-  </div>
-</section>
-
-<!-- ═══ CONTACTO ═══ -->
-<section class="section" id="contacto">
-  <div class="section-label">Información de contacto</div>
-  <h2 class="section-title">Cómo comunicarte con nosotros</h2>
-  <p class="section-desc">EPO 135 · Río Frío de Juárez, Ixtapaluca, Estado de México.</p>
-
-  <div class="contacto-grid">
-    <div class="contacto-item">
-      <span class="contacto-icon">📍</span>
-      <div>
-        <div class="contacto-label">Ubicación</div>
-        <div class="contacto-val">Río Frío de Juárez</div>
-        <div class="contacto-sub">Ixtapaluca, Estado de México</div>
-      </div>
-    </div>
-    <div class="contacto-item">
-      <span class="contacto-icon">🕐</span>
-      <div>
-        <div class="contacto-label">Horario de atención</div>
-        <div class="contacto-val">Lunes a viernes</div>
-        <div class="contacto-sub">7:00 – 15:00 hrs</div>
-      </div>
-    </div>
-    <div class="contacto-item">
-      <span class="contacto-icon">🏫</span>
-      <div>
-        <div class="contacto-label">Clave de centro de trabajo</div>
-        <div class="contacto-val">BG 046</div>
-        <div class="contacto-sub">Bachillerato General · DGEMS</div>
-      </div>
-    </div>
-    <div class="contacto-item">
-      <span class="contacto-icon">🌐</span>
-      <div>
-        <div class="contacto-label">Recursos en línea</div>
-        <div class="contacto-val">
-          <a href="https://epo135subdireccion.weebly.com" target="_blank" style="color:var(--accent)">epo135subdireccion.weebly.com</a>
-        </div>
-        <div class="contacto-sub">Generador de exámenes · Fichas de riesgo</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="callout callout-blue" style="margin-top:1.5rem">
-    <span>ℹ</span>
-    <span>Para reportar una situación de riesgo académico o emocional de un alumno, los docentes pueden usar directamente el <strong>formulario de fichas de seguimiento</strong> disponible en el sitio de la subdirección. La atención es en menos de 24 horas.</span>
-  </div>
-</section>
-
-</main>
-
-<footer>
-  <div class="footer">
-    <div>
-      <div class="footer-logo">EPO 135</div>
-      <p>Escuela Preparatoria Oficial 135 · BG 046 · Ixtapaluca</p>
-    </div>
-    <div style="text-align:right">
-      <p>Sitio mantenido por la Subdirección Escolar</p>
-      <p style="margin-top:2px">Ciclo 2025–2026 · <a href="gestion.html" style="color:var(--hint)">Acceso gestión</a></p>
-    </div>
-  </div>
-</footer>
-
-<!-- ═══ LINKS BAR ═══ -->
-<div class="links-bar">
-  <div class="links-bar-inner">
-    <div class="links-bar-label">Recursos y plataformas de acceso rápido</div>
-    <div class="links-bar-cols">
-
-      <div class="links-col">
-        <div class="links-col-title">Sistemas oficiales</div>
-        <a href="https://educacionmediasuperior.sep.gob.mx/modeloeducativo2025.html" target="_blank">SNBNEM</a>
-        <a href="https://siase2.edomex.gob.mx/siase/" target="_blank">Siase 2</a>
-        <a href="https://miges.edugem.gob.mx/" target="_blank">MIGE</a>
-        <a href="https://cosfac.sems.gob.mx/" target="_blank">Cosfac</a>
-        <a href="https://registro.desarrolloprofesionaldocente.sems.gob.mx/" target="_blank">Formación Docente</a>
-        <a href="https://www.gob.mx/curp/" target="_blank">CURP</a>
-        <a href="https://cn.becasbenitojuarez.gob.mx/sinob/centrales/login#/matricula/media" target="_blank">SiNOBJ</a>
-      </div>
-
-      <div class="links-col">
-        <div class="links-col-title">Herramientas educativas</div>
-        <a href="https://aulamexiquense.mx/" target="_blank">Aula Mexiquense</a>
-        <a href="https://notebooklm.google.com/" target="_blank">NotebookLM</a>
-        <a href="https://new.express.adobe.com/?locale=es-ES" target="_blank">Adobe Express</a>
-        <a href="https://gamma.app/create" target="_blank">Gamma</a>
-        <a href="https://teachy.ai/es" target="_blank">Teachy</a>
-        <a href="https://openknowledgemaps.org/" target="_blank">Open Knowledge Maps</a>
-        <a href="https://epo135subdireccion.weebly.com/biblioteca.html" target="_blank">Librería Virtual EPO 135</a>
-      </div>
-
-      <div class="links-col">
-        <div class="links-col-title">Plataformas de trabajo</div>
-        <a href="https://declaranet.secogem.gob.mx/" target="_blank">Decl@raNET</a>
-        <a href="https://login.microsoftonline.com/" target="_blank">Outlook institucional</a>
-        <a href="https://drive.google.com/drive/folders/1NeZbeRNqiMYdb9b_1xEXXNWZnccxZYEL?usp=drive_link" target="_blank">Manuales y Normativas</a>
-        <a href="https://miderechomilugar.gob.mx/" target="_blank">Mi derecho, Mi lugar</a>
-        <a href="https://epo135subdireccion.weebly.com" target="_blank">Sitio Weebly EPO 135</a>
-        <a href="gestion.html">Gestión interna</a>
-      </div>
-
+<!-- PADRES QUICK ACCESS -->
+<div class="padres-banner" id="padres">
+  <div class="padres-inner">
+    <span class="padres-label">Padres de familia</span>
+    <div class="padres-links">
+      <a href="#calendario" class="padres-link">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="white" stroke-width="1.2"/><path d="M5 2v2M11 2v2M2 7h12" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Calendario escolar
+      </a>
+      <a href="#" class="padres-link">
+        <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="white" stroke-width="1.2"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Contactar orientación
+      </a>
+      <a href="#" class="padres-link">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 2L2 6v7h4v-3h4v3h4V6L8 2z" stroke="white" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        Directorio plantel
+      </a>
+      <a href="#" class="padres-link">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 4h10M3 8h7M3 12h5" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Avisos oficiales
+      </a>
+      <a href="#" class="padres-link">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="white" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Asistencia e indicadores
+      </a>
     </div>
   </div>
 </div>
 
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- LEFT COLUMN -->
+  <div>
+
+    <!-- ANUNCIOS -->
+    <section id="anuncios">
+      <div class="sec-header">
+        <span class="sec-tag">Anuncios recientes</span>
+        <div class="sec-line"></div>
+      </div>
+      <div class="anuncios-grid">
+
+        <div class="anuncio">
+          <div class="anuncio-color" style="background: var(--dorado)"></div>
+          <div class="anuncio-body">
+            <div class="anuncio-cat" style="color: var(--dorado)">Deporte</div>
+            <div class="anuncio-titulo">Torneo Interprepas BG 046 — EPO 135 sede de frontón</div>
+            <div class="anuncio-desc">Junta previa el 16 de abril en EPO 141. Inscripción de cédulas, roles y costos. Medallas a $35 c/u.</div>
+            <div class="anuncio-fecha">17 abril 2026</div>
+          </div>
+        </div>
+
+        <div class="anuncio">
+          <div class="anuncio-color" style="background: var(--verde-med)"></div>
+          <div class="anuncio-body">
+            <div class="anuncio-cat" style="color: var(--verde-med)">Colegiado</div>
+            <div class="anuncio-titulo">Jornada de trabajo colegiado — 26 de marzo</div>
+            <div class="anuncio-desc">4 bloques: permanencia, indicadores, herramientas digitales (Claude + NotebookLM) y vida saludable.</div>
+            <div class="anuncio-fecha">26 marzo 2026</div>
+          </div>
+        </div>
+
+        <div class="anuncio">
+          <div class="anuncio-color" style="background: var(--azul-med)"></div>
+          <div class="anuncio-body">
+            <div class="anuncio-cat" style="color: var(--azul-med)">Tecnología</div>
+            <div class="anuncio-titulo">Sistema de semáforo de asistencia en producción</div>
+            <div class="anuncio-desc">Monitoreo automatizado con IA. Notificaciones vía Telegram cada lunes a las 7:00 am.</div>
+            <div class="anuncio-fecha">15 marzo 2026</div>
+          </div>
+        </div>
+
+        <div class="anuncio">
+          <div class="anuncio-color" style="background: var(--verde-claro)"></div>
+          <div class="anuncio-body">
+            <div class="anuncio-cat" style="color: var(--verde)">Salida didáctica</div>
+            <div class="anuncio-titulo">Visita a Zacatlán, Puebla — 30 de abril</div>
+            <div class="anuncio-desc">Salida educativa abierta a todos los semestres. Cuota: $500 MXN. Prioridad para alumnos en seguimiento.</div>
+            <div class="anuncio-fecha">30 abril 2026</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CALENDARIO -->
+    <section id="calendario">
+      <div class="sec-header">
+        <span class="sec-tag">Calendario escolar</span>
+        <div class="sec-line"></div>
+      </div>
+      <div class="sec-title" style="font-family:'Fraunces',serif">Segundo semestre 2025–2026</div>
+      <p style="font-size:12.5px;color:var(--texto-suave);margin-bottom:1rem;margin-top:-0.5rem">11 de febrero – 15 de julio · 93 días hábiles · Vacaciones: 30 mar – 10 abr</p>
+      <div class="calendario">
+        <div class="cal-header">
+          <span class="cal-mes" id="calMes">Marzo 2026</span>
+          <div class="cal-nav">
+            <button class="cal-btn" id="calPrev">&#8249;</button>
+            <button class="cal-btn" id="calNext">&#8250;</button>
+          </div>
+        </div>
+        <div class="cal-grid">
+          <div class="cal-dias-semana">
+            <div class="cal-dia-sem">D</div>
+            <div class="cal-dia-sem">L</div>
+            <div class="cal-dia-sem">M</div>
+            <div class="cal-dia-sem">X</div>
+            <div class="cal-dia-sem">J</div>
+            <div class="cal-dia-sem">V</div>
+            <div class="cal-dia-sem">S</div>
+          </div>
+          <div class="cal-dias" id="calDias"></div>
+        </div>
+        <div class="cal-leyenda">
+          <div class="ley-item"><div class="ley-dot" style="background:var(--verde-med)"></div>Jornada / evento</div>
+          <div class="ley-item"><div class="ley-dot" style="background:var(--dorado)"></div>Deportivo / egresión</div>
+          <div class="ley-item"><div class="ley-dot" style="background:var(--rojo)"></div>Evaluaciones / SIGEMS</div>
+          <div class="ley-item"><div class="ley-dot" style="background:var(--morado)"></div>Vacaciones</div>
+          <div class="ley-item"><div class="ley-dot" style="background:var(--azul-med)"></div>Hoy</div>
+        </div>
+        <div class="cal-eventos-list" id="calEventos"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Accesos para padres -->
+    <div class="padres-card">
+      <div class="padres-card-header">
+        <span class="padres-icon">👨‍👩‍👧</span>
+        <h3>Accesos para padres</h3>
+      </div>
+      <div class="padres-accesos">
+        <a href="#calendario" class="acceso-btn">
+          <div class="acceso-btn-icon" style="background:var(--verde-palo)">📅</div>
+          <div class="acceso-btn-text">
+            <span class="acceso-btn-titulo">Calendario escolar</span>
+            <span class="acceso-btn-sub">Eventos, exámenes y actividades</span>
+          </div>
+          <span class="acceso-arrow">›</span>
+        </a>
+        <a href="#" class="acceso-btn">
+          <div class="acceso-btn-icon" style="background:var(--azul-palo)">📋</div>
+          <div class="acceso-btn-text">
+            <span class="acceso-btn-titulo">Avisos y comunicados</span>
+            <span class="acceso-btn-sub">Avisos oficiales del plantel</span>
+          </div>
+          <span class="acceso-arrow">›</span>
+        </a>
+        <a href="#" class="acceso-btn">
+          <div class="acceso-btn-icon" style="background:#fef6e4">📞</div>
+          <div class="acceso-btn-text">
+            <span class="acceso-btn-titulo">Contactar orientación</span>
+            <span class="acceso-btn-sub">Nallely Rojas · Armando Villalpando</span>
+          </div>
+          <span class="acceso-arrow">›</span>
+        </a>
+        <a href="#" class="acceso-btn">
+          <div class="acceso-btn-icon" style="background:var(--rojo-palo)">🚨</div>
+          <div class="acceso-btn-text">
+            <span class="acceso-btn-titulo">Ficha de seguimiento</span>
+            <span class="acceso-btn-sub">Reportar situación de tu hijo/a</span>
+          </div>
+          <span class="acceso-arrow">›</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Semáforo de asistencia -->
+    <div class="semaforo-mini">
+      <div class="sem-header">
+        <h3>Semáforo de asistencia</h3>
+      </div>
+      <div class="sem-body">
+        <p class="sem-descripcion">Sistema de monitoreo semanal para detectar alumnos en riesgo de abandono escolar.</p>
+        <div class="sem-items">
+          <div class="sem-item sem-verde">
+            <span>🟢</span>
+            <div>
+              <div class="sem-item-label" style="color:var(--verde)">Verde — Sin riesgo</div>
+              <div class="sem-item-desc">Asistencia normal, sin señales de alerta</div>
+            </div>
+          </div>
+          <div class="sem-item sem-amarillo">
+            <span>🟡</span>
+            <div>
+              <div class="sem-item-label" style="color:var(--dorado)">Amarillo — Atención</div>
+              <div class="sem-item-desc">3–5 faltas o 1 señal de alerta</div>
+            </div>
+          </div>
+          <div class="sem-item sem-rojo">
+            <span>🔴</span>
+            <div>
+              <div class="sem-item-label" style="color:var(--rojo)">Rojo — Riesgo</div>
+              <div class="sem-item-desc">6+ faltas o 2+ señales de alerta</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Directorio -->
+    <div class="directorio">
+      <div class="dir-header">
+        <h3>Directorio del plantel</h3>
+      </div>
+      <div class="dir-list">
+        <div class="dir-item">
+          <div class="dir-avatar" style="background:#5c3a9e">GL</div>
+          <div class="dir-info">
+            <div class="dir-nombre">Mtra. Gabriela Lara Juárez</div>
+            <div class="dir-rol">Supervisora · BG 046</div>
+          </div>
+        </div>
+        <div class="dir-item">
+          <div class="dir-avatar" style="background:var(--verde-med)">GR</div>
+          <div class="dir-info">
+            <div class="dir-nombre">Mtra. Gloria Rosiles Estrada</div>
+            <div class="dir-rol">Directora</div>
+          </div>
+        </div>
+        <div class="dir-item">
+          <div class="dir-avatar" style="background:var(--azul-med)">FC</div>
+          <div class="dir-info">
+            <div class="dir-nombre">Profr. Fernando Cortés Reyes</div>
+            <div class="dir-rol">Subdirector Escolar</div>
+          </div>
+        </div>
+        <div class="dir-item">
+          <div class="dir-avatar" style="background:#c8860a">JA</div>
+          <div class="dir-info">
+            <div class="dir-nombre">Jazmín</div>
+            <div class="dir-rol">Secretaria Escolar</div>
+          </div>
+        </div>
+        <div class="dir-item">
+          <div class="dir-avatar" style="background:#7a4f00">NR</div>
+          <div class="dir-info">
+            <div class="dir-nombre">Nallely A. Rojas Gómez</div>
+            <div class="dir-rol">Orientadora</div>
+          </div>
+        </div>
+        <div class="dir-item">
+          <div class="dir-avatar" style="background:#4a3d8b">AV</div>
+          <div class="dir-info">
+            <div class="dir-nombre">Armando Villalpando Vázquez</div>
+            <div class="dir-rol">Orientador</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+
+    <!-- Columna marca -->
+    <div class="footer-brand">
+      <div class="footer-logo-txt">EPO 135 · Río Frío de Juárez</div>
+      <p>Escuela Preparatoria Oficial Núm. 135 · Subsistema de Bachillerato General del Estado de México · Supervisión Escolar BG 046 · Subdirección de Bachillerato General Región Oriente.</p>
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+          <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px;flex-shrink:0"><path d="M8 2C5.8 2 4 3.8 4 6c0 3 4 8 4 8s4-5 4-8c0-2.2-1.8-4-4-4z" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><circle cx="8" cy="6" r="1.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/></svg>
+          <span>Calle Vista Hermosa s/n, Río Frío de Juárez, Ixtapaluca, Edo. Méx. C.P. 56590</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+          <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px;flex-shrink:0"><rect x="2" y="4" width="12" height="9" rx="1.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M2 5.5l6 4 6-4" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/></svg>
+          <a href="mailto:epo135@edugem.mx" style="color:rgba(255,255,255,0.75);text-decoration:none">epo135@edugem.mx</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+          <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px;flex-shrink:0"><path d="M3 3h2l1 3.5-1.5 1a9 9 0 004 4l1-1.5L13 11v2c-6 1-11-4-10-10z" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/></svg>
+          <a href="tel:5559420717" style="color:rgba(255,255,255,0.75);text-decoration:none">555-942-0717</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+          <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px;flex-shrink:0"><rect x="2" y="2" width="12" height="12" rx="2" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M5 8h6M8 5v6" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <a href="https://epo135subdireccion.weebly.com" target="_blank" style="color:rgba(255,255,255,0.75);text-decoration:none">epo135subdireccion.weebly.com</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna navegación -->
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <a href="#">Inicio</a>
+      <a href="#anuncios">Anuncios</a>
+      <a href="#calendario">Calendario escolar</a>
+      <a href="#padres">Accesos para padres</a>
+      <a href="#">Actividades y deportes</a>
+      <a href="#">Generador de exámenes</a>
+    </div>
+
+    <!-- Columna para padres -->
+    <div class="footer-col">
+      <h4>Para padres</h4>
+      <a href="#">Contactar orientación</a>
+      <a href="#">Ficha de seguimiento</a>
+      <a href="#">Semáforo de asistencia</a>
+      <a href="#">Avisos y comunicados</a>
+      <a href="#">Directorio del plantel</a>
+      <a href="#">Preguntas frecuentes</a>
+    </div>
+
+  </div>
+
+  <!-- Datos del semestre y bottom bar -->
+  <div style="max-width:1100px;margin:1.5rem auto 0;padding:1rem 2rem 0;border-top:1px solid rgba(255,255,255,0.12)">
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1rem">
+      <div style="font-size:11px;color:rgba(255,255,255,0.45)">
+        <span style="color:rgba(255,255,255,0.6);font-weight:500;display:block;margin-bottom:2px;font-family:'DM Mono',monospace;letter-spacing:0.1em;font-size:10px">SEMESTRE ACTIVO</span>
+        Segundo semestre 2025–2026 · 11 feb – 15 jul · 93 días hábiles
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.45)">
+        <span style="color:rgba(255,255,255,0.6);font-weight:500;display:block;margin-bottom:2px;font-family:'DM Mono',monospace;letter-spacing:0.1em;font-size:10px">COMUNIDAD</span>
+        186 estudiantes · 6 semestres · 19 docentes
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.45)">
+        <span style="color:rgba(255,255,255,0.6);font-weight:500;display:block;margin-bottom:2px;font-family:'DM Mono',monospace;letter-spacing:0.1em;font-size:10px">AÑO INSTITUCIONAL</span>
+        2026 · "Año del humanismo mexicano en el Estado de México"
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 EPO 135 · Todos los derechos reservados</span>
+    <span>Subdirección Escolar · Sitio actualizado: marzo 2026 · Desarrollado con Claude</span>
+  </div>
+</footer>
+
+<script>
+// ── CAROUSEL ──
+const wrapper = document.getElementById('slidesWrapper');
+const dotsEl = document.getElementById('dots');
+const totalSlides = 4;
+let current = 0;
+let autoTimer;
+
+function goTo(n) {
+  current = (n + totalSlides) % totalSlides;
+  wrapper.style.transform = `translateX(-${current * 100}%)`;
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+}
+
+function nextSlide() { goTo(current + 1); }
+function prevSlide() { goTo(current - 1); }
+
+function startAuto() {
+  clearInterval(autoTimer);
+  autoTimer = setInterval(nextSlide, 5000);
+}
+
+for (let i = 0; i < totalSlides; i++) {
+  const d = document.createElement('button');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => { goTo(i); startAuto(); });
+  dotsEl.appendChild(d);
+}
+
+document.getElementById('nextBtn').addEventListener('click', () => { nextSlide(); startAuto(); });
+document.getElementById('prevBtn').addEventListener('click', () => { prevSlide(); startAuto(); });
+startAuto();
+
+// ── CALENDARIO ──
+const EVENTOS = {
+  // Marzo
+  '2026-03-09': { tipo: 'rojo',    label: 'Inicio evaluaciones 1er parcial', sub: 'Periodo: 09–20 de marzo' },
+  '2026-03-17': { tipo: 'rojo',    label: 'Entrega planeación 2º parcial', sub: 'Fecha límite docentes' },
+  '2026-03-19': { tipo: 'hoy',     label: 'Hoy' },
+  '2026-03-20': { tipo: 'rojo',    label: 'Fin evaluaciones 1er parcial', sub: 'Cierre del periodo de evaluación' },
+  '2026-03-23': { tipo: 'rojo',    label: 'Inicio captura 1er parcial en SIGEMS', sub: 'Captura: 23–27 de marzo' },
+  '2026-03-26': { tipo: 'evento',  label: '2ª Jornada de Acompañamiento', sub: 'Colegiado docente · 9:00–14:00 hrs' },
+  '2026-03-27': { tipo: 'rojo',    label: 'Cierre captura 1er parcial SIGEMS', sub: '' },
+  '2026-03-30': { tipo: 'morado',  label: 'Inicio vacaciones Semana Santa', sub: 'Receso: 30 mar – 10 abr' },
+  // Abril
+  '2026-04-10': { tipo: 'morado',  label: 'Fin de vacaciones Semana Santa', sub: 'Regreso a clases: 13 de abril' },
+  '2026-04-16': { tipo: 'dorado',  label: 'Junta previa Torneo Interprepas', sub: 'EPO 141 · 9:40 am — cédulas, roles, costos' },
+  '2026-04-17': { tipo: 'dorado',  label: 'Torneo Interprepas BG 046', sub: 'Frontón varonil, fútbol y básquetbol' },
+  '2026-04-27': { tipo: 'rojo',    label: 'Inicio evaluaciones 2º parcial', sub: 'Periodo: 27 abr – 8 may' },
+  '2026-04-30': { tipo: 'evento',  label: 'Salida didáctica Zacatlán', sub: 'Cuota $500 MXN · Puebla' },
+  // Mayo
+  '2026-05-08': { tipo: 'rojo',    label: 'Fin evaluaciones 2º parcial', sub: '' },
+  '2026-05-11': { tipo: 'rojo',    label: 'Entrega planeación 3er parcial', sub: 'Fecha límite docentes' },
+  '2026-05-11': { tipo: 'rojo',    label: 'Inicio captura 2º parcial SIGEMS', sub: 'Captura: 11–15 de mayo' },
+  '2026-05-15': { tipo: 'rojo',    label: 'Cierre captura 2º parcial SIGEMS', sub: '' },
+  '2026-05-25': { tipo: 'evento',  label: '3ª Jornada de Acompañamiento', sub: 'Tercera jornada ordinaria · 9:00–14:00 hrs' },
+  // Junio
+  '2026-06-15': { tipo: 'rojo',    label: 'Inicio evaluaciones 3er parcial', sub: 'Periodo: 15–26 de junio' },
+  '2026-06-23': { tipo: 'evento',  label: '4ª Jornada de Acompañamiento', sub: 'Cuarta jornada ordinaria · 9:00–14:00 hrs' },
+  '2026-06-26': { tipo: 'rojo',    label: 'Fin evaluaciones 3er parcial', sub: '' },
+  '2026-06-29': { tipo: 'rojo',    label: 'Inicio captura 3er parcial SIGEMS', sub: 'Captura: 29 jun – 3 jul' },
+  // Julio
+  '2026-07-01': { tipo: 'rojo',    label: 'Inicio periodo de regularización', sub: 'Regularización: 1–14 de julio' },
+  '2026-07-03': { tipo: 'rojo',    label: 'Cierre captura 3er parcial SIGEMS', sub: '' },
+  '2026-07-14': { tipo: 'rojo',    label: 'Fin periodo de regularización', sub: '' },
+  '2026-07-15': { tipo: 'rojo',    label: 'Inicio captura regularización SIGEMS', sub: 'Captura: 15–17 de julio' },
+  '2026-07-15': { tipo: 'evento',  label: 'Término del semestre', sub: 'Último día hábil — 93 días en total' },
+  '2026-07-17': { tipo: 'dorado',  label: 'Ceremonia de Egresión', sub: 'Generación 2023–2026' },
+};
+
+const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+let calYear = 2026, calMonth = 2; // 0-indexed, March
+
+function pad(n) { return n < 10 ? '0' + n : n; }
+
+function renderCal() {
+  const mesEl = document.getElementById('calMes');
+  const diasEl = document.getElementById('calDias');
+  const eventosEl = document.getElementById('calEventos');
+  mesEl.textContent = `${MESES[calMonth]} ${calYear}`;
+
+  const first = new Date(calYear, calMonth, 1).getDay();
+  const days = new Date(calYear, calMonth + 1, 0).getDate();
+  const prevDays = new Date(calYear, calMonth, 0).getDate();
+
+  let html = '';
+  for (let i = 0; i < first; i++) {
+    const d = prevDays - first + i + 1;
+    html += `<div class="cal-dia otro-mes">${d}</div>`;
+  }
+  for (let d = 1; d <= days; d++) {
+    const key = `${calYear}-${pad(calMonth + 1)}-${pad(d)}`;
+    const ev = EVENTOS[key];
+    let cls = 'cal-dia';
+    if (ev) {
+      if (ev.tipo === 'hoy') cls += ' hoy';
+      else if (ev.tipo === 'evento') cls += ' evento';
+      else if (ev.tipo === 'dorado') cls += ' evento-dorado';
+      else if (ev.tipo === 'rojo') cls += ' evento-rojo';
+      else if (ev.tipo === 'morado') cls += ' evento-morado';
+    }
+    html += `<div class="${cls}">${d}</div>`;
+  }
+  diasEl.innerHTML = html;
+
+  // Eventos del mes visible
+  const mesEventos = Object.entries(EVENTOS).filter(([k]) => {
+    const [y, m] = k.split('-').map(Number);
+    return y === calYear && m === calMonth + 1;
+  }).sort(([a], [b]) => a.localeCompare(b));
+
+  if (mesEventos.length === 0) {
+    eventosEl.innerHTML = '';
+    return;
+  }
+
+  const colores = { evento: 'var(--verde)', dorado: 'var(--dorado)', rojo: 'var(--rojo)', morado: 'var(--morado)', hoy: 'var(--azul)' };
+  let evHtml = '';
+  for (const [k, v] of mesEventos) {
+    const [, , d] = k.split('-');
+    const col = colores[v.tipo] || 'var(--verde)';
+    evHtml += `<div class="cal-evento-item">
+      <div class="cal-evento-fecha" style="background:${col}">
+        <div class="cal-evento-dia">${parseInt(d)}</div>
+        <div>${MESES[calMonth].slice(0,3)}</div>
+      </div>
+      <div class="cal-evento-info">
+        <div class="cal-evento-nombre">${v.label}</div>
+        ${v.sub ? `<div class="cal-evento-sub">${v.sub}</div>` : ''}
+      </div>
+    </div>`;
+  }
+  eventosEl.innerHTML = evHtml;
+}
+
+document.getElementById('calPrev').addEventListener('click', () => {
+  calMonth--;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCal();
+});
+document.getElementById('calNext').addEventListener('click', () => {
+  calMonth++;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  renderCal();
+});
+
+renderCal();
+</script>
 </body>
 </html>
