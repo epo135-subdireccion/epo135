@@ -457,11 +457,64 @@
     color: var(--muted);
   }
 
+  /* ── LINKS BAR ── */
+  .links-bar {
+    background: var(--accent2);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 2rem 0 1.5rem;
+  }
+
+  .links-bar-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .links-bar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 1rem;
+  }
+
+  .links-bar-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem 2rem;
+  }
+
+  .links-col-title {
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .links-col a {
+    display: block;
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    padding: 3px 0;
+    transition: color .15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .links-col a:hover { color: rgba(255,255,255,1); }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
     .main, .hero-inner, .nav-inner { padding-left: 1rem; padding-right: 1rem; }
     .nav-gestion { display: none; }
     .footer { flex-direction: column; align-items: flex-start; }
+    .links-bar-cols { grid-template-columns: 1fr; gap: 1.2rem; }
+    .links-bar-inner { padding-left: 1rem; padding-right: 1rem; }
   }
 </style>
 </head>
@@ -813,6 +866,48 @@
     </div>
   </div>
 </footer>
+
+<!-- ═══ LINKS BAR ═══ -->
+<div class="links-bar">
+  <div class="links-bar-inner">
+    <div class="links-bar-label">Recursos y plataformas de acceso rápido</div>
+    <div class="links-bar-cols">
+
+      <div class="links-col">
+        <div class="links-col-title">Sistemas oficiales</div>
+        <a href="https://educacionmediasuperior.sep.gob.mx/modeloeducativo2025.html" target="_blank">SNBNEM</a>
+        <a href="https://siase2.edomex.gob.mx/siase/" target="_blank">Siase 2</a>
+        <a href="https://miges.edugem.gob.mx/" target="_blank">MIGE</a>
+        <a href="https://cosfac.sems.gob.mx/" target="_blank">Cosfac</a>
+        <a href="https://registro.desarrolloprofesionaldocente.sems.gob.mx/" target="_blank">Formación Docente</a>
+        <a href="https://www.gob.mx/curp/" target="_blank">CURP</a>
+        <a href="https://cn.becasbenitojuarez.gob.mx/sinob/centrales/login#/matricula/media" target="_blank">SiNOBJ</a>
+      </div>
+
+      <div class="links-col">
+        <div class="links-col-title">Herramientas educativas</div>
+        <a href="https://aulamexiquense.mx/" target="_blank">Aula Mexiquense</a>
+        <a href="https://notebooklm.google.com/" target="_blank">NotebookLM</a>
+        <a href="https://new.express.adobe.com/?locale=es-ES" target="_blank">Adobe Express</a>
+        <a href="https://gamma.app/create" target="_blank">Gamma</a>
+        <a href="https://teachy.ai/es" target="_blank">Teachy</a>
+        <a href="https://openknowledgemaps.org/" target="_blank">Open Knowledge Maps</a>
+        <a href="https://epo135subdireccion.weebly.com/biblioteca.html" target="_blank">Librería Virtual EPO 135</a>
+      </div>
+
+      <div class="links-col">
+        <div class="links-col-title">Plataformas de trabajo</div>
+        <a href="https://declaranet.secogem.gob.mx/" target="_blank">Decl@raNET</a>
+        <a href="https://login.microsoftonline.com/" target="_blank">Outlook institucional</a>
+        <a href="https://drive.google.com/drive/folders/1NeZbeRNqiMYdb9b_1xEXXNWZnccxZYEL?usp=drive_link" target="_blank">Manuales y Normativas</a>
+        <a href="https://miderechomilugar.gob.mx/" target="_blank">Mi derecho, Mi lugar</a>
+        <a href="https://epo135subdireccion.weebly.com" target="_blank">Sitio Weebly EPO 135</a>
+        <a href="gestion.html">Gestión interna</a>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
