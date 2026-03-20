@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitácora EPO 135 · Fernando Cortés Reyes</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf9f7;
+    --surface: #ffffff;
+    --surface2: #f4f2ee;
+    --border: #e8e4dd;
+    --border2: #d4cfc6;
+    --text: #1a1917;
+    --muted: #6b6760;
+    --hint: #9c9890;
+    --accent: #2d5a8e;
+    --accent2: #1a3a5c;
+    --green: #1a6b3c;
+    --green-bg: #edf7f2;
+    --green-border: #a8d9be;
+    --amber: #7a4f00;
+    --amber-bg: #fef9ec;
+    --amber-border: #f0d080;
+    --red: #8b1a1a;
+    --red-bg: #fdf2f2;
+    --red-border: #f0aaaa;
+    --blue-bg: #eef4fb;
+    --blue-border: #a8c4e0;
+    --gray-bg: #f4f2ee;
+    --gray-border: #d4cfc6;
+    --pause-bg: #f0eef8;
+    --pause-border: #c4bce8;
+    --pause: #4a3d8b;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 0 2rem;
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .header-school {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--hint);
+    margin-bottom: 0.5rem;
+  }
+
+  .header-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 0.4rem;
+  }
+
+  .header-sub {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .meta-item {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .meta-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .nav-item {
+    padding: 0.75rem 1rem;
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+  }
+
+  .nav-item:hover { color: var(--text); border-color: var(--border2); }
+
+  /* ── LAYOUT ── */
+  .main { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 3rem 0 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .section:first-child { border-top: none; padding-top: 2.5rem; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--hint);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  /* ── PENDIENTES ── */
+  .task-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .task {
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+  }
+
+  .task-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--hint);
+    padding-top: 1px;
+  }
+
+  .task-text { color: var(--text); line-height: 1.5; }
+  .task-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .task-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    white-space: nowrap;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+
+  .badge-red    { background: var(--red-bg);   border-color: var(--red-border);   color: var(--red); }
+  .badge-amber  { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
+  .badge-green  { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+  .badge-blue   { background: var(--blue-bg);  border-color: var(--blue-border);  color: var(--accent); }
+  .badge-gray   { background: var(--gray-bg);  border-color: var(--gray-border);  color: var(--muted); }
+  .badge-pause  { background: var(--pause-bg); border-color: var(--pause-border); color: var(--pause); }
+
+  .task-date { font-size: 11px; color: var(--hint); }
+
+  /* ── PROYECTOS ── */
+  .projects { display: flex; flex-direction: column; gap: 10px; }
+
+  .project {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .project-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .project-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--hint);
+    flex-shrink: 0;
+    padding-top: 3px;
+  }
+
+  .project-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  .project-body {
+    padding: 0 16px 14px 16px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .project-body ul {
+    list-style: none;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .project-body li {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .project-body li::before {
+    content: '→';
+    color: var(--hint);
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .project.done    { border-left: 3px solid var(--green); }
+  .project.active  { border-left: 3px solid var(--accent); }
+  .project.pending { border-left: 3px solid var(--amber); }
+  .project.paused  { border-left: 3px solid var(--pause-border); }
+  .project.closed  { border-left: 3px solid var(--gray-border); opacity: 0.75; }
+
+  /* ── TABLA ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0.75rem 0;
+  }
+
+  .data-table th {
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hint);
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .data-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:nth-child(even) td { background: var(--bg); }
+
+  /* ── CALLOUTS ── */
+  .callout {
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 0.75rem 0;
+    font-size: 13px;
+    line-height: 1.6;
+    display: flex;
+    gap: 10px;
+    border: 1px solid;
+  }
+  .callout-icon { flex-shrink: 0; }
+  .callout-green  { background: var(--green-bg);  border-color: var(--green-border);  color: var(--green); }
+  .callout-amber  { background: var(--amber-bg);  border-color: var(--amber-border);  color: var(--amber); }
+  .callout-blue   { background: var(--blue-bg);   border-color: var(--blue-border);   color: var(--accent2); }
+  .callout-gray   { background: var(--gray-bg);   border-color: var(--gray-border);   color: var(--muted); }
+
+  /* ── CÓDIGO ── */
+  .mono {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    display: block;
+    margin: 6px 0;
+    color: var(--accent2);
+    white-space: pre;
+    overflow-x: auto;
+    line-height: 1.7;
+  }
+
+  code {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: var(--accent2);
+  }
+
+  /* ── SEMÁFORO ── */
+  .semaforo-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    margin: 4px 0;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  /* ── AGENDA ── */
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 140px;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    background: var(--surface);
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row:first-child { background: var(--surface2); }
+  .agenda-time { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--hint); }
+  .agenda-block { color: var(--text); line-height: 1.5; }
+  .agenda-resp { color: var(--muted); font-size: 12px; }
+
+  /* ── EQUIPO ── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 6px;
+  }
+
+  .team-card {
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+  }
+
+  .team-role { font-size: 10px; color: var(--hint); font-family: 'DM Mono', monospace; margin-bottom: 2px; }
+
+  /* ── PERFIL ── */
+  .quote {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--muted);
+    border-left: 3px solid var(--border2);
+    padding: 0.75rem 1.25rem;
+    margin: 1rem 0;
+    line-height: 1.6;
+  }
+
+  .sport-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 8px 0;
+  }
+
+  .sport-title { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+  .sport-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── CORRECCIONES ── */
+  .corr-row {
+    display: grid;
+    grid-template-columns: 90px 160px 1fr;
+    gap: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .corr-row:last-child { border-bottom: none; }
+  .corr-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--hint); }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .footer p { font-size: 12px; color: var(--hint); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .main, .header-inner, .nav-inner { padding-left: 1rem; padding-right: 1rem; }
+    .task { grid-template-columns: 20px 1fr; }
+    .task-meta { display: none; }
+    .agenda-row { grid-template-columns: 80px 1fr; }
+    .agenda-resp { display: none; }
+    .corr-row { grid-template-columns: 80px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-school">EPO 135 · Río Frío de Juárez, Ixtapaluca · BG 046</div>
+    <h1 class="header-title">Bitácora de gestión<br><em>Fernando Felipe Cortés Reyes</em></h1>
+    <p class="header-sub">Subdirector Escolar · 186 estudiantes · 6 semestres</p>
+    <div class="header-meta">
+      <span class="meta-item"><span class="meta-dot"></span>Actualizado: 15 de marzo de 2026</span>
+      <span class="meta-item"><span class="meta-dot"></span>10 proyectos · 3 activos</span>
+      <span class="meta-item"><span class="meta-dot"></span>Colegiado: 26 mar 2026</span>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#pendientes" class="nav-item">Pendientes</a>
+    <a href="#proyectos" class="nav-item">Proyectos</a>
+    <a href="#colegiado" class="nav-item">Colegiado</a>
+    <a href="#permanencia" class="nav-item">Permanencia</a>
+    <a href="#equipo" class="nav-item">Equipo</a>
+    <a href="#infraestructura" class="nav-item">Infraestructura</a>
+    <a href="#perfil" class="nav-item">Perfil</a>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ═══ 1. PENDIENTES ═══ -->
+<section class="section" id="pendientes">
+  <div class="section-label">Sección 1</div>
+  <h2 class="section-title">Pendientes</h2>
+  <div class="task-list">
+
+    <div class="task">
+      <span class="task-num">1</span>
+      <div>
+        <div class="task-text">Ficha de riesgo: Kevin Simón Reyes Lemus</div>
+        <div class="task-sub">Seguimiento activo</div>
+      </div>
+      <div class="task-meta">
+        <span class="badge badge-red">🔴 Alta</span>
+        <span class="task-date">Inmediato</span>
+      </div>
+    </div>
+
+    <div class="task">
+      <span class="task-num">2</span>
+      <div>
+        <div class="task-text">Equipo de básquetbol — Armar equipo para Torneo Interprepas</div>
+      </div>
+      <div class="task-meta">
+        <span class="badge badge-red">🔴 Alta</span>
+        <span class="task-date">Antes 20 mar</span>
+      </div>
+    </div>
+
+    <div class="task">
+      <span class="task-num">3</span>
+      <div>
+        <div class="task-text">Árbitros de frontón — Contactar Profe Reyes (EPO 177)</div>
+      </div>
+      <div class="task-meta">
+        <span class="badge badge-red">🔴 Alta</span>
+        <span class="task-date">Semana 17–21 mar</span>
+      </div>
+    </div>
+
+    <div class="task">
+      <span class="task-num">4</span>
+      <div>
+        <div class="task-text">Colegiado 26 mar — Preparar presentación T3: Claude + NotebookLM</div>
+      </div>
+      <div class="task-meta">
+        <span class="badge badge-amber">🟡 Media</span>
+        <span class="task-date">23 mar</span>
+      </div>
+    </div>
+
+    <div class="task">
+      <span class="task-num">5</span>
+      <div>
+        <div class="task-text">Torneo Interprepas — Cédulas listas semana 23–27 mar, informar costos a EPO 185 (Mtro. Joel López)</div>
+      </div>
+      <div class="task-meta">
+        <span class="badge badge-amber">🟡 Media</span>
+        <span class="task-date">27 mar</span>
+      </div>
+    </div>
+
+    <div class="task">
+      <span class="task-num">6</span>
+      <div>
+        <div class="task-text">Colegiado 26 mar — Confirmar responsable T4: Vive Saludable</div>
+      </div>
+      <div class="task-meta">
+        <span class="badge badge-amber">🟡 Media</span>
+        <span class="task-date">Antes 26 mar</span>
+      </div>
+    </div>
+
+    <div class="task">
+      <span class="task-num">7</span>
+      <div>
+        <div class="task-text">Salida didáctica Zacatlán — Confirmar cuota $500 MXN, actualizar proyecto-salida-zacatlan-FINAL.docx</div>
+      </div>
+      <div class="task-meta">
+        <span class="badge badge-green">🟢 Normal</span>
+        <span class="task-date">Antes 30 abr</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 2. PROYECTOS ═══ -->
+<section class="section" id="proyectos">
+  <div class="section-label">Sección 2</div>
+  <h2 class="section-title">Proyectos</h2>
+  <div class="projects">
+
+    <!-- P1 Generador -->
+    <div class="project closed">
+      <div class="project-header">
+        <span class="project-num">P1</span>
+        <span class="project-title">Generador de Exámenes con IA</span>
+        <span class="badge badge-gray">⏹ Cerrado</span>
+      </div>
+      <div class="project-body">
+        Sistema en producción. Herramienta web para generación de exámenes con Claude Sonnet disponible en el sitio de la subdirección. Proyecto concluido — sin desarrollo activo planificado.
+        <ul>
+          <li>Sitio: epo135subdireccion.weebly.com</li>
+          <li>GAS activo: endpoint /exec operativo</li>
+          <li>Corrección aplicada 11/03/2026: eliminado decodeURIComponent() en doGet</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- P2 Fichas -->
+    <div class="project closed">
+      <div class="project-header">
+        <span class="project-num">P2</span>
+        <span class="project-title">Fichas de Seguimiento de Riesgo</span>
+        <span class="badge badge-gray">⏹ Cerrado</span>
+      </div>
+      <div class="project-body">
+        Sistema en producción. Formulario Google conectado a Sheets y GAS para procesamiento automático de fichas. Proyecto concluido — sistema estable y funcionando.
+        <ul>
+          <li>Formulario activo y operativo</li>
+          <li>GAS activo: endpoint /exec operativo</li>
+          <li>Google Sheet de Fichas activo</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- P3 Semáforo -->
+    <div class="project done">
+      <div class="project-header">
+        <span class="project-num">P3</span>
+        <span class="project-title">Semáforo Semanal de Asistencia</span>
+        <span class="badge badge-green">✓ En producción</span>
+      </div>
+      <div class="project-body">
+        Sistema de semáforo automatizado (verde/amarillo/rojo) para monitoreo semanal de asistencia por grupo. Activo desde marzo 2026. Integración con Claude API y Telegram completada el 15/03/2026.
+        <ul>
+          <li>GAS con trigger semanal: lunes 7:00 am hora CDMX</li>
+          <li>Análisis automático con claude-sonnet-4-20250514</li>
+          <li>Notificaciones vía Telegram Bot EPO 135</li>
+          <li>Hoja "Reportes" con columnas: Fecha y Hora, Semana, Docente, Semestre, Grupo, Nivel, Nombre Alumno, Faltas Acumuladas, Señales, Observaciones</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- P4 Colegiado -->
+    <div class="project active">
+      <div class="project-header">
+        <span class="project-num">P4</span>
+        <span class="project-title">Jornada de Trabajo Colegiado</span>
+        <span class="badge badge-blue">↻ En preparación · 26 mar 2026</span>
+      </div>
+      <div class="project-body">
+        Jornada de 4.5 horas con 4 bloques temáticos. Ver sección completa de Colegiado.
+      </div>
+    </div>
+
+    <!-- P5 Torneo -->
+    <div class="project active">
+      <div class="project-header">
+        <span class="project-num">P5</span>
+        <span class="project-title">Torneo Interprepas BG 046</span>
+        <span class="badge badge-blue">↻ En preparación · 17 abr 2026</span>
+      </div>
+      <div class="project-body">
+        EPO 135 organiza frontón varonil y participa en fútbol y básquetbol.
+        <ul>
+          <li>Fuego olímpico: encendido del pebetero + recorrido de antorcha en el gimnasio</li>
+          <li>Frontón varonil: EPO 135 es sede — 13 participantes · Llave eliminación directa con 3 BYE</li>
+          <li>Fútbol: Eliminatorias Fut 7 · Final Fut 11 en estadio · Equipos formados</li>
+          <li>Básquetbol: equipo por armar (indicación 13 mar · Mtra. Gloria)</li>
+          <li>Coordinadores: Luis Mónico Pérez y Alfonso Osorno García (fútbol) · Erik Caballero Huerta (porristas)</li>
+          <li>Diseño: Mtra. Priscila López Tecomateco — lona del evento y etiquetas de trofeos</li>
+          <li>Costos: Medallas $35 MXN c/u · Trofeos cristal $1,000 MXN por tercia</li>
+          <li>Junta previa: 16 abr 2026 · 9:40 am · EPO 141 — entrega de cédulas, roles, llaves, costos</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- P6 Zacatlán -->
+    <div class="project pending">
+      <div class="project-header">
+        <span class="project-num">P6</span>
+        <span class="project-title">Salida Didáctica Zacatlán</span>
+        <span class="badge badge-amber">⏳ Pendiente</span>
+      </div>
+      <div class="project-body">
+        30 de abril 2026. Confirmar cuota $500 MXN. Priorizar alumnos en riesgo.
+      </div>
+    </div>
+
+    <!-- P7 MCCEMS -->
+    <div class="project paused">
+      <div class="project-header">
+        <span class="project-num">P7</span>
+        <span class="project-title">Investigación Educativa MCCEMS</span>
+        <span class="badge badge-pause">⏸ En pausa</span>
+      </div>
+      <div class="project-body">Pendiente reactivar en próxima etapa.</div>
+    </div>
+
+    <!-- P8 Meta financiera -->
+    <div class="project paused">
+      <div class="project-header">
+        <span class="project-num">P8</span>
+        <span class="project-title">Meta Financiera Personal</span>
+        <span class="badge badge-pause">⏸ En pausa</span>
+      </div>
+      <div class="project-body">
+        Meta: $1,000,000 MXN · Tasa estimada: 13% anual · Capital inicial: ~$200,000 MXN.
+      </div>
+    </div>
+
+    <!-- P9 Objeto de estudio -->
+    <div class="project paused">
+      <div class="project-header">
+        <span class="project-num">P9</span>
+        <span class="project-title">Objeto de Estudio: Dinámicas de poder en la cultura docente</span>
+        <span class="badge badge-pause">⏸ Pendiente de retomar</span>
+      </div>
+      <div class="project-body">
+        Exploración autobiográfica con rigor metodológico. Fenómenos identificados: opresor internalizado (Freire), olimpiadas del sufrimiento, hoarding del conocimiento, proyección. Enfoque relacional al estilo Montaigne. 4 preguntas generadoras abiertas.
+      </div>
+    </div>
+
+    <!-- P10 Autoformación -->
+    <div class="project done">
+      <div class="project-header">
+        <span class="project-num">P10</span>
+        <span class="project-title">Autoformación en Automatización: n8n + Claude + Telegram</span>
+        <span class="badge badge-green">✓ Concluido · 15 mar 2026</span>
+      </div>
+      <div class="project-body">
+        Aprendizaje estratégico de automatización de flujos institucionales con IA integrada. Objetivo cumplido: semáforo semanal automatizado con análisis de Claude, notificaciones vía Telegram, sin servidor ni costo adicional.
+        <ul>
+          <li>✅ Etapa 1 — Lógica de nodos, triggers y flujos de datos en n8n</li>
+          <li>✅ Etapa 2 — Flujo completo: Schedule Trigger → Google Sheets → Telegram</li>
+          <li>✅ Etapa 3 — Claude API integrado como nodo HTTP Request · Análisis por alumno</li>
+          <li>✅ Etapa 4 — Flujo institucional EPO 135: Semáforo Semanal con IA en producción</li>
+        </ul>
+        <div class="callout callout-green" style="margin-top:10px">
+          <span class="callout-icon">✓</span>
+          <span>Decisión final: implementación en Google Apps Script (sin servidor, sin costo). Los conocimientos de n8n se trasladaron íntegramente a GAS. Trigger activo: lunes 7:00 am hora CDMX.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 3. COLEGIADO ═══ -->
+<section class="section" id="colegiado">
+  <div class="section-label">Sección 3</div>
+  <h2 class="section-title">Jornada de Trabajo Colegiado</h2>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem">26 de marzo 2026 · 9:00 – ~13:40 hrs</p>
+
+  <h3 style="font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text)">Agenda del día</h3>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:1.5rem">
+    <div class="agenda-row">
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--hint);letter-spacing:0.1em">HORARIO</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--hint);letter-spacing:0.1em">BLOQUE</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--hint);letter-spacing:0.1em">RESPONSABLE</span>
+    </div>
+    <div class="agenda-row"><span class="agenda-time">9:00 – 9:10</span><span class="agenda-block">Bienvenida y encuadre</span><span class="agenda-resp">Gloria Rosiles / Fernando</span></div>
+    <div class="agenda-row"><span class="agenda-time">9:10 – 10:10</span><span class="agenda-block">T1 · Estrategia de Permanencia</span><span class="agenda-resp">Fernando</span></div>
+    <div class="agenda-row"><span class="agenda-time">10:10 – 11:00</span><span class="agenda-block">T2 · Indicadores — Semáforo parcial + test (1ª parte)</span><span class="agenda-resp">Fernando + Orientadores</span></div>
+    <div class="agenda-row"><span class="agenda-time">11:00 – 11:30</span><span class="agenda-block">☕ Break</span><span class="agenda-resp">—</span></div>
+    <div class="agenda-row"><span class="agenda-time">11:30 – 12:20</span><span class="agenda-block">T2 · Indicadores (2ª parte + acuerdos)</span><span class="agenda-resp">Fernando + Orientadores</span></div>
+    <div class="agenda-row"><span class="agenda-time">12:20 – 12:50</span><span class="agenda-block">T3 · Claude + NotebookLM</span><span class="agenda-resp">Fernando</span></div>
+    <div class="agenda-row"><span class="agenda-time">12:50 – 13:20</span><span class="agenda-block">T4 · Vive Saludable — cómics + pausas activas</span><span class="agenda-resp">Por definir</span></div>
+    <div class="agenda-row"><span class="agenda-time">13:20 – 13:40</span><span class="agenda-block">Acuerdos generales y cierre</span><span class="agenda-resp">Fernando</span></div>
+  </div>
+
+  <h3 style="font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text)">Fichas de conducción</h3>
+
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px">
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">Apertura</div>
+      <div style="font-size:13px;color:var(--muted)">Recalcar la importancia de la jornada desde el inicio. No es una reunión de trámite — hay productos concretos y cada quien sale sabiendo qué le toca.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px">
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">T1 · Estrategia de Permanencia</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6">Argumento: La deserción no es problema del alumno si no la detectamos a tiempo. Este sistema no pide más trabajo — dice exactamente qué observar y a quién reportar.<br><br>
+      · <em>Veterano (20 años):</em> Preguntarle primero qué ha visto que funciona. Conectar su respuesta con el sistema — se convierte en validador.<br>
+      · <em>"Fundadora":</em> Mencionar que el plan recoge prácticas que ya existían. Necesita continuidad, no sustitución.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px">
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">T2 · Indicadores Académicos</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6">Argumento: Los números no son para señalar — son para saber a quién acompañar y cómo.<br><br>
+      · <em>Orientadora si está:</em> Presentarla formalmente antes de que hable. Protagonismo visible reduce distracción.<br>
+      · <em>Si Gloria se la lleva:</em> No señalarlo. Continuar con Armando. Al regreso mencionar acuerdos tomados.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px">
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">T3 · Claude + NotebookLM</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6">Argumento: No es cambiar cómo enseñan — es ahorrar tiempo para concentrarse en los grupos.<br><br>
+      · <em>Novata:</em> Darle un rol en el taller — que pruebe primero o comparta pantalla.<br>
+      · <em>Veterano:</em> Anticipar resistencia con humor sin ironía. Si se va al celular, no confrontar.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px">
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">T4 · Vive Saludable</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6">Argumento: Este bloque es para ellos también. Un docente que no se cuida no puede cuidar a nadie.<br><br>
+      · <em>Movimiento clave:</em> Pedir voluntarios para coordinar pausas activas por semestre — genera compromiso real.<br>
+      · <em>Para distractores:</em> Mejor momento para recuperarlos — bloque más ligero y participativo.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px">
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">Cierre</div>
+      <div style="font-size:13px;color:var(--muted)">Cerrar con acuerdos concretos y firma. Anunciar desde el inicio que habrá firma — reduce desapariciones durante la jornada.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px">
+      <div style="font-size:13px;font-weight:500;margin-bottom:8px">Manejo de distractores</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8">
+        · <strong style="font-weight:500">Celular:</strong> Pregunta abierta + contacto visual indirecto. Si no funciona, caminar hacia ese lado.<br>
+        · <strong style="font-weight:500">Los de la comida:</strong> Anunciar desde el encuadre que el cierre requiere firma de todos.<br>
+        · <strong style="font-weight:500">Veterano que impone:</strong> Escuchar completo. "Gracias, lo anotamos." Seguir. No debatir ni ignorar.<br>
+        · <strong style="font-weight:500">"Fundadora" que interrumpe:</strong> Validar brevemente, redirigir al grupo.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4. PERMANENCIA ═══ -->
+<section class="section" id="permanencia">
+  <div class="section-label">Sección 4</div>
+  <h2 class="section-title">Estrategia de Retorno y Permanencia</h2>
+
+  <h3 style="font-size:14px;font-weight:600;margin:0 0 10px">Documentos generados</h3>
+  <table class="data-table">
+    <thead><tr><th>Documento</th><th>Archivo</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td>Plan de Acción Institucional</td><td><code>plan-permanencia-epo135-v2.docx</code></td><td>✓ Listo para firma</td></tr>
+      <tr><td>Tablero de seguimiento</td><td><code>plan-permanencia-epo135-v2.xlsx</code></td><td>✓ Activo</td></tr>
+      <tr><td>Presentación para docentes</td><td><code>presentacion-permanencia-docentes-v3.html</code></td><td>✓ Lista para colegiado</td></tr>
+      <tr><td>Semáforo semanal (form)</td><td><code>semaforo-semanal-epo135.html</code></td><td>✓ En producción</td></tr>
+      <tr><td>GAS semáforo + Claude + Telegram</td><td><code>EPO135_Semaforo_GAS.js</code></td><td>✓ En producción · 15 mar 2026</td></tr>
+      <tr><td>Fichas de riesgo (form)</td><td><code>fichas-riesgo-epo135.html</code></td><td>✓ En producción</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:14px;font-weight:600;margin:1.5rem 0 10px">Semáforo de riesgo</h3>
+  <div class="semaforo-row"><span>🟢</span><span style="font-weight:500;font-size:13px">Verde</span><span style="color:var(--muted);font-size:13px">Sin riesgo</span></div>
+  <div class="semaforo-row"><span>🟡</span><span style="font-weight:500;font-size:13px">Amarillo</span><span style="color:var(--muted);font-size:13px">3–5 faltas o 1 señal</span></div>
+  <div class="semaforo-row"><span>🔴</span><span style="font-weight:500;font-size:13px">Rojo</span><span style="color:var(--muted);font-size:13px">6+ faltas o 2+ señales</span></div>
+
+  <h3 style="font-size:14px;font-weight:600;margin:1.5rem 0 10px">Protocolo de roles</h3>
+  <table class="data-table">
+    <thead><tr><th>Rol</th><th>Responsable</th><th>Plazo</th></tr></thead>
+    <tbody>
+      <tr><td>Detecta y reporta semáforo</td><td>Docente de grupo</td><td>Cada lunes</td></tr>
+      <tr><td>Activa ficha y asigna</td><td>Fernando Cortés (Subdirector)</td><td>Mismo día</td></tr>
+      <tr><td>Acompañamiento emocional/familiar</td><td>Nallely Rojas / Armando Villalpando</td><td>48 horas</td></tr>
+      <tr><td>Seguimiento académico</td><td>Docente tutor asignado</td><td>48 horas</td></tr>
+      <tr><td>Casos rojos y acuerdos formales</td><td>Fernando Cortés / Gloria Rosiles</td><td>Inmediato</td></tr>
+      <tr><td>Cierre de ficha y reporte</td><td>Fernando Cortés</td><td>Primer lunes del mes</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:14px;font-weight:600;margin:1.5rem 0 10px">Indicadores meta del ciclo</h3>
+  <table class="data-table">
+    <thead><tr><th>Indicador</th><th>Meta</th></tr></thead>
+    <tbody>
+      <tr><td>Alumnos amarillo/rojo</td><td>−30%</td></tr>
+      <tr><td>Fichas cerradas con éxito</td><td>70%</td></tr>
+      <tr><td>Asistencia por grupo</td><td>≥90%</td></tr>
+      <tr><td>Bajas voluntarias</td><td>−25%</td></tr>
+      <tr><td>Participación extracurricular</td><td>≥60%</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:14px;font-weight:600;margin:1.5rem 0 10px">Calendario de implementación</h3>
+  <table class="data-table">
+    <thead><tr><th>Periodo</th><th>Acción principal</th></tr></thead>
+    <tbody>
+      <tr><td>Marzo 2026</td><td>Activar semáforo, capacitar docentes en colegiado, abrir primeras fichas</td></tr>
+      <tr><td>Abril 2026</td><td>1ª reunión seguimiento, Torneo Interprepas, Salida Zacatlán</td></tr>
+      <tr><td>Mayo 2026</td><td>2ª reunión, reconocimiento logros, feria de ciencias</td></tr>
+      <tr><td>Junio 2026</td><td>3ª reunión, cierre fichas, reporte a Supervisión</td></tr>
+      <tr><td>Julio 2026</td><td>Evaluación final, ajustes para ciclo siguiente</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══ 5. EQUIPO ═══ -->
+<section class="section" id="equipo">
+  <div class="section-label">Sección 5</div>
+  <h2 class="section-title">Equipo EPO 135</h2>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem">186 estudiantes · 6 semestres</p>
+
+  <h3 style="font-size:14px;font-weight:600;margin-bottom:10px">Dirección y orientación</h3>
+  <div class="team-grid" style="margin-bottom:1.5rem">
+    <div class="team-card"><div class="team-role">Directora</div>Mtra. Gloria Rosiles Estrada</div>
+    <div class="team-card"><div class="team-role">Subdirector</div>Profr. Fernando Felipe Cortés Reyes</div>
+    <div class="team-card"><div class="team-role">Supervisora BG 046</div>Mtra. Gabriela Lara Juárez</div>
+    <div class="team-card"><div class="team-role">Orientador</div>Nallely Anabel Rojas Gómez</div>
+    <div class="team-card"><div class="team-role">Orientador</div>Armando Villalpando Vázquez</div>
+  </div>
+
+  <h3 style="font-size:14px;font-weight:600;margin-bottom:10px">Docentes</h3>
+  <div class="team-grid">
+    <div class="team-card">Alfonso Osorno García</div>
+    <div class="team-card">Ana Lidia Pineda González</div>
+    <div class="team-card">César Andrés Ramírez Mendoza</div>
+    <div class="team-card">Darling Jennyfer Quintero Palma</div>
+    <div class="team-card">Erik Caballero Huerta</div>
+    <div class="team-card">Erika Marbella Elizalde Palacios</div>
+    <div class="team-card">Joaquín Eladio Mendoza Jiménez</div>
+    <div class="team-card">José Emmanuel Hernández Calderón</div>
+    <div class="team-card">Juan Carlos Morales Morales</div>
+    <div class="team-card">Kevin Simón Reyes Lemus</div>
+    <div class="team-card">Liliana Marlyn Figueroa Ibarra</div>
+    <div class="team-card">Luis Mónico Pérez</div>
+    <div class="team-card">Marcos Martínez Bolaños</div>
+    <div class="team-card">María Concepción Gurrusquieta Navarro</div>
+    <div class="team-card">Minerva Lazcano de la Luz</div>
+    <div class="team-card">Paulina Sánchez Domínguez</div>
+    <div class="team-card">Priscila López Tecomateco</div>
+    <div class="team-card">Verónica Rodríguez Ambrosio</div>
+    <div class="team-card">Yaina Ivanova Rodríguez Sánchez</div>
+  </div>
+</section>
+
+<!-- ═══ 6. INFRAESTRUCTURA ═══ -->
+<section class="section" id="infraestructura">
+  <div class="section-label">Sección 6</div>
+  <h2 class="section-title">Infraestructura Técnica</h2>
+
+  <h3 style="font-size:14px;font-weight:600;margin-bottom:10px">Recursos digitales EPO 135</h3>
+  <table class="data-table">
+    <thead><tr><th>Recurso</th><th>Detalle</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td>Sitio web</td><td>epo135subdireccion.weebly.com</td><td>✓ Activo</td></tr>
+      <tr><td>Modelo IA</td><td>claude-sonnet-4-20250514</td><td>✓ En uso</td></tr>
+      <tr><td>GAS — Generador exámenes</td><td>Endpoint /exec activo</td><td>✓ Producción</td></tr>
+      <tr><td>GAS — Fichas de riesgo</td><td>Endpoint /exec activo</td><td>✓ Producción</td></tr>
+      <tr><td>GAS — Semáforo + Claude + Telegram</td><td>Trigger lunes 7:00 am CDMX</td><td>✓ Producción · 15 mar 2026</td></tr>
+      <tr><td>Google Sheet — Fichas</td><td>ID en resguardo seguro</td><td>✓ Activo</td></tr>
+      <tr><td>Google Sheet — Semáforo</td><td>Hoja "Reportes" · 10 columnas</td><td>✓ Activo</td></tr>
+      <tr><td>Telegram Bot EPO 135</td><td>Token en resguardo · Chat ID configurado</td><td>✓ Activo · 15 mar 2026</td></tr>
+      <tr><td>API Key Anthropic</td><td>En resguardo seguro — no almacenar aquí</td><td>✓ Activa</td></tr>
+      <tr><td>n8n.io Cloud</td><td>Trial 14 días — vence 27 mar 2026</td><td>⚠ Exportar flujos antes del 27 mar</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:14px;font-weight:600;margin:1.5rem 0 10px">Correcciones aplicadas</h3>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+    <div class="corr-row" style="background:var(--surface2)">
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--hint);letter-spacing:0.1em">FECHA</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--hint);letter-spacing:0.1em">SISTEMA</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--hint);letter-spacing:0.1em">CORRECCIÓN</span>
+    </div>
+    <div class="corr-row">
+      <span class="corr-date">11/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">GAS Generador exámenes</span>
+      <span style="font-size:13px;color:var(--muted)">Eliminado <code>decodeURIComponent()</code> en <code>doGet</code> — causaba URIError con prompts largos</span>
+    </div>
+    <div class="corr-row">
+      <span class="corr-date">15/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">GAS Semáforo</span>
+      <span style="font-size:13px;color:var(--muted)">Corregido <code>everyWeekOn()</code> → <code>onWeekDay()</code> + <code>atHour()</code> — método inexistente en la API de ScriptApp</span>
+    </div>
+  </div>
+
+  <h3 style="font-size:14px;font-weight:600;margin:1.5rem 0 10px">Arquitectura del flujo activo</h3>
+  <code class="mono">Google Sheets (Semáforo / Reportes)
+  ↓  SpreadsheetApp.openById()
+GAS ejecutarSemaforo()  [Trigger: lunes 7:00 am CDMX]
+  ↓  UrlFetchApp.fetch() → api.anthropic.com/v1/messages
+Claude Sonnet (claude-sonnet-4-20250514)
+  ↓  content[0].text → recomendación por alumno
+Telegram Bot EPO 135
+  ↓  api.telegram.org/bot{TOKEN}/sendMessage
+Subdirector recibe notificación en Telegram</code>
+</section>
+
+<!-- ═══ 7. PERFIL ═══ -->
+<section class="section" id="perfil">
+  <div class="section-label">Sección 7</div>
+  <h2 class="section-title">Perfil — Fernando Felipe Cortés Reyes</h2>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1rem">Subdirector Escolar · EPO 135 · Río Frío de Juárez, Ixtapaluca</p>
+
+  <blockquote class="quote">"Me gusta aportar a los docentes recursos que mejoren su práctica o que les faciliten el trabajo, para que tengan más tiempo y energía para disfrutar sus clases."</blockquote>
+
+  <h3 style="font-size:14px;font-weight:600;margin:1.5rem 0 10px">Exploración tecnológica actual</h3>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)">
+    <li style="display:flex;gap:8px"><span style="color:var(--green)">●</span> Herramienta activa: Claude.ai</li>
+    <li style="display:flex;gap:8px"><span style="color:var(--green)">●</span> Herramienta activa: NotebookLM</li>
+    <li style="display:flex;gap:8px"><span style="color:var(--green)">●</span> Proyecto activo: Optimización de tutoría</li>
+    <li style="display:flex;gap:8px"><span style="color:var(--green)">●</span> Automatización institucional: GAS + Claude + Telegram (completado 15 mar 2026)</li>
+  </ul>
+
+  <h3 style="font-size:14px;font-weight:600;margin:1.5rem 0 10px">Actividad física y deportes</h3>
+  <table class="data-table">
+    <thead><tr><th>Disciplina</th><th>Detalle</th></tr></thead>
+    <tbody>
+      <tr><td>Karate</td><td>Cinta negra · 7 años sin practicar</td></tr>
+      <tr><td>Running</td><td>5–7 km los fines de semana</td></tr>
+      <tr><td>Ciclismo</td><td>Aficionado activo</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:14px;font-weight:600;margin:1.5rem 0 10px">Seguimiento deportivo</h3>
+
+  <div class="sport-card">
+    <div class="sport-title">🚴 Ciclismo — Isaac del Toro</div>
+    <div class="sport-body">
+      Fan declarado (UAE Team Emirates). Seguimiento activo de toda su temporada.<br><br>
+      <strong style="font-weight:500">2025:</strong> 13 victorias · 2° Giro de Italia · 10 etapas con maglia rosa · Ganó E17 en el Mortirolo<br>
+      <strong style="font-weight:500">2026:</strong> Campeón UAE Tour (3 etapas) · 3° Strade Bianche · Campeón Tirreno-Adriático (ganó E6 en Camerino)<br><br>
+      1° mexicano en ganar la Tirreno-Adriático · 7° ciclista más joven en 25 victorias WorldTour
+    </div>
+  </div>
+
+  <div class="sport-card">
+    <div class="sport-title">🏈 NFL — Buffalo Bills</div>
+    <div class="sport-body">
+      Fan declarado. Seguimiento activo de draft, fichajes y temporada.<br><br>
+      <strong style="font-weight:500">T2025:</strong> 12-5 · Eliminados en Divisional vs Denver (OT 30-33) · McDermott despedido<br>
+      <strong style="font-weight:500">2026:</strong> Nueva era con HC Joe Brady · +Bradley Chubb, +DJ Moore, +Dawson Knox (ext) · Josh Allen reestructurado (+$12M cap)<br><br>
+      Primera temporada en el nuevo Highmark Stadium · Draft Pick #26
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <p>Bitácora EPO 135 · Fernando Felipe Cortés Reyes · Subdirector Escolar</p>
+  <p style="margin-top:4px">Actualizado: 15 de marzo de 2026 · Generado con Claude</p>
+</footer>
+
+</body>
+</html>
