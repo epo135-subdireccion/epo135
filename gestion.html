@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bitácora EPO 135 · Fernando Cortés Reyes</title>
+<title>Gestión EPO 135 · Fernando Cortés Reyes</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -474,8 +474,8 @@
 <!-- HEADER -->
 <header class="site-header">
   <div class="header-inner">
-    <div class="header-school">EPO 135 · Río Frío de Juárez, Ixtapaluca · BG 046</div>
-    <h1 class="header-title">Bitácora de gestión<br><em>Fernando Felipe Cortés Reyes</em></h1>
+    <div class="header-school" style="display:flex;justify-content:space-between;align-items:center"><a href="index.html" style="color:inherit;text-decoration:none;font-weight:500">← Volver al sitio EPO 135</a><span style="opacity:.5">Uso interno · No público</span></div>
+    <h1 class="header-title">Gestión escolar<br><em>Fernando Felipe Cortés Reyes</em></h1>
     <p class="header-sub">Subdirector Escolar · 186 estudiantes · 6 semestres</p>
     <div class="header-meta">
       <span class="meta-item"><span class="meta-dot"></span>Actualizado: 20 de marzo de 2026</span>
@@ -488,13 +488,14 @@
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#pendientes" class="nav-item">Pendientes</a>
+    <a href="index.html" class="nav-item" style="color:var(--accent);font-weight:500">← Sitio</a><a href="#pendientes" class="nav-item">Pendientes</a>
     <a href="#proyectos" class="nav-item">Proyectos</a>
     <a href="#colegiado" class="nav-item">Colegiado</a>
     <a href="#permanencia" class="nav-item">Permanencia</a>
     <a href="#equipo" class="nav-item">Equipo</a>
     <a href="#infraestructura" class="nav-item">Infraestructura</a>
     <a href="#perfil" class="nav-item">Perfil</a>
+    <a href="#sitio" class="nav-item">Sitio web</a>
   </div>
 </nav>
 
@@ -1022,11 +1023,170 @@ Subdirector recibe notificación en Telegram</code>
   </div>
 </section>
 
+
+<!-- ═══ 8. SITIO WEB ═══ -->
+<section class="section" id="sitio">
+  <div class="section-label">Sección 8</div>
+  <h2 class="section-title">Sitio web EPO 135 — Arquitectura y decisiones</h2>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem">Registro de la arquitectura del sitio público y las decisiones de diseño tomadas durante su construcción.</p>
+
+  <h3 style="font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text)">Arquitectura actual del sitio</h3>
+
+  <svg viewBox="0 0 680 370" width="100%" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:1.5rem">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="#9c9890" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+
+    <!-- index.html — nodo raíz -->
+    <g>
+      <rect x="240" y="24" width="200" height="52" rx="8" fill="#eef4fb" stroke="#a8c4e0" stroke-width="1"/>
+      <text x="340" y="45" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#1a3a5c" font-weight="500">index.html</text>
+      <text x="340" y="61" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#6b6760">Inicio · Anuncios · Calendario</text>
+    </g>
+
+    <!-- padres.html -->
+    <g>
+      <rect x="40" y="148" width="168" height="52" rx="8" fill="#fef9ec" stroke="#f0d080" stroke-width="1"/>
+      <text x="124" y="169" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#7a4f00" font-weight="500">padres.html</text>
+      <text x="124" y="185" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#6b6760">Horarios · Trámites · Orientación</text>
+    </g>
+
+    <!-- docentes-snb.html -->
+    <g>
+      <rect x="256" y="148" width="168" height="52" rx="8" fill="#f0eef8" stroke="#c4bce8" stroke-width="1"/>
+      <text x="340" y="169" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#4a3d8b" font-weight="500">docentes-snb.html</text>
+      <text x="340" y="185" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#6b6760">MCCEMS · Rasgos · Acuerdos</text>
+    </g>
+
+    <!-- recursos.html -->
+    <g>
+      <rect x="472" y="148" width="168" height="52" rx="8" fill="#edf7f2" stroke="#a8d9be" stroke-width="1"/>
+      <text x="556" y="169" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#1a6b3c" font-weight="500">recursos.html</text>
+      <text x="556" y="185" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#6b6760">Drive · Documentos · PDFs</text>
+    </g>
+
+    <!-- gestion.html (este archivo) -->
+    <g>
+      <rect x="256" y="290" width="168" height="52" rx="8" fill="#f4f2ee" stroke="#d4cfc6" stroke-width="1"/>
+      <text x="340" y="311" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#6b6760" font-weight="500">gestion.html</text>
+      <text x="340" y="327" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#9c9890">Uso interno · No público</text>
+    </g>
+
+    <!-- Flechas index → páginas -->
+    <line x1="280" y1="76" x2="157" y2="148" stroke="#9c9890" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="320" y1="76" x2="320" y2="148" stroke="#9c9890" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="380" y1="76" x2="523" y2="148" stroke="#9c9890" stroke-width="1" marker-end="url(#arr)"/>
+
+    <!-- Flechas retorno → index (punteadas) -->
+    <line x1="124" y1="200" x2="270" y2="290" stroke="#d4cfc6" stroke-width="1" stroke-dasharray="4 3"/>
+    <line x1="340" y1="200" x2="340" y2="290" stroke="#d4cfc6" stroke-width="1" stroke-dasharray="4 3"/>
+    <line x1="556" y1="200" x2="410" y2="290" stroke="#d4cfc6" stroke-width="1" stroke-dasharray="4 3"/>
+
+    <!-- Leyenda -->
+    <line x1="48" y1="340" x2="72" y2="340" stroke="#9c9890" stroke-width="1" marker-end="url(#arr)"/>
+    <text x="78" y="344" font-family="Inter,sans-serif" font-size="10" fill="#9c9890">Navegación directa</text>
+    <line x1="180" y1="340" x2="204" y2="340" stroke="#d4cfc6" stroke-width="1" stroke-dasharray="4 3"/>
+    <text x="210" y="344" font-family="Inter,sans-serif" font-size="10" fill="#9c9890">Retorno a index desde todas las páginas</text>
+  </svg>
+
+  <h3 style="font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text)">Decisiones de diseño — Registro</h3>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:1.5rem">
+
+    <div class="corr-row" style="background:var(--surface2)">
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--hint);letter-spacing:0.1em">FECHA</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--hint);letter-spacing:0.1em">DECISIÓN</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--hint);letter-spacing:0.1em">RAZONAMIENTO</span>
+    </div>
+
+    <div class="corr-row">
+      <span class="corr-date">20/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">Paleta verde/azul/dorado</span>
+      <span style="font-size:13px;color:var(--muted)">Verde institucional (EPO), azul para datos y navbar secundario, dorado como acento de padres. Colores con suficiente contraste para cumplir accesibilidad básica.</span>
+    </div>
+
+    <div class="corr-row">
+      <span class="corr-date">20/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">Fuentes: Fraunces + Outfit + DM Mono</span>
+      <span style="font-size:13px;color:var(--muted)">Fraunces (serif) para títulos con personalidad institucional. Outfit (sans) para cuerpo legible. DM Mono para datos, fechas y etiquetas técnicas.</span>
+    </div>
+
+    <div class="corr-row">
+      <span class="corr-date">20/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">Logo EPO 135 en base64</span>
+      <span style="font-size:13px;color:var(--muted)">Logo embebido directamente en el HTML para evitar dependencia de servidor. Fondo negro original procesado para hacerlo transparente con Pillow/Python.</span>
+    </div>
+
+    <div class="corr-row">
+      <span class="corr-date">20/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">Color hero por sección</span>
+      <span style="font-size:13px;color:var(--muted)">Azul/verde = index general. Dorado = padres de familia. Morado = área docente (MCCEMS, recursos). Verde medio = recursos públicos. Facilita orientación visual inmediata.</span>
+    </div>
+
+    <div class="corr-row">
+      <span class="corr-date">20/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">Sección padres: solo información pública</span>
+      <span style="font-size:13px;color:var(--muted)">Decisión deliberada: sin fichas individuales, sin celulares de docentes/orientadores, sin datos de otros alumnos. Contacto solo presencial. Horarios de atención mostrados sin nombres de celular.</span>
+    </div>
+
+    <div class="corr-row">
+      <span class="corr-date">20/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">Horarios de clase en padres.html</span>
+      <span style="font-size:13px;color:var(--muted)">Información pública: cualquier padre puede ver cualquier grupo. Se muestran los 6 grupos con selector interactivo. Nombre completo del catedrático incluido según decisión de Fernando.</span>
+    </div>
+
+    <div class="corr-row">
+      <span class="corr-date">20/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">Retorno a index desde todas las páginas</span>
+      <span style="font-size:13px;color:var(--muted)">Logo siempre enlaza a index.html. Topbar incluye "Inicio → index.html". Nav repite el enlace. Regla establecida: ninguna página hija queda sin retorno explícito al inicio.</span>
+    </div>
+
+    <div class="corr-row">
+      <span class="corr-date">20/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">Salida Zacatlán suspendida</span>
+      <span style="font-size:13px;color:var(--muted)">Suspendida por razones de seguridad (20/03/2026). No comunicar motivo específico públicamente. Proyecto P6 marcado como cerrado en gestión.</span>
+    </div>
+
+    <div class="corr-row">
+      <span class="corr-date">20/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">Costos de medallas/trofeos del torneo</span>
+      <span style="font-size:13px;color:var(--muted)">Anotación de minuta interna. Eliminada del sitio público y de gestión por ser información no pública. Solo persiste en actas de reunión físicas.</span>
+    </div>
+
+    <div class="corr-row">
+      <span class="corr-date">20/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">recursos.html — acceso público</span>
+      <span style="font-size:13px;color:var(--muted)">Recursos como Drive de normatividad, programas y planeación son de acceso público. PDFs de agenda y documentos adicionales también públicos. Sin restricción de acceso.</span>
+    </div>
+
+    <div class="corr-row">
+      <span class="corr-date">20/03/2026</span>
+      <span style="font-size:13px;color:var(--text)">gestion.html — uso interno</span>
+      <span style="font-size:13px;color:var(--muted)">Antes llamado bitácora. Renombrado a gestión. No se enlaza desde el sitio público. Acceso directo por URL. Contiene fichas sensibles, datos de seguimiento y notas de minuta.</span>
+    </div>
+
+  </div>
+
+  <h3 style="font-size:14px;font-weight:600;margin-bottom:10px;color:var(--text)">Páginas del sitio — Estado actual</h3>
+  <table class="data-table">
+    <thead><tr><th>Archivo</th><th>Título</th><th>Audiencia</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td><code>index.html</code></td><td>Inicio EPO 135</td><td>Pública</td><td>✓ En desarrollo activo</td></tr>
+      <tr><td><code>padres.html</code></td><td>Para padres de familia</td><td>Pública</td><td>✓ Primera versión lista</td></tr>
+      <tr><td><code>docentes-snb.html</code></td><td>SNB · MCCEMS</td><td>Pública (docentes)</td><td>✓ Primera versión lista</td></tr>
+      <tr><td><code>recursos.html</code></td><td>Recursos públicos</td><td>Pública</td><td>✓ Primera versión lista</td></tr>
+      <tr><td><code>gestion.html</code></td><td>Gestión escolar</td><td>Interna</td><td>✓ Activo · No enlazado públicamente</td></tr>
+    </tbody>
+  </table>
+
+</section>
+
 </main>
 
 <footer class="footer">
-  <p>Bitácora EPO 135 · Fernando Felipe Cortés Reyes · Subdirector Escolar</p>
-  <p style="margin-top:4px">Actualizado: 15 de marzo de 2026 · Generado con Claude</p>
+  <p>Gestión EPO 135 · Fernando Felipe Cortés Reyes · Subdirector Escolar · <a href="index.html" style="color:inherit">← Sitio público</a></p>
+  <p style="margin-top:4px">Actualizado: 20 de marzo de 2026 · Generado con Claude · <a href="index.html" style="color:inherit">← Volver al sitio</a></p>
 </footer>
 
 </body>

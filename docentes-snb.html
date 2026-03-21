@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EPO 135 · Río Frío de Juárez</title>
+<title>SNB · MCCEMS · EPO 135</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -13,7 +13,6 @@
   --verde-palo: #e8f5ed;
   --azul: #0d3b6e;
   --azul-med: #1a5ca0;
-  --azul-claro: #2e80d8;
   --azul-palo: #e6f0fb;
   --blanco: #ffffff;
   --gris-fondo: #f5f7f6;
@@ -22,713 +21,193 @@
   --texto-suave: #3d5248;
   --dorado: #c8860a;
   --dorado-palo: #fef6e4;
-  --rojo: #c0392b;
-  --rojo-palo: #fdecea;
   --morado: #5c3a9e;
   --morado-palo: #f0ecfb;
+  --morado-borde: #c4b8e8;
 }
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: 'Outfit', sans-serif;
-  background: var(--gris-fondo);
-  color: var(--texto);
-  font-size: 15px;
-  line-height: 1.6;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: "Outfit", sans-serif; background: var(--gris-fondo); color: var(--texto); font-size: 15px; line-height: 1.6; }
 
 /* ── TOPBAR ── */
-.topbar {
-  background: var(--azul);
-  color: #fff;
-  font-size: 11.5px;
-  padding: 6px 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  letter-spacing: 0.03em;
-}
-.topbar a { color: rgba(255,255,255,0.75); text-decoration: none; }
-.topbar a:hover { color: #fff; }
+.topbar { background: var(--azul); color:#fff; font-size:11.5px; padding:6px 2rem; display:flex; justify-content:space-between; align-items:center; letter-spacing:.03em; }
+.topbar a { color:rgba(255,255,255,.75); text-decoration:none; }
+.topbar a:hover { color:#fff; }
 
 /* ── NAVBAR ── */
-.navbar {
-  background: var(--verde);
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
-}
-.nav-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 62px;
-}
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-}
-.nav-logo-icon {
-  width: 40px;
-  height: 40px;
-  background: var(--blanco);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.nav-logo-icon svg { width: 26px; height: 26px; }
-.nav-logo-text { line-height: 1.1; }
-.nav-logo-title {
-  font-family: 'Fraunces', serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: #fff;
-  display: block;
-}
-.nav-logo-sub {
-  font-size: 10.5px;
-  color: rgba(255,255,255,0.7);
-  font-family: 'DM Mono', monospace;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  list-style: none;
-}
-.nav-links a {
-  color: rgba(255,255,255,0.85);
-  text-decoration: none;
-  font-size: 13.5px;
-  font-weight: 500;
-  padding: 6px 14px;
-  border-radius: 6px;
-  transition: background .15s, color .15s;
-}
-.nav-links a:hover, .nav-links a.active {
-  background: rgba(255,255,255,0.15);
-  color: #fff;
-}
-.btn-padres {
-  background: var(--dorado) !important;
-  color: #fff !important;
-  font-weight: 600 !important;
-  padding: 7px 16px !important;
-}
-.btn-padres:hover { background: #a86e06 !important; }
+.navbar { background:var(--verde); position:sticky; top:0; z-index:200; box-shadow:0 2px 12px rgba(0,0,0,.18); }
+.nav-inner { max-width:1100px; margin:0 auto; padding:0 2rem; display:flex; align-items:center; justify-content:space-between; height:62px; }
+.nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.nav-logo-icon { width:44px; height:44px; background:transparent; border-radius:0; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.nav-logo-title { font-family:"Fraunces",serif; font-size:16px; font-weight:700; color:#fff; display:block; }
+.nav-logo-sub { font-size:10.5px; color:rgba(255,255,255,.7); font-family:"DM Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
+.nav-links { display:flex; align-items:center; gap:4px; list-style:none; }
+.nav-links a { color:rgba(255,255,255,.85); text-decoration:none; font-size:13.5px; font-weight:500; padding:6px 14px; border-radius:6px; transition:background .15s,color .15s; }
+.nav-links a:hover, .nav-links a.active { background:rgba(255,255,255,.15); color:#fff; }
+.btn-docentes { background:var(--morado) !important; color:#fff !important; font-weight:600 !important; padding:7px 16px !important; }
 
-/* ── HERO CAROUSEL ── */
-.hero {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background: var(--azul);
-}
-.slides-wrapper {
-  display: flex;
-  transition: transform .55s cubic-bezier(.4,0,.2,1);
-}
-.slide {
-  min-width: 100%;
-  min-height: 420px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 3rem 4rem;
+/* ── HERO ── */
+.hero-snb {
+  background: linear-gradient(135deg, #3a1a6e 0%, #1a0d3b 100%);
+  padding: 3.5rem 2rem 3rem;
   position: relative;
   overflow: hidden;
 }
-.slide-1 { background: linear-gradient(135deg, #0d3b6e 60%, #0f5e2f); }
-.slide-2 { background: linear-gradient(135deg, #0f5e2f 60%, #c8860a 120%); }
-.slide-3 { background: linear-gradient(135deg, #7a1020 60%, #0d3b6e); }
-.slide-4 { background: linear-gradient(135deg, #0d4a3b 60%, #c8860a 120%); }
+.hero-snb::before {
+  content:"";
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(92,58,158,.35) 0%, transparent 60%);
+}
+.hero-snb-inner { max-width:1100px; margin:0 auto; position:relative; z-index:1; display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+.hero-snb-kicker { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.65); margin-bottom:.6rem; }
+.hero-snb-title { font-family:"Fraunces",serif; font-size:clamp(1.6rem,3vw,2.4rem); font-weight:700; color:#fff; line-height:1.1; margin-bottom:.7rem; }
+.hero-snb-title em { font-style:italic; font-weight:400; opacity:.85; }
+.hero-snb-desc { font-size:14px; color:rgba(255,255,255,.75); max-width:540px; line-height:1.65; }
+.hero-chips { display:flex; gap:8px; flex-wrap:wrap; margin-top:1.2rem; }
+.hero-chip { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); color:#fff; font-size:12px; padding:5px 12px; border-radius:20px; font-weight:500; }
+.hero-deco { font-family:"Fraunces",serif; font-size:5rem; font-weight:700; color:rgba(255,255,255,.07); line-height:1; flex-shrink:0; }
 
-.slide-deco {
-  position: absolute;
-  right: 0; top: 0; bottom: 0;
-  width: 45%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.09;
-}
-.slide-deco svg { width: 100%; height: 100%; }
+/* ── ANCLA NAV ── */
+.ancla-nav { background:var(--blanco); border-bottom:1px solid var(--gris-borde); position:sticky; top:62px; z-index:100; }
+.ancla-inner { max-width:1100px; margin:0 auto; padding:0 2rem; display:flex; gap:0; overflow-x:auto; }
+.ancla-item { padding:.8rem 1.1rem; font-size:12.5px; color:var(--texto-suave); text-decoration:none; white-space:nowrap; border-bottom:2px solid transparent; font-weight:500; transition:color .15s,border-color .15s; }
+.ancla-item:hover { color:var(--morado); border-color:var(--morado-borde); }
+.ancla-item.active { color:var(--morado); border-color:var(--morado); }
 
-.slide-content { position: relative; z-index: 2; max-width: 600px; }
-.slide-tag {
-  display: inline-block;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
-  border: 1px solid rgba(255,255,255,0.25);
-  padding: 4px 12px;
-  border-radius: 20px;
-  margin-bottom: 1rem;
-}
-.slide-title {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.15;
-  margin-bottom: 0.8rem;
-}
-.slide-desc {
-  font-size: 15px;
-  color: rgba(255,255,255,0.8);
-  line-height: 1.65;
-  margin-bottom: 1.5rem;
-  max-width: 480px;
-}
-.slide-btn {
-  display: inline-block;
-  background: var(--blanco);
-  color: var(--azul);
-  font-weight: 600;
-  font-size: 13px;
-  padding: 10px 22px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: transform .15s, box-shadow .15s;
-}
-.slide-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
-.slide-btn-alt {
-  display: inline-block;
-  border: 1.5px solid rgba(255,255,255,0.5);
-  color: #fff;
-  font-weight: 500;
-  font-size: 13px;
-  padding: 10px 22px;
-  border-radius: 8px;
-  text-decoration: none;
-  margin-left: 10px;
-  transition: background .15s;
-}
-.slide-btn-alt:hover { background: rgba(255,255,255,0.1); }
+/* ── MAIN ── */
+.page-main { max-width:1100px; margin:0 auto; padding:2.5rem 2rem 5rem; }
 
-/* carousel controls */
-.carousel-controls {
-  position: absolute;
-  bottom: 1.2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-  z-index: 10;
-}
-.dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.35);
-  cursor: pointer;
-  transition: background .2s, transform .2s;
-  border: none;
-  outline: none;
-}
-.dot.active { background: #fff; transform: scale(1.3); }
-.carousel-prev, .carousel-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.25);
-  color: #fff;
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background .15s;
-}
-.carousel-prev { left: 1.2rem; }
-.carousel-next { right: 1.2rem; }
-.carousel-prev:hover, .carousel-next:hover { background: rgba(255,255,255,0.25); }
+/* ── SECTION ── */
+.sec-header { display:flex; align-items:center; gap:10px; margin-bottom:1.2rem; }
+.sec-tag { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--morado); font-weight:500; white-space:nowrap; }
+.sec-line { flex:1; height:1px; background:var(--gris-borde); }
+.sec-title { font-family:"Fraunces",serif; font-size:1.35rem; font-weight:600; color:var(--texto); margin-bottom:.4rem; }
+.sec-sub { font-size:13px; color:var(--texto-suave); margin-bottom:1.4rem; line-height:1.6; }
 
-/* ── PADRES BANNER ── */
-.padres-banner {
-  background: var(--dorado);
-  padding: 0;
+/* ── RASGOS ── */
+.rasgos-intro {
+  background:var(--morado-palo);
+  border:1px solid var(--morado-borde);
+  border-radius:12px;
+  padding:16px 20px;
+  font-size:13px;
+  color:var(--morado);
+  margin-bottom:1.5rem;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  line-height:1.6;
 }
-.padres-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  min-height: 56px;
+.rasgos-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:2.5rem; }
+.rasgo-card {
+  background:var(--blanco);
+  border:1px solid var(--gris-borde);
+  border-radius:12px;
+  padding:18px 18px 16px;
+  transition:box-shadow .15s, transform .15s;
+  position:relative;
+  overflow:hidden;
 }
-.padres-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.8);
-  white-space: nowrap;
+.rasgo-card:hover { box-shadow:0 4px 18px rgba(0,0,0,.08); transform:translateY(-2px); }
+.rasgo-card::before {
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0;
+  height:3px;
+  background:var(--morado);
+  opacity:.6;
 }
-.padres-links {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  padding: 10px 0;
+.rasgo-num {
+  font-family:"DM Mono",monospace;
+  font-size:10px;
+  letter-spacing:.15em;
+  color:var(--morado);
+  font-weight:500;
+  margin-bottom:8px;
+  text-transform:uppercase;
 }
-.padres-link {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(255,255,255,0.18);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: #fff;
-  font-size: 12.5px;
-  font-weight: 500;
-  padding: 6px 14px;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: background .15s;
+.rasgo-texto {
+  font-size:13px;
+  color:var(--texto-suave);
+  line-height:1.65;
 }
-.padres-link:hover { background: rgba(255,255,255,0.3); }
-.padres-link svg { width: 14px; height: 14px; }
+.rasgo-texto strong { color:var(--texto); font-weight:600; }
 
-/* ── MAIN CONTENT ── */
-.main {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2.5rem 2rem 4rem;
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 2rem;
-  align-items: start;
-}
+/* color por área temática */
+.rasgo-card.area-humanista::before { background:var(--morado); }
+.rasgo-card.area-ciudadana::before { background:var(--azul-med); }
+.rasgo-card.area-bienestar::before { background:var(--verde-med); }
+.rasgo-card.area-digital::before { background:var(--dorado); }
+.rasgo-card.area-ciencia::before { background:#c0392b; }
 
-/* ── SECTION HEADER ── */
-.sec-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 1.2rem;
+/* ── ACUERDOS ── */
+.acuerdos-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:2.5rem; }
+.acuerdo-card {
+  background:var(--blanco);
+  border:1px solid var(--gris-borde);
+  border-radius:12px;
+  padding:20px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  transition:box-shadow .15s;
 }
-.sec-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--verde-med);
-  font-weight: 500;
+.acuerdo-card:hover { box-shadow:0 4px 16px rgba(0,0,0,.08); }
+.acuerdo-icon {
+  width:44px; height:44px;
+  border-radius:10px;
+  background:var(--morado-palo);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
 }
-.sec-line { flex: 1; height: 1px; background: var(--gris-borde); }
-.sec-title {
-  font-family: 'Fraunces', serif;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: var(--texto);
-  margin-bottom: 1rem;
+.acuerdo-titulo { font-size:13.5px; font-weight:600; color:var(--texto); margin-bottom:4px; line-height:1.4; }
+.acuerdo-desc { font-size:12px; color:var(--texto-suave); line-height:1.55; margin-bottom:10px; }
+.acuerdo-btn {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:var(--morado);
+  color:#fff;
+  font-size:12px;
+  font-weight:500;
+  padding:6px 14px;
+  border-radius:6px;
+  text-decoration:none;
+  transition:background .15s;
 }
+.acuerdo-btn:hover { background:#4a2d8a; }
 
-/* ── ANUNCIOS GRID ── */
-.anuncios-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 2.5rem;
+/* ── CONTEXTO CARD ── */
+.contexto-card {
+  background:var(--blanco);
+  border:1px solid var(--gris-borde);
+  border-radius:12px;
+  padding:24px;
+  margin-bottom:2.5rem;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2rem;
 }
-.anuncio {
-  background: var(--blanco);
-  border: 1px solid var(--gris-borde);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform .15s, box-shadow .15s;
-  cursor: pointer;
-}
-.anuncio:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
-.anuncio-color {
-  height: 5px;
-}
-.anuncio-body { padding: 14px 16px; }
-.anuncio-cat {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-  font-weight: 500;
-}
-.anuncio-titulo {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--texto);
-  line-height: 1.35;
-  margin-bottom: 6px;
-}
-.anuncio-desc {
-  font-size: 12.5px;
-  color: var(--texto-suave);
-  line-height: 1.55;
-  margin-bottom: 10px;
-}
-.anuncio-fecha {
-  font-size: 11px;
-  font-family: 'DM Mono', monospace;
-  color: #8a9e92;
-}
-
-/* ── CALENDARIO ── */
-.calendario {
-  background: var(--blanco);
-  border: 1px solid var(--gris-borde);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 2.5rem;
-}
-.cal-header {
-  background: var(--verde);
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.cal-mes {
-  font-family: 'Fraunces', serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #fff;
-}
-.cal-nav { display: flex; gap: 6px; }
-.cal-btn {
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.25);
-  color: #fff;
-  width: 28px; height: 28px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  display: flex; align-items: center; justify-content: center;
-  transition: background .15s;
-}
-.cal-btn:hover { background: rgba(255,255,255,0.28); }
-.cal-grid { padding: 12px 14px; }
-.cal-dias-semana {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-  margin-bottom: 4px;
-}
-.cal-dia-sem {
-  text-align: center;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: #8a9e92;
-  padding: 4px;
-}
-.cal-dias {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-}
-.cal-dia {
-  text-align: center;
-  padding: 5px 2px;
-  font-size: 12.5px;
-  border-radius: 6px;
-  cursor: default;
-  line-height: 1;
-  color: var(--texto);
-}
-.cal-dia.otro-mes { color: #c0cdc5; }
-.cal-dia.hoy { background: var(--azul); color: #fff; font-weight: 600; }
-.cal-dia.evento { background: var(--verde-palo); color: var(--verde); font-weight: 600; cursor: pointer; position: relative; }
-.cal-dia.evento::after {
-  content: '';
-  display: block;
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: var(--verde-med);
-  margin: 2px auto 0;
-}
-.cal-dia.evento-dorado { background: var(--dorado-palo); color: var(--dorado); font-weight: 600; cursor: pointer; }
-.cal-dia.evento-dorado::after {
-  content: '';
-  display: block;
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: var(--dorado);
-  margin: 2px auto 0;
-}
-.cal-dia.evento-rojo { background: var(--rojo-palo); color: var(--rojo); font-weight: 600; cursor: pointer; }
-.cal-dia.evento-rojo::after {
-  content: '';
-  display: block;
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: var(--rojo);
-  margin: 2px auto 0;
-}
-.cal-dia.evento-morado { background: var(--morado-palo); color: var(--morado); font-weight: 600; cursor: pointer; }
-.cal-dia.evento-morado::after {
-  content: '';
-  display: block;
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: var(--morado);
-  margin: 2px auto 0;
-}
-.cal-leyenda {
-  padding: 8px 14px 12px;
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  border-top: 1px solid var(--gris-borde);
-}
-.ley-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  color: var(--texto-suave);
-}
-.ley-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-}
-.cal-eventos-list { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 6px; }
-.cal-evento-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  background: var(--gris-fondo);
-  border: 1px solid var(--gris-borde);
-}
-.cal-evento-fecha {
-  background: var(--verde);
-  color: #fff;
-  border-radius: 6px;
-  padding: 4px 8px;
-  text-align: center;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  line-height: 1.2;
-  flex-shrink: 0;
-  min-width: 40px;
-}
-.cal-evento-dia { font-size: 14px; font-weight: 600; }
-.cal-evento-info { font-size: 12.5px; }
-.cal-evento-nombre { font-weight: 600; color: var(--texto); }
-.cal-evento-sub { color: var(--texto-suave); font-size: 11.5px; }
-
-/* ── SIDEBAR ── */
-.sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
-
-/* Accesos para padres */
-.padres-card {
-  background: var(--blanco);
-  border: 1px solid var(--gris-borde);
-  border-radius: 12px;
-  overflow: hidden;
-}
-.padres-card-header {
-  background: var(--dorado);
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.padres-card-header h3 {
-  font-family: 'Fraunces', serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-}
-.padres-icon { font-size: 18px; }
-.padres-accesos { padding: 12px; display: flex; flex-direction: column; gap: 6px; }
-.acceso-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  text-decoration: none;
-  border: 1px solid var(--gris-borde);
-  background: var(--gris-fondo);
-  transition: background .15s, border-color .15s;
-  color: var(--texto);
-}
-.acceso-btn:hover { background: var(--verde-palo); border-color: var(--verde-claro); }
-.acceso-btn-icon {
-  width: 34px; height: 34px;
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px;
-  flex-shrink: 0;
-}
-.acceso-btn-text { flex: 1; }
-.acceso-btn-titulo { font-size: 13px; font-weight: 600; color: var(--texto); display: block; }
-.acceso-btn-sub { font-size: 11px; color: var(--texto-suave); display: block; }
-.acceso-arrow { color: var(--gris-borde); font-size: 14px; }
-
-/* Directorio */
-.directorio {
-  background: var(--blanco);
-  border: 1px solid var(--gris-borde);
-  border-radius: 12px;
-  overflow: hidden;
-}
-.dir-header {
-  background: var(--azul);
-  padding: 14px 16px;
-}
-.dir-header h3 {
-  font-family: 'Fraunces', serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-}
-.dir-list { padding: 10px; display: flex; flex-direction: column; gap: 4px; }
-.dir-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  transition: background .12s;
-}
-.dir-item:hover { background: var(--azul-palo); }
-.dir-avatar {
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px;
-  font-weight: 600;
-  flex-shrink: 0;
-  color: #fff;
-}
-.dir-info { flex: 1; }
-.dir-nombre { font-size: 13px; font-weight: 500; color: var(--texto); }
-.dir-rol { font-size: 11px; color: var(--texto-suave); }
-.dir-ext { font-family: 'DM Mono', monospace; font-size: 10px; color: #8a9e92; }
-
-/* Semáforo mini */
-.semaforo-mini {
-  background: var(--blanco);
-  border: 1px solid var(--gris-borde);
-  border-radius: 12px;
-  overflow: hidden;
-}
-.sem-header {
-  background: var(--verde);
-  padding: 14px 16px;
-}
-.sem-header h3 {
-  font-family: 'Fraunces', serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-}
-.sem-body { padding: 12px 14px; }
-.sem-descripcion {
-  font-size: 12.5px;
-  color: var(--texto-suave);
-  line-height: 1.55;
-  margin-bottom: 10px;
-}
-.sem-items { display: flex; flex-direction: column; gap: 6px; }
-.sem-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid;
-  font-size: 12.5px;
-}
-.sem-verde { background: #eaf7ee; border-color: #a8d9b8; }
-.sem-amarillo { background: #fef8e7; border-color: #f0d080; }
-.sem-rojo { background: #fdecea; border-color: #f0aaaa; }
-.sem-item-label { font-weight: 600; flex: 1; }
-.sem-item-desc { font-size: 11.5px; color: var(--texto-suave); }
+.ctx-bloque { }
+.ctx-titulo { font-size:13px; font-weight:600; color:var(--texto); margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.ctx-titulo svg { flex-shrink:0; }
+.ctx-lista { list-style:none; display:flex; flex-direction:column; gap:5px; }
+.ctx-lista li { display:flex; gap:8px; font-size:12.5px; color:var(--texto-suave); line-height:1.5; }
+.ctx-lista li::before { content:"·"; color:var(--morado); font-weight:700; flex-shrink:0; }
 
 /* ── FOOTER ── */
-footer {
-  background: var(--azul);
-  color: rgba(255,255,255,0.8);
-  padding: 2.5rem 2rem;
-}
-.footer-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 2rem;
-}
-.footer-brand { }
-.footer-logo-txt {
-  font-family: 'Fraunces', serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 6px;
-}
-.footer-brand p { font-size: 12.5px; line-height: 1.6; max-width: 280px; }
-.footer-col h4 {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
-  font-family: 'DM Mono', monospace;
-  margin-bottom: 10px;
-}
-.footer-col a {
-  display: block;
-  font-size: 13px;
-  color: rgba(255,255,255,0.75);
-  text-decoration: none;
-  margin-bottom: 6px;
-  transition: color .12s;
-}
-.footer-col a:hover { color: #fff; }
-.footer-bottom {
-  max-width: 1100px;
-  margin: 1.5rem auto 0;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255,255,255,0.12);
-  display: flex;
-  justify-content: space-between;
-  font-size: 11.5px;
-  color: rgba(255,255,255,0.45);
-}
+footer { background:var(--azul); color:rgba(255,255,255,.8); padding:2rem; }
+.footer-bottom { max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; font-size:11.5px; color:rgba(255,255,255,.45); }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 860px) {
-  .main { grid-template-columns: 1fr; }
-  .sidebar { display: grid; grid-template-columns: repeat(2, 1fr); }
-  .footer-inner { grid-template-columns: 1fr 1fr; }
-  .footer-brand { grid-column: 1 / -1; }
-  .nav-links { display: none; }
-  .slide { padding: 2rem 1.5rem; min-height: 320px; }
+@media (max-width:860px) {
+  .rasgos-grid { grid-template-columns:1fr 1fr; }
+  .acuerdos-grid { grid-template-columns:1fr; }
+  .contexto-card { grid-template-columns:1fr; }
+  .nav-links { display:none; }
 }
-@media (max-width: 540px) {
-  .anuncios-grid { grid-template-columns: 1fr; }
-  .padres-inner { flex-direction: column; align-items: flex-start; padding: 10px 1rem; gap: 8px; }
-  .sidebar { grid-template-columns: 1fr; }
-  .footer-inner { grid-template-columns: 1fr; }
+@media (max-width:560px) {
+  .rasgos-grid { grid-template-columns:1fr; }
+  .hero-deco { display:none; }
 }
 </style>
 </head>
@@ -738,8 +217,8 @@ footer {
 <div class="topbar">
   <span>EPO 135 · Subsistema de Preparatorias Oficiales · BG 046</span>
   <div style="display:flex;gap:1.5rem">
-    <a href="#">Intranet docente</a>
-    <a href="#">Correo institucional</a>
+    <a href="index.html">Inicio</a>
+    <a href="padres.html">Para padres</a>
     <a href="#">Contacto</a>
   </div>
 </div>
@@ -748,586 +227,250 @@ footer {
 <nav class="navbar">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <div class="nav-logo-icon" style="background:transparent;border-radius:0;width:44px;height:44px;">
+      <div class="nav-logo-icon">
         <img src="data:image/png;base64,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" alt="Logo EPO 135" style="width:44px;height:44px;object-fit:contain;">
       </div>
-      <div class="nav-logo-text">
+      <div>
         <span class="nav-logo-title">EPO 135</span>
         <span class="nav-logo-sub">Río Frío de Juárez · Ixtapaluca</span>
       </div>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">Inicio</a></li>
-      <li><a href="#">Académico</a></li>
-      <li><a href="#">Actividades</a></li>
-      <li><a href="#">Comunidad</a></li>
-      <li><a href="#">Contacto</a></li>
-      <li><a href="padres.html" class="btn-padres">Para padres</a></li>
-      <li><a href="docentes-snb.html">Docentes</a></li>
-      <li><a href="recursos.html">Recursos</a></li>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="index.html#anuncios">Académico</a></li>
+      <li><a href="index.html#calendario">Calendario</a></li>
+      <li><a href="padres.html">Para padres</a></li>
+      <li><a href="#" class="btn-docentes active" style="background:rgba(255,255,255,.2)!important">Docentes</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- HERO CAROUSEL -->
-<section class="hero">
-  <div class="slides-wrapper" id="slidesWrapper">
-
-    <!-- Slide 1: Torneo Interprepas -->
-    <div class="slide slide-1">
-      <div class="slide-deco">
-        <svg viewBox="0 0 400 400" fill="none">
-          <circle cx="200" cy="200" r="180" stroke="white" stroke-width="2"/>
-          <circle cx="200" cy="200" r="120" stroke="white" stroke-width="2"/>
-          <circle cx="200" cy="200" r="60" stroke="white" stroke-width="2"/>
-          <line x1="20" y1="200" x2="380" y2="200" stroke="white" stroke-width="1.5"/>
-          <line x1="200" y1="20" x2="200" y2="380" stroke="white" stroke-width="1.5"/>
-        </svg>
-      </div>
-      <div class="slide-content">
-        <span class="slide-tag">Próximamente · 17 Abril 2026</span>
-        <h2 class="slide-title">Torneo Interprepas<br>BG 046</h2>
-        <p class="slide-desc">EPO 135 es sede del frontón varonil y participa en fútbol y básquetbol. ¡Apoya a nuestra escuela!</p>
-        <a href="#anuncios" class="slide-btn">Ver detalles</a>
-        <a href="#calendario" class="slide-btn-alt">Calendario</a>
-      </div>
-    </div>
-
-    <!-- Slide 2: Jornada Colegiada -->
-    <div class="slide slide-2">
-      <div class="slide-deco">
-        <svg viewBox="0 0 400 400" fill="none">
-          <rect x="60" y="60" width="280" height="280" rx="8" stroke="white" stroke-width="2"/>
-          <rect x="100" y="100" width="80" height="80" rx="4" stroke="white" stroke-width="1.5"/>
-          <rect x="220" y="100" width="80" height="80" rx="4" stroke="white" stroke-width="1.5"/>
-          <rect x="100" y="220" width="80" height="80" rx="4" stroke="white" stroke-width="1.5"/>
-          <rect x="220" y="220" width="80" height="80" rx="4" stroke="white" stroke-width="1.5"/>
-        </svg>
-      </div>
-      <div class="slide-content">
-        <span class="slide-tag">Jornada de trabajo · 26 Marzo 2026</span>
-        <h2 class="slide-title">Colegiado Docente<br><em style="font-style:italic;font-weight:400">Permanencia y bienestar</em></h2>
-        <p class="slide-desc">Estrategias de permanencia, indicadores académicos, herramientas digitales y vida saludable para nuestra comunidad.</p>
-        <a href="#" class="slide-btn">Programa completo</a>
-      </div>
-    </div>
-
-    <!-- Slide 3: Sistema de seguimiento -->
-    <div class="slide slide-3">
-      <div class="slide-deco">
-        <svg viewBox="0 0 400 400" fill="none">
-          <path d="M200 50 L350 300 L50 300 Z" stroke="white" stroke-width="2"/>
-          <path d="M200 120 L300 300 L100 300 Z" stroke="white" stroke-width="1.5"/>
-          <circle cx="200" cy="50" r="6" fill="white"/>
-          <circle cx="100" cy="300" r="6" fill="white"/>
-          <circle cx="300" cy="300" r="6" fill="white"/>
-        </svg>
-      </div>
-      <div class="slide-content">
-        <span class="slide-tag">Sistema activo · Desde Marzo 2026</span>
-        <h2 class="slide-title">Semáforo de<br>Asistencia EPO 135</h2>
-        <p class="slide-desc">Monitoreo semanal automatizado para detectar a tiempo a estudiantes en riesgo y acompañarlos.</p>
-        <a href="#" class="slide-btn">Conocer más</a>
-        <a href="#padres" class="slide-btn-alt">Para padres</a>
-      </div>
-    </div>
-
-    <!-- Slide 4: Actividades extracurriculares -->
-    <div class="slide slide-4">
-      <div class="slide-deco">
-        <svg viewBox="0 0 400 400" fill="none">
-          <path d="M50 300 Q100 200 200 180 Q300 160 350 100" stroke="white" stroke-width="2"/>
-          <path d="M50 340 Q150 280 200 220 Q260 160 350 140" stroke="white" stroke-width="1.5"/>
-          <circle cx="200" cy="180" r="12" stroke="white" stroke-width="2"/>
-          <circle cx="350" cy="100" r="8" fill="white" opacity=".4"/>
-        </svg>
-      </div>
-      <div class="slide-content">
-        <span class="slide-tag">Próximamente · Ciclo 2025–2026</span>
-        <h2 class="slide-title">Actividades<br><em style="font-style:italic;font-weight:400">extracurriculares</em></h2>
-        <p class="slide-desc">Próximamente información sobre actividades y salidas educativas del semestre. Estén atentos a los comunicados oficiales.</p>
-        <a href="#" class="slide-btn">Más información</a>
-      </div>
-    </div>
-
+<!-- ANCLA NAV -->
+<nav class="ancla-nav">
+  <div class="ancla-inner">
+    <a href="#perfil" class="ancla-item active">Perfil de egreso</a>
+    <a href="#acuerdos" class="ancla-item">Acuerdos secretariales</a>
+    <a href="#contexto" class="ancla-item">Contexto MCCEMS</a>
   </div>
+</nav>
 
-  <!-- Controls -->
-  <button class="carousel-prev" id="prevBtn">&#8249;</button>
-  <button class="carousel-next" id="nextBtn">&#8250;</button>
-  <div class="carousel-controls" id="dots"></div>
+<!-- HERO -->
+<section class="hero-snb">
+  <div class="hero-snb-inner">
+    <div>
+      <div class="hero-snb-kicker">Área docente · EPO 135</div>
+      <h1 class="hero-snb-title">Sistema Nacional<br>de Bachillerato<br><em>MCCEMS</em></h1>
+      <p class="hero-snb-desc">Marco Curricular Común de la Educación Media Superior. Referencia normativa y pedagógica para la práctica docente en el ciclo 2025–2026.</p>
+      <div class="hero-chips">
+        <span class="hero-chip">9 rasgos de egreso</span>
+        <span class="hero-chip">4 acuerdos secretariales</span>
+        <span class="hero-chip">Uso exclusivo docente</span>
+      </div>
+    </div>
+    <div class="hero-deco">SNB</div>
+  </div>
 </section>
 
-<!-- PADRES QUICK ACCESS -->
-<div class="padres-banner" id="padres">
-  <div class="padres-inner">
-    <span class="padres-label">Padres de familia</span>
-    <div class="padres-links">
-      <a href="#calendario" class="padres-link">
-        <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="white" stroke-width="1.2"/><path d="M5 2v2M11 2v2M2 7h12" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Calendario escolar
-      </a>
-      <a href="#" class="padres-link">
-        <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="white" stroke-width="1.2"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Contactar orientación
-      </a>
-      <a href="#" class="padres-link">
-        <svg viewBox="0 0 16 16" fill="none"><path d="M8 2L2 6v7h4v-3h4v3h4V6L8 2z" stroke="white" stroke-width="1.2" stroke-linejoin="round"/></svg>
-        Directorio plantel
-      </a>
-      <a href="#" class="padres-link">
-        <svg viewBox="0 0 16 16" fill="none"><path d="M3 4h10M3 8h7M3 12h5" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Avisos oficiales
-      </a>
-      <a href="#" class="padres-link">
-        <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="white" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Asistencia e indicadores
-      </a>
+<!-- MAIN -->
+<main class="page-main">
+
+  <!-- RASGOS DEL PERFIL DE EGRESO -->
+  <section id="perfil" style="margin-bottom:3rem">
+    <div class="sec-header">
+      <span class="sec-tag">Sección 1</span>
+      <div class="sec-line"></div>
     </div>
-  </div>
-</div>
+    <h2 class="sec-title">Rasgos del perfil de egreso</h2>
+    <p class="sec-sub">El perfil de egreso del MCCEMS define 9 rasgos que articulan los aprendizajes esperados al concluir la educación media superior.</p>
 
-<!-- MAIN CONTENT -->
-<div class="main">
-
-  <!-- LEFT COLUMN -->
-  <div>
-
-    <!-- ANUNCIOS -->
-    <section id="anuncios">
-      <div class="sec-header">
-        <span class="sec-tag">Anuncios recientes</span>
-        <div class="sec-line"></div>
-      </div>
-      <div class="anuncios-grid">
-
-        <div class="anuncio">
-          <div class="anuncio-color" style="background: var(--dorado)"></div>
-          <div class="anuncio-body">
-            <div class="anuncio-cat" style="color: var(--dorado)">Deporte</div>
-            <div class="anuncio-titulo">Torneo Interprepas BG 046 — EPO 135 sede de frontón</div>
-            <div class="anuncio-desc">Junta previa el 16 de abril en EPO 141. Inscripción de cédulas, roles y costos. Medallas a $35 c/u.</div>
-            <div class="anuncio-fecha">17 abril 2026</div>
-          </div>
-        </div>
-
-        <div class="anuncio">
-          <div class="anuncio-color" style="background: var(--verde-med)"></div>
-          <div class="anuncio-body">
-            <div class="anuncio-cat" style="color: var(--verde-med)">Colegiado</div>
-            <div class="anuncio-titulo">Jornada de trabajo colegiado — 26 de marzo</div>
-            <div class="anuncio-desc">4 bloques: permanencia, indicadores, herramientas digitales (Claude + NotebookLM) y vida saludable.</div>
-            <div class="anuncio-fecha">26 marzo 2026</div>
-          </div>
-        </div>
-
-        <div class="anuncio">
-          <div class="anuncio-color" style="background: var(--azul-med)"></div>
-          <div class="anuncio-body">
-            <div class="anuncio-cat" style="color: var(--azul-med)">Tecnología</div>
-            <div class="anuncio-titulo">Sistema de semáforo de asistencia en producción</div>
-            <div class="anuncio-desc">Monitoreo automatizado con IA. Notificaciones vía Telegram cada lunes a las 7:00 am.</div>
-            <div class="anuncio-fecha">15 marzo 2026</div>
-          </div>
-        </div>
-
-        <div class="anuncio">
-          <div class="anuncio-color" style="background: var(--verde-claro)"></div>
-          <div class="anuncio-body">
-            <div class="anuncio-cat" style="color: var(--verde)">Salida didáctica</div>
-            <div class="anuncio-titulo" style="color:var(--texto-suave);text-decoration:line-through">Visita a Zacatlán, Puebla — 30 de abril</div>
-            <div class="anuncio-desc"><strong style="color:var(--rojo)">Actividad suspendida.</strong> Se informará oportunamente sobre nuevas actividades.</div>
-            <div class="anuncio-fecha">30 abril 2026</div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- CALENDARIO -->
-    <section id="calendario">
-      <div class="sec-header">
-        <span class="sec-tag">Calendario escolar</span>
-        <div class="sec-line"></div>
-      </div>
-      <div class="sec-title" style="font-family:'Fraunces',serif">Segundo semestre 2025–2026</div>
-      <p style="font-size:12.5px;color:var(--texto-suave);margin-bottom:1rem;margin-top:-0.5rem">11 de febrero – 15 de julio · 93 días hábiles · Vacaciones: 30 mar – 10 abr</p>
-      <div class="calendario">
-        <div class="cal-header">
-          <span class="cal-mes" id="calMes">Marzo 2026</span>
-          <div class="cal-nav">
-            <button class="cal-btn" id="calPrev">&#8249;</button>
-            <button class="cal-btn" id="calNext">&#8250;</button>
-          </div>
-        </div>
-        <div class="cal-grid">
-          <div class="cal-dias-semana">
-            <div class="cal-dia-sem">D</div>
-            <div class="cal-dia-sem">L</div>
-            <div class="cal-dia-sem">M</div>
-            <div class="cal-dia-sem">X</div>
-            <div class="cal-dia-sem">J</div>
-            <div class="cal-dia-sem">V</div>
-            <div class="cal-dia-sem">S</div>
-          </div>
-          <div class="cal-dias" id="calDias"></div>
-        </div>
-        <div class="cal-leyenda">
-          <div class="ley-item"><div class="ley-dot" style="background:var(--verde-med)"></div>Jornada / evento</div>
-          <div class="ley-item"><div class="ley-dot" style="background:var(--dorado)"></div>Deportivo / egresión</div>
-          <div class="ley-item"><div class="ley-dot" style="background:var(--rojo)"></div>Evaluaciones / SIGEMS</div>
-          <div class="ley-item"><div class="ley-dot" style="background:var(--morado)"></div>Vacaciones</div>
-          <div class="ley-item"><div class="ley-dot" style="background:var(--azul-med)"></div>Hoy</div>
-        </div>
-        <div class="cal-eventos-list" id="calEventos"></div>
-      </div>
-    </section>
-
-  </div>
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-
-    <!-- Accesos para padres -->
-    <div class="padres-card">
-      <div class="padres-card-header">
-        <span class="padres-icon">👨‍👩‍👧</span>
-        <h3>Accesos para padres</h3>
-      </div>
-      <div class="padres-accesos">
-        <a href="#calendario" class="acceso-btn">
-          <div class="acceso-btn-icon" style="background:var(--verde-palo)">📅</div>
-          <div class="acceso-btn-text">
-            <span class="acceso-btn-titulo">Calendario escolar</span>
-            <span class="acceso-btn-sub">Eventos, exámenes y actividades</span>
-          </div>
-          <span class="acceso-arrow">›</span>
-        </a>
-        <a href="#" class="acceso-btn">
-          <div class="acceso-btn-icon" style="background:var(--azul-palo)">📋</div>
-          <div class="acceso-btn-text">
-            <span class="acceso-btn-titulo">Avisos y comunicados</span>
-            <span class="acceso-btn-sub">Avisos oficiales del plantel</span>
-          </div>
-          <span class="acceso-arrow">›</span>
-        </a>
-        <a href="#" class="acceso-btn">
-          <div class="acceso-btn-icon" style="background:#fef6e4">📞</div>
-          <div class="acceso-btn-text">
-            <span class="acceso-btn-titulo">Contactar orientación</span>
-            <span class="acceso-btn-sub">Profra. Nallely Rojas · Dr. Armando Villalpando</span>
-          </div>
-          <span class="acceso-arrow">›</span>
-        </a>
-        <a href="#" class="acceso-btn">
-          <div class="acceso-btn-icon" style="background:var(--rojo-palo)">🚨</div>
-          <div class="acceso-btn-text">
-            <span class="acceso-btn-titulo">Ficha de seguimiento</span>
-            <span class="acceso-btn-sub">Reportar situación de tu hijo/a</span>
-          </div>
-          <span class="acceso-arrow">›</span>
-        </a>
-      </div>
+    <div class="rasgos-intro">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink:0;margin-top:2px"><circle cx="9" cy="9" r="7.5" stroke="#5c3a9e" stroke-width="1.3"/><path d="M9 5.5v4M9 12v.5" stroke="#5c3a9e" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <span>Los rasgos del perfil de egreso son el referente central para el diseño de secuencias didácticas, la evaluación por competencias y la planeación por trayectorias formativas. Se articulan con las Unidades de Aprendizaje Curricular (UAC) de cada semestre.</span>
     </div>
 
-    <!-- Semáforo de asistencia -->
-    <div class="semaforo-mini">
-      <div class="sem-header">
-        <h3>Semáforo de asistencia</h3>
+    <div class="rasgos-grid">
+
+      <div class="rasgo-card area-humanista">
+        <div class="rasgo-num">Rasgo I · Pensamiento crítico</div>
+        <div class="rasgo-texto">Desarrolla una actitud reflexiva que le permite <strong>conocer, problematizar y argumentar</strong> sobre las situaciones que afectan su ámbito comunitario, regional y global, a partir del diálogo y desde una perspectiva humanista y científica.</div>
       </div>
-      <div class="sem-body">
-        <p class="sem-descripcion">Sistema de monitoreo semanal para detectar alumnos en riesgo de abandono escolar.</p>
-        <div class="sem-items">
-          <div class="sem-item sem-verde">
-            <span>🟢</span>
-            <div>
-              <div class="sem-item-label" style="color:var(--verde)">Verde — Sin riesgo</div>
-              <div class="sem-item-desc">Asistencia normal, sin señales de alerta</div>
-            </div>
-          </div>
-          <div class="sem-item sem-amarillo">
-            <span>🟡</span>
-            <div>
-              <div class="sem-item-label" style="color:var(--dorado)">Amarillo — Atención</div>
-              <div class="sem-item-desc">3–5 faltas o 1 señal de alerta</div>
-            </div>
-          </div>
-          <div class="sem-item sem-rojo">
-            <span>🔴</span>
-            <div>
-              <div class="sem-item-label" style="color:var(--rojo)">Rojo — Riesgo</div>
-              <div class="sem-item-desc">6+ faltas o 2+ señales de alerta</div>
-            </div>
-          </div>
+
+      <div class="rasgo-card area-ciudadana">
+        <div class="rasgo-num">Rasgo II · Identidad histórica y social</div>
+        <div class="rasgo-texto">Reconoce su <strong>condición histórica y social</strong> para intervenir en la conformación y transformación de las estructuras políticas que organizan la sociedad que habita.</div>
+      </div>
+
+      <div class="rasgo-card area-bienestar">
+        <div class="rasgo-num">Rasgo III · Ética científica y ambiental</div>
+        <div class="rasgo-texto">Se involucra en la búsqueda del <strong>bienestar humano y el cuidado del medio ambiente</strong> a partir de la comprensión ética de las ciencias, humanidades y tecnologías como construcciones colectivas que explican los fenómenos del entorno.</div>
+      </div>
+
+      <div class="rasgo-card area-ciudadana">
+        <div class="rasgo-num">Rasgo IV · Ciudadanía e interculturalidad</div>
+        <div class="rasgo-texto">Conoce, defiende y ejerce su <strong>derecho como persona ciudadana</strong> a participar en la construcción de alternativas que promuevan la justicia social, desde una perspectiva intercultural, de derechos humanos e igualdad de género.</div>
+      </div>
+
+      <div class="rasgo-card area-digital">
+        <div class="rasgo-num">Rasgo V · Ciudadanía digital</div>
+        <div class="rasgo-texto">Ejerce su <strong>ciudadanía digital</strong> a través de un posicionamiento ético sobre la pertinencia del desarrollo, distribución y uso de las tecnologías digitales.</div>
+      </div>
+
+      <div class="rasgo-card area-bienestar">
+        <div class="rasgo-num">Rasgo VI · Salud integral</div>
+        <div class="rasgo-texto">Cuida su <strong>salud de forma integral</strong> a partir de la alimentación sana, la práctica de actividad física y la construcción de vínculos intersubjetivos responsables basados en el respeto a la dignidad y los derechos humanos.</div>
+      </div>
+
+      <div class="rasgo-card area-humanista">
+        <div class="rasgo-num">Rasgo VII · Comunicación oral y escrita</div>
+        <div class="rasgo-texto">Utiliza <strong>herramientas orales y escritas</strong> para la expresión clara y coherente de sus ideas, perspectivas y emociones.</div>
+      </div>
+
+      <div class="rasgo-card area-ciencia">
+        <div class="rasgo-num">Rasgo VIII · Pensamiento científico y algorítmico</div>
+        <div class="rasgo-texto">Hace uso de las teorías, metodologías y <strong>pensamiento algorítmico</strong> de las diversas áreas del conocimiento para entender, intervenir y resolver problemas de su cotidianeidad.</div>
+      </div>
+
+      <div class="rasgo-card area-humanista">
+        <div class="rasgo-num">Rasgo IX · Valoración estética y cultural</div>
+        <div class="rasgo-texto">Reconoce, aprecia y aprehende el <strong>valor estético del patrimonio cultural</strong>, así como las diferentes manifestaciones artísticas.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ACUERDOS SECRETARIALES -->
+  <section id="acuerdos" style="margin-bottom:3rem">
+    <div class="sec-header">
+      <span class="sec-tag">Sección 2</span>
+      <div class="sec-line"></div>
+    </div>
+    <h2 class="sec-title">Acuerdos secretariales</h2>
+    <p class="sec-sub">Documentos normativos de la SEP que fundamentan el MCCEMS y la operación del Sistema Nacional de Bachillerato.</p>
+
+    <div class="acuerdos-grid">
+
+      <div class="acuerdo-card">
+        <div class="acuerdo-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="2" width="14" height="18" rx="2" stroke="#5c3a9e" stroke-width="1.4"/><path d="M7 7h8M7 11h8M7 15h5" stroke="#5c3a9e" stroke-width="1.2" stroke-linecap="round"/></svg>
         </div>
+        <div>
+          <div class="acuerdo-titulo">Acuerdo Secretarial — Marco curricular MCCEMS</div>
+          <div class="acuerdo-desc">Establece el Marco Curricular Común de la Educación Media Superior y los lineamientos para su implementación en los subsistemas del país.</div>
+          <a href="https://epo135subdireccion.weebly.com/uploads/1/4/7/6/147621910/345b57e8238a29d6f433.pdf" target="_blank" class="acuerdo-btn">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 11l9-9M11 2v7M11 2H4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Ver documento PDF
+          </a>
+        </div>
+      </div>
+
+      <div class="acuerdo-card">
+        <div class="acuerdo-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="2" width="14" height="18" rx="2" stroke="#5c3a9e" stroke-width="1.4"/><path d="M7 7h8M7 11h8M7 15h5" stroke="#5c3a9e" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="acuerdo-titulo">Acuerdo Secretarial — Evaluación y trayectorias</div>
+          <div class="acuerdo-desc">Regula los mecanismos de evaluación del aprendizaje, las trayectorias formativas y la acreditación en el marco del MCCEMS.</div>
+          <a href="https://epo135subdireccion.weebly.com/uploads/1/4/7/6/147621910/7b97334b1532f64a479a.pdf" target="_blank" class="acuerdo-btn">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 11l9-9M11 2v7M11 2H4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Ver documento PDF
+          </a>
+        </div>
+      </div>
+
+      <div class="acuerdo-card">
+        <div class="acuerdo-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="2" width="14" height="18" rx="2" stroke="#5c3a9e" stroke-width="1.4"/><path d="M7 7h8M7 11h8M7 15h5" stroke="#5c3a9e" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="acuerdo-titulo">Modelo Educativo 2025 — MCCEMS</div>
+          <div class="acuerdo-desc">Documento base del modelo educativo vigente que articula el enfoque por competencias, humanista y de trayectorias del nivel medio superior.</div>
+          <a href="https://epo135subdireccion.weebly.com/uploads/1/4/7/6/147621910/modelo_educativo_2025_mccms.pdf" target="_blank" class="acuerdo-btn">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 11l9-9M11 2v7M11 2H4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Ver documento PDF
+          </a>
+        </div>
+      </div>
+
+      <div class="acuerdo-card">
+        <div class="acuerdo-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="2" width="14" height="18" rx="2" stroke="#5c3a9e" stroke-width="1.4"/><path d="M7 7h8M7 11h8M7 15h5" stroke="#5c3a9e" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="acuerdo-titulo">MCC · Programa Analítico de Evaluación y Certificación (PAEC)</div>
+          <div class="acuerdo-desc">Define los criterios y procedimientos del Programa Analítico de Evaluación y Certificación alineado al Marco Curricular Común.</div>
+          <a href="https://epo135subdireccion.weebly.com/uploads/1/4/7/6/147621910/mcc_paec.pdf" target="_blank" class="acuerdo-btn">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 11l9-9M11 2v7M11 2H4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Ver documento PDF
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTEXTO MCCEMS -->
+  <section id="contexto">
+    <div class="sec-header">
+      <span class="sec-tag">Sección 3</span>
+      <div class="sec-line"></div>
+    </div>
+    <h2 class="sec-title">Contexto MCCEMS en EPO 135</h2>
+    <p class="sec-sub">Elementos de referencia para la implementación del marco curricular en el plantel.</p>
+
+    <div class="contexto-card">
+      <div class="ctx-bloque">
+        <div class="ctx-titulo">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="#5c3a9e" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="#5c3a9e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Ejes del marco curricular
+        </div>
+        <ul class="ctx-lista">
+          <li>Pensamiento crítico y humanista</li>
+          <li>Ciudadanía e interculturalidad</li>
+          <li>Bienestar y salud integral</li>
+          <li>Ciudadanía digital y ética tecnológica</li>
+          <li>Comunicación y expresión</li>
+          <li>Pensamiento científico y matemático</li>
+          <li>Valoración artística y cultural</li>
+        </ul>
+      </div>
+      <div class="ctx-bloque">
+        <div class="ctx-titulo">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#5c3a9e" stroke-width="1.2"/><path d="M8 4.5V8l2.5 2" stroke="#5c3a9e" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Implicaciones para la práctica docente
+        </div>
+        <ul class="ctx-lista">
+          <li>Planeación por trayectorias formativas y UAC</li>
+          <li>Evaluación formativa y auténtica</li>
+          <li>Diseño de situaciones de aprendizaje contextualizadas</li>
+          <li>Articulación entre asignaturas del mismo semestre</li>
+          <li>Registro en SIGEMS alineado al MCCEMS</li>
+          <li>Participación en jornadas colegiadas de seguimiento</li>
+        </ul>
       </div>
     </div>
+  </section>
 
-    <!-- Directorio -->
-    <div class="directorio">
-      <div class="dir-header">
-        <h3>Directorio del plantel</h3>
-      </div>
-      <div class="dir-list">
-        <div class="dir-item">
-          <div class="dir-avatar" style="background:#5c3a9e">GL</div>
-          <div class="dir-info">
-            <div class="dir-nombre">Mtra. Gabriela Lara Juárez</div>
-            <div class="dir-rol">Supervisora · BG 046</div>
-          </div>
-        </div>
-        <div class="dir-item">
-          <div class="dir-avatar" style="background:var(--verde-med)">GR</div>
-          <div class="dir-info">
-            <div class="dir-nombre">Mtra. Gloria Rosiles Estrada</div>
-            <div class="dir-rol">Directora Escolar</div>
-          </div>
-        </div>
-        <div class="dir-item">
-          <div class="dir-avatar" style="background:var(--azul-med)">FC</div>
-          <div class="dir-info">
-            <div class="dir-nombre">Profr. Fernando Cortés Reyes</div>
-            <div class="dir-rol">Subdirector Escolar</div>
-          </div>
-        </div>
-        <div class="dir-item">
-          <div class="dir-avatar" style="background:#c8860a">JM</div>
-          <div class="dir-info">
-            <div class="dir-nombre">Profra. Jazmín Martínez Beltrán</div>
-            <div class="dir-rol">Secretaria Escolar</div>
-          </div>
-        </div>
-        <div class="dir-item">
-          <div class="dir-avatar" style="background:#7a4f00">NR</div>
-          <div class="dir-info">
-            <div class="dir-nombre">Profra. Nallely A. Rojas Gómez</div>
-            <div class="dir-rol">Orientadora Escolar</div>
-          </div>
-        </div>
-        <div class="dir-item">
-          <div class="dir-avatar" style="background:#4a3d8b">AV</div>
-          <div class="dir-info">
-            <div class="dir-nombre">Dr. Armando Villalpando Vázquez</div>
-            <div class="dir-rol">Orientador Escolar</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </aside>
-</div>
+</main>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-
-    <!-- Columna marca -->
-    <div class="footer-brand">
-      <div class="footer-logo-txt">EPO 135 · Río Frío de Juárez</div>
-      <p>Escuela Preparatoria Oficial Núm. 135 · Subsistema de Bachillerato General del Estado de México · Supervisión Escolar BG 046 · Subdirección de Bachillerato General Región Oriente.</p>
-      <div style="margin-top:14px;display:flex;flex-direction:column;gap:6px">
-        <div style="display:flex;align-items:center;gap:8px;font-size:12px">
-          <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px;flex-shrink:0"><path d="M8 2C5.8 2 4 3.8 4 6c0 3 4 8 4 8s4-5 4-8c0-2.2-1.8-4-4-4z" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><circle cx="8" cy="6" r="1.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/></svg>
-          <span>Calle Vista Hermosa s/n, Río Frío de Juárez, Ixtapaluca, Edo. Méx. C.P. 56590</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;font-size:12px">
-          <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px;flex-shrink:0"><rect x="2" y="4" width="12" height="9" rx="1.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M2 5.5l6 4 6-4" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/></svg>
-          <a href="/cdn-cgi/l/email-protection#3451445b050701745150415351591a594c" style="color:rgba(255,255,255,0.75);text-decoration:none"><span class="__cf_email__" data-cfemail="5b3e2b346a686e1b3e3f2e3c3e36753623">[email&#160;protected]</span></a>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;font-size:12px">
-          <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px;flex-shrink:0"><path d="M3 3h2l1 3.5-1.5 1a9 9 0 004 4l1-1.5L13 11v2c-6 1-11-4-10-10z" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/></svg>
-          <a href="tel:5559420717" style="color:rgba(255,255,255,0.75);text-decoration:none">555-942-0717</a>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;font-size:12px">
-          <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px;flex-shrink:0"><rect x="2" y="2" width="12" height="12" rx="2" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M5 8h6M8 5v6" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/></svg>
-          <a href="https://epo135subdireccion.weebly.com" target="_blank" style="color:rgba(255,255,255,0.75);text-decoration:none">epo135subdireccion.weebly.com</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Columna navegación -->
-    <div class="footer-col">
-      <h4>Navegación</h4>
-      <a href="#">Inicio</a>
-      <a href="#anuncios">Anuncios</a>
-      <a href="#calendario">Calendario escolar</a>
-      <a href="#padres">Accesos para padres</a>
-      <a href="#">Actividades y deportes</a>
-      <a href="#">Generador de exámenes</a>
-    </div>
-
-    <!-- Columna para padres -->
-    <div class="footer-col">
-      <h4>Para padres</h4>
-      <a href="#">Contactar orientación</a>
-      <a href="#">Ficha de seguimiento</a>
-      <a href="#">Semáforo de asistencia</a>
-      <a href="#">Avisos y comunicados</a>
-      <a href="#">Directorio del plantel</a>
-      <a href="#">Preguntas frecuentes</a>
-    </div>
-
-  </div>
-
-  <!-- Datos del semestre y bottom bar -->
-  <div style="max-width:1100px;margin:1.5rem auto 0;padding:1rem 2rem 0;border-top:1px solid rgba(255,255,255,0.12)">
-    <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1rem">
-      <div style="font-size:11px;color:rgba(255,255,255,0.45)">
-        <span style="color:rgba(255,255,255,0.6);font-weight:500;display:block;margin-bottom:2px;font-family:'DM Mono',monospace;letter-spacing:0.1em;font-size:10px">SEMESTRE ACTIVO</span>
-        Segundo semestre 2025–2026 · 11 feb – 15 jul · 93 días hábiles
-      </div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.45)">
-        <span style="color:rgba(255,255,255,0.6);font-weight:500;display:block;margin-bottom:2px;font-family:'DM Mono',monospace;letter-spacing:0.1em;font-size:10px">COMUNIDAD</span>
-        186 estudiantes · 6 semestres · 19 docentes
-      </div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.45)">
-        <span style="color:rgba(255,255,255,0.6);font-weight:500;display:block;margin-bottom:2px;font-family:'DM Mono',monospace;letter-spacing:0.1em;font-size:10px">AÑO INSTITUCIONAL</span>
-        2026 · "Año del humanismo mexicano en el Estado de México"
-      </div>
-    </div>
-  </div>
-
   <div class="footer-bottom">
     <span>© 2026 EPO 135 · Todos los derechos reservados</span>
-    <span>Subdirección Escolar · Sitio actualizado: marzo 2026 · Desarrollado con Claude</span>
+    <span>Preparatoria Oficial Núm. 135 · Río Frío de Juárez, Ixtapaluca · BG 046 · <a href="index.html" style="color:rgba(255,255,255,.45);text-decoration:none">← Inicio</a></span>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ── CAROUSEL ──
-const wrapper = document.getElementById('slidesWrapper');
-const dotsEl = document.getElementById('dots');
-const totalSlides = 4;
-let current = 0;
-let autoTimer;
-
-function goTo(n) {
-  current = (n + totalSlides) % totalSlides;
-  wrapper.style.transform = `translateX(-${current * 100}%)`;
-  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
-}
-
-function nextSlide() { goTo(current + 1); }
-function prevSlide() { goTo(current - 1); }
-
-function startAuto() {
-  clearInterval(autoTimer);
-  autoTimer = setInterval(nextSlide, 5000);
-}
-
-for (let i = 0; i < totalSlides; i++) {
-  const d = document.createElement('button');
-  d.className = 'dot' + (i === 0 ? ' active' : '');
-  d.addEventListener('click', () => { goTo(i); startAuto(); });
-  dotsEl.appendChild(d);
-}
-
-document.getElementById('nextBtn').addEventListener('click', () => { nextSlide(); startAuto(); });
-document.getElementById('prevBtn').addEventListener('click', () => { prevSlide(); startAuto(); });
-startAuto();
-
-// ── CALENDARIO ──
-const EVENTOS = {
-  // Marzo
-  '2026-03-09': { tipo: 'rojo',    label: 'Inicio evaluaciones 1er parcial', sub: 'Periodo: 09–20 de marzo' },
-  '2026-03-17': { tipo: 'rojo',    label: 'Entrega planeación 2º parcial', sub: 'Fecha límite docentes' },
-  '2026-03-19': { tipo: 'hoy',     label: 'Hoy' },
-  '2026-03-20': { tipo: 'rojo',    label: 'Fin evaluaciones 1er parcial', sub: 'Cierre del periodo de evaluación' },
-  '2026-03-23': { tipo: 'rojo',    label: 'Inicio captura 1er parcial en SIGEMS', sub: 'Captura: 23–27 de marzo' },
-  '2026-03-26': { tipo: 'evento',  label: '2ª Jornada de Acompañamiento', sub: 'Colegiado docente · 9:00–14:00 hrs' },
-  '2026-03-27': { tipo: 'rojo',    label: 'Cierre captura 1er parcial SIGEMS', sub: '' },
-  '2026-03-30': { tipo: 'morado',  label: 'Inicio vacaciones Semana Santa', sub: 'Receso: 30 mar – 10 abr' },
-  // Abril
-  '2026-04-10': { tipo: 'morado',  label: 'Fin de vacaciones Semana Santa', sub: 'Regreso a clases: 13 de abril' },
-  '2026-04-16': { tipo: 'dorado',  label: 'Junta previa Torneo Interprepas', sub: 'EPO 141 · 9:40 am — cédulas, roles, costos' },
-  '2026-04-17': { tipo: 'dorado',  label: 'Torneo Interprepas BG 046', sub: 'Frontón varonil, fútbol y básquetbol' },
-  '2026-04-27': { tipo: 'rojo',    label: 'Inicio evaluaciones 2º parcial', sub: 'Periodo: 27 abr – 8 may' },
-  // '2026-04-30': Zacatlán suspendida — eliminado 20/03/2026
-  // Mayo
-  '2026-05-08': { tipo: 'rojo',    label: 'Fin evaluaciones 2º parcial', sub: '' },
-  '2026-05-11': { tipo: 'rojo',    label: 'Entrega planeación 3er parcial', sub: 'Fecha límite docentes' },
-  '2026-05-11': { tipo: 'rojo',    label: 'Inicio captura 2º parcial SIGEMS', sub: 'Captura: 11–15 de mayo' },
-  '2026-05-15': { tipo: 'rojo',    label: 'Cierre captura 2º parcial SIGEMS', sub: '' },
-  '2026-05-25': { tipo: 'evento',  label: '3ª Jornada de Acompañamiento', sub: 'Tercera jornada ordinaria · 9:00–14:00 hrs' },
-  // Junio
-  '2026-06-15': { tipo: 'rojo',    label: 'Inicio evaluaciones 3er parcial', sub: 'Periodo: 15–26 de junio' },
-  '2026-06-23': { tipo: 'evento',  label: '4ª Jornada de Acompañamiento', sub: 'Cuarta jornada ordinaria · 9:00–14:00 hrs' },
-  '2026-06-26': { tipo: 'rojo',    label: 'Fin evaluaciones 3er parcial', sub: '' },
-  '2026-06-29': { tipo: 'rojo',    label: 'Inicio captura 3er parcial SIGEMS', sub: 'Captura: 29 jun – 3 jul' },
-  // Julio
-  '2026-07-01': { tipo: 'rojo',    label: 'Inicio periodo de regularización', sub: 'Regularización: 1–14 de julio' },
-  '2026-07-03': { tipo: 'rojo',    label: 'Cierre captura 3er parcial SIGEMS', sub: '' },
-  '2026-07-14': { tipo: 'rojo',    label: 'Fin periodo de regularización', sub: '' },
-  '2026-07-15': { tipo: 'rojo',    label: 'Inicio captura regularización SIGEMS', sub: 'Captura: 15–17 de julio' },
-  '2026-07-15': { tipo: 'evento',  label: 'Término del semestre', sub: 'Último día hábil — 93 días en total' },
-  '2026-07-17': { tipo: 'dorado',  label: 'Ceremonia de Egresión', sub: 'Generación 2023–2026' },
-};
-
-const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-let calYear = 2026, calMonth = 2; // 0-indexed, March
-
-function pad(n) { return n < 10 ? '0' + n : n; }
-
-function renderCal() {
-  const mesEl = document.getElementById('calMes');
-  const diasEl = document.getElementById('calDias');
-  const eventosEl = document.getElementById('calEventos');
-  mesEl.textContent = `${MESES[calMonth]} ${calYear}`;
-
-  const first = new Date(calYear, calMonth, 1).getDay();
-  const days = new Date(calYear, calMonth + 1, 0).getDate();
-  const prevDays = new Date(calYear, calMonth, 0).getDate();
-
-  let html = '';
-  for (let i = 0; i < first; i++) {
-    const d = prevDays - first + i + 1;
-    html += `<div class="cal-dia otro-mes">${d}</div>`;
+<script>
+const anclaItems = document.querySelectorAll(".ancla-item");
+const sections = ["perfil","acuerdos","contexto"];
+window.addEventListener("scroll", () => {
+  let current = sections[0];
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 150) current = id;
   }
-  for (let d = 1; d <= days; d++) {
-    const key = `${calYear}-${pad(calMonth + 1)}-${pad(d)}`;
-    const ev = EVENTOS[key];
-    let cls = 'cal-dia';
-    if (ev) {
-      if (ev.tipo === 'hoy') cls += ' hoy';
-      else if (ev.tipo === 'evento') cls += ' evento';
-      else if (ev.tipo === 'dorado') cls += ' evento-dorado';
-      else if (ev.tipo === 'rojo') cls += ' evento-rojo';
-      else if (ev.tipo === 'morado') cls += ' evento-morado';
-    }
-    html += `<div class="${cls}">${d}</div>`;
-  }
-  diasEl.innerHTML = html;
-
-  // Eventos del mes visible
-  const mesEventos = Object.entries(EVENTOS).filter(([k]) => {
-    const [y, m] = k.split('-').map(Number);
-    return y === calYear && m === calMonth + 1;
-  }).sort(([a], [b]) => a.localeCompare(b));
-
-  if (mesEventos.length === 0) {
-    eventosEl.innerHTML = '';
-    return;
-  }
-
-  const colores = { evento: 'var(--verde)', dorado: 'var(--dorado)', rojo: 'var(--rojo)', morado: 'var(--morado)', hoy: 'var(--azul)' };
-  let evHtml = '';
-  for (const [k, v] of mesEventos) {
-    const [, , d] = k.split('-');
-    const col = colores[v.tipo] || 'var(--verde)';
-    evHtml += `<div class="cal-evento-item">
-      <div class="cal-evento-fecha" style="background:${col}">
-        <div class="cal-evento-dia">${parseInt(d)}</div>
-        <div>${MESES[calMonth].slice(0,3)}</div>
-      </div>
-      <div class="cal-evento-info">
-        <div class="cal-evento-nombre">${v.label}</div>
-        ${v.sub ? `<div class="cal-evento-sub">${v.sub}</div>` : ''}
-      </div>
-    </div>`;
-  }
-  eventosEl.innerHTML = evHtml;
-}
-
-document.getElementById('calPrev').addEventListener('click', () => {
-  calMonth--;
-  if (calMonth < 0) { ca
+  anclaItems.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + current));
+}, {passive:true});
+</script>
+</body>
+</html>
