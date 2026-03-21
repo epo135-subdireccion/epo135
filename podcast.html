@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diálogos · EPO 135</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --verde: #0f5e2f;
+  --verde-med: #1a7a3f;
+  --verde-claro: #2ea84f;
+  --azul: #0d3b6e;
+  --blanco: #ffffff;
+  --gris-fondo: #f5f7f6;
+  --gris-borde: #d8e2dc;
+  --texto: #0f1f17;
+  --texto-suave: #3d5248;
+  --dorado: #c8860a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Outfit', sans-serif; background: var(--gris-fondo); color: var(--texto); font-size: 15px; line-height: 1.6; }
+
+/* TOPBAR */
+.topbar { background: var(--azul); color: #fff; font-size: 11.5px; padding: 6px 2rem; display: flex; justify-content: space-between; align-items: center; }
+.topbar a { color: rgba(255,255,255,0.75); text-decoration: none; }
+.topbar a:hover { color: #fff; }
+
+/* NAVBAR */
+.navbar { background: var(--verde); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
+.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 62px; }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; color: #fff; display: block; line-height: 1.1; }
+.nav-logo-sub { font-size: 10.5px; color: rgba(255,255,255,0.7); font-family: 'DM Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+.nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+.nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 13.5px; font-weight: 500; padding: 6px 14px; border-radius: 6px; transition: background .15s, color .15s; }
+.nav-links a:hover, .nav-links a.active { background: rgba(255,255,255,0.15); color: #fff; }
+.btn-padres { background: var(--dorado) !important; color: #fff !important; font-weight: 600 !important; padding: 7px 16px !important; border-radius: 6px; }
+.btn-padres:hover { background: #a86e06 !important; }
+
+/* PAGE HEADER */
+.page-header { background: linear-gradient(135deg, #0d3b6e 55%, #0f5e2f 100%); padding: 3rem 2rem 2.5rem; position: relative; overflow: hidden; }
+.page-header-deco { position: absolute; right: 40px; top: 50%; transform: translateY(-50%); opacity: 0.06; }
+.page-header-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
+.page-header-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin-bottom: 1rem; }
+.page-header h1 { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 0.6rem; }
+.page-header p { font-size: 14.5px; color: rgba(255,255,255,0.72); max-width: 520px; }
+
+/* BUSCADOR */
+.buscador-bar { background: var(--blanco); border-bottom: 1px solid var(--gris-borde); padding: 0.75rem 2rem; position: sticky; top: 62px; z-index: 100; }
+.buscador-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 10px; }
+.buscador-wrap { display: flex; align-items: center; gap: 8px; border: 1.5px solid var(--gris-borde); border-radius: 20px; padding: 5px 14px; background: var(--gris-fondo); transition: border-color .15s; width: 280px; }
+.buscador-wrap:focus-within { border-color: var(--verde-med); }
+.buscador-wrap svg { width: 14px; height: 14px; color: var(--texto-suave); flex-shrink: 0; }
+.buscador-wrap input { border: none; background: transparent; font-family: 'Outfit', sans-serif; font-size: 13px; color: var(--texto); outline: none; width: 100%; }
+.buscador-wrap input::placeholder { color: #aab7b0; }
+.contador { font-family: 'DM Mono', monospace; font-size: 11px; color: #8fa898; margin-left: auto; }
+
+/* MAIN */
+.main { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 3rem; }
+
+/* REPRODUCTOR DESTACADO */
+.player-destacado {
+  background: linear-gradient(135deg, var(--azul) 60%, #0f5e2f);
+  border-radius: 16px; padding: 2rem; margin-bottom: 2rem;
+  position: relative; overflow: hidden;
+}
+.player-destacado-deco { position: absolute; right: -10px; top: -10px; opacity: 0.05; }
+.pd-tag { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.18); padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 0.7rem; }
+.pd-titulo { font-family: 'Fraunces', serif; font-size: 1.35rem; font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: 0.5rem; }
+.pd-desc { font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 1.3rem; min-height: 1.3em; }
+
+/* CONTROLES DEL REPRODUCTOR */
+.controles {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px; padding: 0.9rem 1.1rem;
+  display: flex; align-items: center; gap: 0.9rem;
+}
+.play-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--blanco); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: transform .15s, box-shadow .15s;
+}
+.play-btn:hover { transform: scale(1.07); box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+.play-btn svg { width: 17px; height: 17px; color: var(--azul); margin-left: 2px; }
+.play-btn.pause svg { margin-left: 0; }
+.barra-wrap { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+.barra {
+  width: 100%; height: 4px; background: rgba(255,255,255,0.15);
+  border-radius: 4px; cursor: pointer; position: relative;
+}
+.barra:hover { height: 6px; }
+.progreso { height: 100%; border-radius: 4px; background: var(--verde-claro); width: 0%; pointer-events: none; transition: width 0.25s linear; }
+.tiempos { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 10.5px; color: rgba(255,255,255,0.45); }
+.vol-btn { background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.55); display: flex; align-items: center; transition: color .15s; }
+.vol-btn:hover { color: #fff; }
+.vol-btn svg { width: 17px; height: 17px; }
+
+/* LISTA DE DIÁLOGOS */
+.sec-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #8fa898; margin-bottom: 1rem; }
+.dialogos-lista { display: flex; flex-direction: column; gap: 8px; }
+
+/* TARJETA */
+.dialogo-card {
+  background: var(--blanco); border: 1px solid var(--gris-borde);
+  border-radius: 11px; padding: 0.9rem 1.2rem;
+  display: flex; align-items: center; gap: 1rem;
+  cursor: pointer; transition: box-shadow .18s, transform .18s, border-color .18s;
+}
+.dialogo-card:hover { box-shadow: 0 4px 16px rgba(15,94,47,0.1); transform: translateY(-1px); border-color: #b8d4c2; }
+.dialogo-card.activo { border-color: var(--verde-med); box-shadow: 0 0 0 3px rgba(30,122,63,0.1); }
+.d-num { font-family: 'DM Mono', monospace; font-size: 11px; color: #c0cdc5; width: 20px; text-align: right; flex-shrink: 0; }
+.d-icono { width: 44px; height: 44px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.d-info { flex: 1; min-width: 0; }
+.d-cat { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--verde-claro); margin-bottom: 2px; }
+.d-titulo { font-family: 'Fraunces', serif; font-size: 14.5px; font-weight: 700; color: var(--texto); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.d-desc { font-size: 12px; color: var(--texto-suave); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* mini indicador de reproducción */
+.d-estado { flex-shrink: 0; display: flex; align-items: center; }
+.ondas { display: flex; align-items: flex-end; gap: 2px; height: 16px; opacity: 0; transition: opacity .2s; }
+.ondas span { display: block; width: 3px; background: var(--verde-claro); border-radius: 2px; animation: onda 0.8s ease-in-out infinite; }
+.ondas span:nth-child(1) { height: 6px; animation-delay: 0s; }
+.ondas span:nth-child(2) { height: 12px; animation-delay: 0.15s; }
+.ondas span:nth-child(3) { height: 8px; animation-delay: 0.3s; }
+.ondas span:nth-child(4) { height: 14px; animation-delay: 0.1s; }
+.ondas.visible { opacity: 1; }
+@keyframes onda {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+.icono-play-mini { color: #c0cdc5; opacity: 1; }
+.dialogo-card.activo .icono-play-mini { color: var(--verde-claro); }
+
+/* EMPTY */
+.empty { text-align: center; padding: 3rem 1rem; color: var(--texto-suave); display: none; }
+.empty svg { width: 38px; height: 38px; opacity: 0.2; margin: 0 auto 0.8rem; display: block; }
+
+/* FOOTER */
+footer { background: var(--azul); color: rgba(255,255,255,0.6); padding: 2.5rem 2rem 0; }
+.footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem; padding-bottom: 2rem; }
+.footer-col h4 { font-family: 'Fraunces', serif; font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.9); margin-bottom: 1rem; }
+.footer-col a { display: block; font-size: 12.5px; color: rgba(255,255,255,0.55); text-decoration: none; margin-bottom: 6px; transition: color .15s; }
+.footer-col a:hover { color: rgba(255,255,255,0.9); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); max-width: 1100px; margin: 0 auto; padding: 1rem 0 1.2rem; display: flex; justify-content: space-between; font-size: 11.5px; color: rgba(255,255,255,0.3); }
+
+@media (max-width: 700px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .footer-bottom { flex-direction: column; gap: 6px; }
+  .nav-links { display: none; }
+  .topbar div { display: none; }
+  .d-num { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>EPO 135 · Bachillerato General · Río Frío de Juárez, Ixtapaluca</span>
+  <div style="display:flex;gap:1.5rem">
+    <a href="#">Intranet docente</a>
+    <a href="#">Correo institucional</a>
+    <a href="#">Contacto</a>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 44 44" fill="none" width="40" height="40">
+          <rect x="2" y="2" width="40" height="40" rx="8" fill="white" fill-opacity="0.12"/>
+          <path d="M22 8 L36 16 L36 28 L22 36 L8 28 L8 16 Z" stroke="white" stroke-width="1.8" fill="none"/>
+          <path d="M22 14 L30 19 L30 25 L22 30 L14 25 L14 19 Z" stroke="white" stroke-width="1.4" fill="none"/>
+          <circle cx="22" cy="22" r="3" fill="white" fill-opacity="0.85"/>
+        </svg>
+      </div>
+      <div>
+        <span class="nav-logo-title">EPO 135</span>
+        <span class="nav-logo-sub">Río Frío de Juárez</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="index.html#anuncios">Anuncios</a></li>
+      <li><a href="index.html#calendario">Calendario</a></li>
+      <li><a href="podcast.html" class="active">Diálogos</a></li>
+      <li><a href="#">Contacto</a></li>
+      <li><a href="padres.html" class="btn-padres">Para padres</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-deco">
+    <svg viewBox="0 0 300 300" fill="none" width="260" height="260">
+      <circle cx="150" cy="150" r="140" stroke="white" stroke-width="1.5"/>
+      <circle cx="150" cy="150" r="90" stroke="white" stroke-width="1.5"/>
+      <circle cx="150" cy="150" r="40" stroke="white" stroke-width="1.5"/>
+      <circle cx="150" cy="150" r="12" fill="white"/>
+    </svg>
+  </div>
+  <div class="page-header-inner">
+    <div class="page-header-tag">📖 Materiales educativos en audio</div>
+    <h1>Diálogos de consulta</h1>
+    <p>Diálogos en audio sobre libros y textos educativos para referencia y consulta del plantel.</p>
+  </div>
+</div>
+
+<!-- BUSCADOR -->
+<div class="buscador-bar">
+  <div class="buscador-inner">
+    <div class="buscador-wrap">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="6.5" cy="6.5" r="4.5"/><path d="M10 10 L14 14"/>
+      </svg>
+      <input type="text" placeholder="Buscar diálogo…" oninput="buscar(this.value)">
+    </div>
+    <span class="contador" id="contador">7 diálogos</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- REPRODUCTOR DESTACADO -->
+  <div class="player-destacado">
+    <div class="player-destacado-deco">
+      <svg viewBox="0 0 200 200" fill="none" width="200" height="200">
+        <circle cx="100" cy="100" r="90" stroke="white" stroke-width="2"/>
+        <circle cx="100" cy="100" r="50" stroke="white" stroke-width="2"/>
+        <circle cx="100" cy="100" r="15" fill="white"/>
+      </svg>
+    </div>
+    <div class="pd-tag" id="pdTag">Educativo · Diálogo</div>
+    <div class="pd-titulo" id="pdTitulo">Selecciona un diálogo</div>
+    <div class="pd-desc" id="pdDesc">Elige un título de la lista para comenzar a escuchar.</div>
+    <div class="controles">
+      <button class="play-btn" id="playBtn" onclick="togglePlay()">
+        <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div class="barra-wrap">
+        <div class="barra" id="barra" onclick="seek(event)">
+          <div class="progreso" id="progreso"></div>
+        </div>
+        <div class="tiempos">
+          <span id="tiempoActual">0:00</span>
+          <span id="tiempoTotal">0:00</span>
+        </div>
+      </div>
+      <button class="vol-btn" onclick="toggleMute()" title="Silenciar">
+        <svg id="volIcon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- LISTA -->
+  <div class="sec-label">Todos los diálogos</div>
+  <div class="dialogos-lista" id="dialogosLista"></div>
+  <div class="empty" id="emptyState">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M9 19V6l12-3v13M9 19c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm12-3c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"/>
+    </svg>
+    <p>No se encontraron diálogos.</p>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>EPO 135 · Río Frío de Juárez</h4>
+      <div style="font-size:12px;margin-bottom:6px">Calle Vista Hermosa s/n, Río Frío de Juárez, Ixtapaluca, Edo. Méx.</div>
+      <div style="font-size:12px;margin-bottom:6px"><a href="tel:5559420717" style="color:rgba(255,255,255,0.75);text-decoration:none">555-942-0717</a></div>
+      <div style="font-size:12px"><a href="https://epo135subdireccion.weebly.com" target="_blank" style="color:rgba(255,255,255,0.75);text-decoration:none">epo135subdireccion.weebly.com</a></div>
+    </div>
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <a href="index.html">Inicio</a>
+      <a href="index.html#anuncios">Anuncios</a>
+      <a href="index.html#calendario">Calendario escolar</a>
+      <a href="podcast.html">Diálogos</a>
+      <a href="padres.html">Para padres</a>
+    </div>
+    <div class="footer-col">
+      <h4>Diálogos</h4>
+      <a href="#">Libros y materiales</a>
+      <a href="#">Educativos</a>
+    </div>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;padding:1rem 0 0;border-top:1px solid rgba(255,255,255,0.1)">
+    <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:0.8rem">
+      Segundo semestre 2025–2026 · 11 feb – 15 jul · 93 días hábiles
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 EPO 135 · Todos los derechos reservados</span>
+    <span>Subdirección Escolar · Marzo 2026 · Desarrollado con Claude</span>
+  </div>
+</footer>
+
+<audio id="audioEl" preload="none"></audio>
+
+<script>
+// Base URL del repositorio — ajusta si cambias de rama o carpeta
+const BASE = 'https://raw.githubusercontent.com/epo135-subdireccion/audio/main/audio/';
+
+// ════════════════════════════════════
+//  DATOS DE DIÁLOGOS
+//  Para agregar más: copia un bloque
+//  y actualiza id, titulo, desc, archivo
+// ════════════════════════════════════
+const DIALOGOS = [
+  {
+    id: 1,
+    titulo: 'Cómo aterrizar el paradigma ignaciano en clase',
+    desc: '',
+    color: '#0f5e2f',
+    archivo: 'Cómo_aterrizar_el_paradigma_ignaciano_en_clase.mp3'
+  },
+  {
+    id: 2,
+    titulo: 'Cómo la historia inventó la juventud',
+    desc: '',
+    color: '#1a5ca0',
+    archivo: 'Cómo_la_historia_inventó_la_juventud.mp3'
+  },
+  {
+    id: 3,
+    titulo: 'Cómo lograr un aprendizaje significativo',
+    desc: '',
+    color: '#5c3a9e',
+    archivo: 'Cómo_lograr_un_aprendizaje_significativo.mp3'
+  },
+  {
+    id: 4,
+    titulo: 'Cómo no ser un monstruo intelectual',
+    desc: '',
+    color: '#c8860a',
+    archivo: 'Cómo_no_ser_un_monstruo_intelectual.mp3'
+  },
+  {
+    id: 5,
+    titulo: 'De la tortura al control invisible',
+    desc: '',
+    color: '#c0392b',
+    archivo: 'De_la_tortura_al_control_invisible.mp3'
+  },
+  {
+    id: 6,
+    titulo: 'El peligro del profesor perfecto',
+    desc: '',
+    color: '#0d3b6e',
+    archivo: 'El_peligro_del_profesor_perfecto.mp3'
+  },
+  {
+    id: 7,
+    titulo: 'Por qué la escuela expulsa estudiantes',
+    desc: '',
+    color: '#2ea84f',
+    archivo: 'Por_qué_la_escuela_expulsa_estudiantes.mp3'
+  }
+];
+
+// ════════════════════════════════════
+//  ESTADO
+// ════════════════════════════════════
+const audio = document.getElementById('audioEl');
+let idActivo = null;
+let reproduciendo = false;
+let textoBusqueda = '';
+
+function fmt(s) {
+  if (isNaN(s) || !isFinite(s)) return '0:00';
+  const m = Math.floor(s / 60), seg = Math.floor(s % 60);
+  return m + ':' + String(seg).padStart(2, '0');
+}
+
+// ════════════════════════════════════
+//  CARGAR EPISODIO
+// ════════════════════════════════════
+function cargar(id) {
+  const d = DIALOGOS.find(x => x.id === id);
+  if (!d) return;
+
+  idActivo = id;
+  reproduciendo = false;
+
+  // Actualizar reproductor destacado
+  document.getElementById('pdTitulo').textContent = d.titulo;
+  document.getElementById('pdDesc').textContent = d.desc || 'Diálogo educativo · EPO 135';
+  document.getElementById('progreso').style.width = '0%';
+  document.getElementById('tiempoActual').textContent = '0:00';
+  document.getElementById('tiempoTotal').textContent = '0:00';
+  setIconPlay(false);
+
+  // Cargar audio
+  audio.src = BASE + encodeURIComponent(d.archivo);
+  audio.load();
+
+  // Marcar tarjeta activa y ocultar ondas de todas
+  document.querySelectorAll('.dialogo-card').forEach(c => {
+    c.classList.remove('activo');
+    c.querySelector('.ondas').classList.remove('visible');
+  });
+  const card = document.querySelector('[data-id="' + id + '"]');
+  if (card) card.classList.add('activo');
+
+  // Auto-play
+  audio.play().then(() => {
+    reproduciendo = true;
+    setIconPlay(true);
+    if (card) card.querySelector('.ondas').classList.add('visible');
+  }).catch(() => {});
+}
+
+function togglePlay() {
+  if (idActivo === null) return;
+  if (reproduciendo) {
+    audio.pause();
+    reproduciendo = false;
+    setIconPlay(false);
+    const c = document.querySelector('[data-id="' + idActivo + '"]');
+    if (c) c.querySelector('.ondas').classList.remove('visible');
+  } else {
+    audio.play().then(() => {
+      reproduciendo = true;
+      setIconPlay(true);
+      const c = document.querySelector('[data-id="' + idActivo + '"]');
+      if (c) c.querySelector('.ondas').classList.add('visible');
+    });
+  }
+}
+
+function setIconPlay(playing) {
+  document.getElementById('playIcon').innerHTML = playing
+    ? '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'
+    : '<path d="M8 5v14l11-7z"/>';
+  const btn = document.getElementById('playBtn');
+  btn.classList.toggle('pause', playing);
+}
+
+function seek(e) {
+  if (!audio.duration) return;
+  const r = e.currentTarget.getBoundingClientRect();
+  audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+}
+
+function toggleMute() {
+  audio.muted = !audio.muted;
+  document.getElementById('volIcon').innerHTML = audio.muted
+    ? '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>'
+    : '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>';
+}
+
+audio.addEventListener('timeupdate', () => {
+  if (!audio.duration) return;
+  const pct = (audio.currentTime / audio.duration) * 100;
+  document.getElementById('progreso').style.width = pct + '%';
+  document.getElementById('tiempoActual').textContent = fmt(audio.currentTime);
+  document.getElementById('tiempoTotal').textContent = fmt(audio.duration);
+});
+
+audio.addEventListener('ended', () => {
+  reproduciendo = false;
+  setIconPlay(false);
+  document.getElementById('progreso').style.width = '0%';
+  const c = document.querySelector('[data-id="' + idActivo + '"]');
+  if (c) c.querySelector('.ondas').classList.remove('visible');
+});
+
+// ════════════════════════════════════
+//  RENDER LISTA
+// ════════════════════════════════════
+function render() {
+  const lista = document.getElementById('dialogosLista');
+  const empty = document.getElementById('emptyState');
+  const contador = document.getElementById('contador');
+
+  const filtrados = DIALOGOS.filter(d =>
+    !textoBusqueda || d.titulo.toLowerCase().includes(textoBusqueda.toLowerCase())
+  );
+
+  contador.textContent = filtrados.length + ' diálogo' + (filtrados.length !== 1 ? 's' : '');
+
+  if (filtrados.length === 0) {
+    lista.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  lista.innerHTML = filtrados.map(function(d, i) {
+    const esActivo = d.id === idActivo;
+    return '<div class="dialogo-card' + (esActivo ? ' activo' : '') + '" data-id="' + d.id + '" onclick="cargar(' + d.id + ')">' +
+      '<span class="d-num">' + String(i + 1).padStart(2, '0') + '</span>' +
+      '<div class="d-icono" style="background:' + d.color + '18">📖</div>' +
+      '<div class="d-info">' +
+        '<div class="d-cat">Educativo · Diálogo</div>' +
+        '<div class="d-titulo">' + d.titulo + '</div>' +
+        (d.desc ? '<div class="d-desc">' + d.desc + '</div>' : '') +
+      '</div>' +
+      '<div class="d-estado">' +
+        '<div class="ondas' + (esActivo && reproduciendo ? ' visible' : '') + '">' +
+          '<span></span><span></span><span></span><span></span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function buscar(val) {
+  textoBusqueda = val;
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>
