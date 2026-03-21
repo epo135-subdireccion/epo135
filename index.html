@@ -1330,4 +1330,17 @@ function renderCal() {
 
 document.getElementById('calPrev').addEventListener('click', () => {
   calMonth--;
-  if (calMonth < 0) { ca
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCal();
+});
+
+document.getElementById('calNext').addEventListener('click', () => {
+  calMonth++;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  renderCal();
+});
+
+renderCal();
+</script>
+</body>
+</html>
