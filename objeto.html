@@ -1,0 +1,470 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitácora — Fernando Felipe Cortés Reyes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            padding: 36px 40px;
+        }
+
+        .header .label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #7ecfff;
+            margin-bottom: 8px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            color: #a0b4cc;
+        }
+
+        .header .date-badge {
+            display: inline-block;
+            margin-top: 16px;
+            background: rgba(126, 207, 255, 0.15);
+            border: 1px solid rgba(126, 207, 255, 0.3);
+            color: #7ecfff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        /* Body */
+        .body {
+            padding: 36px 40px;
+        }
+
+        /* Status bar */
+        .status-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-area {
+            background: #e8f0fe;
+            color: #1a73e8;
+        }
+
+        .badge-status {
+            background: #e6f4ea;
+            color: #1e7e34;
+        }
+
+        .badge-paused {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #1a73e8;
+            border-bottom: 2px solid #e8f0fe;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        thead tr {
+            background: #f4f6f9;
+        }
+
+        th {
+            text-align: left;
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #444;
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .selected {
+            color: #1e7e34;
+            font-weight: 600;
+        }
+
+        /* Concept cards */
+        .cards {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .card {
+            background: #f8faff;
+            border-left: 4px solid #1a73e8;
+            border-radius: 0 8px 8px 0;
+            padding: 16px 20px;
+        }
+
+        .card h3 {
+            font-size: 15px;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+
+        .card .card-meta {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Tension box */
+        .tension-box {
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 10px;
+            padding: 20px 24px;
+        }
+
+        .tension-box p {
+            font-size: 14px;
+            color: #5d4037;
+            line-height: 1.7;
+        }
+
+        .tension-box .tension-schema {
+            margin-top: 14px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #6d4c41;
+            background: rgba(0,0,0,0.04);
+            padding: 12px 16px;
+            border-radius: 6px;
+            line-height: 2;
+        }
+
+        /* Reading table */
+        .reading-box {
+            background: #f4f6f9;
+            border-radius: 10px;
+            padding: 20px 24px;
+        }
+
+        .book-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+
+        .book-meta {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 14px;
+        }
+
+        /* Research question */
+        .question-box {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 10px;
+            padding: 24px 28px;
+            color: white;
+        }
+
+        .question-box .q-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #7ecfff;
+            margin-bottom: 12px;
+        }
+
+        .question-box blockquote {
+            font-size: 16px;
+            font-style: italic;
+            line-height: 1.7;
+            color: #e8f4ff;
+            border-left: 3px solid #7ecfff;
+            padding-left: 16px;
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .check-box {
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            margin-top: 1px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f4f6f9;
+            padding: 20px 40px;
+            font-size: 12px;
+            color: #999;
+            border-top: 1px solid #e8e8e8;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <div class="label">Bitácora de Investigación</div>
+            <h1>Dinámicas de poder en cultura docente</h1>
+            <div class="subtitle">Fernando Felipe Cortés Reyes · Subdirector EPO 135</div>
+            <div class="date-badge">📅 15 de marzo de 2026</div>
+        </div>
+
+        <!-- Body -->
+        <div class="body">
+
+            <!-- Status -->
+            <div class="status-bar">
+                <span class="badge badge-area">🔬 Investigación Personal</span>
+                <span class="badge badge-paused">⏸ Estado anterior: En pausa</span>
+                <span class="badge badge-status">✅ Estado actual: Retomado</span>
+            </div>
+
+            <!-- Conceptos explorados -->
+            <div class="section">
+                <div class="section-title">Conceptos explorados</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concepto</th>
+                            <th>Autor</th>
+                            <th>Decisión</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Habitus</td>
+                            <td>Pierre Bourdieu</td>
+                            <td>Segunda entrada — pendiente</td>
+                        </tr>
+                        <tr>
+                            <td>Microfísica del poder</td>
+                            <td>Michel Foucault</td>
+                            <td class="selected">✅ Seleccionado para comenzar</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Desarrollo conceptual -->
+            <div class="section">
+                <div class="section-title">Desarrollo conceptual — Microfísica del poder</div>
+                <div class="cards">
+                    <div class="card">
+                        <h3>1. Saber-Poder</h3>
+                        <div class="card-meta">Foucault · Concepto interno 1</div>
+                        <p>Quien define lo verdadero ejerce poder. Aplicado al contexto escolar: ¿quién tiene autoridad epistémica en EPO 135? ¿El docente con más antigüedad equivale al que más sabe?</p>
+                    </div>
+                    <div class="card">
+                        <h3>2. Normalización</h3>
+                        <div class="card-meta">Foucault · Concepto interno 2</div>
+                        <p>El poder establece lo normal y señala lo desviado. Aplicado al contexto escolar: ¿qué se considera un "buen docente" en EPO 135? ¿Cómo se trata al docente que innova vs. el que replica lo tradicional?</p>
+                    </div>
+                    <div class="card">
+                        <h3>3. Vigilancia y el Panóptico</h3>
+                        <div class="card-meta">Foucault · Concepto interno 3</div>
+                        <p>El poder opera aunque no se ejerza físicamente. Aplicado al contexto escolar: ¿cómo cambia el comportamiento docente ante la presencia o ausencia de figuras de autoridad?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tensión teórica -->
+            <div class="section">
+                <div class="section-title">Tensión teórica identificada</div>
+                <div class="tension-box">
+                    <p>Fernando ocupa una posición <strong>doble</strong> en el campo que estudia: es simultáneamente <em>objeto del poder institucional</em> y <em>sujeto que ejerce poder</em> sobre otros. Esta posición requiere honestidad reflexiva — aquí entra <strong>Montaigne</strong> al marco teórico.</p>
+                    <div class="tension-schema">
+DIRECCIÓN / SUPERVISIÓN<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ poder sobre Fernando<br>
+&nbsp;&nbsp;&nbsp;[ FERNANDO ]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ poder sobre otros<br>
+DOCENTES / ESTUDIANTES
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lectura recomendada -->
+            <div class="section">
+                <div class="section-title">Texto de entrada recomendado</div>
+                <div class="reading-box">
+                    <div class="book-title">📖 Vigilar y Castigar</div>
+                    <div class="book-meta">Michel Foucault · 1975</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sección</th>
+                                <th>Motivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Cap. 1 · El cuerpo de los condenados</td>
+                                <td>Giro conceptual sobre el poder</td>
+                            </tr>
+                            <tr>
+                                <td>Cap. 3 · La disciplina</td>
+                                <td>Microfísica aplicada a instituciones</td>
+                            </tr>
+                            <tr>
+                                <td>Sección · El panóptico</td>
+                                <td>Imagen central para contextos escolares</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pregunta de investigación -->
+            <div class="section">
+                <div class="section-title">Pregunta de investigación preliminar</div>
+                <div class="question-box">
+                    <div class="q-label">🔍 Pregunta central</div>
+                    <blockquote>
+                        ¿De qué manera las micro-prácticas cotidianas en la cultura docente de la EPO 135 reproducen, negocian o resisten las relaciones de poder institucional?
+                    </blockquote>
+                </div>
+            </div>
+
+            <!-- Próximos pasos -->
+            <div class="section">
+                <div class="section-title">Próximos pasos</div>
+                <ul class="checklist">
+                    <li><div class="check-box"></div> Conseguir / localizar <strong>Vigilar y Castigar</strong></li>
+                    <li><div class="check-box"></div> Leer las secciones priorizadas</li>
+                    <li><div class="check-box"></div> Profundizar en uno de los tres conceptos internos</li>
+                    <li><div class="check-box"></div> Conectar Foucault con Freire en una segunda sesión</li>
+                    <li><div class="check-box"></div> Iniciar construcción formal del marco teórico</li>
+                </ul>
+            </div>
+
+            <!-- Conexiones -->
+            <div class="section">
+                <div class="section-title">Conexiones con otros proyectos</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Proyecto</th>
+                            <th>Vínculo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Colegiado · 26 mar 2026</td>
+                            <td>Posible espacio de observación de microfísica del poder en acción</td>
+                        </tr>
+                        <tr>
+                            <td>Perfil docente EPO 135</td>
+                            <td>Campo empírico natural para el objeto de estudio</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span>📋 Bitácora generada con apoyo de Claude</span>
+            <span>Sesión de trabajo · 15 mar 2026</span>
+        </div>
+
+    </div>
+</body>
+</html>
+```

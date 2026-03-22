@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Deportivo — Fernando Cortés</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #07090f;
+    --deep: #03050d;
+    --bills-blue: #00338d;
+    --bills-red: #c60c30;
+    --uae-red: #e3001b;
+    --uae-gold: #f0a500;
+    --teal: #00c9a7;
+    --cyan: #00d4ff;
+    --text: #dde2f0;
+    --muted: #697090;
+    --card: rgba(255,255,255,0.035);
+    --card-hover: rgba(255,255,255,0.065);
+    --border: rgba(255,255,255,0.07);
+    --border-bright: rgba(255,255,255,0.14);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--deep);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
+    background-size:48px 48px;
+    pointer-events:none; z-index:0;
+  }
+
+  /* HEADER */
+  header {
+    position:relative; z-index:10;
+    padding:28px 44px 22px;
+    border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+    background:linear-gradient(180deg,rgba(0,51,141,0.12) 0%,transparent 100%);
+  }
+  .h-left h1 {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:2.4rem; letter-spacing:3px; line-height:1;
+    background:linear-gradient(100deg,#fff 0%,var(--cyan) 55%,var(--uae-gold) 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .h-left p {
+    font-family:'Space Mono',monospace;
+    font-size:0.68rem; color:var(--muted); letter-spacing:2px;
+    text-transform:uppercase; margin-top:5px;
+  }
+  .h-right {
+    display:flex; flex-direction:column; align-items:flex-end; gap:6px;
+  }
+  .update-pill {
+    font-family:'Space Mono',monospace; font-size:0.66rem;
+    background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.25);
+    color:var(--cyan); padding:6px 14px; border-radius:4px; letter-spacing:1px;
+  }
+  .version-pill {
+    font-family:'Space Mono',monospace; font-size:0.6rem;
+    color:var(--muted); letter-spacing:1px;
+  }
+
+  /* MAIN LAYOUT */
+  main {
+    position:relative; z-index:10;
+    display:grid; grid-template-columns:1fr 1fr;
+  }
+  .panel {
+    padding:32px 40px;
+    border-right:1px solid var(--border);
+  }
+  .panel:last-child { border-right:none; }
+
+  /* PANEL HEADER */
+  .panel-header {
+    display:flex; align-items:center; gap:14px;
+    margin-bottom:28px; padding-bottom:18px;
+    border-bottom:1px solid var(--border);
+  }
+  .picon {
+    width:46px; height:46px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.3rem; flex-shrink:0;
+  }
+  .picon.cy { background:linear-gradient(135deg,#c00014,#ff4530); }
+  .picon.bu { background:linear-gradient(135deg,#00338d,#0055cc); }
+  .ptitle {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1.7rem; letter-spacing:2px; line-height:1;
+  }
+  .ptitle.cy { color:var(--uae-red); }
+  .ptitle.bu { color:#4a8af4; }
+  .psub {
+    font-family:'Space Mono',monospace;
+    font-size:0.63rem; color:var(--muted);
+    letter-spacing:1px; margin-top:3px;
+  }
+
+  /* SECTION TITLE */
+  .sec {
+    font-family:'Space Mono',monospace; font-size:0.6rem;
+    color:var(--muted); text-transform:uppercase; letter-spacing:2.5px;
+    margin-bottom:11px; display:flex; align-items:center; gap:8px;
+  }
+  .sec::after { content:''; flex:1; height:1px; background:var(--border); }
+
+  /* STAT GRID */
+  .sgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:24px; }
+  .sc {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:8px; padding:13px 10px; text-align:center;
+    transition:all 0.2s;
+  }
+  .sc:hover { background:var(--card-hover); border-color:var(--border-bright); }
+  .sn {
+    font-family:'Bebas Neue',sans-serif; font-size:1.9rem; line-height:1;
+  }
+  .sn.red { color:var(--uae-red); }
+  .sn.gold { color:var(--uae-gold); }
+  .sn.teal { color:var(--teal); }
+  .sn.blue { color:#4a8af4; }
+  .sn.bred { color:var(--bills-red); }
+  .sn.cyan { color:var(--cyan); }
+  .sn.warn { color:#ff9944; }
+  .sl {
+    font-family:'Space Mono',monospace; font-size:0.58rem;
+    color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-top:4px;
+  }
+
+  /* BADGES */
+  .badge {
+    display:inline-flex; align-items:center; gap:4px;
+    font-family:'Space Mono',monospace; font-size:0.6rem;
+    padding:3px 8px; border-radius:3px; letter-spacing:0.5px; font-weight:700;
+  }
+  .badge.win   { background:rgba(0,201,167,0.12); color:var(--teal);   border:1px solid rgba(0,201,167,0.3); }
+  .badge.live  { background:rgba(227,0,27,0.12);  color:#ff3b3b; border:1px solid rgba(227,0,27,0.35); animation:pulse 1.4s infinite; }
+  .badge.pod   { background:rgba(240,165,0,0.12); color:var(--uae-gold); border:1px solid rgba(240,165,0,0.3); }
+  .badge.pend  { background:rgba(255,255,255,0.05); color:var(--muted); border:1px solid var(--border); }
+  .badge.alert { background:rgba(255,100,0,0.12); color:#ff8844; border:1px solid rgba(255,100,0,0.3); }
+  .badge.new   { background:rgba(0,212,255,0.1);  color:var(--cyan); border:1px solid rgba(0,212,255,0.25); }
+  .badge.ext   { background:rgba(0,201,167,0.1);  color:var(--teal); border:1px solid rgba(0,201,167,0.25); }
+  .badge.fired { background:rgba(255,70,70,0.1);  color:#ff6060; border:1px solid rgba(255,70,70,0.3); }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.45} }
+  .dot { width:5px; height:5px; border-radius:50%; background:#ff3b3b; display:inline-block; animation:pulse 1s infinite; }
+
+  /* LIVE BOX */
+  .livebox {
+    background:linear-gradient(135deg,rgba(227,0,27,0.1),rgba(240,165,0,0.05));
+    border:1px solid rgba(227,0,27,0.28); border-radius:8px;
+    padding:15px; margin-bottom:22px;
+  }
+  .lbhead { display:flex; align-items:center; justify-content:space-between; margin-bottom:11px; }
+  .lbname { font-family:'Bebas Neue',sans-serif; font-size:1.25rem; letter-spacing:2px; color:var(--uae-gold); }
+  .gcrow { display:flex; align-items:center; gap:10px; padding:5px 0; font-size:0.8rem; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .gcrow:last-child { border-bottom:none; }
+  .gcpos { font-family:'Bebas Neue',sans-serif; font-size:1.15rem; width:22px; color:var(--uae-gold); flex-shrink:0; }
+  .gcname { flex:1; font-weight:500; }
+  .gcgap { font-family:'Space Mono',monospace; font-size:0.68rem; color:var(--muted); }
+  .gcgap.ldr { color:var(--teal); font-weight:700; }
+
+  /* RACE TABLE */
+  .rtable { width:100%; border-collapse:collapse; margin-bottom:22px; font-size:0.8rem; }
+  .rtable th {
+    font-family:'Space Mono',monospace; font-size:0.58rem;
+    letter-spacing:1.5px; color:var(--muted); text-transform:uppercase;
+    text-align:left; padding:5px 10px; border-bottom:1px solid var(--border);
+  }
+  .rtable td { padding:8px 10px; border-bottom:1px solid rgba(255,255,255,0.035); vertical-align:middle; }
+  .rtable tr:last-child td { border-bottom:none; }
+  .rtable tr:hover td { background:rgba(255,255,255,0.02); }
+
+  /* JERSEYS */
+  .jrow { display:flex; gap:9px; margin-bottom:22px; }
+  .jcard {
+    flex:1; background:var(--card); border:1px solid var(--border);
+    border-radius:8px; padding:11px; text-align:center;
+  }
+  .jemoji { font-size:1.7rem; display:block; margin-bottom:5px; }
+  .jlabel { font-family:'Space Mono',monospace; font-size:0.58rem; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+  .jstatus { font-size:0.73rem; font-weight:600; margin-top:3px; }
+  .jstatus.on  { color:var(--teal); }
+  .jstatus.off { color:var(--muted); }
+
+  /* MILESTONE BOX */
+  .milebox {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:8px; padding:13px 15px; margin-bottom:22px;
+  }
+  .mile { font-size:0.77rem; line-height:1.55; color:#a8b0cc; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .mile:last-child { border-bottom:none; }
+  .mile strong { color:var(--text); }
+
+  /* PLAYER ROWS */
+  .prow { display:flex; align-items:center; gap:11px; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .prow:last-child { border-bottom:none; }
+  .pnum { font-family:'Bebas Neue',sans-serif; font-size:1.2rem; color:var(--muted); width:30px; text-align:center; flex-shrink:0; }
+  .pinfo { flex:1; }
+  .pname { font-weight:600; font-size:0.83rem; }
+  .ppos { font-family:'Space Mono',monospace; font-size:0.6rem; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+
+  /* ALERT BOX */
+  .alertbox {
+    background:linear-gradient(135deg,rgba(255,80,0,0.1),rgba(198,12,48,0.07));
+    border:1px solid rgba(255,80,0,0.3); border-radius:8px;
+    padding:14px 16px; margin-bottom:22px;
+  }
+  .alertbox .atitle {
+    font-family:'Bebas Neue',sans-serif; font-size:1.1rem;
+    letter-spacing:2px; color:#ff6633; margin-bottom:8px;
+  }
+  .alertbox p { font-size:0.78rem; line-height:1.55; color:#b0b8cc; }
+  .alertbox strong { color:var(--text); }
+
+  /* DIVIDER */
+  .div { height:1px; background:var(--border); margin:18px 0; }
+
+  /* FOOTER */
+  footer {
+    position:relative; z-index:10;
+    border-top:1px solid var(--border);
+    padding:12px 44px;
+    display:flex; align-items:center; justify-content:space-between;
+    background:rgba(0,0,0,0.25);
+  }
+  footer p { font-family:'Space Mono',monospace; font-size:0.6rem; color:var(--muted); letter-spacing:1px; }
+  .ftag { color:var(--cyan); }
+
+  @media(max-width:860px){
+    main{ grid-template-columns:1fr; }
+    .panel{ border-right:none; border-bottom:1px solid var(--border); }
+    header{ flex-direction:column; gap:14px; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-left">
+    <h1>Dashboard Deportivo</h1>
+    <p>Fernando Cortés &nbsp;·&nbsp; Temporada 2025–2026 &nbsp;·&nbsp; v6.0</p>
+  </div>
+  <div class="h-right">
+    <div class="update-pill">Actualizado: 21 · MAR · 2026</div>
+    <div class="version-pill">v6.0 · Milán-San Remo · Bills FA cerrada</div>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════ PANEL CICLISMO ══════════ -->
+<div class="panel">
+  <div class="panel-header">
+    <div class="picon cy">🚴</div>
+    <div>
+      <div class="ptitle cy">Isaac del Toro</div>
+      <div class="psub">UAE Team Emirates · XRG &nbsp;·&nbsp; 2026 en curso</div>
+    </div>
+  </div>
+
+  <!-- Stats 2026 -->
+  <div class="sec">Temporada 2026 — Acumulado</div>
+  <div class="sgrid">
+    <div class="sc"><div class="sn gold">4</div><div class="sl">Podios 2026</div></div>
+    <div class="sc"><div class="sn teal">2</div><div class="sl">Victorias GC</div></div>
+    <div class="sc"><div class="sn red">Top 2</div><div class="sl">Ranking UCI</div></div>
+  </div>
+
+  <!-- Tirreno RESULTADO FINAL -->
+  <div class="livebox" style="background:linear-gradient(135deg,rgba(0,201,167,0.1),rgba(240,165,0,0.05));border-color:rgba(0,201,167,0.35);">
+    <div class="lbhead">
+      <div class="lbname">Tirreno–Adriático 2026</div>
+      <div class="badge win">🏆 CAMPEÓN</div>
+    </div>
+    <div style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:1.5px;margin-bottom:9px;">CG FINAL · 15 MAR 2026</div>
+    <div class="gcrow">
+      <div class="gcpos">1</div>
+      <div class="gcname"><strong style="color:var(--uae-gold)">Isaac del Toro</strong> 🇲🇽 🏆</div>
+      <div class="gcgap ldr">CAMPEÓN</div>
+    </div>
+    <div class="gcrow">
+      <div class="gcpos" style="color:var(--muted)">2</div>
+      <div class="gcname">Giulio Pellizzari 🇮🇹</div>
+      <div class="gcgap">+ 0:42</div>
+    </div>
+    <div class="gcrow">
+      <div class="gcpos" style="color:var(--muted)">3</div>
+      <div class="gcname">Matteo Jorgenson 🇺🇸</div>
+      <div class="gcgap">+ 0:43</div>
+    </div>
+    <div style="margin-top:9px;font-size:0.68rem;color:var(--teal);font-family:'Space Mono',monospace;line-height:1.5;">
+      ✓ 1° MEXICANO EN GANAR LA TIRRENO-ADRIÁTICO<br>
+      ✓ GANÓ E6 ETAPA REINA · Camerino 188 km<br>
+      ✓ 7° CICLISTA MÁS JOVEN EN 25 VICTORIAS WORLDTOUR
+    </div>
+  </div>
+
+  <!-- Milán-San Remo 2026 -->
+  <div class="livebox" style="background:linear-gradient(135deg,rgba(0,51,141,0.12),rgba(240,165,0,0.05));border-color:rgba(0,212,255,0.35);margin-bottom:14px;">
+    <div class="lbhead">
+      <div class="lbname">Milán–San Remo 2026</div>
+      <div class="badge win">✅ COMPLETADO</div>
+    </div>
+    <div style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:1.5px;margin-bottom:9px;">MONUMENTO · 21 MAR 2026 · 298 KM</div>
+    <div class="gcrow">
+      <div class="gcpos">1</div>
+      <div class="gcname"><strong>Tadej Pogačar</strong> 🇸🇮 — Victoria UAE</div>
+      <div class="gcgap ldr">GANADOR</div>
+    </div>
+    <div class="gcrow">
+      <div class="gcpos" style="color:var(--muted)">2</div>
+      <div class="gcname">Thomas Pidcock 🏴󠁧󠁢󠁥󠁮󠁧󠁿</div>
+      <div class="gcgap">Sprint</div>
+    </div>
+    <div class="gcrow">
+      <div class="gcpos" style="color:var(--muted)">—</div>
+      <div class="gcname"><strong style="color:var(--cyan)">Isaac del Toro</strong> 🇲🇽 — Gregario clave</div>
+      <div class="gcgap" style="color:var(--cyan)">Cipressa 🔥</div>
+    </div>
+    <div style="margin-top:9px;font-size:0.68rem;color:var(--cyan);font-family:'Space Mono',monospace;line-height:1.5;">
+      ✓ ACELERACIÓN EN LA CIPRESSA · Partió el pelotón<br>
+      ✓ SU TRABAJO fue determinante para el triunfo de Pogačar<br>
+      ✓ PAPEL CLAVE de latinoamericano en un Monumento
+    </div>
+  </div>
+
+  <!-- Resultados 2026 -->
+  <div class="sec">Resultados 2026</div>
+  <table class="rtable">
+    <thead><tr><th>Carrera</th><th>Resultado</th><th>Nota</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>UAE Tour</strong></td>
+        <td><span class="badge win">🏆 GC + 3 etapas</span></td>
+        <td style="font-size:0.7rem;color:var(--muted)">Llegada en solitario E6</td>
+      </tr>
+      <tr>
+        <td><strong>Strade Bianche</strong></td>
+        <td><span class="badge pod">🥉 3° lugar</span></td>
+        <td style="font-size:0.7rem;color:var(--muted)">Mejor clásica de su carrera</td>
+      </tr>
+      <tr>
+        <td><strong>Milán–San Remo</strong></td>
+        <td><span class="badge new">🏁 Gregario clave</span></td>
+        <td style="font-size:0.7rem;color:var(--muted)">Aceleración en la Cipressa · Victoria de Pogačar</td>
+      </tr>
+      <tr>
+        <td><strong>Tirreno-Adriático</strong></td>
+        <td><span class="badge win">🏆 Campeón</span></td>
+        <td style="font-size:0.7rem;color:var(--muted)">Ganó E6 en Camerino · +42s sobre Pellizzari · 1° mexicano en ganar la carrera</td>
+      </tr>
+      <tr>
+        <td style="color:var(--muted)">Vuelta al País Vasco</td>
+        <td><span class="badge pend">Próxima</span></td>
+        <td style="font-size:0.7rem;color:var(--muted)">Abril 2026</td>
+      </tr>
+      <tr>
+        <td style="color:var(--muted)">Giro de Italia</td>
+        <td><span class="badge pend">Mayo 2026</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Jerseys activos -->
+  <div class="sec">Maillots activos 2026</div>
+  <div class="jrow">
+    <div class="jcard" style="border-color:rgba(0,212,255,0.2)">
+      <span class="jemoji">🔵</span>
+      <div class="jlabel">Maglia Azzurra</div>
+      <div class="jstatus on">Tirreno 🏆 ✓</div>
+    </div>
+    <div class="jcard" style="border-color:rgba(227,0,27,0.2)">
+      <span class="jemoji">🔴</span>
+      <div class="jlabel">Jersey Rojo</div>
+      <div class="jstatus off">UAE Tour ✓</div>
+    </div>
+    <div class="jcard" style="border-color:rgba(255,255,255,0.08)">
+      <span class="jemoji">⚪</span>
+      <div class="jlabel">Mejor Joven</div>
+      <div class="jstatus off">UAE Tour ✓</div>
+    </div>
+  </div>
+
+  <!-- Hitos -->
+  <div class="sec">Hitos históricos</div>
+  <div class="milebox">
+    <div class="mile">🏔️ <strong>Giro 2025</strong> — 2° general, 10 días con maglia rosa, ganó E17 en el Mortirolo</div>
+    <div class="mile">📜 <strong>Récord</strong> — Más joven en ganar etapa vistiendo maglia rosa desde 1979</div>
+    <div class="mile">🇲🇽 <strong>Historia</strong> — Mejor mexicano en Grandes Vueltas · Mejor resultado clásica (Strade Bianche)</div>
+    <div class="mile">⚡ <strong>UAE Tour 2026</strong> — Campeón con 3 victorias de etapa y llegada en solitario +12s</div>
+    <div class="mile">🏆 <strong>Tirreno-Adriático 2026</strong> — Campeón · Ganó E6 en Camerino · 1° mexicano en ganar la carrera</div>
+    <div class="mile">📊 <strong>Ranking UCI</strong> — Top 2 del mundo · 7° ciclista más joven en 25 victorias WorldTour (22 años)</div>
+    <div class="mile">🔵 <strong>Milán-San Remo 2026</strong> — Gregario decisivo · Aceleración en la Cipressa que lanzó la victoria de Pogačar · Papel histórico de latinoamericano en un Monumento</div>
+  </div>
+
+</div>
+
+<!-- ══════════ PANEL BILLS ══════════ -->
+<div class="panel">
+  <div class="panel-header">
+    <div class="picon bu">🏈</div>
+    <div>
+      <div class="ptitle bu">Buffalo Bills</div>
+      <div class="psub">NFL · Free Agency 2026 Cerrada · Era Brady · DC Jim Leonhard · Draft Pick #26</div>
+    </div>
+  </div>
+
+  <!-- ALERTA CAMBIO COACH -->
+  <div class="alertbox">
+    <div class="atitle">⚡ CAMBIO DE ERA — NUEVO HEAD COACH</div>
+    <p>Tras la derrota ante Denver en el Divisional Round (OT, 30-33) y <strong>4 años consecutivos eliminados en esa ronda</strong>, el dueño Terry Pegula tomó la decisión: <strong>Sean McDermott fue despedido el 19 de enero de 2026</strong>. En su lugar, el OC <strong>Joe Brady (36 años)</strong> firmó contrato de 5 años, convirtiéndose en el coach más joven activo de la NFL. Brady fue el primero en ser entrevistado y el elegido por continuidad con Josh Allen.</p>
+  </div>
+
+  <!-- OFFSEASON 2026 -->
+  <div class="sec">Movimientos Offseason 2026 — Free Agency Cerrada</div>
+
+  <!-- Adquisiciones FA -->
+  <div style="margin-bottom:4px;">
+    <div class="prow">
+      <div class="pnum">10</div>
+      <div class="pinfo">
+        <div class="pname">DJ Moore</div>
+        <div class="ppos">WR · Trade de Chicago Bears · Pick #60 (2ª ronda) + Pick #5</div>
+      </div>
+      <span class="badge new">TRADE</span>
+    </div>
+    <div class="prow">
+      <div class="pnum">17</div>
+      <div class="pinfo">
+        <div class="pname">Josh Allen</div>
+        <div class="ppos">QB · Reestructura contrato · 2 años · Libera cap space</div>
+      </div>
+      <span class="badge ext">REESTRUCTURA</span>
+    </div>
+    <div class="prow">
+      <div class="pnum">—</div>
+      <div class="pinfo">
+        <div class="pname">Bradley Chubb</div>
+        <div class="ppos">EDGE · Ex-Dolphins · 3 años / $43.5M ($29M gtd) · 8.5 sacks 2025</div>
+      </div>
+      <span class="badge new">NUEVO</span>
+    </div>
+    <div class="prow">
+      <div class="pnum">—</div>
+      <div class="pinfo">
+        <div class="pname">C.J. Gardner-Johnson</div>
+        <div class="ppos">S · Ex-Steelers · 1 año / $3.5M · Campeón SB LIX · Versatilidad en slot</div>
+      </div>
+      <span class="badge new">NUEVO</span>
+    </div>
+    <div class="prow">
+      <div class="pnum">—</div>
+      <div class="pinfo">
+        <div class="pname">Geno Stone</div>
+        <div class="ppos">S · Ex-Bengals · 1 año / mínimo veterano · 14 INT carrera · Ball-hawk</div>
+      </div>
+      <span class="badge new">NUEVO</span>
+    </div>
+    <div class="prow">
+      <div class="pnum">—</div>
+      <div class="pinfo">
+        <div class="pname">Dawson Knox</div>
+        <div class="ppos">TE · Reworked contract hasta 2028 · Pieza clave de Josh Allen</div>
+      </div>
+      <span class="badge ext">EXTENSIÓN</span>
+    </div>
+    <div class="prow">
+      <div class="pnum">—</div>
+      <div class="pinfo">
+        <div class="pname">Connor McGovern</div>
+        <div class="ppos">C · Re-firma · 4 años / $52M ($32M gtd) · Ancla de la línea ofensiva</div>
+      </div>
+      <span class="badge ext">RE-FIRMA</span>
+    </div>
+    <div class="prow">
+      <div class="pnum">—</div>
+      <div class="pinfo">
+        <div class="pname">Kyle Allen</div>
+        <div class="ppos">QB Backup · 2 años / $4.1M · Amigo personal de Josh Allen</div>
+      </div>
+      <span class="badge new">NUEVO</span>
+    </div>
+    <div class="prow">
+      <div class="pnum">—</div>
+      <div class="pinfo">
+        <div class="pname">Dee Alford</div>
+        <div class="ppos">CB/Nickel · Ex-Falcons · 3 años / $21M ($10M gtd) · 1ª firma de Leonhard</div>
+      </div>
+      <span class="badge new">NUEVO</span>
+    </div>
+    <div class="prow">
+      <div class="pnum">—</div>
+      <div class="pinfo">
+        <div class="pname">Ed Oliver · Spencer Brown · DT Oliver</div>
+        <div class="ppos">DT / OT · Reestructuras contractuales para liberar cap</div>
+      </div>
+      <span class="badge ext">REESTRUCTURA</span>
+    </div>
+    <div class="prow" style="opacity:0.55">
+      <div class="pnum">—</div>
+      <div class="pinfo">
+        <div class="pname">Taron Johnson · Mitch Trubisky · David Edwards</div>
+        <div class="ppos">CB (Raiders) · QB (Titans) · G (Saints · 4 años/$61M) — Liberados / tradeados</div>
+      </div>
+      <span class="badge fired">SALIDAS</span>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- Draft 2026 -->
+  <div class="sec">NFL Draft 2026 — Pick 26 · Pittsburgh · 23 Abr</div>
+  <div style="background:var(--card);border:1px solid rgba(240,165,0,0.2);border-radius:8px;padding:13px 15px;margin-bottom:18px;">
+    <p style="font-size:0.78rem;line-height:1.6;color:#a8b0cc;">
+      Los Bills entran al draft con el <strong style="color:var(--uae-gold)">pick #26</strong> en primera ronda — primera vez con esa posición desde 2006. Tras los movimientos de FA, las necesidades prioritarias son: <strong style="color:var(--text)">linebacker, línea ofensiva (guard izquierdo), EDGE depth</strong>. Solo 2 picks en el Top-100 tras el trade de DJ Moore.
+    </p>
+  </div>
+
+  <!-- Nuevo estadio -->
+  <div class="sec">Nuevo Highmark Stadium</div>
+  <div style="background:linear-gradient(135deg,rgba(0,51,141,0.2),rgba(0,212,255,0.05));border:1px solid rgba(0,51,141,0.35);border-radius:8px;padding:13px 15px;">
+    <p style="font-size:0.78rem;line-height:1.6;color:#a8b0cc;">
+      🏟️ <strong style="color:#4a8af4">2026 = Primera temporada en el nuevo estadio</strong>. El viejo Highmark será demolido. Diseñado como venue "football-first", el recinto promete ser uno de los mejores de la NFL y llega en el año de reinicio con Joe Brady al frente.
+    </p>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <p class="ftag">FERNANDO CORTÉS · DOCENTE · EDO. MÉXICO</p>
+  <p>🚴 Del Toro — UAE Tour + Tirreno 🏆🏆 · Milán-San Remo 🔑 &nbsp;·&nbsp; 🏈 Bills — Era Brady · FA Cerrada</p>
+  <p>v6.0 · 21 Mar 2026</p>
+</footer>
+
+</body>
+</html>
