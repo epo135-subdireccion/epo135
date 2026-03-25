@@ -478,7 +478,7 @@
     <h1 class="header-title">Gestión escolar<br><em>Fernando Felipe Cortés Reyes</em></h1>
     <p class="header-sub">Subdirector Escolar · 186 estudiantes · 6 semestres</p>
     <div class="header-meta">
-      <span class="meta-item"><span class="meta-dot"></span>Actualizado: 21 de marzo de 2026</span>
+      <span class="meta-item"><span class="meta-dot"></span>Actualizado: 24 de marzo de 2026</span>
       <span class="meta-item"><span class="meta-dot"></span>10 proyectos · 2 activos</span>
       <span class="meta-item"><span class="meta-dot"></span>Colegiado: 26 mar 2026</span>
     </div>
@@ -496,6 +496,7 @@
     <a href="#infraestructura" class="nav-item">Infraestructura</a>
     <a href="#perfil" class="nav-item">Perfil</a>
     <a href="#sitio" class="nav-item">Sitio web</a>
+    <a href="#tecnologia" class="nav-item">⚙ Tecnología</a>
     <a href="#running" class="nav-item">🏃 Running</a>
   </div>
 </nav>
@@ -793,6 +794,12 @@
       <div style="font-size:13px;color:var(--muted);line-height:1.6">Argumento: Los números no son para señalar — son para saber a quién acompañar y cómo.<br><br>
       · <em>Orientadora si está:</em> Presentarla formalmente antes de que hable. Protagonismo visible reduce distracción.<br>
       · <em>Si Gloria se la lleva:</em> No señalarlo. Continuar con Armando. Al regreso mencionar acuerdos tomados.</div>
+      <div style="margin-top:10px;padding:10px 12px;background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:6px;font-size:12px;color:var(--accent2)">
+        <strong style="font-weight:600">Actividad:</strong> Presentación de resultados de evaluaciones del 1er parcial 2025-B — dashboard interactivo por grupo (promedios, aprobación, alumnos en riesgo, UAC). Archivo: <code>dashboard_EPO135_Semaforo_v2.html</code>
+        <div style="margin-top:6px;padding-top:6px;border-top:1px solid var(--blue-border)">
+          <strong style="font-weight:600">Nueva función:</strong> Pestaña <em>🔍 Buscar Alumno</em> — seleccionar grado y grupo para consultar calificaciones parciales individuales, promedio parcial, conteo de UAC reprobadas y % de aprobación. Útil para análisis grupal en sesión.
+        </div>
+      </div>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px">
       <div style="font-size:13px;font-weight:500;margin-bottom:6px">T3 · Claude + NotebookLM</div>
@@ -1183,9 +1190,120 @@ Subdirector recibe notificación en Telegram</code>
 
 </section>
 
-<!-- ═══ 9. RUNNING ═══ -->
-<section class="section" id="running">
+<!-- ═══ 9. RECURSOS TECNOLÓGICOS ═══ -->
+<section class="section" id="tecnologia">
   <div class="section-label">Sección 9</div>
+  <h2 class="section-title">Recursos Tecnológicos — Autogestión</h2>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem">Herramientas digitales en uso activo · Flujos de trabajo con IA · Marzo 2026</p>
+
+  <!-- Flujo principal: YouTube → NotebookLM -->
+  <h3 style="font-size:14px;font-weight:600;margin-bottom:10px;color:var(--text)">Flujo: Audio de YouTube → Análisis con IA</h3>
+  <div class="callout callout-blue" style="margin-bottom:1rem">
+    <span class="callout-icon">🎙️</span>
+    <span>Extracción de audio desde videos de YouTube para análisis con NotebookLM, independiente de agregar el link como fuente directa. Útil para conferencias, ponencias y contenido educativo en video.</span>
+  </div>
+
+  <div class="projects">
+
+    <div class="project active">
+      <div class="project-header">
+        <span class="project-num">T·01</span>
+        <div>
+          <div class="project-title">yt-dlp — Extractor de audio YouTube</div>
+          <div style="margin-top:4px"><span class="badge badge-green">Instalado</span> <span class="badge badge-blue">Windows 11</span></div>
+        </div>
+      </div>
+      <div class="project-body">
+        <p>Herramienta de línea de comandos para descargar audio de YouTube como MP3. Software libre, sin registro, sin anuncios. Se actualiza automáticamente cuando YouTube cambia su sistema.</p>
+        <ul>
+          <li>Instalado vía pip + Python 3.14 · PATH configurado manualmente en variables de entorno</li>
+          <li>Requiere ffmpeg para conversión a MP3 · instalado vía <code>winget install ffmpeg</code></li>
+          <li>Ruta de scripts: <code>C:\Users\tupap\AppData\Local\Python\pythoncore-3.14-64\Scripts</code></li>
+        </ul>
+        <div class="mono" style="margin-top:10px"># Comando principal de descarga
+yt-dlp -x --audio-format mp3 "URL_DEL_VIDEO"
+
+# Actualizar cuando falle
+pip install --upgrade yt-dlp</div>
+      </div>
+    </div>
+
+    <div class="project active">
+      <div class="project-header">
+        <span class="project-num">T·02</span>
+        <div>
+          <div class="project-title">NotebookLM — Análisis de fuentes con IA</div>
+          <div style="margin-top:4px"><span class="badge badge-green">En uso activo</span> <span class="badge badge-blue">Google</span></div>
+        </div>
+      </div>
+      <div class="project-body">
+        <p>Plataforma de Google para analizar documentos, audios y fuentes con IA. Permite hacer preguntas, generar resúmenes y crear podcasts sobre el contenido cargado.</p>
+        <ul>
+          <li>Acepta archivos MP3 directamente como fuente de audio → los transcribe automáticamente</li>
+          <li>Flujo: descargar MP3 con yt-dlp → subir en "Agregar fuente" → "Archivo de audio"</li>
+          <li>Útil para conferencias, webinars y ponencias en video que no están disponibles como texto</li>
+          <li>Acceso: <code>notebooklm.google.com</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project active">
+      <div class="project-header">
+        <span class="project-num">T·03</span>
+        <div>
+          <div class="project-title">n8n + Claude + Telegram — Automatización institucional</div>
+          <div style="margin-top:4px"><span class="badge badge-amber">En aprendizaje</span> <span class="badge badge-blue">Free plan · desde mar 2026</span></div>
+        </div>
+      </div>
+      <div class="project-body">
+        <p>Proyecto de autoformación para construir flujos automatizados aplicables a EPO 135. Integra n8n como orquestador, Claude como motor de IA y Telegram como canal de entrega.</p>
+        <ul>
+          <li>Cuenta n8n.io activa desde ~14 marzo 2026 · plan gratuito</li>
+          <li>Objetivo: automatizar comunicados, recordatorios y consultas institucionales</li>
+          <li>Estado: exploración de flujos básicos y conexión entre servicios</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project active">
+      <div class="project-header">
+        <span class="project-num">T·04</span>
+        <div>
+          <div class="project-title">Claude (Anthropic) — Asistente IA principal</div>
+          <div style="margin-top:4px"><span class="badge badge-green">En uso activo</span></div>
+        </div>
+      </div>
+      <div class="project-body">
+        <p>Usado para generación y mejora del sitio EPO 135, creación de herramientas HTML educativas, análisis de datos de running, y resolución de flujos técnicos como la instalación de yt-dlp.</p>
+        <ul>
+          <li>Sitio web EPO 135 completo generado con asistencia de Claude (index, podcast, padres, docentes, recursos)</li>
+          <li>Herramientas HTML: organizadores gráficos, buscador de libros PDF, guías de instalación</li>
+          <li>Análisis de datos: running histórico 2021–2026 (296 sesiones), planificación Semana Santa</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tabla de comandos de referencia rápida -->
+  <h3 style="font-size:14px;font-weight:600;margin:1.5rem 0 10px;color:var(--text)">Referencia rápida — yt-dlp</h3>
+  <table class="data-table">
+    <thead><tr><th>Acción</th><th>Comando</th></tr></thead>
+    <tbody>
+      <tr><td>Descargar MP3 (estándar)</td><td><code>yt-dlp -x --audio-format mp3 "URL"</code></td></tr>
+      <tr><td>Descargar MP3 máxima calidad</td><td><code>yt-dlp -x --audio-format mp3 --audio-quality 0 "URL"</code></td></tr>
+      <tr><td>Guardar en carpeta específica</td><td><code>yt-dlp -x --audio-format mp3 -o "C:\Audios\%(title)s.%(ext)s" "URL"</code></td></tr>
+      <tr><td>Descargar playlist completa</td><td><code>yt-dlp -x --audio-format mp3 "URL_PLAYLIST"</code></td></tr>
+      <tr><td>Actualizar yt-dlp</td><td><code>pip install --upgrade yt-dlp</code></td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:12px;color:var(--hint);margin-top:1rem">Configurado: 23 de marzo de 2026 · PATH ajustado manualmente en variables de entorno del sistema</p>
+</section>
+
+<!-- ═══ 10. RUNNING ═══ -->
+<section class="section" id="running">
+  <div class="section-label">Sección 10</div>
   <h2 class="section-title">Rendimiento Running — Fernando Cortés</h2>
   <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem">Registro histórico completo · Adidas Running · Dic 2021 – Mar 2026</p>
 
@@ -1384,7 +1502,7 @@ Subdirector recibe notificación en Telegram</code>
 
 <footer class="footer">
   <p>Gestión EPO 135 · Fernando Felipe Cortés Reyes · Subdirector Escolar · <a href="index.html" style="color:inherit">← Sitio público</a></p>
-  <p style="margin-top:4px">Actualizado: 21 de marzo de 2026 · Generado con Claude · <a href="index.html" style="color:inherit">← Volver al sitio</a></p>
+  <p style="margin-top:4px">Actualizado: 24 de marzo de 2026 · Generado con Claude · <a href="index.html" style="color:inherit">← Volver al sitio</a></p>
 </footer>
 
 </body>
