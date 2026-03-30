@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analizador de Funciones — EPO 135</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & ROOT ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green-dark:  #1a4a2e;
+  --green-mid:   #2d6a4f;
+  --green-light: #52b788;
+  --green-pale:  #d8f3dc;
+  --gold:        #e9c46a;
+  --gold-dark:   #b8932a;
+  --blue-accent: #1a56db;
+  --blue-light:  #e6f1fb;
+  --surface:     #f8f9fa;
+  --surface2:    #f0f2f0;
+  --border:      rgba(0,0,0,0.10);
+  --border2:     rgba(0,0,0,0.18);
+  --text:        #1a1f1c;
+  --text2:       #4a5550;
+  --text3:       #8a9490;
+  --mono:        'DM Mono', monospace;
+  --sans:        'Outfit', sans-serif;
+  --serif:       'Fraunces', serif;
+  --radius:      8px;
+  --radius-lg:   12px;
+  --shadow:      0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg:   0 4px 24px rgba(0,0,0,0.12);
+}
+body {
+  font-family: var(--sans);
+  background: var(--surface);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ===== HEADER ===== */
+.site-header {
+  background: var(--green-dark);
+  color: white;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.site-header .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.site-header .logo-mark {
+  width: 32px; height: 32px;
+  background: var(--gold);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--green-dark);
+  flex-shrink: 0;
+}
+.site-header .brand-name {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  line-height: 1.2;
+}
+.site-header .brand-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.6);
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
+}
+.site-header .header-nav {
+  display: flex;
+  gap: 4px;
+}
+.site-header .hnav-btn {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-family: var(--sans);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  transition: all .15s;
+}
+.site-header .hnav-btn:hover,
+.site-header .hnav-btn.active {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border-color: rgba(255,255,255,0.4);
+}
+.site-header .version-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 7px;
+  background: rgba(233,196,106,0.2);
+  border: 1px solid rgba(233,196,106,0.4);
+  color: var(--gold);
+  border-radius: 10px;
+}
+
+/* ===== MAIN SCREENS ===== */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ===== DASHBOARD ===== */
+.dashboard {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+}
+.dash-hero {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
+  color: white;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.dash-hero::before {
+  content: '';
+  position: absolute;
+  right: -40px; top: -40px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.dash-hero::after {
+  content: '';
+  position: absolute;
+  right: 60px; bottom: -60px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(233,196,106,0.08);
+}
+.dash-hero h1 {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.dash-hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+.dash-hero p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  max-width: 480px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.dash-hero .start-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: var(--gold);
+  color: var(--green-dark);
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  text-decoration: none;
+}
+.dash-hero .start-btn:hover { background: #f0cd7a; transform: translateY(-1px); }
+.dash-hero .meta {
+  margin-top: 20px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.dash-hero .meta-item {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--mono);
+}
+.dash-hero .meta-item strong {
+  color: rgba(255,255,255,0.9);
+  font-weight: 500;
+}
+
+.dash-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.dash-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  cursor: pointer;
+  transition: all .15s;
+  position: relative;
+}
+.dash-card:hover {
+  border-color: var(--green-light);
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+}
+.dash-card .dc-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.dc-green { background: var(--green-pale); }
+.dc-gold  { background: #fef3c7; }
+.dc-blue  { background: var(--blue-light); }
+.dash-card h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.dash-card p {
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+.dash-card .dc-badge {
+  position: absolute;
+  top: 10px; right: 10px;
+  font-size: 9px;
+  font-family: var(--mono);
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: var(--green-pale);
+  color: var(--green-mid);
+}
+.changelog {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+.changelog-header {
+  padding: 12px 16px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  font-family: var(--mono);
+}
+.cl-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.cl-item:last-child { border-bottom: none; }
+.cl-ver {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--green-mid);
+  padding-top: 2px;
+}
+.cl-content h4 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.cl-content ul {
+  list-style: none;
+  padding: 0;
+}
+.cl-content ul li {
+  font-size: 11px;
+  color: var(--text2);
+  padding: 1px 0;
+  padding-left: 12px;
+  position: relative;
+}
+.cl-content ul li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--green-light);
+  font-weight: 700;
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.info-box {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+}
+.info-box h4 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.info-box p, .info-box li {
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+.info-box ul { list-style: none; padding: 0; }
+.info-box li::before { content: '→ '; color: var(--green-light); font-weight: 700; }
+
+/* ===== APP SCREEN ===== */
+.app-screen {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 52px);
+}
+.app-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: white;
+  padding: 0 12px;
+  gap: 2px;
+}
+.app-tab {
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text2);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .15s;
+  white-space: nowrap;
+  font-family: var(--sans);
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+.app-tab:hover { color: var(--text); }
+.app-tab.active {
+  color: var(--green-dark);
+  border-bottom-color: var(--green-mid);
+  font-weight: 600;
+}
+.app-pane { display: none; flex: 1; overflow: hidden; }
+.app-pane.active { display: flex; }
+
+/* ===== FUNCIÓN PANE ===== */
+.fn-wrap {
+  display: grid;
+  grid-template-columns: 262px 1fr;
+  flex: 1;
+  overflow: hidden;
+}
+.fn-panel {
+  border-right: 1px solid var(--border);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--surface2);
+  overflow-y: auto;
+}
+.fn-graph-area {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  overflow: hidden;
+}
+.slbl {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  margin-bottom: 4px;
+  font-family: var(--mono);
+}
+.fn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+.fb {
+  padding: 5px 4px;
+  font-size: 11px;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  background: white;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all .12s;
+  text-align: center;
+  font-family: var(--sans);
+}
+.fb:hover { color: var(--text); border-color: var(--green-light); }
+.fb.active {
+  background: var(--green-dark);
+  color: white;
+  border-color: var(--green-dark);
+}
+.prow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+}
+.prow:last-child { border-bottom: none; }
+.phdr { display: flex; justify-content: space-between; align-items: baseline; }
+.pname { font-size: 11px; font-style: italic; font-family: var(--mono); color: var(--text); }
+.pval { font-size: 11px; font-weight: 500; font-family: var(--mono); color: var(--green-mid); min-width: 36px; text-align: right; }
+.pdesc { font-size: 10px; color: var(--text3); }
+input[type=range] { width: 100%; accent-color: var(--green-mid); }
+.fbox {
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  background: white;
+}
+.ftxt {
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--green-dark);
+  font-weight: 500;
+  word-break: break-all;
+}
+.props-box { font-size: 11px; color: var(--text2); line-height: 1.8; }
+.props-box span { font-family: var(--mono); color: var(--text); font-size: 11px; }
+.irow { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; }
+.ic { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 5px 7px; }
+.il { font-size: 9px; color: var(--text3); font-family: var(--mono); }
+.iv { font-size: 11px; font-weight: 500; font-family: var(--mono); color: var(--text); }
+.toolbar {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.tbtn {
+  padding: 5px 10px;
+  font-size: 11px;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  background: white;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all .12s;
+  white-space: nowrap;
+  font-family: var(--sans);
+}
+.tbtn:hover { color: var(--text); border-color: var(--green-light); }
+.tbtn.on { background: var(--green-dark); color: white; border-color: var(--green-dark); }
+.tbl-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: white;
+}
+.tbl-wrap table { width: 100%; border-collapse: collapse; font-size: 11px; font-family: var(--mono); }
+.tbl-wrap th { padding: 4px 8px; text-align: right; color: var(--text3); font-weight: 500; border-bottom: 1px solid var(--border); font-size: 10px; }
+.tbl-wrap th:first-child { text-align: left; }
+.tbl-wrap td { padding: 3px 8px; text-align: right; color: var(--text); border-bottom: 1px solid var(--border); }
+.tbl-wrap td:first-child { text-align: left; color: var(--text2); }
+.tbl-wrap tr:last-child td { border-bottom: none; }
+.tbl-wrap tr.root-row td { color: var(--blue-accent); font-weight: 500; }
+canvas { border: 1px solid var(--border); border-radius: var(--radius-lg); display: block; width: 100%; }
+
+/* ===== SISTEMAS PANE ===== */
+.sys-wrap { display: grid; grid-template-columns: 290px 1fr; flex: 1; overflow: hidden; }
+.sys-panel {
+  border-right: 1px solid var(--border);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--surface2);
+  overflow-y: auto;
+}
+.sys-graph { padding: 10px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.stb {
+  padding: 7px 10px;
+  font-size: 11px;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  background: white;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all .12s;
+  text-align: left;
+  font-family: var(--sans);
+  width: 100%;
+  margin-bottom: 4px;
+}
+.stb:hover { color: var(--text); border-color: var(--green-light); }
+.stb.active { background: var(--green-dark); color: white; border-color: var(--green-dark); }
+.eq-block { display: flex; flex-direction: column; gap: 6px; }
+.eq-row { display: flex; align-items: center; gap: 5px; font-size: 12px; font-family: var(--mono); flex-wrap: wrap; }
+.eq-label { color: var(--text3); white-space: nowrap; min-width: 28px; }
+.eq-inp {
+  width: 50px;
+  font-size: 12px;
+  font-family: var(--mono);
+  padding: 4px 5px;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  background: white;
+  color: var(--text);
+  text-align: center;
+}
+.eq-inp:focus { outline: none; border-color: var(--green-light); }
+.sol-box {
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 10px;
+  background: white;
+}
+.sol-title { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; font-family: var(--mono); }
+.sol-val { font-size: 13px; font-family: var(--mono); font-weight: 500; color: var(--text); line-height: 1.8; }
+.sol-val.no-sol { color: #c2410c; }
+.sol-val.inf-sol { color: var(--blue-accent); }
+.badge { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 10px; font-weight: 500; margin-left: 6px; }
+.badge-green { background: var(--green-pale); color: var(--green-mid); }
+.badge-red { background: #fcebeb; color: #a32d2d; }
+.badge-blue { background: var(--blue-light); color: #185fa5; }
+
+@media (max-width: 660px) {
+  .fn-wrap, .sys-wrap { grid-template-columns: 1fr; }
+  .fn-panel, .sys-panel { border-right: none; border-bottom: 1px solid var(--border); max-height: 280px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .dash-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="brand">
+    <div class="logo-mark">EPO</div>
+    <div>
+      <div class="brand-name">EPO 135 — Analizador de Funciones</div>
+      <div class="brand-sub">Río Frío de Juárez · CCT 15EBH0262Z</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <div class="header-nav">
+      <button class="hnav-btn active" id="nav-dashboard" onclick="showScreen('dashboard')">Inicio</button>
+      <button class="hnav-btn" id="nav-app" onclick="showScreen('app')">Abrir herramienta</button>
+    </div>
+    <span class="version-badge">v3.0</span>
+  </div>
+</header>
+
+<!-- ===== DASHBOARD ===== -->
+<div class="screen active" id="screen-dashboard">
+  <div class="dashboard">
+
+    <div class="dash-hero">
+      <h1>Analizador de <em>Funciones Matemáticas</em></h1>
+      <p>Herramienta interactiva para estudiantes de preparatoria. Explora funciones, manipula parámetros en tiempo real, analiza sistemas de ecuaciones y exporta tus gráficas.</p>
+      <button class="start-btn" onclick="showScreen('app')">
+        Abrir herramienta &nbsp;→
+      </button>
+      <div class="meta">
+        <div class="meta-item"><strong>Institución:</strong> EPO 135</div>
+        <div class="meta-item"><strong>Nivel:</strong> Bachillerato general</div>
+        <div class="meta-item"><strong>Versión:</strong> 3.0 — Marzo 2026</div>
+        <div class="meta-item"><strong>Modo:</strong> Offline / Sin internet</div>
+      </div>
+    </div>
+
+    <div class="dash-section-title">Módulos disponibles</div>
+    <div class="dash-grid">
+      <div class="dash-card" onclick="showScreen('app')">
+        <div class="dc-icon dc-green">📈</div>
+        <div class="dc-badge">11 tipos</div>
+        <h3>Análisis de funciones</h3>
+        <p>Graficador interactivo con sliders para cada parámetro. Encuentra raíces, tabla de valores y exporta imagen.</p>
+      </div>
+      <div class="dash-card" onclick="showScreen('app');setTimeout(()=>switchAppTab('sistemas'),100)">
+        <div class="dc-icon dc-gold">⚖️</div>
+        <div class="dc-badge">7 tipos</div>
+        <h3>Sistemas de ecuaciones</h3>
+        <p>Lineales 2×2 y 3×3, y sistemas mixtos (lineal + cuadrática, cúbica, raíz, exponencial, logarítmica).</p>
+      </div>
+      <div class="dash-card" onclick="showScreen('app')">
+        <div class="dc-icon dc-green">📐</div>
+        <h3>Funciones trigonométricas</h3>
+        <p>Seno, coseno y tangente con control de amplitud, frecuencia, desfase y desplazamiento vertical.</p>
+      </div>
+      <div class="dash-card" onclick="showScreen('app')">
+        <div class="dc-icon dc-blue">📊</div>
+        <h3>Tabla de valores</h3>
+        <p>Genera tablas de 21 puntos en el rango visible. Las raíces se marcan automáticamente en azul.</p>
+      </div>
+      <div class="dash-card" onclick="showScreen('app')">
+        <div class="dc-icon dc-gold">🎯</div>
+        <h3>Búsqueda de raíces</h3>
+        <p>Algoritmo de bisección con precisión de 4 decimales. Las raíces aparecen como letreros sobre la gráfica.</p>
+      </div>
+      <div class="dash-card" onclick="showScreen('app')">
+        <div class="dc-icon dc-green">🖼️</div>
+        <h3>Exportar imagen</h3>
+        <p>Descarga la gráfica como PNG con marca institucional EPO 135 para imprimir o compartir.</p>
+      </div>
+    </div>
+
+    <div class="dash-section-title">Historial de versiones</div>
+    <div class="changelog">
+      <div class="changelog-header">CHANGELOG — Analizador de Funciones EPO 135</div>
+      <div class="cl-item">
+        <div class="cl-ver">v3.0<br><span style="font-size:9px;color:var(--text3)">Mar 2026</span></div>
+        <div class="cl-content">
+          <h4>Versión actual — Sistema completo</h4>
+          <ul>
+            <li>Pestaña "Sistemas de ecuaciones": lineal 2×2 y 3×3 (Gauss-Jordan), lineal+cuadrática, lineal+cúbica, lineal+raíz, lineal+exponencial, lineal+logarítmica</li>
+            <li>Intersecciones graficadas con letreros de coordenadas (algoritmo bisección)</li>
+            <li>Diagnóstico de sistemas: único, infinito, incompatible con badges de color</li>
+            <li>Eliminación de cotangente, secante y cosecante</li>
+            <li>Nuevas funciones: logaritmo base b (slider para la base) y logaritmo natural ln</li>
+            <li>Dashboard de bienvenida con changelog y módulos</li>
+            <li>Archivo HTML standalone completo para uso offline</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-ver">v2.0<br><span style="font-size:9px;color:var(--text3)">Mar 2026</span></div>
+        <div class="cl-content">
+          <h4>Trigonométricas, tabla y exportación</h4>
+          <ul>
+            <li>Funciones trigonométricas: seno, coseno, tangente, cosecante, secante, cotangente</li>
+            <li>Tabla de valores desplegable (21 puntos), raíces marcadas en azul</li>
+            <li>Raíces como letreros flotantes sobre el plano cartesiano</li>
+            <li>Exportar imagen PNG con marca EPO 135</li>
+            <li>Control de rango del eje x (campo numérico)</li>
+            <li>Grid adaptativo según el rango visible</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-ver">v1.0<br><span style="font-size:9px;color:var(--text3)">Mar 2026</span></div>
+        <div class="cl-content">
+          <h4>Versión inicial — Graficador base</h4>
+          <ul>
+            <li>8 tipos de función: lineal, cuadrática, cúbica, raíz cuadrada, valor absoluto, exponencial, logarítmica, senoidal</li>
+            <li>Panel lateral con sliders para cada literal/parámetro</li>
+            <li>Fórmula actualizada en tiempo real</li>
+            <li>Propiedades matemáticas (dominio, rango, vértice, asíntota)</li>
+            <li>Tarjetas de datos clave</li>
+            <li>Punto destacado en intercepto con eje y</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-section-title">Información institucional</div>
+    <div class="info-grid">
+      <div class="info-box">
+        <h4>🏫 Escuela Preparatoria Oficial Núm. 135</h4>
+        <ul>
+          <li>CCT: 15EBH0262Z</li>
+          <li>Ubicación: Río Frío de Juárez, Ixtapaluca, Edo. Méx.</li>
+          <li>Supervisión: BG 046 — Subdirección Regional Oriente</li>
+          <li>Directora: Mtra. Gloria Rosiles</li>
+          <li>Contacto: epo135@edugem.mx</li>
+          <li>Tel: 555-942-0717 · C.P. 56590</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>💡 Uso en el aula</h4>
+        <ul>
+          <li>Funciona sin internet (archivo HTML autónomo)</li>
+          <li>Compatible con Chrome, Edge, Firefox</li>
+          <li>Abre desde USB o carpeta compartida</li>
+          <li>Los alumnos pueden exportar e imprimir sus gráficas</li>
+          <li>Pendiente: modo presentación para proyector</li>
+          <li>Pendiente: banco de ejercicios por unidad</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== APP SCREEN ===== -->
+<div class="screen" id="screen-app">
+  <div class="app-screen">
+    <div class="app-tabs">
+      <button class="app-tab active" id="apptab-funciones" onclick="switchAppTab('funciones')">Análisis de funciones</button>
+      <button class="app-tab" id="apptab-sistemas" onclick="switchAppTab('sistemas')">Sistemas de ecuaciones</button>
+    </div>
+
+    <!-- PESTAÑA FUNCIONES -->
+    <div class="app-pane active" id="apppane-funciones">
+      <div class="fn-wrap">
+        <div class="fn-panel">
+          <div>
+            <div class="slbl">Tipo de función</div>
+            <div class="fn-grid" id="fn-grid">
+              <button class="fb active" data-fn="lineal">Lineal</button>
+              <button class="fb" data-fn="cuadratica">Cuadrática</button>
+              <button class="fb" data-fn="cubica">Cúbica</button>
+              <button class="fb" data-fn="raiz">Raíz cuad.</button>
+              <button class="fb" data-fn="valor_abs">Valor abs.</button>
+              <button class="fb" data-fn="exponencial">Exponencial</button>
+              <button class="fb" data-fn="logaritmica">Log base b</button>
+              <button class="fb" data-fn="logaritmica_natural">Log natural ln</button>
+              <button class="fb" data-fn="senoidal">Seno</button>
+              <button class="fb" data-fn="cosenoidal">Coseno</button>
+              <button class="fb" data-fn="tangente">Tangente</button>
+            </div>
+          </div>
+          <div>
+            <div class="slbl">Literales / parámetros</div>
+            <div id="params-container"></div>
+          </div>
+          <div>
+            <div class="slbl">Fórmula</div>
+            <div class="fbox"><div class="ftxt" id="formula-display"></div></div>
+          </div>
+          <div>
+            <div class="slbl">Propiedades</div>
+            <div class="props-box" id="props-display"></div>
+          </div>
+        </div>
+        <div class="fn-graph-area">
+          <div class="irow" id="info-row"></div>
+          <div class="toolbar">
+            <button class="tbtn" id="btn-tabla">Tabla de valores</button>
+            <button class="tbtn" id="btn-raices">Raíces</button>
+            <button class="tbtn" id="btn-export">Exportar imagen</button>
+            <label style="font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px;margin-left:auto">
+              x:&nbsp;<input type="number" id="xmin-in" value="-10" style="width:42px;font-size:11px;padding:3px 5px;border:1px solid var(--border2);border-radius:4px;background:white;color:var(--text)">
+              a&nbsp;<input type="number" id="xmax-in" value="10" style="width:42px;font-size:11px;padding:3px 5px;border:1px solid var(--border2);border-radius:4px;background:white;color:var(--text)">
+            </label>
+          </div>
+          <div style="position:relative;flex:1;min-height:300px"><canvas id="gc"></canvas></div>
+          <div id="tabla-container" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PESTAÑA SISTEMAS -->
+    <div class="app-pane" id="apppane-sistemas">
+      <div class="sys-wrap">
+        <div class="sys-panel">
+          <div>
+            <div class="slbl">Tipo de sistema</div>
+            <div id="sys-type-grid">
+              <button class="stb active" data-sys="lin2x2">Lineal 2×2</button>
+              <button class="stb" data-sys="lin3x3">Lineal 3×3</button>
+              <button class="stb" data-sys="lin_cuad">Lineal + Cuadrática</button>
+              <button class="stb" data-sys="lin_cub">Lineal + Cúbica</button>
+              <button class="stb" data-sys="lin_raiz">Lineal + Raíz cuad.</button>
+              <button class="stb" data-sys="lin_exp">Lineal + Exponencial</button>
+              <button class="stb" data-sys="lin_log">Lineal + Logarítmica</button>
+            </div>
+          </div>
+          <div id="sys-eq-block" class="eq-block"></div>
+          <div class="sol-box">
+            <div class="sol-title">Solución</div>
+            <div class="sol-val" id="sol-display">—</div>
+          </div>
+          <div>
+            <div class="slbl">Interpretación</div>
+            <div class="props-box" id="sys-props"></div>
+          </div>
+        </div>
+        <div class="sys-graph">
+          <div class="toolbar">
+            <button class="tbtn" id="btn-sys-export">Exportar imagen</button>
+            <label style="font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px;margin-left:auto">
+              x:&nbsp;<input type="number" id="sxmin" value="-10" style="width:42px;font-size:11px;padding:3px 5px;border:1px solid var(--border2);border-radius:4px;background:white;color:var(--text)">
+              a&nbsp;<input type="number" id="sxmax" value="10" style="width:42px;font-size:11px;padding:3px 5px;border:1px solid var(--border2);border-radius:4px;background:white;color:var(--text)">
+            </label>
+          </div>
+          <div style="position:relative;flex:1;min-height:340px"><canvas id="sc"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== NAV =====
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  document.querySelectorAll('.hnav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('nav-' + id).classList.add('active');
+  if (id === 'app') setTimeout(() => { drawFn(); }, 80);
+}
+function switchAppTab(tab) {
+  document.querySelectorAll('.app-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.app-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('apptab-' + tab).classList.add('active');
+  document.getElementById('apppane-' + tab).classList.add('active');
+  if (tab === 'sistemas') setTimeout(solveDraw, 60);
+  else setTimeout(drawFn, 60);
+}
+
+// ===== FUNCIONES =====
+const PI = Math.PI;
+function fmtA(v){if(v===1)return '';if(v===-1)return '-';return v%1===0?v:v.toFixed(1)}
+function fmtB(v){if(v===0)return '';return v>0?`+ ${v%1===0?v:v.toFixed(1)}`:`- ${Math.abs(v%1===0?v:v.toFixed(1))}`}
+function fmt(v){return isNaN(v)||!isFinite(v)?'–':+v.toFixed(4)===0?'0':v.toFixed(4)}
+
+const FUNS = {
+  lineal: {
+    params:[{id:'a',label:'a',desc:'pendiente',min:-5,max:5,step:.5,val:1},{id:'b',label:'b',desc:'ordenada al origen',min:-10,max:10,step:1,val:0}],
+    formula:(p)=>`f(x) = ${fmtA(p.a)}x ${fmtB(p.b)}`,
+    fn:(x,p)=>p.a*x+p.b,
+    props:(p)=>[`Pendiente: <span>${p.a}</span>`,`Int. y: <span>${p.b}</span>`,`Int. x: <span>${p.a!==0?(-p.b/p.a).toFixed(3):'sin def.'}</span>`,`Dominio: <span>ℝ</span>`,`Rango: <span>ℝ</span>`],
+    info:(p)=>({'Pendiente':p.a,'Int. y':p.b,'Int. x':p.a!==0?(+(-p.b/p.a).toFixed(2)):'-'})
+  },
+  cuadratica: {
+    params:[{id:'a',label:'a',desc:'coef. x²',min:-3,max:3,step:.5,val:1},{id:'b',label:'b',desc:'coef. x',min:-6,max:6,step:1,val:0},{id:'c',label:'c',desc:'constante',min:-10,max:10,step:1,val:0}],
+    formula:(p)=>`f(x) = ${fmtA(p.a)}x² ${fmtB(p.b)}x ${fmtB(p.c)}`,
+    fn:(x,p)=>p.a*x*x+p.b*x+p.c,
+    props:(p)=>{const vx=-p.b/(2*(p.a||1e-9));const vy=p.a*vx*vx+p.b*vx+p.c;const d=p.b*p.b-4*p.a*p.c;return[`Vértice: <span>(${vx.toFixed(2)}, ${vy.toFixed(2)})</span>`,`Discriminante: <span>${d.toFixed(2)}</span>`,`Raíces reales: <span>${d>0?2:d===0?1:0}</span>`,`Abre: <span>${p.a>0?'↑':p.a<0?'↓':'—'}</span>`]},
+    info:(p)=>{const vx=-p.b/(2*(p.a||1e-9));const vy=p.a*vx*vx+p.b*vx+p.c;return{'Vért. x':+vx.toFixed(2),'Vért. y':+vy.toFixed(2),'Disc.':(+((p.b*p.b-4*p.a*p.c).toFixed(2)))}}
+  },
+  cubica: {
+    params:[{id:'a',label:'a',desc:'coef. x³',min:-2,max:2,step:.5,val:1},{id:'b',label:'b',desc:'coef. x²',min:-4,max:4,step:1,val:0},{id:'c',label:'c',desc:'coef. x',min:-4,max:4,step:1,val:0},{id:'d',label:'d',desc:'constante',min:-10,max:10,step:1,val:0}],
+    formula:(p)=>`f(x) = ${fmtA(p.a)}x³ ${fmtB(p.b)}x² ${fmtB(p.c)}x ${fmtB(p.d)}`,
+    fn:(x,p)=>p.a*x**3+p.b*x*x+p.c*x+p.d,
+    props:()=>[`Dominio: <span>ℝ</span>`,`Rango: <span>ℝ</span>`],
+    info:(p)=>({'a':p.a,'d':p.d,'—':'—'})
+  },
+  raiz: {
+    params:[{id:'a',label:'a',desc:'amplitud',min:-3,max:3,step:.5,val:1},{id:'h',label:'h',desc:'desp. horiz.',min:-5,max:5,step:1,val:0},{id:'k',label:'k',desc:'desp. vert.',min:-5,max:5,step:1,val:0}],
+    formula:(p)=>`f(x) = ${fmtA(p.a)}√(x ${fmtB(-p.h)}) ${fmtB(p.k)}`,
+    fn:(x,p)=>{const v=x-p.h;return v>=0?p.a*Math.sqrt(v)+p.k:NaN},
+    props:(p)=>[`Dominio: <span>x ≥ ${p.h}</span>`,`Inicio: <span>(${p.h},${p.k})</span>`,`Rango: <span>${p.a>=0?'y ≥ '+p.k:'y ≤ '+p.k}</span>`],
+    info:(p)=>({'Dom.':p.h,'Rango':p.k,'a':p.a})
+  },
+  valor_abs: {
+    params:[{id:'a',label:'a',desc:'pendiente ramas',min:-3,max:3,step:.5,val:1},{id:'h',label:'h',desc:'vértice x',min:-6,max:6,step:1,val:0},{id:'k',label:'k',desc:'vértice y',min:-6,max:6,step:1,val:0}],
+    formula:(p)=>`f(x) = ${fmtA(p.a)}|x ${fmtB(-p.h)}| ${fmtB(p.k)}`,
+    fn:(x,p)=>p.a*Math.abs(x-p.h)+p.k,
+    props:(p)=>[`Vértice: <span>(${p.h},${p.k})</span>`,`Eje sim.: <span>x = ${p.h}</span>`,`Dominio: <span>ℝ</span>`],
+    info:(p)=>({'Vért. x':p.h,'Vért. y':p.k,'a':p.a})
+  },
+  exponencial: {
+    params:[{id:'a',label:'a',desc:'coef. inicial',min:-3,max:3,step:.5,val:1},{id:'b',label:'b',desc:'base (b > 0)',min:.1,max:4,step:.1,val:2},{id:'c',label:'c',desc:'desp. vertical',min:-5,max:5,step:1,val:0}],
+    formula:(p)=>`f(x) = ${fmtA(p.a)}(${p.b.toFixed(1)})ˣ ${fmtB(p.c)}`,
+    fn:(x,p)=>p.a*Math.pow(Math.max(p.b,.01),x)+p.c,
+    props:(p)=>[`Asíntota: <span>y = ${p.c}</span>`,`Int. y: <span>${(p.a+p.c).toFixed(2)}</span>`,`Comportamiento: <span>${p.b>1?'creciente':'decreciente'}</span>`],
+    info:(p)=>({'Base':+p.b.toFixed(2),'Asíntota':p.c,'Int. y':+(p.a+p.c).toFixed(2)})
+  },
+  logaritmica: {
+    params:[{id:'a',label:'a',desc:'amplitud',min:-3,max:3,step:.5,val:1},{id:'b',label:'b',desc:'base (b>0, b≠1)',min:.5,max:10,step:.5,val:10},{id:'h',label:'h',desc:'desp. horiz.',min:-4,max:4,step:1,val:0},{id:'k',label:'k',desc:'desp. vert.',min:-5,max:5,step:1,val:0}],
+    formula:(p)=>`f(x) = ${fmtA(p.a)}log_${p.b.toFixed(0)}(x ${fmtB(-p.h)}) ${fmtB(p.k)}`,
+    fn:(x,p)=>{const v=x-p.h;const base=Math.max(p.b,.001);return v>0&&base!==1?p.a*(Math.log(v)/Math.log(base))+p.k:NaN},
+    props:(p)=>[`Base: <span>${p.b.toFixed(1)}</span>`,`Asíntota vert.: <span>x = ${p.h}</span>`,`Dominio: <span>x > ${p.h}</span>`,`Rango: <span>ℝ</span>`],
+    info:(p)=>({'Base':+p.b.toFixed(1),'Asínt. x':p.h,'Desp. y':p.k})
+  },
+  logaritmica_natural: {
+    params:[{id:'a',label:'a',desc:'amplitud',min:-3,max:3,step:.5,val:1},{id:'h',label:'h',desc:'desp. horiz.',min:-4,max:4,step:1,val:0},{id:'k',label:'k',desc:'desp. vert.',min:-5,max:5,step:1,val:0}],
+    formula:(p)=>`f(x) = ${fmtA(p.a)}ln(x ${fmtB(-p.h)}) ${fmtB(p.k)}`,
+    fn:(x,p)=>{const v=x-p.h;return v>0?p.a*Math.log(v)+p.k:NaN},
+    props:(p)=>[`Base: <span>e ≈ 2.718</span>`,`Asíntota vert.: <span>x = ${p.h}</span>`,`Dominio: <span>x > ${p.h}</span>`,`Rango: <span>ℝ</span>`],
+    info:(p)=>({'Asínt. x':p.h,'Desp. y':p.k,'a':p.a})
+  },
+  senoidal: {
+    params:[{id:'a',label:'A',desc:'amplitud',min:-4,max:4,step:.5,val:1},{id:'b',label:'B',desc:'frec. angular',min:.5,max:4,step:.5,val:1},{id:'c',label:'C',desc:'desfase',min:-3,max:3,step:.5,val:0},{id:'d',label:'D',desc:'desp. vert.',min:-4,max:4,step:1,val:0}],
+    formula:(p)=>`f(x) = ${fmtA(p.a)}sen(${fmtA(p.b)}x ${fmtB(-p.c)}) ${fmtB(p.d)}`,
+    fn:(x,p)=>p.a*Math.sin(p.b*x-p.c)+p.d,
+    props:(p)=>[`Amplitud: <span>${Math.abs(p.a)}</span>`,`Período: <span>${(2*PI/(p.b||1)).toFixed(3)}</span>`,`Desfase: <span>${p.c}</span>`,`Rango: <span>[${p.d-Math.abs(p.a)}, ${p.d+Math.abs(p.a)}]</span>`],
+    info:(p)=>({'Amp.':Math.abs(p.a),'Período':+(2*PI/(p.b||1)).toFixed(3),'Desfase':p.c})
+  },
+  cosenoidal: {
+    params:[{id:'a',label:'A',desc:'amplitud',min:-4,max:4,step:.5,val:1},{id:'b',label:'B',desc:'frec. angular',min:.5,max:4,step:.5,val:1},{id:'c',label:'C',desc:'desfase',min:-3,max:3,step:.5,val:0},{id:'d',label:'D',desc:'desp. vert.',min:-4,max:4,step:1,val:0}],
+    formula:(p)=>`f(x) = ${fmtA(p.a)}cos(${fmtA(p.b)}x ${fmtB(-p.c)}) ${fmtB(p.d)}`,
+    fn:(x,p)=>p.a*Math.cos(p.b*x-p.c)+p.d,
+    props:(p)=>[`Amplitud: <span>${Math.abs(p.a)}</span>`,`Período: <span>${(2*PI/(p.b||1)).toFixed(3)}</span>`,`Desfase: <span>${p.c}</span>`,`Rango: <span>[${p.d-Math.abs(p.a)}, ${p.d+Math.abs(p.a)}]</span>`],
+    info:(p)=>({'Amp.':Math.abs(p.a),'Período':+(2*PI/(p.b||1)).toFixed(3),'Desfase':p.c})
+  },
+  tangente: {
+    params:[{id:'a',label:'A',desc:'amplitud',min:-3,max:3,step:.5,val:1},{id:'b',label:'B',desc:'frec. angular',min:.5,max:4,step:.5,val:1},{id:'c',label:'C',desc:'desfase',min:-3,max:3,step:.5,val:0},{id:'d',label:'D',desc:'desp. vert.',min:-4,max:4,step:1,val:0}],
+    formula:(p)=>`f(x) = ${fmtA(p.a)}tan(${fmtA(p.b)}x ${fmtB(-p.c)}) ${fmtB(p.d)}`,
+    fn:(x,p)=>{const v=Math.tan(p.b*x-p.c);return Math.abs(v)>50?NaN:p.a*v+p.d},
+    props:(p)=>[`Período: <span>${(PI/(p.b||1)).toFixed(3)}</span>`,`Asíntotas: <span>x=(π/2+nπ−C)/B</span>`,`Rango: <span>ℝ</span>`],
+    info:(p)=>({'Período':+(PI/(p.b||1)).toFixed(3),'B':p.b,'C':p.c})
+  }
+};
+
+let currentFn='lineal', params={}, showRaices=false, showTabla=false;
+
+function initParams(){params={};FUNS[currentFn].params.forEach(p=>{params[p.id]=p.val})}
+function renderParams(){
+  const c=document.getElementById('params-container');c.innerHTML='';
+  FUNS[currentFn].params.forEach(p=>{
+    const row=document.createElement('div');row.className='prow';
+    row.innerHTML=`<div class="phdr"><span class="pname">${p.label}</span><span class="pval" id="val-${p.id}">${params[p.id]}</span></div><div class="pdesc">${p.desc}</div><input type="range" min="${p.min}" max="${p.max}" step="${p.step}" value="${params[p.id]}" data-id="${p.id}">`;
+    c.appendChild(row);
+    row.querySelector('input').addEventListener('input',function(){
+      params[this.dataset.id]=parseFloat(this.value);
+      document.getElementById('val-'+this.dataset.id).textContent=this.value;
+      drawFn();
+    });
+  });
+}
+
+function findRoots(fn,xMin,xMax){
+  const roots=[];const steps=4000;let prev=fn(xMin,params);
+  for(let i=1;i<=steps;i++){
+    const x=xMin+(i/steps)*(xMax-xMin);const y=fn(x,params);
+    if(!isNaN(prev)&&!isNaN(y)&&isFinite(prev)&&isFinite(y)){
+      if(prev*y<0){
+        let lo=x-(1/steps)*(xMax-xMin),hi=x;
+        for(let j=0;j<30;j++){const m=(lo+hi)/2;const fm=fn(m,params);if(isNaN(fm)||!isFinite(fm))break;if(fm*fn(lo,params)<=0)hi=m;else lo=m;}
+        const root=(lo+hi)/2;
+        if(roots.length===0||Math.abs(root-roots[roots.length-1])>0.05)roots.push(+root.toFixed(4));
+      }
+      if(Math.abs(y)<0.004&&(roots.length===0||Math.abs(x-roots[roots.length-1])>0.05))roots.push(+x.toFixed(4));
+    }
+    prev=y;
+  }
+  return roots;
+}
+
+function buildTabla(){
+  const fn=FUNS[currentFn].fn;
+  const xMin=parseFloat(document.getElementById('xmin-in').value)||(-10);
+  const xMax=parseFloat(document.getElementById('xmax-in').value)||10;
+  const roots=findRoots(fn,xMin,xMax);
+  const step=(xMax-xMin)/20;const rows=[];
+  for(let x=xMin;x<=xMax+step*.01;x+=step)rows.push(+x.toFixed(3));
+  const c=document.getElementById('tabla-container');
+  c.innerHTML=`<div class="slbl" style="margin-bottom:4px">Tabla de valores</div><div class="tbl-wrap"><table><thead><tr><th>x</th><th>f(x)</th><th>Nota</th></tr></thead><tbody>${
+    rows.map(x=>{const y=fn(x,params);const isRoot=roots.some(r=>Math.abs(r-x)<(step*.6));return`<tr class="${isRoot?'root-row':''}"><td>${x.toFixed(3)}</td><td>${fmt(y)}</td><td>${isRoot?'raíz':''}</td></tr>`;}).join('')
+  }</tbody></table></div>`;
+}
+
+function drawCanvas(canvas,fn1,fn2,intersections,xMin,xMax,colors,label1,label2){
+  const wrap=canvas.parentElement;
+  const W=wrap.offsetWidth||500;const H=Math.max(300,wrap.offsetHeight||340);
+  const dpr=window.devicePixelRatio||1;
+  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
+  const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  const bg='#ffffff';
+  const gridC='rgba(0,0,0,.06)';const grid5C='rgba(0,0,0,.13)';
+  const axisC='rgba(0,0,0,.3)';const lblC='rgba(0,0,0,.35)';
+  const yMin=-10,yMax=10;
+  const pad={top:18,right:18,bottom:30,left:40};
+  const gw=W-pad.left-pad.right,gh=H-pad.top-pad.bottom;
+  const toX=v=>pad.left+((v-xMin)/(xMax-xMin))*gw;
+  const toY=v=>pad.top+((yMax-v)/(yMax-yMin))*gh;
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  const xRange=xMax-xMin;let gridStep=xRange>30?5:xRange>15?2:1;
+  for(let i=Math.ceil(xMin/gridStep)*gridStep;i<=xMax;i+=gridStep){
+    ctx.strokeStyle=i%5===0?grid5C:gridC;ctx.lineWidth=i%5===0?.7:.4;
+    ctx.beginPath();ctx.moveTo(toX(i),pad.top);ctx.lineTo(toX(i),pad.top+gh);ctx.stroke();
+  }
+  for(let i=-10;i<=10;i++){
+    ctx.strokeStyle=i%5===0?grid5C:gridC;ctx.lineWidth=i%5===0?.7:.4;
+    ctx.beginPath();ctx.moveTo(pad.left,toY(i));ctx.lineTo(pad.left+gw,toY(i));ctx.stroke();
+  }
+  ctx.strokeStyle=axisC;ctx.lineWidth=1.2;
+  ctx.beginPath();ctx.moveTo(toX(0),pad.top);ctx.lineTo(toX(0),pad.top+gh);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(pad.left,toY(0));ctx.lineTo(pad.left+gw,toY(0));ctx.stroke();
+  ctx.fillStyle=lblC;ctx.font=`10px 'DM Mono',monospace`;ctx.textAlign='center';
+  for(let i=Math.ceil(xMin/gridStep)*gridStep;i<=xMax;i+=gridStep){if(Math.abs(i)>.01)ctx.fillText(i,toX(i),toY(0)+13);}
+  ctx.textAlign='right';
+  for(let i=-9;i<=9;i+=2){if(Math.abs(i)>.01&&i>=yMin&&i<=yMax)ctx.fillText(i,toX(0)-4,toY(i)+3);}
+  function drawCurve(fn,color){
+    ctx.strokeStyle=color;ctx.lineWidth=2.2;ctx.lineJoin='round';ctx.lineCap='round';
+    const steps=gw*3;ctx.beginPath();let started=false;
+    for(let i=0;i<=steps;i++){
+      const x=xMin+(i/steps)*(xMax-xMin);const y=fn(x);
+      if(isNaN(y)||!isFinite(y)||Math.abs(y)>500){started=false;continue;}
+      const px=toX(x),py=toY(y);
+      if(py<pad.top-2||py>pad.top+gh+2){started=false;continue;}
+      if(!started){ctx.moveTo(px,py);started=true;}else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+  }
+  drawCurve(fn1,colors[0]);
+  if(fn2)drawCurve(fn2,colors[1]);
+  if(intersections&&intersections.length>0){
+    const iC='#c2410c';const iBg='rgba(194,65,12,.1)';
+    intersections.forEach(pt=>{
+      if(pt.x<xMin||pt.x>xMax)return;
+      const px=toX(pt.x),py=toY(pt.y);
+      ctx.fillStyle=iC;ctx.beginPath();ctx.arc(px,py,5,0,PI*2);ctx.fill();
+      const lbl=`(${pt.x.toFixed(2)},${pt.y.toFixed(2)})`;
+      ctx.font=`bold 10px 'DM Mono',monospace`;const tw=ctx.measureText(lbl).width;
+      const lx=Math.max(pad.left+2,Math.min(px-tw/2-4,pad.left+gw-tw-8));
+      const ly=Math.max(pad.top+14,py-14);
+      ctx.fillStyle=iBg;ctx.beginPath();ctx.roundRect(lx,ly-12,tw+8,14,3);ctx.fill();
+      ctx.fillStyle=iC;ctx.fillText(lbl,lx+4,ly-1);
+    });
+  }
+  if(label1){
+    ctx.font=`500 11px 'DM Mono',monospace`;const sp=8;
+    ctx.fillStyle=colors[0];ctx.textAlign='left';ctx.fillText(label1,pad.left+sp,pad.top+14);
+    if(label2){ctx.fillStyle=colors[1];ctx.fillText(label2,pad.left+sp,pad.top+27);}
+  }
+}
+
+function drawFn(){
+  document.getElementById('formula-display').textContent=FUNS[currentFn].formula(params);
+  document.getElementById('props-display').innerHTML=FUNS[currentFn].props(params).map(p=>`<div>${p}</div>`).join('');
+  const info=FUNS[currentFn].info(params);
+  document.getElementById('info-row').innerHTML=Object.entries(info).map(([k,v])=>`<div class="ic"><div class="il">${k}</div><div class="iv">${v}</div></div>`).join('');
+  if(showTabla)buildTabla();
+  const xMin=parseFloat(document.getElementById('xmin-in').value)||(-10);
+  const xMax=parseFloat(document.getElementById('xmax-in').value)||10;
+  const fn=FUNS[currentFn].fn;
+  let ints=[];
+  if(showRaices)ints=findRoots(fn,xMin,xMax).map(rx=>({x:rx,y:0}));
+  drawCanvas(document.getElementById('gc'),x=>fn(x,params),null,ints,xMin,xMax,['#1a56db',''],null,null);
+  if(showRaices&&ints.length===0){
+    const canvas=document.getElementById('gc');const ctx=canvas.getContext('2d');const dpr=window.devicePixelRatio||1;
+    ctx.fillStyle='rgba(0,0,0,.38)';ctx.font=`10px 'DM Mono',monospace`;ctx.textAlign='center';
+    ctx.fillText('Sin raíces reales en el rango',canvas.width/(2*dpr),30);
+  }
+}
+
+document.getElementById('fn-grid').addEventListener('click',e=>{
+  const btn=e.target.closest('.fb');if(!btn)return;
+  currentFn=btn.dataset.fn;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  initParams();renderParams();drawFn();
+});
+document.getElementById('btn-raices').addEventListener('click',function(){
+  showRaices=!showRaices;this.classList.toggle('on',showRaices);this.textContent=showRaices?'Ocultar raíces':'Raíces';drawFn();
+});
+document.getElementById('btn-tabla').addEventListener('click',function(){
+  showTabla=!showTabla;this.classList.toggle('on',showTabla);this.textContent=showTabla?'Ocultar tabla':'Tabla de valores';
+  const c=document.getElementById('tabla-container');c.style.display=showTabla?'block':'none';if(showTabla)buildTabla();
+});
+document.getElementById('btn-export').addEventListener('click',()=>{
+  exportCanvas(document.getElementById('gc'),'f(x) = '+FUNS[currentFn].formula(params).replace('f(x) = ',''));
+});
+function exportCanvas(canvas,title){
+  const dpr=window.devicePixelRatio||1;
+  const off=document.createElement('canvas');off.width=canvas.width;off.height=canvas.height;
+  const octx=off.getContext('2d');
+  octx.fillStyle='#ffffff';octx.fillRect(0,0,off.width,off.height);
+  octx.drawImage(canvas,0,0);
+  octx.fillStyle='rgba(26,74,46,0.6)';octx.font=`${11*dpr}px 'DM Mono',monospace`;octx.textAlign='left';
+  octx.fillText('EPO 135 — '+title,10*dpr,canvas.height-8*dpr);
+  const url=off.toDataURL('image/png');const a=document.createElement('a');a.href=url;a.download='epo135-funcion.png';a.click();
+}
+document.getElementById('xmin-in').addEventListener('change',drawFn);
+document.getElementById('xmax-in').addEventListener('change',drawFn);
+
+// ===== SISTEMAS =====
+const SYS_TYPES={
+  lin2x2:{label:'Lineal 2×2',
+    fields:[{id:'a1',def:1},{id:'b1',def:1},{id:'c1',def:3},{id:'a2',def:2},{id:'b2',def:-1},{id:'c2',def:1}],
+    renderEqs(v){return`<div class="slbl">Ecuaciones</div><div class="eq-row"><span class="eq-label">Ec.1:</span>${inp('a1',v.a1)}x + ${inp('b1',v.b1)}y = ${inp('c1',v.c1)}</div><div class="eq-row"><span class="eq-label">Ec.2:</span>${inp('a2',v.a2)}x + ${inp('b2',v.b2)}y = ${inp('c2',v.c2)}</div>`},
+    solve(v){const det=v.a1*v.b2-v.a2*v.b1;if(Math.abs(det)<1e-10){const r=v.a1/v.a2;const cons=Math.abs(v.b1/v.b2-r)<1e-8&&Math.abs(v.c1/v.c2-r)<1e-8;return{type:cons?'inf':'none',sol:null};}const x=(v.c1*v.b2-v.c2*v.b1)/det;const y=(v.a1*v.c2-v.a2*v.c1)/det;return{type:'unique',sol:{x:+x.toFixed(4),y:+y.toFixed(4)}};},
+    fn1(v){return x=>(v.b1!==0?(v.c1-v.a1*x)/v.b1:NaN)},fn2(v){return x=>(v.b2!==0?(v.c2-v.a2*x)/v.b2:NaN)},
+    props(r){return r.type==='unique'?['Sistema compatible determinado','Una única solución: intersección de dos rectas']:r.type==='inf'?['Sistema compatible indeterminado','Infinitas soluciones: rectas coincidentes']:['Sistema incompatible','Sin solución: rectas paralelas']}},
+  lin3x3:{label:'Lineal 3×3',
+    fields:[{id:'a1',def:1},{id:'b1',def:1},{id:'c1',def:0},{id:'d1',def:3},{id:'a2',def:2},{id:'b2',def:-1},{id:'c2',def:1},{id:'d2',def:5},{id:'a3',def:0},{id:'b3',def:1},{id:'c3',def:2},{id:'d3',def:4}],
+    renderEqs(v){return`<div class="slbl">Ecuaciones</div><div class="eq-row"><span class="eq-label">Ec.1:</span>${inp('a1',v.a1)}x + ${inp('b1',v.b1)}y + ${inp('c1',v.c1)}z = ${inp('d1',v.d1)}</div><div class="eq-row"><span class="eq-label">Ec.2:</span>${inp('a2',v.a2)}x + ${inp('b2',v.b2)}y + ${inp('c2',v.c2)}z = ${inp('d2',v.d2)}</div><div class="eq-row"><span class="eq-label">Ec.3:</span>${inp('a3',v.a3)}x + ${inp('b3',v.b3)}y + ${inp('c3',v.c3)}z = ${inp('d3',v.d3)}</div>`},
+    solve(v){const M=[[v.a1,v.b1,v.c1,v.d1],[v.a2,v.b2,v.c2,v.d2],[v.a3,v.b3,v.c3,v.d3]];const m=M.map(r=>[...r]);for(let col=0;col<3;col++){let maxR=col;for(let r=col+1;r<3;r++)if(Math.abs(m[r][col])>Math.abs(m[maxR][col]))maxR=r;[m[col],m[maxR]]=[m[maxR],m[col]];if(Math.abs(m[col][col])<1e-12)continue;for(let r=0;r<3;r++){if(r===col)continue;const f=m[r][col]/m[col][col];for(let c=col;c<4;c++)m[r][c]-=f*m[col][c];}}const inc=m.some(r=>Math.abs(r[0])<1e-10&&Math.abs(r[1])<1e-10&&Math.abs(r[2])<1e-10&&Math.abs(r[3])>1e-8);if(inc)return{type:'none',sol:null};const free=m.filter(r=>Math.abs(r[0])<1e-10&&Math.abs(r[1])<1e-10&&Math.abs(r[2])<1e-10).length;if(free>0)return{type:'inf',sol:null};const z=m[2][3]/(m[2][2]||1e-12);const y=(m[1][3]-m[1][2]*z)/(m[1][1]||1e-12);const x=(m[0][3]-m[0][2]*z-m[0][1]*y)/(m[0][0]||1e-12);return{type:'unique',sol:{x:+x.toFixed(4),y:+y.toFixed(4),z:+z.toFixed(4)}};},
+    fn1(v){return x=>(v.b1!==0?(v.d1-v.a1*x-v.c1*1)/v.b1:NaN)},fn2(v){return x=>(v.b2!==0?(v.d2-v.a2*x-v.c2*1)/v.b2:NaN)},
+    props(r){return r.type==='unique'?['Sistema 3×3 compatible determinado','Solución única (intersección de tres planos)']:r.type==='inf'?['Sistema compatible indeterminado','Infinitas soluciones']:['Sistema incompatible','Sin solución']}},
+  lin_cuad:{label:'Lineal + Cuadrática',
+    fields:[{id:'m',def:1},{id:'b',def:0},{id:'a',def:1},{id:'p',def:0},{id:'q',def:0}],
+    renderEqs(v){return`<div class="slbl">Ecuaciones</div><div class="eq-row"><span class="eq-label">L:</span>y = ${inp('m',v.m)}x + ${inp('b',v.b)}</div><div class="eq-row"><span class="eq-label">C:</span>y = ${inp('a',v.a)}x² + ${inp('p',v.p)}x + ${inp('q',v.q)}</div>`},
+    solve(v){return solveIntersections(x=>v.m*x+v.b, x=>v.a*x*x+v.p*x+v.q)},
+    fn1(v){return x=>v.m*x+v.b},fn2(v){return x=>v.a*x*x+v.p*x+v.q},
+    props(r){return[`Intersección: recta y parábola`,`Puntos comunes: ${r.length}`]}},
+  lin_cub:{label:'Lineal + Cúbica',
+    fields:[{id:'m',def:1},{id:'b',def:0},{id:'a',def:1},{id:'p',def:0},{id:'q',def:0},{id:'r',def:0}],
+    renderEqs(v){return`<div class="slbl">Ecuaciones</div><div class="eq-row"><span class="eq-label">L:</span>y = ${inp('m',v.m)}x + ${inp('b',v.b)}</div><div class="eq-row"><span class="eq-label">Cu:</span>y = ${inp('a',v.a)}x³ + ${inp('p',v.p)}x² + ${inp('q',v.q)}x + ${inp('r',v.r)}</div>`},
+    solve(v){return solveIntersections(x=>v.m*x+v.b, x=>v.a*x**3+v.p*x*x+v.q*x+v.r)},
+    fn1(v){return x=>v.m*x+v.b},fn2(v){return x=>v.a*x**3+v.p*x*x+v.q*x+v.r},
+    props(r){return[`Intersección: recta y cúbica`,`Puntos comunes: ${r.length}`]}},
+  lin_raiz:{label:'Lineal + Raíz cuad.',
+    fields:[{id:'m',def:1},{id:'b',def:-1},{id:'a',def:1},{id:'h',def:0},{id:'k',def:0}],
+    renderEqs(v){return`<div class="slbl">Ecuaciones</div><div class="eq-row"><span class="eq-label">L:</span>y = ${inp('m',v.m)}x + ${inp('b',v.b)}</div><div class="eq-row"><span class="eq-label">R:</span>y = ${inp('a',v.a)}√(x − ${inp('h',v.h)}) + ${inp('k',v.k)}</div>`},
+    solve(v){return solveIntersections(x=>v.m*x+v.b, x=>{const d=x-v.h;return d>=0?v.a*Math.sqrt(d)+v.k:NaN})},
+    fn1(v){return x=>v.m*x+v.b},fn2(v){return x=>{const d=x-v.h;return d>=0?v.a*Math.sqrt(d)+v.k:NaN}},
+    props(r){return[`Intersección: recta y raíz cuadrada`,`Puntos comunes: ${r.length}`]}},
+  lin_exp:{label:'Lineal + Exponencial',
+    fields:[{id:'m',def:1},{id:'b',def:0},{id:'a',def:1},{id:'base',def:2},{id:'c',def:0}],
+    renderEqs(v){return`<div class="slbl">Ecuaciones</div><div class="eq-row"><span class="eq-label">L:</span>y = ${inp('m',v.m)}x + ${inp('b',v.b)}</div><div class="eq-row"><span class="eq-label">E:</span>y = ${inp('a',v.a)}(${parseFloat(v.base).toFixed(1)})ˣ + ${inp('c',v.c)} &nbsp;<small>base:</small>${inp('base',v.base)}</div>`},
+    solve(v){return solveIntersections(x=>v.m*x+v.b, x=>v.a*Math.pow(Math.max(parseFloat(v.base),.01),x)+parseFloat(v.c))},
+    fn1(v){return x=>v.m*x+v.b},fn2(v){return x=>v.a*Math.pow(Math.max(parseFloat(v.base),.01),x)+parseFloat(v.c)},
+    props(r){return[`Intersección: recta y exponencial`,`Puntos comunes: ${r.length}`]}},
+  lin_log:{label:'Lineal + Logarítmica',
+    fields:[{id:'m',def:1},{id:'b',def:0},{id:'a',def:1},{id:'h',def:0},{id:'k',def:0}],
+    renderEqs(v){return`<div class="slbl">Ecuaciones</div><div class="eq-row"><span class="eq-label">L:</span>y = ${inp('m',v.m)}x + ${inp('b',v.b)}</div><div class="eq-row"><span class="eq-label">Ln:</span>y = ${inp('a',v.a)}ln(x − ${inp('h',v.h)}) + ${inp('k',v.k)}</div>`},
+    solve(v){return solveIntersections(x=>v.m*x+v.b, x=>{const d=x-v.h;return d>0?v.a*Math.log(d)+v.k:NaN})},
+    fn1(v){return x=>v.m*x+v.b},fn2(v){return x=>{const d=x-v.h;return d>0?v.a*Math.log(d)+v.k:NaN}},
+    props(r){return[`Intersección: recta y logarítmica`,`Puntos comunes: ${r.length}`]}}
+};
+
+function inp(id,val){return`<input class="eq-inp" id="sf-${id}" value="${val}" type="number" step="any">`}
+
+function solveIntersections(f1,f2){
+  const xMin=parseFloat(document.getElementById('sxmin').value)||(-10);
+  const xMax=parseFloat(document.getElementById('sxmax').value)||10;
+  const pts=[];const steps=5000;let prevD=f1(xMin)-f2(xMin);
+  for(let i=1;i<=steps;i++){
+    const x=xMin+(i/steps)*(xMax-xMin);
+    const y1=f1(x);const y2=f2(x);
+    if(isNaN(y1)||isNaN(y2)||!isFinite(y1)||!isFinite(y2)){prevD=NaN;continue;}
+    const d=y1-y2;
+    if(!isNaN(prevD)&&prevD*d<0){
+      let lo=x-(1/steps)*(xMax-xMin),hi=x;
+      for(let j=0;j<40;j++){const m=(lo+hi)/2;const dm=f1(m)-f2(m);if(isNaN(dm)||!isFinite(dm))break;if(dm*prevD<=0)hi=m;else lo=m;}
+      const rx=(lo+hi)/2;const ry=(f1(rx)+f2(rx))/2;
+      if(pts.length===0||Math.abs(rx-pts[pts.length-1].x)>0.05)pts.push({x:+rx.toFixed(4),y:+ry.toFixed(4)});
+    }
+    if(Math.abs(d)<0.008&&(pts.length===0||Math.abs(x-pts[pts.length-1].x)>0.1))pts.push({x:+x.toFixed(4),y:+((f1(x)+f2(x))/2).toFixed(4)});
+    prevD=d;
+  }
+  return pts;
+}
+
+let currentSys='lin2x2';
+
+function getSysVals(){
+  const vals={};
+  SYS_TYPES[currentSys].fields.forEach(f=>{
+    const el=document.getElementById('sf-'+f.id);
+    vals[f.id]=el?parseFloat(el.value)||0:f.def;
+  });
+  return vals;
+}
+
+function renderSysEqs(){
+  const block=document.getElementById('sys-eq-block');block.innerHTML='';
+  const vals={};SYS_TYPES[currentSys].fields.forEach(f=>{vals[f.id]=f.def});
+  const tmp=document.createElement('div');tmp.className='eq-block';
+  tmp.innerHTML=SYS_TYPES[currentSys].renderEqs(vals);
+  block.appendChild(tmp);
+  tmp.querySelectorAll('.eq-inp').forEach(el=>{el.addEventListener('input',()=>solveDraw())});
+}
+
+function solveDraw(){
+  const v=getSysVals();const st=SYS_TYPES[currentSys];
+  const c1='#1a56db';const c2='#c2410c';
+  const xMin=parseFloat(document.getElementById('sxmin').value)||(-10);
+  const xMax=parseFloat(document.getElementById('sxmax').value)||10;
+  if(currentSys==='lin2x2'||currentSys==='lin3x3'){
+    const result=st.solve(v);
+    const sd=document.getElementById('sol-display');const sp=document.getElementById('sys-props');
+    if(result.type==='unique'){
+      sd.className='sol-val';
+      sd.innerHTML=currentSys==='lin3x3'?`x = ${result.sol.x}<br>y = ${result.sol.y}<br>z = ${result.sol.z}`:`x = ${result.sol.x}<br>y = ${result.sol.y}`;
+      sp.innerHTML=st.props(result).map(p=>`<div>${p} <span class="badge badge-green">✓</span></div>`).join('');
+    } else if(result.type==='inf'){
+      sd.className='sol-val inf-sol';sd.innerHTML='Infinitas soluciones';
+      sp.innerHTML=st.props(result).map(p=>`<div>${p} <span class="badge badge-blue">∞</span></div>`).join('');
+    } else {
+      sd.className='sol-val no-sol';sd.innerHTML='Sin solución';
+      sp.innerHTML=st.props(result).map(p=>`<div>${p} <span class="badge badge-red">✗</span></div>`).join('');
+    }
+    let ints=[];
+    if(result.type==='unique'&&result.sol)ints=[{x:result.sol.x,y:result.sol.y}];
+    drawCanvas(document.getElementById('sc'),st.fn1(v),st.fn2(v),ints,xMin,xMax,[c1,c2],'Ec. 1','Ec. 2');
+  } else {
+    const pts=st.solve(v);
+    const sd=document.getElementById('sol-display');const sp=document.getElementById('sys-props');
+    if(pts.length===0){sd.className='sol-val no-sol';sd.innerHTML='Sin intersección en el rango visible';}
+    else{sd.className='sol-val';sd.innerHTML=pts.map(p=>`x = ${p.x},  y = ${p.y}`).join('<br>');}
+    sp.innerHTML=st.props(pts).map(p=>`<div>${p}</div>`).join('');
+    drawCanvas(document.getElementById('sc'),st.fn1(v),st.fn2(v),pts,xMin,xMax,[c1,c2],'L','F₂');
+  }
+}
+
+document.getElementById('sys-type-grid').addEventListener('click',e=>{
+  const btn=e.target.closest('.stb');if(!btn)return;
+  currentSys=btn.dataset.sys;
+  document.querySelectorAll('.stb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  renderSysEqs();setTimeout(solveDraw,50);
+});
+document.getElementById('btn-sys-export').addEventListener('click',()=>{
+  exportCanvas(document.getElementById('sc'),SYS_TYPES[currentSys].label);
+});
+document.getElementById('sxmin').addEventListener('change',solveDraw);
+document.getElementById('sxmax').addEventListener('change',solveDraw);
+
+window.addEventListener('resize',()=>{
+  const activePane=document.querySelector('.app-pane.active');
+  if(!activePane)return;
+  if(activePane.id==='apppane-funciones')drawFn();else solveDraw();
+});
+
+// ===== INIT =====
+initParams();renderParams();
+renderSysEqs();
+</script>
+</body>
+</html>
