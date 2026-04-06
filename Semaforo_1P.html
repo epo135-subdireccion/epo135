@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Colegiado · EPO 135 · 1er Parcial 2025-B</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300&family=Outfit:wght@300;400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --verde: #0f5e2f;
+  --verde-med: #1a7a3f;
+  --verde-claro: #2ea84f;
+  --azul: #0d3b6e;
+  --azul-med: #1a5ca0;
+  --dorado: #c8860a;
+  --rojo: #c0392b;
+  --naranja: #e67e22;
+  --morado: #5c3a9e;
+  --gris-fondo: #f0f4f1;
+  --gris-borde: #d0ddd5;
+  --texto: #0f1f17;
+  --blanco: #ffffff;
+  --sombra: 0 4px 24px rgba(15,31,23,.10);
+  --radio: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--gris-fondo);
+  color: var(--texto);
+  min-height: 100vh;
+  font-size: 15px;
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: linear-gradient(135deg, var(--verde) 0%, var(--azul) 100%);
+  color: white;
+  padding: 28px 36px 22px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: 30%;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+}
+.header-escudo {
+  width: 60px; height: 60px;
+  background: rgba(255,255,255,.15);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,.3);
+}
+.header-info h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.header-info p {
+  font-size: .85rem;
+  opacity: .8;
+  margin-top: 4px;
+  font-family: 'DM Mono', monospace;
+}
+.header-badge {
+  margin-left: auto;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: .8rem;
+  font-family: 'DM Mono', monospace;
+  white-space: nowrap;
+}
+
+/* ===== NAV TABS ===== */
+.nav-bar {
+  background: white;
+  padding: 0 24px;
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--gris-borde);
+  overflow-x: auto;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.tab {
+  padding: 14px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: .82rem;
+  color: #666;
+  border-bottom: 3px solid transparent;
+  transition: all .2s;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.tab:hover { color: var(--verde-med); }
+.tab.active { color: var(--verde); border-color: var(--verde); }
+.tab.tab-general { color: var(--azul); }
+.tab.tab-general.active { border-color: var(--azul); color: var(--azul); }
+
+/* ===== MAIN CONTENT ===== */
+.main { padding: 24px; max-width: 1400px; margin: 0 auto; }
+
+.view { display: none; }
+.view.active { display: block; }
+
+/* ===== KPI CARDS ===== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.kpi-card {
+  background: white;
+  border-radius: var(--radio);
+  padding: 20px;
+  box-shadow: var(--sombra);
+  border-left: 5px solid;
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::after {
+  content: attr(data-icon);
+  position: absolute;
+  right: 14px; top: 14px;
+  font-size: 1.6rem;
+  opacity: .15;
+}
+.kpi-label {
+  font-size: .72rem;
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #888;
+  margin-bottom: 8px;
+}
+.kpi-value {
+  font-family: 'Fraunces', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.kpi-sub {
+  font-size: .75rem;
+  color: #999;
+  margin-top: 4px;
+}
+.kpi-verde { border-color: var(--verde-claro); }
+.kpi-verde .kpi-value { color: var(--verde); }
+.kpi-rojo { border-color: var(--rojo); }
+.kpi-rojo .kpi-value { color: var(--rojo); }
+.kpi-dorado { border-color: var(--dorado); }
+.kpi-dorado .kpi-value { color: var(--dorado); }
+.kpi-azul { border-color: var(--azul-med); }
+.kpi-azul .kpi-value { color: var(--azul); }
+.kpi-morado { border-color: var(--morado); }
+.kpi-morado .kpi-value { color: var(--morado); }
+
+/* ===== SECTION HEADER ===== */
+.sec-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 24px 0 14px;
+}
+.sec-header h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--azul);
+}
+.sec-line {
+  flex: 1;
+  height: 1px;
+  background: var(--gris-borde);
+}
+
+/* ===== GRUPO CARDS (vista general) ===== */
+.grupos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.grupo-card {
+  background: white;
+  border-radius: var(--radio);
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+  border: 2px solid transparent;
+}
+.grupo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(15,31,23,.14);
+}
+.grupo-card-head {
+  padding: 18px 20px 14px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.grupo-card-head::after {
+  content: '';
+  position: absolute;
+  right: -20px; top: -20px;
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.1);
+}
+.gc-grado {
+  font-family: 'DM Mono', monospace;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  opacity: .8;
+}
+.gc-nombre {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.gc-prom {
+  position: absolute;
+  right: 20px; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Fraunces', serif;
+  font-size: 2.4rem;
+  font-weight: 900;
+  opacity: .95;
+}
+.grupo-card-body {
+  padding: 16px 20px;
+}
+.gc-stats {
+  display: flex;
+  gap: 20px;
+}
+.gc-stat {
+  text-align: center;
+}
+.gc-stat-val {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.gc-stat-lbl {
+  font-size: .68rem;
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+  color: #999;
+}
+.gc-bar {
+  margin-top: 14px;
+  height: 8px;
+  background: var(--gris-borde);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.gc-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width .6s ease;
+}
+
+/* color gradients por grado */
+.g1 { background: linear-gradient(135deg, #0d3b6e, #1a5ca0); }
+.g2 { background: linear-gradient(135deg, #0f5e2f, #2ea84f); }
+.g3 { background: linear-gradient(135deg, #6b1a2e, #c0392b); }
+.g1-bar { background: linear-gradient(90deg, #1a5ca0, #4a9de0); }
+.g2-bar { background: linear-gradient(90deg, #0f5e2f, #2ea84f); }
+.g3-bar { background: linear-gradient(90deg, #c0392b, #e74c3c); }
+
+/* ===== DISTRIBUCION BAR ===== */
+.dist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.dist-card {
+  background: white;
+  border-radius: var(--radio);
+  padding: 18px 20px;
+  box-shadow: var(--sombra);
+}
+.dist-title {
+  font-weight: 600;
+  font-size: .85rem;
+  margin-bottom: 12px;
+  color: var(--azul);
+}
+.dist-bars { display: flex; flex-direction: column; gap: 6px; }
+.dist-row { display: flex; align-items: center; gap: 8px; }
+.dist-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: .72rem;
+  width: 22px;
+  text-align: right;
+  color: #666;
+}
+.dist-bar-wrap { flex: 1; height: 18px; background: #f0f0f0; border-radius: 4px; overflow: hidden; }
+.dist-bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; }
+.dist-count { font-size: .68rem; font-weight: 600; color: white; }
+.d10 { background: #2ea84f; }
+.d9  { background: #27ae60; }
+.d8  { background: #16a085; }
+.d7  { background: #2980b9; }
+.d6  { background: #f39c12; }
+.d5  { background: #e74c3c; }
+
+/* ===== TABLA ALUMNOS ===== */
+.tabla-wrap {
+  background: white;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.tabla-header {
+  padding: 16px 20px;
+  background: var(--azul);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tabla-header h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+}
+.busca {
+  padding: 7px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: .82rem;
+  width: 200px;
+  background: rgba(255,255,255,.15);
+  color: white;
+  placeholder: search;
+}
+.busca::placeholder { color: rgba(255,255,255,.6); }
+.busca:focus { outline: 2px solid rgba(255,255,255,.5); }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th {
+  background: #f7faf8;
+  padding: 10px 14px;
+  font-size: .72rem;
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #555;
+  text-align: left;
+  border-bottom: 2px solid var(--gris-borde);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+th:hover { background: #eef2ef; }
+td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #f0f4f1;
+  font-size: .83rem;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #f7faf8; }
+.prom-chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-family: 'DM Mono', monospace;
+  font-size: .78rem;
+}
+.prom-10 { background: #d5f5e3; color: #1a8a3f; }
+.prom-9  { background: #d5f5e3; color: #1a8a3f; }
+.prom-8  { background: #d6eaf8; color: #1a5ca0; }
+.prom-7  { background: #d6e4f0; color: #2471a3; }
+.prom-6  { background: #fef9e7; color: #b7950b; }
+.prom-5  { background: #fde8e8; color: #c0392b; }
+.nl-chip {
+  display: inline-block;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--gris-borde);
+  text-align: center; line-height: 26px;
+  font-family: 'DM Mono', monospace;
+  font-size: .72rem;
+  color: #666;
+}
+
+/* ===== MATERIAS ===== */
+.materias-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.materia-card {
+  background: white;
+  border-radius: var(--radio);
+  padding: 16px 18px;
+  box-shadow: var(--sombra);
+  border-left: 4px solid var(--gris-borde);
+}
+.materia-nombre {
+  font-weight: 600;
+  font-size: .85rem;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.mat-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.mat-prom {
+  font-family: 'Fraunces', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.mat-info {
+  flex: 1;
+}
+.mat-bar { height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden; margin-bottom: 4px; }
+.mat-bar-fill { height: 100%; border-radius: 3px; }
+.mat-rep { font-size: .72rem; font-family: 'DM Mono', monospace; color: #888; }
+.mat-rep span { font-weight: 700; color: var(--rojo); }
+
+/* ===== SEMAFORO ALUMNOS ===== */
+.semaforo-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.semaforo-card {
+  background: white;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+}
+.sc-head {
+  padding: 12px 16px;
+  font-size: .78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: white;
+}
+.sc-list { padding: 8px 0; }
+.sc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px;
+  border-bottom: 1px solid #f4f4f4;
+  font-size: .82rem;
+}
+.sc-item:last-child { border-bottom: none; }
+.sc-nombre { flex: 1; }
+.sc-prom-badge {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: .8rem;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+.sc-rojo .sc-head { background: var(--rojo); }
+.sc-dorado .sc-head { background: var(--dorado); }
+.sc-verde .sc-head { background: var(--verde-claro); }
+
+/* ===== RESUMEN GENERAL ===== */
+.resumen-comparativo {
+  background: white;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.rc-head {
+  padding: 16px 20px;
+  background: var(--azul);
+  color: white;
+}
+.rc-head h3 { font-family: 'Fraunces', serif; font-size: 1rem; }
+.rc-body { padding: 20px; }
+.rc-row {
+  display: grid;
+  grid-template-columns: 160px repeat(6, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f4f1;
+}
+.rc-row:last-child { border-bottom: none; }
+.rc-row.header-row {
+  font-size: .7rem;
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: #888;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--gris-borde);
+}
+.rc-lbl { font-weight: 600; font-size: .85rem; }
+.rc-val {
+  font-family: 'DM Mono', monospace;
+  font-size: .9rem;
+  text-align: center;
+}
+.rc-val.best { color: var(--verde); font-weight: 700; }
+.rc-val.worst { color: var(--rojo); font-weight: 700; }
+
+.tab.tab-busqueda { color: var(--morado); }
+.tab.tab-busqueda.active { border-color: var(--morado); color: var(--morado); }
+
+/* ===== VISTA BÚSQUEDA ALUMNO ===== */
+.busq-panel {
+  background: white;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 28px 28px 20px;
+  margin-bottom: 24px;
+}
+.busq-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--morado);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.busq-selectors {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.busq-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.busq-group label {
+  font-size: .72rem;
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #888;
+}
+.busq-select {
+  padding: 9px 14px;
+  border: 2px solid var(--gris-borde);
+  border-radius: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: .88rem;
+  color: var(--texto);
+  background: white;
+  cursor: pointer;
+  transition: border-color .2s;
+  min-width: 150px;
+}
+.busq-select:focus { outline: none; border-color: var(--morado); }
+.busq-btn {
+  padding: 10px 22px;
+  background: var(--morado);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+  align-self: flex-end;
+}
+.busq-btn:hover { background: #4a2d85; }
+.busq-results { display: none; }
+.busq-results.visible { display: block; }
+
+/* ===== TARJETA INDIVIDUAL ALUMNO ===== */
+.alumno-header {
+  background: linear-gradient(135deg, var(--morado), #8b5cf6);
+  border-radius: var(--radio);
+  padding: 24px 28px;
+  color: white;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.alumno-avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.2);
+  border: 2px solid rgba(255,255,255,.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.alumno-info h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.alumno-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: .78rem;
+  opacity: .8;
+  margin-top: 4px;
+}
+.alumno-stats {
+  margin-left: auto;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.alumno-stat {
+  text-align: center;
+}
+.alumno-stat-val {
+  font-family: 'Fraunces', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.alumno-stat-lbl {
+  font-size: .68rem;
+  font-family: 'DM Mono', monospace;
+  opacity: .75;
+  text-transform: uppercase;
+}
+
+/* ===== TABLA CALIFICACIONES ALUMNO ===== */
+.califs-table-wrap {
+  background: white;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.califs-table-head {
+  padding: 14px 20px;
+  background: var(--morado);
+  color: white;
+}
+.califs-table-head h3 { font-family: 'Fraunces', serif; font-size: .95rem; }
+.califs-table { width: 100%; border-collapse: collapse; }
+.califs-table th {
+  background: #f5f0fa;
+  padding: 10px 16px;
+  font-size: .7rem;
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #555;
+  text-align: left;
+  border-bottom: 2px solid #e8ddf5;
+}
+.califs-table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #f5f0fa;
+  font-size: .84rem;
+}
+.califs-table tr:last-child td { border-bottom: none; }
+.califs-table tr:hover td { background: #faf7ff; }
+.califs-table tr.reprobada td { background: #fff5f5; }
+.califs-table tr.reprobada:hover td { background: #ffecec; }
+.calif-num {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-family: 'DM Mono', monospace;
+  font-size: .82rem;
+}
+.calif-rep-badge {
+  display: inline-block;
+  font-size: .65rem;
+  background: #fde8e8;
+  color: var(--rojo);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+/* ===== LISTA DE ALUMNOS DEL GRUPO ===== */
+.lista-grupo-wrap {
+  background: white;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.lista-grupo-head {
+  padding: 14px 20px;
+  background: linear-gradient(90deg, var(--morado), #6b46c1);
+  color: white;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.lista-grupo-head h3 { font-family: 'Fraunces', serif; font-size: .95rem; }
+.lista-busca {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: .8rem;
+  width: 180px;
+  background: rgba(255,255,255,.2);
+  color: white;
+}
+.lista-busca::placeholder { color: rgba(255,255,255,.6); }
+.lista-busca:focus { outline: 2px solid rgba(255,255,255,.5); }
+.alumno-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #f5f0fa;
+  cursor: pointer;
+  transition: background .15s;
+}
+.alumno-row:hover { background: #faf7ff; }
+.alumno-row:last-child { border-bottom: none; }
+.alumno-row.selected { background: #f0e8ff; }
+.ar-nl {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: #e8ddf5;
+  color: var(--morado);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: .72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.ar-nombre { flex: 1; font-size: .85rem; font-weight: 500; }
+.ar-prom {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: .82rem;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+.no-results {
+  padding: 32px;
+  text-align: center;
+  color: #aaa;
+  font-family: 'DM Mono', monospace;
+  font-size: .85rem;
+}
+
+/* ===== RESPONSIVE BUSQUEDA ===== */
+@media (max-width: 600px) {
+  .busq-selectors { flex-direction: column; }
+  .alumno-stats { margin-left: 0; }
+  .alumno-header { flex-direction: column; align-items: flex-start; }
+}
+.footer {
+  text-align: center;
+  padding: 24px;
+  font-size: .75rem;
+  color: #aaa;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.view.active { animation: fadeIn .3s ease; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+  .header { flex-wrap: wrap; gap: 12px; padding: 20px; }
+  .header-badge { margin-left: 0; }
+  .rc-row { grid-template-columns: 1fr 1fr; font-size: .78rem; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .main { padding: 14px; }
+  #busq-layout { grid-template-columns: 1fr !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-escudo">🎓</div>
+  <div class="header-info">
+    <h1>EPO 135 · Resultados 1er Parcial</h1>
+    <p>Ciclo Escolar 2025-B · Turno Matutino · Colegiado 26 Mar 2026</p>
+  </div>
+  <div class="header-badge">ACTUALIZADO</div>
+</div>
+
+<div class="nav-bar">
+  <div class="tab tab-general active" onclick="showView('general', this)">Resumen General</div>
+  <div class="tab" onclick="showView('g1o1', this)">1°A</div>
+  <div class="tab" onclick="showView('g1o2', this)">1°B</div>
+  <div class="tab" onclick="showView('g2o1', this)">2°A</div>
+  <div class="tab" onclick="showView('g2o2', this)">2°B</div>
+  <div class="tab" onclick="showView('g3o1', this)">3°A</div>
+  <div class="tab" onclick="showView('g3o2', this)">3°B</div>
+  <div class="tab tab-busqueda" onclick="showView('busqueda', this)">🔍 Buscar Alumno</div>
+</div>
+
+<div class="main">
+
+<!-- =================== VISTA GENERAL =================== -->
+<div id="view-general" class="view active">
+
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-azul" data-icon="👥">
+      <div class="kpi-label">Total de Alumnos</div>
+      <div class="kpi-value" id="total-alumnos">186</div>
+      <div class="kpi-sub">6 grupos</div>
+    </div>
+    <div class="kpi-card kpi-verde" data-icon="✅">
+      <div class="kpi-label">Aprobados</div>
+      <div class="kpi-value" id="total-aprobados">—</div>
+      <div class="kpi-sub" id="pct-aprobados">—</div>
+    </div>
+    <div class="kpi-card kpi-rojo" data-icon="⚠️">
+      <div class="kpi-label">En Riesgo</div>
+      <div class="kpi-value" id="total-reprobados">—</div>
+      <div class="kpi-sub" id="pct-reprobados">—</div>
+    </div>
+    <div class="kpi-card kpi-dorado" data-icon="📊">
+      <div class="kpi-label">Promedio Escolar</div>
+      <div class="kpi-value" id="prom-escolar">—</div>
+      <div class="kpi-sub">sobre 10</div>
+    </div>
+    <div class="kpi-card kpi-morado" data-icon="🏆">
+      <div class="kpi-label">Mejor Grupo</div>
+      <div class="kpi-value" id="mejor-grupo" style="font-size:1.4rem">—</div>
+      <div class="kpi-sub" id="mejor-grupo-prom">—</div>
+    </div>
+  </div>
+
+  <div class="sec-header">
+    <h2>Panorama por Grupo</h2>
+    <div class="sec-line"></div>
+    <span style="font-size:.75rem;color:#aaa;font-family:'DM Mono',monospace">Clic en tarjeta para ver detalle</span>
+  </div>
+  <div class="grupos-grid" id="grupos-grid"></div>
+
+  <div class="sec-header">
+    <h2>Comparativo entre Grupos</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="resumen-comparativo">
+    <div class="rc-head"><h3>Indicadores por Grupo — Primer Parcial 2025-B</h3></div>
+    <div class="rc-body">
+      <div class="rc-row header-row">
+        <div>Grupo</div>
+        <div style="text-align:center">Alumnos</div>
+        <div style="text-align:center">Promedio</div>
+        <div style="text-align:center">Aprobados</div>
+        <div style="text-align:center">En riesgo</div>
+        <div style="text-align:center">% aprob.</div>
+        <div style="text-align:center">Máximo</div>
+      </div>
+      <div id="tabla-comparativa"></div>
+    </div>
+  </div>
+
+  <div class="sec-header">
+    <h2>Distribución de Promedios</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="dist-grid" id="dist-grid"></div>
+
+</div>
+
+<!-- =================== VISTAS POR GRUPO =================== -->
+<div id="view-g1o1" class="view"></div>
+<div id="view-g1o2" class="view"></div>
+<div id="view-g2o1" class="view"></div>
+<div id="view-g2o2" class="view"></div>
+<div id="view-g3o1" class="view"></div>
+<div id="view-g3o2" class="view"></div>
+
+<!-- =================== VISTA BÚSQUEDA DE ALUMNO =================== -->
+<div id="view-busqueda" class="view">
+
+  <div class="busq-panel">
+    <div class="busq-title">🔍 Búsqueda por Grado y Grupo</div>
+    <div class="busq-selectors">
+      <div class="busq-group">
+        <label>Grado</label>
+        <select class="busq-select" id="sel-grado" onchange="onGradoChange()">
+          <option value="">— Selecciona grado —</option>
+          <option value="1">1° Primero</option>
+          <option value="2">2° Segundo</option>
+          <option value="3">3° Tercero</option>
+        </select>
+      </div>
+      <div class="busq-group">
+        <label>Grupo</label>
+        <select class="busq-select" id="sel-grupo" onchange="onGrupoChange()">
+          <option value="">— Selecciona grupo —</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="busq-results" id="busq-results">
+    <div style="display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start" id="busq-layout">
+
+      <!-- Lista de alumnos -->
+      <div class="lista-grupo-wrap">
+        <div class="lista-grupo-head">
+          <h3 id="lista-titulo">Alumnos del grupo</h3>
+          <input class="lista-busca" type="text" placeholder="Filtrar..." id="lista-busca-input" oninput="filtrarListaAlumnos()">
+        </div>
+        <div id="lista-alumnos-body"></div>
+      </div>
+
+      <!-- Detalle del alumno seleccionado -->
+      <div id="detalle-alumno">
+        <div class="no-results" style="background:white;border-radius:14px;box-shadow:var(--sombra);padding:48px">
+          <div style="font-size:2rem;margin-bottom:12px">👆</div>
+          Selecciona un alumno de la lista para ver sus calificaciones
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</div><!-- /main -->
+
+<div class="footer">
+  EPO 135 · Subdirección Académica · Dashboard generado para Colegiado 26 marzo 2026 · Datos: 1er Parcial 2025-B (captura en proceso)
+</div>
+
+<script>
+// ======================== DATOS ========================
+const DATA = {"1o1": {"titulo": "PRIMER GRADO  GRUPO UNO", "students": [{"nl": 1, "nombre": "ANTONIO SEGUNDO AXEL", "promedio": 7.18, "califs": {"Pensamiento Matemático II": 8.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 6.0, "Lengua y Comunicación II": 7.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 9.0, "Educación para la Salud": 6.0, "Igualdad de Género II": 10.0}}, {"nl": 2, "nombre": "CABALLERO MORENO OSVALDO", "promedio": 6.64, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 8.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 8.0, "Educación para la Salud": 5.0, "Igualdad de Género II": 10.0}}, {"nl": 3, "nombre": "CRUZ ROSALINO GIOVANNY", "promedio": 5.73, "califs": {"Pensamiento Matemático II": 5.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 7.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 5.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 5.0, "Educación para la Salud": 5.0, "Igualdad de Género II": 6.0}}, {"nl": 4, "nombre": "DIAZ NUEVO ERICK", "promedio": 5.55, "califs": {"Pensamiento Matemático II": 6.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 6.0, "Educación para la Salud": 6.0, "Igualdad de Género II": 6.0}}, {"nl": 5, "nombre": "FLORES LEYVA SEBASTIAN", "promedio": 7.09, "califs": {"Pensamiento Matemático II": 8.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 6.0, "Lengua y Comunicación II": 6.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 8.0, "Educación para la Salud": 6.0, "Igualdad de Género II": 10.0}}, {"nl": 6, "nombre": "HIDALGO DE JESUS MANUEL UZIEL", "promedio": 5.73, "califs": {"Pensamiento Matemático II": 5.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 8.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 5.0, "Pensamiento Filosófico y Humanidades II": 6.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 7.0, "Educación para la Salud": 5.0, "Igualdad de Género II": 6.0}}, {"nl": 7, "nombre": "LAZCANO MARTINEZ SONIA", "promedio": 5.82, "califs": {"Pensamiento Matemático II": 6.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 7.0, "Educación para la Salud": 6.0, "Igualdad de Género II": 7.0}}, {"nl": 8, "nombre": "LAZCANO PALAFOX KATHERINE", "promedio": 8.18, "califs": {"Pensamiento Matemático II": 10.0, "Ciencias Naturales, Experimentales y Tec II": 10.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 6.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 8.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}, {"nl": 9, "nombre": "LEYVA DOROTEO ESTRELLA", "promedio": 5.91, "califs": {"Pensamiento Matemático II": 5.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 7.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 5.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 5.0, "Educación para la Salud": 5.0, "Igualdad de Género II": 10.0}}, {"nl": 10, "nombre": "LOPEZ DE JESUS  JOSE", "promedio": 5.45, "califs": {"Pensamiento Matemático II": 5.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 6.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 6.0, "Educación para la Salud": 5.0, "Igualdad de Género II": 6.0}}, {"nl": 11, "nombre": "MARTINEZ XOCO ABRIL", "promedio": 9.27, "califs": {"Pensamiento Matemático II": 10.0, "Ciencias Naturales, Experimentales y Tec II": 10.0, "Taller de ciencias I": 10.0, "Lengua y Comunicación II": 6.0, "Ciencias Sociales II": 9.0, "Cultura Digital II": 9.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 9.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 10.0, "Igualdad de Género II": 10.0}}, {"nl": 12, "nombre": "MONTAÑO FLORES VALENTINA", "promedio": 8.18, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 10.0, "Taller de ciencias I": 7.0, "Lengua y Comunicación II": 9.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 7.0, "Actividades Físicas y Deportivas": 8.0, "Educación para la Salud": 8.0, "Igualdad de Género II": 10.0}}, {"nl": 13, "nombre": "NUEVO MONTES CESAR ALEXIS", "promedio": 6.73, "califs": {"Pensamiento Matemático II": 8.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 7.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 7.0, "Educación para la Salud": 7.0, "Igualdad de Género II": 10.0}}, {"nl": 14, "nombre": "OSORNO DE JESUS MARIO", "promedio": 5.82, "califs": {"Pensamiento Matemático II": 5.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 6.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 5.0, "Pensamiento Filosófico y Humanidades II": 6.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 5.0, "Educación para la Salud": 6.0, "Igualdad de Género II": 10.0}}, {"nl": 15, "nombre": "OSORNO DIAZ MIGUEL", "promedio": 6.45, "califs": {"Pensamiento Matemático II": 6.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 9.0, "Educación para la Salud": 8.0, "Igualdad de Género II": 6.0}}, {"nl": 16, "nombre": "OSORNO PALAFOX ORLANDO", "promedio": 7.73, "califs": {"Pensamiento Matemático II": 10.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 7.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 6.0}}, {"nl": 17, "nombre": "OTLICA MORENO JUAN JOSE", "promedio": 6.45, "califs": {"Pensamiento Matemático II": 6.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 8.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 7.0, "Educación para la Salud": 6.0, "Igualdad de Género II": 10.0}}, {"nl": 18, "nombre": "PEREZ VERA ZAYMIN BELEN", "promedio": 8.91, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 10.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 7.0, "Ciencias Sociales II": 7.0, "Cultura Digital II": 9.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 9.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}, {"nl": 19, "nombre": "RAMIREZ PEREZ SHERLYN VALESA", "promedio": 8.55, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 10.0, "Taller de ciencias I": 8.0, "Lengua y Comunicación II": 9.0, "Ciencias Sociales II": 7.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}, {"nl": 20, "nombre": "RAMIREZ RAMIREZ JAZMIN", "promedio": 7.55, "califs": {"Pensamiento Matemático II": 6.0, "Ciencias Naturales, Experimentales y Tec II": 10.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 7.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 7.0, "Educación para la Salud": 7.0, "Igualdad de Género II": 10.0}}, {"nl": 21, "nombre": "REYES MONICO EYMY", "promedio": 6.27, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 6.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 5.0, "Educación para la Salud": 6.0, "Igualdad de Género II": 10.0}}, {"nl": 22, "nombre": "REYES SANCHEZ KENYA", "promedio": 8.45, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 10.0, "Taller de ciencias I": 10.0, "Lengua y Comunicación II": 7.0, "Ciencias Sociales II": 8.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 7.0, "Actividades Físicas y Deportivas": 8.0, "Educación para la Salud": 8.0, "Igualdad de Género II": 10.0}}, {"nl": 23, "nombre": "RIVERA OTLICA LUCI ODALIZ", "promedio": 9.0, "califs": {"Pensamiento Matemático II": 10.0, "Ciencias Naturales, Experimentales y Tec II": 10.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 8.0, "Ciencias Sociales II": 8.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 8.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}, {"nl": 24, "nombre": "ROSALINO MONICO OLIVER", "promedio": 6.09, "califs": {"Pensamiento Matemático II": 7.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 8.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 7.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 6.0, "Educación para la Salud": 6.0, "Igualdad de Género II": 6.0}}, {"nl": 25, "nombre": "RUIZ FLORES PAMELA", "promedio": 8.82, "califs": {"Pensamiento Matemático II": 10.0, "Ciencias Naturales, Experimentales y Tec II": 10.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 6.0, "Ciencias Sociales II": 8.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 8.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}, {"nl": 26, "nombre": "RUIZ NUEVO ULISES", "promedio": 5.73, "califs": {"Pensamiento Matemático II": 5.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 8.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 5.0, "Pensamiento Filosófico y Humanidades II": 7.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 5.0, "Educación para la Salud": 6.0, "Igualdad de Género II": 6.0}}, {"nl": 27, "nombre": "SALAS SANCHEZ MARIANO", "promedio": 5.45, "califs": {"Pensamiento Matemático II": 6.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 6.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 5.0, "Educación para la Salud": 5.0, "Igualdad de Género II": 6.0}}, {"nl": 28, "nombre": "SANCHEZ CABRERA FRIDA", "promedio": 7.82, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 6.0, "Lengua y Comunicación II": 6.0, "Ciencias Sociales II": 7.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}, {"nl": 29, "nombre": "STASCH AGUILAR DIEGO BERNARD", "promedio": 7.27, "califs": {"Pensamiento Matemático II": 10.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 6.0, "Lengua y Comunicación II": 8.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 9.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 7.0, "Educación para la Salud": 6.0, "Igualdad de Género II": 10.0}}, {"nl": 30, "nombre": "TRINIDAD HERNANDEZ THAYLI REGINA", "promedio": 6.0, "califs": {"Pensamiento Matemático II": 6.0, "Ciencias Naturales, Experimentales y Tec II": 6.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 9.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 5.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 5.0, "Educación para la Salud": 5.0, "Igualdad de Género II": 10.0}}, {"nl": 31, "nombre": "TRINIDAD TRINIDAD ITZI DAYANA", "promedio": 8.0, "califs": {"Pensamiento Matemático II": 8.0, "Ciencias Naturales, Experimentales y Tec II": 10.0, "Taller de ciencias I": 8.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 7.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 10.0, "Igualdad de Género II": null}}], "subjects": ["Pensamiento Matemático II", "Ciencias Naturales, Experimentales y Tec II", "Taller de ciencias I", "Lengua y Comunicación II", "Ciencias Sociales II", "Cultura Digital II", "Pensamiento Filosófico y Humanidades II", "Inglés II", "Actividades Físicas y Deportivas", "Educación para la Salud", "Igualdad de Género II"], "subj_stats": {"Pensamiento Matemático II": {"promedio": 7.55, "reprobados": 6, "total": 31}, "Ciencias Naturales, Experimentales y Tec II": {"promedio": 7.29, "reprobados": 0, "total": 31}, "Taller de ciencias I": {"promedio": 6.48, "reprobados": 16, "total": 31}, "Lengua y Comunicación II": {"promedio": 6.81, "reprobados": 6, "total": 31}, "Ciencias Sociales II": {"promedio": 5.94, "reprobados": 14, "total": 31}, "Cultura Digital II": {"promedio": 6.81, "reprobados": 6, "total": 31}, "Pensamiento Filosófico y Humanidades II": {"promedio": 7.39, "reprobados": 7, "total": 31}, "Inglés II": {"promedio": 5.87, "reprobados": 17, "total": 31}, "Actividades Físicas y Deportivas": {"promedio": 7.52, "reprobados": 7, "total": 31}, "Educación para la Salud": {"promedio": 6.97, "reprobados": 7, "total": 31}, "Igualdad de Género II": {"promedio": 8.7, "reprobados": 0, "total": 31}}, "grupo_promedio": 7.03, "total_alumnos": 31, "reprobados": 9, "aprobados": 22, "distribucion": {"10": 0, "9": 5, "8": 7, "7": 5, "6": 5, "5-": 9}}, "1o2": {"titulo": "PRIMER GRADO  GRUPO DOS", "students": [{"nl": 1, "nombre": "ANTONIO CUELLAR IVANA", "promedio": 6.82, "califs": {"Pensamiento Matemático II": 6.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 6.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 8.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 5.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}, {"nl": 2, "nombre": "ANTONIO TRINIDAD CRISTIAN", "promedio": 5.73, "califs": {"Pensamiento Matemático II": 7.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 5.0, "Pensamiento Filosófico y Humanidades II": 6.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 5.0, "Educación para la Salud": 5.0, "Igualdad de Género II": 6.0}}, {"nl": 3, "nombre": "ARVIZU MONTES IAN YOSAEL", "promedio": 7.64, "califs": {"Pensamiento Matemático II": 6.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 9.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 6.0, "Inglés II": 7.0, "Actividades Físicas y Deportivas": 7.0, "Educación para la Salud": 8.0, "Igualdad de Género II": 10.0}}, {"nl": 4, "nombre": "BOLAÑOS HUERTA EMILY", "promedio": 9.55, "califs": {"Pensamiento Matemático II": 10.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 10.0, "Lengua y Comunicación II": 10.0, "Ciencias Sociales II": 10.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 9.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 10.0, "Igualdad de Género II": 10.0}}, {"nl": 5, "nombre": "CELSO FLORES ERICK", "promedio": 6.82, "califs": {"Pensamiento Matemático II": 5.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 7.0, "Lengua y Comunicación II": 7.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 7.0, "Actividades Físicas y Deportivas": 8.0, "Educación para la Salud": 7.0, "Igualdad de Género II": 9.0}}, {"nl": 6, "nombre": "DE JESUS ANTONIO VALENTINA", "promedio": 5.55, "califs": {"Pensamiento Matemático II": 5.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 5.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 5.0, "Educación para la Salud": 6.0, "Igualdad de Género II": 6.0}}, {"nl": 7, "nombre": "DE LA LUZ VALENTIN GERARDO", "promedio": 6.36, "califs": {"Pensamiento Matemático II": 6.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 7.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 5.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 8.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 6.0}}, {"nl": 8, "nombre": "DIAZ AMBROSIO CINTHYA", "promedio": 9.36, "califs": {"Pensamiento Matemático II": 8.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 10.0, "Ciencias Sociales II": 10.0, "Cultura Digital II": 9.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 9.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 10.0, "Igualdad de Género II": 10.0}}, {"nl": 9, "nombre": "DIAZ MACIAS JENIFER", "promedio": 9.09, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 9.0, "Ciencias Sociales II": 10.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 9.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 10.0, "Igualdad de Género II": 10.0}}, {"nl": 10, "nombre": "FLORES ANASTACIO MAURICIO", "promedio": 8.0, "califs": {"Pensamiento Matemático II": 5.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 10.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 7.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}, {"nl": 11, "nombre": "FLORES MARQUINA ALEXANDER", "promedio": 8.55, "califs": {"Pensamiento Matemático II": 8.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 8.0, "Lengua y Comunicación II": 9.0, "Ciencias Sociales II": 9.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 7.0, "Inglés II": 8.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 10.0, "Igualdad de Género II": 9.0}}, {"nl": 12, "nombre": "GONZALEZ SALAS SAMANTA", "promedio": 9.18, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 10.0, "Lengua y Comunicación II": 10.0, "Ciencias Sociales II": 10.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 8.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 10.0, "Igualdad de Género II": 9.0}}, {"nl": 13, "nombre": "LIBRADO PRIMERO ANGELICA", "promedio": 8.73, "califs": {"Pensamiento Matemático II": 10.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 8.0, "Lengua y Comunicación II": 9.0, "Ciencias Sociales II": 8.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 8.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 8.0, "Igualdad de Género II": 10.0}}, {"nl": 14, "nombre": "LUNA REYES SUSANA GUADALUPE", "promedio": 8.64, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 7.0, "Ciencias Sociales II": 10.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 7.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}, {"nl": 15, "nombre": "LUNA SANCHEZ ZOE LLINDSAY", "promedio": 7.82, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 8.0, "Ciencias Sociales II": 9.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 7.0, "Actividades Físicas y Deportivas": 8.0, "Educación para la Salud": 7.0, "Igualdad de Género II": 9.0}}, {"nl": 16, "nombre": "MANCILLA NUEVO VALENTINA", "promedio": 7.91, "califs": {"Pensamiento Matemático II": 7.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 6.0, "Lengua y Comunicación II": 10.0, "Ciencias Sociales II": 7.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 7.0, "Inglés II": 7.0, "Actividades Físicas y Deportivas": 7.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}, {"nl": 17, "nombre": "MONICO ANTONIO VALENTINA", "promedio": 9.45, "califs": {"Pensamiento Matemático II": 10.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 10.0, "Lengua y Comunicación II": 10.0, "Ciencias Sociales II": 8.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 10.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 10.0, "Igualdad de Género II": 10.0}}, {"nl": 18, "nombre": "MONTES NUEVO JOSE GUADALUPE", "promedio": 7.0, "califs": {"Pensamiento Matemático II": 5.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 6.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 6.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}, {"nl": 19, "nombre": "NUEVO BLANDO PAMELA LIZBETH", "promedio": 8.36, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 9.0, "Ciencias Sociales II": 8.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 7.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 9.0, "Educación para la Salud": 8.0, "Igualdad de Género II": 10.0}}, {"nl": 20, "nombre": "NUEVO ZEPEDA MARVIN", "promedio": 6.27, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 6.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 5.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 7.0, "Educación para la Salud": 7.0, "Igualdad de Género II": 6.0}}, {"nl": 21, "nombre": "OSORNO REYES AYME", "promedio": 9.18, "califs": {"Pensamiento Matemático II": 10.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 10.0, "Ciencias Sociales II": 7.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 9.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 10.0, "Igualdad de Género II": 10.0}}, {"nl": 22, "nombre": "OSORNO SANCHEZ WILLIAM ALEXANDER", "promedio": 8.09, "califs": {"Pensamiento Matemático II": 8.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 8.0, "Lengua y Comunicación II": 9.0, "Ciencias Sociales II": 7.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 7.0, "Actividades Físicas y Deportivas": 8.0, "Educación para la Salud": 8.0, "Igualdad de Género II": 9.0}}, {"nl": 23, "nombre": "PEREZ DE JESUS JESUS", "promedio": 9.18, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 10.0, "Lengua y Comunicación II": 10.0, "Ciencias Sociales II": 10.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 7.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 10.0, "Igualdad de Género II": 10.0}}, {"nl": 24, "nombre": "PRIMERO RAMIREZ BAYRON", "promedio": 7.0, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 6.0, "Ciencias Sociales II": 7.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 6.0, "Educación para la Salud": 8.0, "Igualdad de Género II": 10.0}}, {"nl": 25, "nombre": "REYES DIAZ DANIELA", "promedio": 9.64, "califs": {"Pensamiento Matemático II": 10.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 10.0, "Ciencias Sociales II": 10.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 10.0, "Inglés II": 10.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 10.0, "Igualdad de Género II": 10.0}}, {"nl": 26, "nombre": "ROMANO REYES CRISTOPHER AXEL", "promedio": 7.45, "califs": {"Pensamiento Matemático II": 7.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 8.0, "Lengua y Comunicación II": 6.0, "Ciencias Sociales II": 7.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 6.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 8.0, "Educación para la Salud": 8.0, "Igualdad de Género II": 10.0}}, {"nl": 27, "nombre": "ROMERO LEYVA EDWIN", "promedio": 8.91, "califs": {"Pensamiento Matemático II": 10.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 9.0, "Lengua y Comunicación II": 7.0, "Ciencias Sociales II": 8.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 9.0, "Inglés II": 8.0, "Actividades Físicas y Deportivas": 10.0, "Educación para la Salud": 10.0, "Igualdad de Género II": 10.0}}, {"nl": 28, "nombre": "ROSALINO MORENO ERIC", "promedio": 6.82, "califs": {"Pensamiento Matemático II": 8.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 9.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 5.0, "Pensamiento Filosófico y Humanidades II": 6.0, "Inglés II": 7.0, "Actividades Físicas y Deportivas": 7.0, "Educación para la Salud": 7.0, "Igualdad de Género II": 6.0}}, {"nl": 29, "nombre": "SALAS AMBROSIO LEONEL", "promedio": 7.36, "califs": {"Pensamiento Matemático II": 8.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 8.0, "Ciencias Sociales II": 6.0, "Cultura Digital II": 5.0, "Pensamiento Filosófico y Humanidades II": 7.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 9.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}, {"nl": 30, "nombre": "SIGRIST OSORNO VALENTINA NAOMI", "promedio": 8.82, "califs": {"Pensamiento Matemático II": 9.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 10.0, "Lengua y Comunicación II": 10.0, "Ciencias Sociales II": 8.0, "Cultura Digital II": 8.0, "Pensamiento Filosófico y Humanidades II": 8.0, "Inglés II": 9.0, "Actividades Físicas y Deportivas": 8.0, "Educación para la Salud": 8.0, "Igualdad de Género II": 10.0}}, {"nl": 31, "nombre": "ZEPEDA VALDEZ ALDAIR", "promedio": 6.09, "califs": {"Pensamiento Matemático II": 5.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 5.0, "Lengua y Comunicación II": 5.0, "Ciencias Sociales II": 7.0, "Cultura Digital II": 6.0, "Pensamiento Filosófico y Humanidades II": 5.0, "Inglés II": 5.0, "Actividades Físicas y Deportivas": 7.0, "Educación para la Salud": 7.0, "Igualdad de Género II": 6.0}}, {"nl": 32, "nombre": "ZUÑIGA SANCHEZ AITANA", "promedio": 7.27, "califs": {"Pensamiento Matemático II": 6.0, "Ciencias Naturales, Experimentales y Tec II": 9.0, "Taller de ciencias I": 6.0, "Lengua y Comunicación II": 9.0, "Ciencias Sociales II": 5.0, "Cultura Digital II": 7.0, "Pensamiento Filosófico y Humanidades II": 6.0, "Inglés II": 6.0, "Actividades Físicas y Deportivas": 7.0, "Educación para la Salud": 9.0, "Igualdad de Género II": 10.0}}], "subjects": ["Pensamiento Matemático II", "Ciencias Naturales, Experimentales y Tec II", "Taller de ciencias I", "Lengua y Comunicación II", "Ciencias Sociales II", "Cultura Digital II", "Pensamiento Filosófico y Humanidades II", "Inglés II", "Actividades Físicas y Deportivas", "Educación para la Salud", "Igualdad de Género II"], "subj_stats": {"Pensamiento Matemático II": {"promedio": 7.84, "reprobados": 5, "total": 32}, "Ciencias Naturales, Experimentales y Tec II": {"promedio": 9.0, "reprobados": 0, "total": 32}, "Taller de ciencias I": {"promedio": 7.56, "reprobados": 7, "total": 32}, "Lengua y Comunicación II": {"promedio": 8.0, "reprobados": 7, "total": 32}, "Ciencias Sociales II": {"promedio": 7.41, "reprobados": 7, "total": 32}, "Cultura Digital II": {"promedio": 6.88, "reprobados": 6, "total": 32}, "Pensamiento Filosófico y Humanidades II": {"promedio": 7.06, "reprobados": 7, "total": 32}, "Inglés II": {"promedio": 7.03, "reprobados": 6, "total": 32}, "Actividades Físicas y Deportivas": {"promedio": 8.41, "reprobados": 3, "total": 32}, "Educación para la Salud": {"promedio": 8.56, "reprobados": 1, "total": 32}, "Igualdad de Género II": {"promedio": 9.09, "reprobados": 0, "total": 32}}, "grupo_promedio": 7.9, "total_alumnos": 32, "reprobados": 2, "aprobados": 30, "distribucion": {"10": 2, "9": 11, "8": 6, "7": 8, "6": 3, "5-": 2}}, "2o1": {"titulo": "SEGUNDO GRADO GRUPO UNO", "students": [{"nl": 1, "nombre": "ANTONIO PRIMERO JESUS", "promedio": 6.23, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 5.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 7.0, "Inglés IV": 5.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 5.0, "Taller de Cultura Digital": 7.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 7.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 7.0}}, {"nl": 2, "nombre": "ANTONIO RENTERIA JOSE JONATHAN", "promedio": 9.62, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 10.0, "Pensamiento Literario": 10.0, "Inglés IV": 7.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 9.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 3, "nombre": "ANTONIO SEGUNDO YAMILE", "promedio": 8.54, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 10.0, "Inglés IV": 6.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 8.0, "Taller de Cultura Digital": 8.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 4, "nombre": "DE JESUS  NUEVO ANDY", "promedio": 9.08, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 9.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 10.0, "Inglés IV": 9.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 9.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 9.0}}, {"nl": 5, "nombre": "DE LA LUZ DOROTEO EDWIN", "promedio": 7.08, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 8.0, "Espacio y Sociedad": 6.0, "Pensamiento Literario": 8.0, "Inglés IV": 5.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 6.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 8.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 7.0, "Temas Selectos de Igualdad y DD HH": 8.0}}, {"nl": 6, "nombre": "DIAZ AMBROSIO SUSEET", "promedio": 8.85, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 9.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 9.0, "Inglés IV": 6.0, "Ciencias Sociales III": 9.0, "Conciencia Histórica I": 10.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 7, "nombre": "DOROTEO CRUZ BRITANIA", "promedio": 9.69, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 10.0, "Pensamiento Literario": 10.0, "Inglés IV": 10.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 10.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 8, "nombre": "DOROTEO SALAS IRVIN URIEL", "promedio": 7.85, "califs": {"Temas Selectos de Matemáticas I": 8.0, "Reacciones Químicas": 7.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 9.0, "Inglés IV": 6.0, "Ciencias Sociales III": 8.0, "Conciencia Histórica I": 6.0, "Taller de Cultura Digital": 8.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 9.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 9.0}}, {"nl": 9, "nombre": "FLORES  SALAS GENESIS ROMINA", "promedio": 9.23, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 8.0, "Pensamiento Literario": 10.0, "Inglés IV": 9.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 7.0, "Educación Integral en Sexualidad y Género": 9.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 9.0}}, {"nl": 10, "nombre": "GONZALEZ SALAS PEDRO", "promedio": 6.38, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 5.0, "Espacio y Sociedad": 6.0, "Pensamiento Literario": 8.0, "Inglés IV": 5.0, "Ciencias Sociales III": 6.0, "Conciencia Histórica I": 5.0, "Taller de Cultura Digital": 7.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 8.0}}, {"nl": 11, "nombre": "HUERTA  CASTRO IKER DANIEL", "promedio": 6.15, "califs": {"Temas Selectos de Matemáticas I": 7.0, "Reacciones Químicas": 6.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 5.0, "Inglés IV": 5.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 5.0, "Taller de Cultura Digital": 7.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 6.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 6.0}}, {"nl": 12, "nombre": "HUESCA PEREZ MEREDICK", "promedio": 9.15, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 10.0, "Inglés IV": 9.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 8.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 8.0, "Educación Integral en Sexualidad y Género": 9.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 9.0}}, {"nl": 13, "nombre": "ITURBIDE DE JESUS  LEILANI", "promedio": 9.62, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 9.0, "Espacio y Sociedad": 10.0, "Pensamiento Literario": 10.0, "Inglés IV": 8.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 10.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 8.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 14, "nombre": "ITURBIDE DE JESUS  LUIS YAEL", "promedio": 6.54, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 6.0, "Espacio y Sociedad": 6.0, "Pensamiento Literario": 7.0, "Inglés IV": 5.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 7.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 7.0, "Mantenimiento de Redes": 8.0, "Educación Integral en Sexualidad y Género": 6.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 6.0}}, {"nl": 15, "nombre": "LAZCANO HUERTA CHRISTIAN", "promedio": 6.85, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 7.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 8.0, "Inglés IV": 7.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 8.0, "Taller de Cultura Digital": 8.0, "Comunidades Virtuales": 7.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 7.0, "Actividades Artísticas y Culturales": 7.0, "Temas Selectos de Igualdad y DD HH": 7.0}}, {"nl": 16, "nombre": "LAZCANO HUESCA KEVIN", "promedio": 9.23, "califs": {"Temas Selectos de Matemáticas I": 9.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 8.0, "Pensamiento Literario": 10.0, "Inglés IV": 9.0, "Ciencias Sociales III": 9.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 9.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 8.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 17, "nombre": "MEDINA  CRUZ MARIA JOSE", "promedio": 9.69, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 9.0, "Espacio y Sociedad": 10.0, "Pensamiento Literario": 10.0, "Inglés IV": 10.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 8.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 18, "nombre": "MONICO MORENO ANA LAURA", "promedio": 9.31, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 10.0, "Inglés IV": 7.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 10.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 8.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 19, "nombre": "MONTAÑO CARBALLO RODRIGO", "promedio": 7.62, "califs": {"Temas Selectos de Matemáticas I": 6.0, "Reacciones Químicas": 8.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 8.0, "Inglés IV": 6.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 6.0, "Taller de Cultura Digital": 8.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 9.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 9.0}}, {"nl": 20, "nombre": "MONTES  NUEVO MARIA LETICIA", "promedio": 8.92, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 8.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 9.0, "Inglés IV": 10.0, "Ciencias Sociales III": 9.0, "Conciencia Histórica I": 8.0, "Taller de Cultura Digital": 8.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 7.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 21, "nombre": "MORENO ANTONIO ALEXANDER", "promedio": 5.46, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 6.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 5.0, "Inglés IV": 5.0, "Ciencias Sociales III": 5.0, "Conciencia Histórica I": 5.0, "Taller de Cultura Digital": 6.0, "Comunidades Virtuales": 7.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 6.0, "Actividades Artísticas y Culturales": 5.0, "Temas Selectos de Igualdad y DD HH": 6.0}}, {"nl": 22, "nombre": "NUEVO DIAZ MARIANELA", "promedio": 8.23, "califs": {"Temas Selectos de Matemáticas I": 9.0, "Reacciones Químicas": 9.0, "Espacio y Sociedad": 8.0, "Pensamiento Literario": 9.0, "Inglés IV": 6.0, "Ciencias Sociales III": 9.0, "Conciencia Histórica I": 7.0, "Taller de Cultura Digital": 8.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 9.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 9.0}}, {"nl": 23, "nombre": "NUEVO OCLICA JEYMI", "promedio": 9.0, "califs": {"Temas Selectos de Matemáticas I": 9.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 8.0, "Pensamiento Literario": 9.0, "Inglés IV": 9.0, "Ciencias Sociales III": 8.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 24, "nombre": "NUEVO PORTAL EMILY", "promedio": 9.62, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 9.0, "Pensamiento Literario": 10.0, "Inglés IV": 10.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 10.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 25, "nombre": "OSORNO PRIMERO EDUARDO", "promedio": 8.31, "califs": {"Temas Selectos de Matemáticas I": 9.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 8.0, "Pensamiento Literario": 9.0, "Inglés IV": 6.0, "Ciencias Sociales III": 8.0, "Conciencia Histórica I": 8.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 7.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 8.0}}, {"nl": 26, "nombre": "POTRERO RUIZ YARET", "promedio": 9.77, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 9.0, "Pensamiento Literario": 10.0, "Inglés IV": 10.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 10.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 8.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 27, "nombre": "POZOS  SEGUNDO CRISTIAN YAEL", "promedio": 9.85, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 10.0, "Pensamiento Literario": 10.0, "Inglés IV": 10.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 10.0, "Taller de Cultura Digital": 10.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 8.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 28, "nombre": "ROMERO OSORNO MARIA JOSE", "promedio": 8.77, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 10.0, "Inglés IV": 6.0, "Ciencias Sociales III": 8.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 8.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 29, "nombre": "SANCHEZ CRUZ EBER", "promedio": 8.15, "califs": {"Temas Selectos de Matemáticas I": 7.0, "Reacciones Químicas": 8.0, "Espacio y Sociedad": 8.0, "Pensamiento Literario": 9.0, "Inglés IV": 6.0, "Ciencias Sociales III": 8.0, "Conciencia Histórica I": 6.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 30, "nombre": "SEGUNDO ANTONIO EDUARDO", "promedio": 6.69, "califs": {"Temas Selectos de Matemáticas I": 6.0, "Reacciones Químicas": 7.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 8.0, "Inglés IV": 5.0, "Ciencias Sociales III": 8.0, "Conciencia Histórica I": 6.0, "Taller de Cultura Digital": 7.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 7.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 7.0}}, {"nl": 31, "nombre": "SEGUNDO REYES DANIEL", "promedio": 8.08, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 8.0, "Inglés IV": 5.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 8.0, "Taller de Cultura Digital": 8.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 9.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 9.0}}, {"nl": 32, "nombre": "TRINIDAD  TRINIDAD ADNERI XIMENA", "promedio": 9.23, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 9.0, "Pensamiento Literario": 10.0, "Inglés IV": 10.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 9.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 9.0}}], "subjects": ["Temas Selectos de Matemáticas I", "Reacciones Químicas", "Espacio y Sociedad", "Pensamiento Literario", "Inglés IV", "Ciencias Sociales III", "Conciencia Histórica I", "Taller de Cultura Digital", "Comunidades Virtuales", "Mantenimiento de Redes", "Educación Integral en Sexualidad y Género", "Actividades Artísticas y Culturales", "Temas Selectos de Igualdad y DD HH"], "subj_stats": {"Temas Selectos de Matemáticas I": {"promedio": 8.44, "reprobados": 6, "total": 32}, "Reacciones Químicas": {"promedio": 8.62, "reprobados": 2, "total": 32}, "Espacio y Sociedad": {"promedio": 7.44, "reprobados": 5, "total": 32}, "Pensamiento Literario": {"promedio": 8.91, "reprobados": 2, "total": 32}, "Inglés IV": {"promedio": 7.25, "reprobados": 8, "total": 32}, "Ciencias Sociales III": {"promedio": 8.47, "reprobados": 1, "total": 32}, "Conciencia Histórica I": {"promedio": 7.94, "reprobados": 4, "total": 32}, "Taller de Cultura Digital": {"promedio": 8.81, "reprobados": 0, "total": 32}, "Comunidades Virtuales": {"promedio": 9.41, "reprobados": 0, "total": 32}, "Mantenimiento de Redes": {"promedio": 6.56, "reprobados": 5, "total": 32}, "Educación Integral en Sexualidad y Género": {"promedio": 8.91, "reprobados": 0, "total": 32}, "Actividades Artísticas y Culturales": {"promedio": 8.72, "reprobados": 1, "total": 32}, "Temas Selectos de Igualdad y DD HH": {"promedio": 8.91, "reprobados": 0, "total": 32}}, "grupo_promedio": 8.34, "total_alumnos": 32, "reprobados": 1, "aprobados": 31, "distribucion": {"10": 7, "9": 11, "8": 6, "7": 4, "6": 3, "5-": 1}}, "2o2": {"titulo": "SEGUNDO GRADO GRUPO DOS", "students": [{"nl": 1, "nombre": "ANTONIO JUAREZ AMY YEIMY", "promedio": 7.0, "califs": {"Temas Selectos de Matemáticas I": 7.0, "Reacciones Químicas": 8.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 6.0, "Inglés IV": 6.0, "Ciencias Sociales III": 6.0, "Conciencia Histórica I": 7.0, "Taller de Cultura Digital": 6.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 7.0, "Temas Selectos de Igualdad y DD HH": 8.0}}, {"nl": 2, "nombre": "ANTONIO NUEVO YAMILE", "promedio": 5.54, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 5.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 6.0, "Inglés IV": 5.0, "Ciencias Sociales III": 5.0, "Conciencia Histórica I": 5.0, "Taller de Cultura Digital": 6.0, "Comunidades Virtuales": 7.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 6.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 6.0}}, {"nl": 3, "nombre": "ARVIZU MONTES DANA ALIN", "promedio": 8.15, "califs": {"Temas Selectos de Matemáticas I": 9.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 9.0, "Pensamiento Literario": 8.0, "Inglés IV": 9.0, "Ciencias Sociales III": 9.0, "Conciencia Histórica I": 7.0, "Taller de Cultura Digital": 7.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 7.0, "Temas Selectos de Igualdad y DD HH": 8.0}}, {"nl": 4, "nombre": "AVELINO GONZALEZ ESTEFANIA", "promedio": 7.77, "califs": {"Temas Selectos de Matemáticas I": 9.0, "Reacciones Químicas": 9.0, "Espacio y Sociedad": 8.0, "Pensamiento Literario": 8.0, "Inglés IV": 8.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 7.0, "Taller de Cultura Digital": 6.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 7.0, "Temas Selectos de Igualdad y DD HH": 8.0}}, {"nl": 5, "nombre": "CELSO  TRINIDAD JUAN", "promedio": 6.08, "califs": {"Temas Selectos de Matemáticas I": 7.0, "Reacciones Químicas": 6.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 6.0, "Inglés IV": 5.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 5.0, "Taller de Cultura Digital": 6.0, "Comunidades Virtuales": 7.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 7.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 7.0}}, {"nl": 6, "nombre": "CRUZ DE LA LUZ LEONARDO", "promedio": 8.46, "califs": {"Temas Selectos de Matemáticas I": 8.0, "Reacciones Químicas": 8.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 7.0, "Inglés IV": 8.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 8.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 7, "nombre": "DE JESUS  DOROTEO JESUS YAMIL", "promedio": 6.31, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 7.0, "Espacio y Sociedad": 6.0, "Pensamiento Literario": 6.0, "Inglés IV": 6.0, "Ciencias Sociales III": 6.0, "Conciencia Histórica I": 6.0, "Taller de Cultura Digital": 6.0, "Comunidades Virtuales": 7.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 8.0}}, {"nl": 8, "nombre": "DOROTEO  MORENO MIGUEL SALVADOR", "promedio": 5.85, "califs": {"Temas Selectos de Matemáticas I": 6.0, "Reacciones Químicas": 6.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 6.0, "Inglés IV": 5.0, "Ciencias Sociales III": 5.0, "Conciencia Histórica I": 5.0, "Taller de Cultura Digital": 6.0, "Comunidades Virtuales": 5.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 8.0}}, {"nl": 9, "nombre": "DOROTEO  SANCHEZ JESUS ALAN", "promedio": 8.77, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 8.0, "Espacio y Sociedad": 9.0, "Pensamiento Literario": 7.0, "Inglés IV": 8.0, "Ciencias Sociales III": 9.0, "Conciencia Histórica I": 8.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 8.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 10, "nombre": "FLORES  TELLEZ ALBERTO JOSELI", "promedio": 6.0, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 7.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 6.0, "Inglés IV": 6.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 5.0, "Taller de Cultura Digital": 6.0, "Comunidades Virtuales": 8.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 6.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 6.0}}, {"nl": 11, "nombre": "FLORES  TORRES LUIS JONAS", "promedio": 8.0, "califs": {"Temas Selectos de Matemáticas I": 8.0, "Reacciones Químicas": 8.0, "Espacio y Sociedad": 8.0, "Pensamiento Literario": 8.0, "Inglés IV": 8.0, "Ciencias Sociales III": 8.0, "Conciencia Histórica I": 8.0, "Taller de Cultura Digital": 8.0, "Comunidades Virtuales": 8.0, "Mantenimiento de Redes": 8.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 8.0, "Temas Selectos de Igualdad y DD HH": 8.0}}, {"nl": 12, "nombre": "HUERTA  CASTRO DYLAN", "promedio": 6.31, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 6.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 6.0, "Inglés IV": 7.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 6.0, "Taller de Cultura Digital": 7.0, "Comunidades Virtuales": 7.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 5.0, "Temas Selectos de Igualdad y DD HH": 8.0}}, {"nl": 13, "nombre": "JUAREZ HUERTA LEILANI", "promedio": 5.77, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 5.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 6.0, "Inglés IV": 5.0, "Ciencias Sociales III": 5.0, "Conciencia Histórica I": 5.0, "Taller de Cultura Digital": 6.0, "Comunidades Virtuales": 6.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 8.0}}, {"nl": 14, "nombre": "LEYVA  FRANCISCO VANESSA", "promedio": 8.77, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 8.0, "Pensamiento Literario": 7.0, "Inglés IV": 9.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 7.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 7.0, "Educación Integral en Sexualidad y Género": 9.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 9.0}}, {"nl": 15, "nombre": "LUNA ANTONIO ADILLENETH", "promedio": 8.38, "califs": {"Temas Selectos de Matemáticas I": 9.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 7.0, "Inglés IV": 7.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 8.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 16, "nombre": "MARTINEZ ROJAS MATILDE", "promedio": 9.46, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 9.0, "Espacio y Sociedad": 9.0, "Pensamiento Literario": 8.0, "Inglés IV": 10.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 10.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 8.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 17, "nombre": "MORENO AMBROSIO CRISTIAN", "promedio": 6.0, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 6.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 6.0, "Inglés IV": 5.0, "Ciencias Sociales III": 6.0, "Conciencia Histórica I": 5.0, "Taller de Cultura Digital": 7.0, "Comunidades Virtuales": 7.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 7.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 7.0}}, {"nl": 18, "nombre": "MORENO OLIVAREZ SALVADOR", "promedio": 7.23, "califs": {"Temas Selectos de Matemáticas I": 6.0, "Reacciones Químicas": 8.0, "Espacio y Sociedad": 9.0, "Pensamiento Literario": 6.0, "Inglés IV": 8.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 7.0, "Taller de Cultura Digital": 6.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 8.0, "Temas Selectos de Igualdad y DD HH": 7.0}}, {"nl": 19, "nombre": "NUEVO AMBROCIO GABRIEL", "promedio": 6.31, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 7.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 6.0, "Inglés IV": 7.0, "Ciencias Sociales III": 6.0, "Conciencia Histórica I": 6.0, "Taller de Cultura Digital": 6.0, "Comunidades Virtuales": 9.0, "Mantenimiento de Redes": 5.0, "Educación Integral en Sexualidad y Género": 6.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 6.0}}, {"nl": 20, "nombre": "POTRERO OSORNO MARIO YAEL", "promedio": 9.38, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 10.0, "Pensamiento Literario": 8.0, "Inglés IV": 9.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 10.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 21, "nombre": "REYES  ARELLANO JOSE MIGUEL", "promedio": 9.23, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 8.0, "Espacio y Sociedad": 10.0, "Pensamiento Literario": 8.0, "Inglés IV": 8.0, "Ciencias Sociales III": 10.0, "Conciencia Histórica I": 10.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 7.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 22, "nombre": "REYES SANCHEZ CHERLYN", "promedio": 7.69, "califs": {"Temas Selectos de Matemáticas I": 9.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 7.0, "Inglés IV": 8.0, "Ciencias Sociales III": 8.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 6.0, "Comunidades Virtuales": 8.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 9.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 9.0}}, {"nl": 23, "nombre": "REYES  SEGUNDO JACHELIN", "promedio": 8.15, "califs": {"Temas Selectos de Matemáticas I": 8.0, "Reacciones Químicas": 10.0, "Espacio y Sociedad": 8.0, "Pensamiento Literario": 7.0, "Inglés IV": 7.0, "Ciencias Sociales III": 8.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 7.0, "Comunidades Virtuales": 8.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 9.0, "Actividades Artísticas y Culturales": 10.0, "Temas Selectos de Igualdad y DD HH": 9.0}}, {"nl": 24, "nombre": "SALAS TRINIDAD MIGUEL", "promedio": 7.38, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 8.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 6.0, "Inglés IV": 7.0, "Ciencias Sociales III": 5.0, "Conciencia Histórica I": 8.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 7.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 7.0, "Temas Selectos de Igualdad y DD HH": 9.0}}, {"nl": 25, "nombre": "SANCHEZ  RUIZ CINTHYA", "promedio": 8.23, "califs": {"Temas Selectos de Matemáticas I": 9.0, "Reacciones Químicas": 9.0, "Espacio y Sociedad": 7.0, "Pensamiento Literario": 6.0, "Inglés IV": 7.0, "Ciencias Sociales III": 8.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 8.0, "Mantenimiento de Redes": 7.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 8.0, "Temas Selectos de Igualdad y DD HH": 10.0}}, {"nl": 26, "nombre": "SEGUNDO AMBROSIO ULISES", "promedio": 7.38, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 6.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 7.0, "Inglés IV": 7.0, "Ciencias Sociales III": 7.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 8.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 9.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 9.0}}, {"nl": 27, "nombre": "SEGUNDO NUEVO YAMILE", "promedio": 8.46, "califs": {"Temas Selectos de Matemáticas I": 10.0, "Reacciones Químicas": 8.0, "Espacio y Sociedad": 10.0, "Pensamiento Literario": 7.0, "Inglés IV": 7.0, "Ciencias Sociales III": 9.0, "Conciencia Histórica I": 9.0, "Taller de Cultura Digital": 9.0, "Comunidades Virtuales": 10.0, "Mantenimiento de Redes": 6.0, "Educación Integral en Sexualidad y Género": 10.0, "Actividades Artísticas y Culturales": 9.0, "Temas Selectos de Igualdad y DD HH": 6.0}}, {"nl": 28, "nombre": "SEGUNDO REYES JAVIER", "promedio": 6.31, "califs": {"Temas Selectos de Matemáticas I": 5.0, "Reacciones Químicas": 6.0, "Espacio y Sociedad": 5.0, "Pensamiento Literario": 6.0, "Inglés IV": 5.0, "Ciencias Sociales III": 6.0, "Conciencia Histórica I": 6.0, "Taller de Cultura Digital": 7.0, "Comunidades Virtuales": 7.0, "Mantenimiento de Redes": 7.0, "Educación Integral en Sexualidad y Género": 8.0, "Actividades Artísticas y Culturales": 6.0, "Temas Selectos de Igualdad y DD HH": 8.0}}], "subjects": ["Temas Selectos de Matemáticas I", "Reacciones Químicas", "Espacio y Sociedad", "Pensamiento Literario", "Inglés IV", "Ciencias Sociales III", "Conciencia Histórica I", "Taller de Cultura Digital", "Comunidades Virtuales", "Mantenimiento de Redes", "Educación Integral en Sexualidad y Género", "Actividades Artísticas y Culturales", "Temas Selectos de Igualdad y DD HH"], "subj_stats": {"Temas Selectos de Matemáticas I": {"promedio": 7.32, "reprobados": 10, "total": 28}, "Reacciones Químicas": {"promedio": 7.79, "reprobados": 2, "total": 28}, "Espacio y Sociedad": {"promedio": 6.93, "reprobados": 11, "total": 28}, "Pensamiento Literario": {"promedio": 6.71, "reprobados": 0, "total": 28}, "Inglés IV": {"promedio": 7.04, "reprobados": 6, "total": 28}, "Ciencias Sociales III": {"promedio": 7.43, "reprobados": 4, "total": 28}, "Conciencia Histórica I": {"promedio": 7.39, "reprobados": 6, "total": 28}, "Taller de Cultura Digital": {"promedio": 7.36, "reprobados": 0, "total": 28}, "Comunidades Virtuales": {"promedio": 8.36, "reprobados": 1, "total": 28}, "Mantenimiento de Redes": {"promedio": 6.07, "reprobados": 9, "total": 28}, "Educación Integral en Sexualidad y Género": {"promedio": 8.5, "reprobados": 0, "total": 28}, "Actividades Artísticas y Culturales": {"promedio": 7.57, "reprobados": 1, "total": 28}, "Temas Selectos de Igualdad y DD HH": {"promedio": 8.29, "reprobados": 0, "total": 28}}, "grupo_promedio": 7.44, "total_alumnos": 28, "reprobados": 3, "aprobados": 25, "distribucion": {"10": 0, "9": 5, "8": 9, "7": 4, "6": 7, "5-": 3}}, "3o1": {"titulo": "TERCER GRADO GRUPO UNO", "students": [{"nl": 1, "nombre": "ANTONIO TRINIDAD FIDEL", "promedio": 7.25, "califs": {"Temas Selectos de Matemáticas II": 8.0, "Organismos: Estructuras y Procesos": 6.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 7.0, "Ciencias de la Comunicación I": 5.0, "Temas Selectos de Inglés II": 5.0, "Temas Selectos de Filosofía": 7.0, "Temas Selectos De Derechos Humanos V": 7.0, "Actividades Artísticas y Cult III": 7.0, "Paginas Web": 9.0, "Diseño Digital": 9.0}}, {"nl": 2, "nombre": "CELSO FLORES MEREDIT", "promedio": 9.83, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 3, "nombre": "CONTRERAS SEGUNDO ALLISON", "promedio": 9.83, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 4, "nombre": "CORTES OSORNO ANGEL", "promedio": 7.33, "califs": {"Temas Selectos de Matemáticas II": 8.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 6.0, "Economía I": 7.0, "Ciencias de la Comunicación I": 8.0, "Temas Selectos de Inglés II": 7.0, "Temas Selectos de Filosofía": 7.0, "Temas Selectos De Derechos Humanos V": 6.0, "Actividades Artísticas y Cult III": 5.0, "Paginas Web": 10.0, "Diseño Digital": 9.0}}, {"nl": 5, "nombre": "DE LA LUZ VILLA DANIELLE", "promedio": 8.42, "califs": {"Temas Selectos de Matemáticas II": 8.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 8.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 8.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 6.0, "Temas Selectos de Filosofía": 8.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 7.0, "Paginas Web": 9.0, "Diseño Digital": 10.0}}, {"nl": 6, "nombre": "DIAZ RAMIREZ SANTIAGO", "promedio": 8.83, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 8.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 8.0, "Temas Selectos de Inglés II": 6.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 9.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 7, "nombre": "FLORES LEYVA SAMUEL", "promedio": 8.08, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 7.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 7.0, "Temas Selectos de Filosofía": 7.0, "Temas Selectos De Derechos Humanos V": 7.0, "Actividades Artísticas y Cult III": 8.0, "Paginas Web": 9.0, "Diseño Digital": 9.0}}, {"nl": 8, "nombre": "LAZCANO ANTONIO FERNANDA", "promedio": 9.75, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 9, "nombre": "LAZCANO HUESCA LESLI", "promedio": 9.83, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 10, "nombre": "LAZCANO MARTINEZ MELINA", "promedio": 8.33, "califs": {"Temas Selectos de Matemáticas II": 7.0, "Organismos: Estructuras y Procesos": 7.0, "Conciencia Histórica III": 8.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 7.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 6.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 7.0, "Diseño Digital": 10.0}}, {"nl": 11, "nombre": "MONICO DIAZ JESUS", "promedio": 7.5, "califs": {"Temas Selectos de Matemáticas II": 6.0, "Organismos: Estructuras y Procesos": 7.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 8.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 6.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 6.0, "Actividades Artísticas y Cult III": 5.0, "Paginas Web": 6.0, "Diseño Digital": 10.0}}, {"nl": 12, "nombre": "MONTAÑO FLORES CAMILA", "promedio": 8.83, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 8.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 8.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 8.0, "Actividades Artísticas y Cult III": 9.0, "Paginas Web": 9.0, "Diseño Digital": 10.0}}, {"nl": 13, "nombre": "NOLAZCO NUEVO LEOBARDO", "promedio": 6.58, "califs": {"Temas Selectos de Matemáticas II": 5.0, "Organismos: Estructuras y Procesos": 5.0, "Conciencia Histórica III": 5.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 6.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 5.0, "Temas Selectos de Filosofía": 8.0, "Temas Selectos De Derechos Humanos V": 6.0, "Actividades Artísticas y Cult III": 5.0, "Paginas Web": 6.0, "Diseño Digital": 9.0}}, {"nl": 14, "nombre": "OSORNO REYES MARELY", "promedio": 9.58, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 15, "nombre": "OSORNO TORRES YEILIN", "promedio": 9.67, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 16, "nombre": "PALMA SEGUNDO LITZY BUGET", "promedio": 9.92, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 9.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 17, "nombre": "PEREZ HUESCA VALERIA", "promedio": 9.17, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 7.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 8.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 9.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 18, "nombre": "PRIMERO MONICO JOSE GUADALUPE", "promedio": 8.75, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 8.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 8.0, "Temas Selectos de Inglés II": 5.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 9.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 19, "nombre": "RAMIREZ SEGUNDO KEVIN", "promedio": 7.67, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 7.0, "Conciencia Histórica III": 6.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 7.0, "Ciencias de la Comunicación I": 6.0, "Temas Selectos de Inglés II": 7.0, "Temas Selectos de Filosofía": 8.0, "Temas Selectos De Derechos Humanos V": 9.0, "Actividades Artísticas y Cult III": 5.0, "Paginas Web": 10.0, "Diseño Digital": 8.0}}, {"nl": 20, "nombre": "RENDON MORALES JORGE", "promedio": 8.0, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 6.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 7.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 6.0, "Temas Selectos de Filosofía": 7.0, "Temas Selectos De Derechos Humanos V": 9.0, "Actividades Artísticas y Cult III": 8.0, "Paginas Web": 10.0, "Diseño Digital": 8.0}}, {"nl": 21, "nombre": "REYES ARELLANO BENJAMIN ADRIAN", "promedio": 8.75, "califs": {"Temas Selectos de Matemáticas II": 8.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 7.0, "Temas Selectos de Filosofía": 8.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 8.0, "Paginas Web": 10.0, "Diseño Digital": 9.0}}, {"nl": 22, "nombre": "RODRIGUEZ SEGUNDO PAMELA", "promedio": 9.5, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 23, "nombre": "SALAS SANCHEZ OMAR YAEL", "promedio": 9.25, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 8.0, "Paginas Web": 10.0, "Diseño Digital": 9.0}}, {"nl": 24, "nombre": "SANCHEZ HUESCA XIMENA", "promedio": 9.92, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 25, "nombre": "SANCHEZ MARTINEZ MARIA GUADALUPE", "promedio": 9.75, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 26, "nombre": "SEGUNDO NUEVO OZIEL", "promedio": 8.42, "califs": {"Temas Selectos de Matemáticas II": 8.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 6.0, "Temas Selectos de Filosofía": 8.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 8.0, "Paginas Web": 10.0, "Diseño Digital": 9.0}}, {"nl": 27, "nombre": "SEGUNDO RUIZ JUAN MIGUEL", "promedio": 8.83, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 7.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 6.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 9.0}}, {"nl": 28, "nombre": "SEGUNDO SEGUNDO ALEXANDRA", "promedio": 9.83, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 29, "nombre": "URIBE TRINIDAD AMAYRANI", "promedio": 9.83, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 30, "nombre": "VENTEÑO SANTOS JORGE", "promedio": 8.0, "califs": {"Temas Selectos de Matemáticas II": 8.0, "Organismos: Estructuras y Procesos": 7.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 7.0, "Ciencias de la Comunicación I": 8.0, "Temas Selectos de Inglés II": 8.0, "Temas Selectos de Filosofía": 8.0, "Temas Selectos De Derechos Humanos V": 9.0, "Actividades Artísticas y Cult III": 8.0, "Paginas Web": 8.0, "Diseño Digital": 9.0}}, {"nl": 31, "nombre": "XOCO OSORNO ANGELES", "promedio": 9.25, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 8.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 9.0, "Actividades Artísticas y Cult III": 9.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 32, "nombre": "ZUÑIGA MORENO MELANY", "promedio": 9.25, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 9.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 8.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}], "subjects": ["Temas Selectos de Matemáticas II", "Organismos: Estructuras y Procesos", "Conciencia Histórica III", "Practica y Colaboración Ciudadana", "Economía I", "Ciencias de la Comunicación I", "Temas Selectos de Inglés II", "Temas Selectos de Filosofía", "Temas Selectos De Derechos Humanos V", "Actividades Artísticas y Cult III", "Paginas Web", "Diseño Digital"], "subj_stats": {"Temas Selectos de Matemáticas II": {"promedio": 8.69, "reprobados": 1, "total": 32}, "Organismos: Estructuras y Procesos": {"promedio": 8.09, "reprobados": 1, "total": 32}, "Conciencia Histórica III": {"promedio": 8.34, "reprobados": 1, "total": 32}, "Practica y Colaboración Ciudadana": {"promedio": 9.78, "reprobados": 0, "total": 32}, "Economía I": {"promedio": 8.78, "reprobados": 0, "total": 32}, "Ciencias de la Comunicación I": {"promedio": 8.88, "reprobados": 1, "total": 32}, "Temas Selectos de Inglés II": {"promedio": 8.03, "reprobados": 3, "total": 32}, "Temas Selectos de Filosofía": {"promedio": 8.91, "reprobados": 0, "total": 32}, "Temas Selectos De Derechos Humanos V": {"promedio": 9.25, "reprobados": 0, "total": 32}, "Actividades Artísticas y Cult III": {"promedio": 8.59, "reprobados": 4, "total": 32}, "Paginas Web": {"promedio": 9.47, "reprobados": 0, "total": 32}, "Diseño Digital": {"promedio": 9.59, "reprobados": 0, "total": 32}}, "grupo_promedio": 8.87, "total_alumnos": 32, "reprobados": 0, "aprobados": 32, "distribucion": {"10": 12, "9": 9, "8": 8, "7": 3, "6": 0, "5-": 0}}, "3o2": {"titulo": "TERCER GRADO GRUPO DOS", "students": [{"nl": 1, "nombre": "ANTONIO DOROTEO ALINNE YURETSSI", "promedio": 10.0, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 2, "nombre": "CASTILLO DIAZ JESUS", "promedio": 7.25, "califs": {"Temas Selectos de Matemáticas II": 7.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 7.0, "Economía I": 8.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 9.0, "Temas Selectos de Filosofía": 5.0, "Temas Selectos De Derechos Humanos V": 5.0, "Actividades Artísticas y Cult III": 6.0, "Paginas Web": 8.0, "Diseño Digital": 7.0}}, {"nl": 3, "nombre": "CELSO NUEVO JONATHAN", "promedio": 8.83, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 9.0, "Temas Selectos de Filosofía": 7.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 8.0, "Paginas Web": 9.0, "Diseño Digital": 8.0}}, {"nl": 4, "nombre": "CRUZ NUEVO YESSICA", "promedio": 9.58, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 7.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 5, "nombre": "DE JESUS ANTONIO YEZLIN MAITE", "promedio": 9.92, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 6, "nombre": "DE JESUS PALMA FELIX ABRAM", "promedio": 6.83, "califs": {"Temas Selectos de Matemáticas II": 7.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 6.0, "Practica y Colaboración Ciudadana": 7.0, "Economía I": 6.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 5.0, "Temas Selectos de Filosofía": 5.0, "Temas Selectos De Derechos Humanos V": 5.0, "Actividades Artísticas y Cult III": 6.0, "Paginas Web": 9.0, "Diseño Digital": 8.0}}, {"nl": 7, "nombre": "DIAZ HUESCA HILLARY", "promedio": 9.92, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 9.0}}, {"nl": 8, "nombre": "DOROTEO NUEVO ISIS", "promedio": 7.25, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 7.0, "Conciencia Histórica III": 8.0, "Practica y Colaboración Ciudadana": 5.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 8.0, "Temas Selectos de Inglés II": 8.0, "Temas Selectos de Filosofía": 7.0, "Temas Selectos De Derechos Humanos V": 5.0, "Actividades Artísticas y Cult III": 6.0, "Paginas Web": 8.0, "Diseño Digital": 7.0}}, {"nl": 9, "nombre": "GARCIA REYES SANDI", "promedio": 9.42, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 9.0}}, {"nl": 10, "nombre": "GRANADOS ANTONIO MARIA GUADALUPE", "promedio": 8.92, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 7.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 8.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 7.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 11, "nombre": "HUERTA CASTRO LANDER GAEL", "promedio": 6.92, "califs": {"Temas Selectos de Matemáticas II": 7.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 7.0, "Economía I": 6.0, "Ciencias de la Comunicación I": 7.0, "Temas Selectos de Inglés II": 6.0, "Temas Selectos de Filosofía": 6.0, "Temas Selectos De Derechos Humanos V": 6.0, "Actividades Artísticas y Cult III": 6.0, "Paginas Web": 9.0, "Diseño Digital": 8.0}}, {"nl": 12, "nombre": "HUESCA LAZCANO BRENDA", "promedio": 9.25, "califs": {"Temas Selectos de Matemáticas II": 8.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 7.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 13, "nombre": "LAZCANO TEOFILO JOSE LUIS", "promedio": 6.42, "califs": {"Temas Selectos de Matemáticas II": 7.0, "Organismos: Estructuras y Procesos": 6.0, "Conciencia Histórica III": 6.0, "Practica y Colaboración Ciudadana": 6.0, "Economía I": 7.0, "Ciencias de la Comunicación I": 8.0, "Temas Selectos de Inglés II": 5.0, "Temas Selectos de Filosofía": 5.0, "Temas Selectos De Derechos Humanos V": 6.0, "Actividades Artísticas y Cult III": 6.0, "Paginas Web": 9.0, "Diseño Digital": 6.0}}, {"nl": 14, "nombre": "LUNA LIBRADO JESSICA", "promedio": 9.67, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 7.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 15, "nombre": "NUEVO DIAZ LIZBETH", "promedio": 9.5, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 8.0, "Temas Selectos de Inglés II": 9.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 9.0}}, {"nl": 16, "nombre": "NUEVO OLIVARES JUAN DAVID", "promedio": 9.75, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 9.0}}, {"nl": 17, "nombre": "OTLICA SEGUNDO GUADALUPE", "promedio": 9.92, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 18, "nombre": "PRIMERO MEJIA URIEL", "promedio": 7.75, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 7.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 8.0, "Temas Selectos de Filosofía": 5.0, "Temas Selectos De Derechos Humanos V": 6.0, "Actividades Artísticas y Cult III": 6.0, "Paginas Web": 9.0, "Diseño Digital": 8.0}}, {"nl": 19, "nombre": "PRIMERO MORENO ZULEIMI", "promedio": 9.33, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 8.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 7.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 20, "nombre": "REYES DIAZ HEYDI", "promedio": 9.83, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 8.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 21, "nombre": "REYES SEGUNDO CRISTHIAN", "promedio": 7.92, "califs": {"Temas Selectos de Matemáticas II": 9.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 6.0, "Practica y Colaboración Ciudadana": 6.0, "Economía I": 8.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 9.0, "Temas Selectos de Filosofía": 5.0, "Temas Selectos De Derechos Humanos V": 9.0, "Actividades Artísticas y Cult III": 8.0, "Paginas Web": 9.0, "Diseño Digital": 8.0}}, {"nl": 22, "nombre": "RIVERA OTLICA BRAULIO", "promedio": 7.75, "califs": {"Temas Selectos de Matemáticas II": 8.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 8.0, "Economía I": 8.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 7.0, "Temas Selectos de Filosofía": 6.0, "Temas Selectos De Derechos Humanos V": 6.0, "Actividades Artísticas y Cult III": 6.0, "Paginas Web": 10.0, "Diseño Digital": 8.0}}, {"nl": 23, "nombre": "ROMERO OSORNO VICTOR ANTONIO", "promedio": 8.42, "califs": {"Temas Selectos de Matemáticas II": 8.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 7.0, "Economía I": 8.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 6.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 9.0, "Paginas Web": 10.0, "Diseño Digital": 8.0}}, {"nl": 24, "nombre": "RUIZ JUAREZ ANDREA MARELY", "promedio": 9.75, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 10.0, "Practica y Colaboración Ciudadana": 10.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 8.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 25, "nombre": "SANCHEZ CRUZ EDER", "promedio": 7.42, "califs": {"Temas Selectos de Matemáticas II": 7.0, "Organismos: Estructuras y Procesos": 7.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 8.0, "Economía I": 7.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 6.0, "Temas Selectos de Filosofía": 6.0, "Temas Selectos De Derechos Humanos V": 6.0, "Actividades Artísticas y Cult III": 8.0, "Paginas Web": 9.0, "Diseño Digital": 9.0}}, {"nl": 26, "nombre": "SANCHEZ PALAFOX JHOSTIN DEIVID", "promedio": 8.25, "califs": {"Temas Selectos de Matemáticas II": 8.0, "Organismos: Estructuras y Procesos": 7.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 8.0, "Temas Selectos de Inglés II": 6.0, "Temas Selectos de Filosofía": 8.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 7.0, "Paginas Web": 9.0, "Diseño Digital": 9.0}}, {"nl": 27, "nombre": "SANDOVAL VILCHIS ALICIA", "promedio": 9.58, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 7.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 28, "nombre": "SOLIS PALMA VALERIA", "promedio": 9.5, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 10.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 7.0, "Temas Selectos de Filosofía": 9.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 29, "nombre": "SOTERO REYES CITLALI", "promedio": 8.42, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 6.0, "Economía I": 8.0, "Ciencias de la Comunicación I": 10.0, "Temas Selectos de Inglés II": 6.0, "Temas Selectos de Filosofía": 8.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 7.0, "Paginas Web": 10.0, "Diseño Digital": 10.0}}, {"nl": 30, "nombre": "TERAN ANTONIO XALLY", "promedio": 9.58, "califs": {"Temas Selectos de Matemáticas II": 10.0, "Organismos: Estructuras y Procesos": 9.0, "Conciencia Histórica III": 9.0, "Practica y Colaboración Ciudadana": 9.0, "Economía I": 10.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 10.0, "Temas Selectos de Filosofía": 10.0, "Temas Selectos De Derechos Humanos V": 10.0, "Actividades Artísticas y Cult III": 10.0, "Paginas Web": 9.0, "Diseño Digital": 10.0}}, {"nl": 31, "nombre": "ZUÑIGA CASTAÑEDA LUIS ENRIQUE", "promedio": 7.83, "califs": {"Temas Selectos de Matemáticas II": 8.0, "Organismos: Estructuras y Procesos": 8.0, "Conciencia Histórica III": 7.0, "Practica y Colaboración Ciudadana": 8.0, "Economía I": 9.0, "Ciencias de la Comunicación I": 9.0, "Temas Selectos de Inglés II": 8.0, "Temas Selectos de Filosofía": 6.0, "Temas Selectos De Derechos Humanos V": 6.0, "Actividades Artísticas y Cult III": 6.0, "Paginas Web": 10.0, "Diseño Digital": 9.0}}], "subjects": ["Temas Selectos de Matemáticas II", "Organismos: Estructuras y Procesos", "Conciencia Histórica III", "Practica y Colaboración Ciudadana", "Economía I", "Ciencias de la Comunicación I", "Temas Selectos de Inglés II", "Temas Selectos de Filosofía", "Temas Selectos De Derechos Humanos V", "Actividades Artísticas y Cult III", "Paginas Web", "Diseño Digital"], "subj_stats": {"Temas Selectos de Matemáticas II": {"promedio": 8.97, "reprobados": 0, "total": 31}, "Organismos: Estructuras y Procesos": {"promedio": 8.87, "reprobados": 0, "total": 31}, "Conciencia Histórica III": {"promedio": 8.42, "reprobados": 0, "total": 31}, "Practica y Colaboración Ciudadana": {"promedio": 8.45, "reprobados": 1, "total": 31}, "Economía I": {"promedio": 9.1, "reprobados": 0, "total": 31}, "Ciencias de la Comunicación I": {"promedio": 9.29, "reprobados": 0, "total": 31}, "Temas Selectos de Inglés II": {"promedio": 8.29, "reprobados": 2, "total": 31}, "Temas Selectos de Filosofía": {"promedio": 7.84, "reprobados": 5, "total": 31}, "Temas Selectos De Derechos Humanos V": {"promedio": 8.71, "reprobados": 3, "total": 31}, "Actividades Artísticas y Cult III": {"promedio": 8.26, "reprobados": 0, "total": 31}, "Paginas Web": {"promedio": 9.58, "reprobados": 0, "total": 31}, "Diseño Digital": {"promedio": 9.0, "reprobados": 0, "total": 31}}, "grupo_promedio": 8.73, "total_alumnos": 31, "reprobados": 0, "aprobados": 31, "distribucion": {"10": 13, "9": 5, "8": 7, "7": 5, "6": 1, "5-": 0}}};
+
+// ======================== CONFIG ========================
+const GRUPOS_META = {
+  '1o1': { label: '1° A', grado: 'Primer Grado', cls: 'g1' },
+  '1o2': { label: '1° B', grado: 'Primer Grado', cls: 'g1' },
+  '2o1': { label: '2° A', grado: 'Segundo Grado', cls: 'g2' },
+  '2o2': { label: '2° B', grado: 'Segundo Grado', cls: 'g2' },
+  '3o1': { label: '3° A', grado: 'Tercer Grado', cls: 'g3' },
+  '3o2': { label: '3° B', grado: 'Tercer Grado', cls: 'g3' },
+};
+
+// ======================== HELPERS ========================
+function promClass(p) {
+  if (p >= 9) return 'prom-9';
+  if (p >= 8) return 'prom-8';
+  if (p >= 7) return 'prom-7';
+  if (p >= 6) return 'prom-6';
+  return 'prom-5';
+}
+function barColor(p) {
+  if (p >= 9) return '#2ea84f';
+  if (p >= 8) return '#16a085';
+  if (p >= 7) return '#2980b9';
+  if (p >= 6) return '#f39c12';
+  return '#e74c3c';
+}
+function matColor(p) {
+  if (p >= 9) return '#2ea84f';
+  if (p >= 8) return '#16a085';
+  if (p >= 7) return '#2980b9';
+  if (p >= 6) return '#f39c12';
+  return '#e74c3c';
+}
+
+// ======================== RENDER GENERAL ========================
+function renderGeneral() {
+  const keys = Object.keys(DATA);
+  let totalAlumnos = 0, totalAprobados = 0, totalReprobados = 0;
+  let promedios = [], best = { label: '', prom: 0 };
+
+  keys.forEach(k => {
+    const g = DATA[k];
+    totalAlumnos += g.total_alumnos;
+    totalAprobados += g.aprobados;
+    totalReprobados += g.reprobados;
+    const proms = g.students.map(s=>s.promedio).filter(p=>p!=null);
+    promedios.push(...proms);
+    if (g.grupo_promedio > best.prom) {
+      best = { label: GRUPOS_META[k].label, prom: g.grupo_promedio };
+    }
+  });
+
+  const promEscolar = (promedios.reduce((a,b)=>a+b,0)/promedios.length).toFixed(2);
+  document.getElementById('total-alumnos').textContent = totalAlumnos;
+  document.getElementById('total-aprobados').textContent = totalAprobados;
+  document.getElementById('pct-aprobados').textContent = ((totalAprobados/totalAlumnos)*100).toFixed(1)+'% del total';
+  document.getElementById('total-reprobados').textContent = totalReprobados;
+  document.getElementById('pct-reprobados').textContent = ((totalReprobados/totalAlumnos)*100).toFixed(1)+'% requieren atención';
+  document.getElementById('prom-escolar').textContent = promEscolar;
+  document.getElementById('mejor-grupo').textContent = best.label;
+  document.getElementById('mejor-grupo-prom').textContent = 'Promedio: '+best.prom.toFixed(2);
+
+  // Grupo cards
+  const grid = document.getElementById('grupos-grid');
+  grid.innerHTML = keys.map(k => {
+    const g = DATA[k]; const m = GRUPOS_META[k];
+    const pct = (g.aprobados/g.total_alumnos*100).toFixed(0);
+    return `<div class="grupo-card" onclick="showView('g${k}',null)">
+      <div class="grupo-card-head ${m.cls}">
+        <div class="gc-grado">${m.grado}</div>
+        <div class="gc-nombre">Grupo ${m.label}</div>
+        <div class="gc-prom">${g.grupo_promedio.toFixed(1)}</div>
+      </div>
+      <div class="grupo-card-body">
+        <div class="gc-stats">
+          <div class="gc-stat"><div class="gc-stat-val" style="color:var(--verde)">${g.aprobados}</div><div class="gc-stat-lbl">Aprobados</div></div>
+          <div class="gc-stat"><div class="gc-stat-val" style="color:var(--rojo)">${g.reprobados}</div><div class="gc-stat-lbl">En riesgo</div></div>
+          <div class="gc-stat"><div class="gc-stat-val">${g.total_alumnos}</div><div class="gc-stat-lbl">Alumnos</div></div>
+          <div class="gc-stat"><div class="gc-stat-val">${pct}%</div><div class="gc-stat-lbl">Aprobación</div></div>
+        </div>
+        <div class="gc-bar"><div class="gc-bar-fill ${m.cls}-bar" style="width:${(g.grupo_promedio/10*100).toFixed(0)}%"></div></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Tabla comparativa
+  const promValues = keys.map(k=>DATA[k].grupo_promedio);
+  const maxProm = Math.max(...promValues), minProm = Math.min(...promValues);
+  const maxRep = Math.max(...keys.map(k=>DATA[k].reprobados));
+  const tc = document.getElementById('tabla-comparativa');
+  tc.innerHTML = keys.map(k => {
+    const g = DATA[k]; const m = GRUPOS_META[k];
+    const maxP = g.students.reduce((a,s)=>Math.max(a,s.promedio||0),0);
+    const pctA = (g.aprobados/g.total_alumnos*100).toFixed(0)+'%';
+    const isBest = g.grupo_promedio === maxProm;
+    const isWorst = g.grupo_promedio === minProm;
+    return `<div class="rc-row">
+      <div class="rc-lbl">${m.label}</div>
+      <div class="rc-val">${g.total_alumnos}</div>
+      <div class="rc-val ${isBest?'best':isWorst?'worst':''}">${g.grupo_promedio.toFixed(2)}</div>
+      <div class="rc-val" style="color:var(--verde)">${g.aprobados}</div>
+      <div class="rc-val" style="color:${g.reprobados===maxRep&&maxRep>0?'var(--rojo)':'inherit'}">${g.reprobados}</div>
+      <div class="rc-val">${pctA}</div>
+      <div class="rc-val">${maxP.toFixed(1)}</div>
+    </div>`;
+  }).join('');
+
+  // Distribución
+  const dg = document.getElementById('dist-grid');
+  dg.innerHTML = keys.map(k => {
+    const g = DATA[k]; const m = GRUPOS_META[k];
+    const d = g.distribucion;
+    const total = g.total_alumnos;
+    const cats = [['10',d['10'],'d10'],['9',d['9'],'d9'],['8',d['8'],'d8'],['7',d['7'],'d7'],['6',d['6'],'d6'],['<6',d['5-'],'d5']];
+    return `<div class="dist-card">
+      <div class="dist-title">Grupo ${m.label} · ${total} alumnos</div>
+      <div class="dist-bars">
+        ${cats.map(([lbl,cnt,cls]) => `
+          <div class="dist-row">
+            <div class="dist-lbl">${lbl}</div>
+            <div class="dist-bar-wrap">
+              <div class="dist-bar-fill ${cls}" style="width:${total>0?(cnt/total*100).toFixed(0):0}%">
+                ${cnt>0?`<span class="dist-count">${cnt}</span>`:''}
+              </div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ======================== RENDER GRUPO DETAIL ========================
+function renderGrupo(key) {
+  const g = DATA[key];
+  const m = GRUPOS_META[key];
+  const el = document.getElementById('view-g'+key);
+  if (el.dataset.rendered) return;
+  el.dataset.rendered = '1';
+
+  const sortedStudents = [...g.students].sort((a,b)=>(b.promedio||0)-(a.promedio||0));
+  const riesgo = sortedStudents.filter(s=>(s.promedio||0)<6);
+  const alerta = sortedStudents.filter(s=>(s.promedio||0)>=6 && (s.promedio||0)<7);
+  const top = sortedStudents.filter(s=>(s.promedio||0)>=9);
+
+  const maxP = sortedStudents[0]?.promedio || 0;
+  const minP = sortedStudents[sortedStudents.length-1]?.promedio || 0;
+
+  el.innerHTML = `
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-azul" data-icon="👥"><div class="kpi-label">Alumnos</div><div class="kpi-value">${g.total_alumnos}</div><div class="kpi-sub">${m.label}</div></div>
+      <div class="kpi-card kpi-dorado" data-icon="📊"><div class="kpi-label">Promedio Grupo</div><div class="kpi-value">${g.grupo_promedio.toFixed(2)}</div><div class="kpi-sub">sobre 10</div></div>
+      <div class="kpi-card kpi-verde" data-icon="✅"><div class="kpi-label">Aprobados</div><div class="kpi-value">${g.aprobados}</div><div class="kpi-sub">${(g.aprobados/g.total_alumnos*100).toFixed(0)}%</div></div>
+      <div class="kpi-card kpi-rojo" data-icon="⚠️"><div class="kpi-label">En Riesgo</div><div class="kpi-value">${g.reprobados}</div><div class="kpi-sub">prom < 6</div></div>
+      <div class="kpi-card kpi-morado" data-icon="🏆"><div class="kpi-label">Máximo</div><div class="kpi-value">${maxP.toFixed(2)}</div><div class="kpi-sub">Mín: ${minP.toFixed(2)}</div></div>
+    </div>
+
+    <div class="sec-header"><h2>Semáforo de Alumnos</h2><div class="sec-line"></div></div>
+    <div class="semaforo-section">
+      <div class="semaforo-card sc-rojo">
+        <div class="sc-head">🔴 En Riesgo — Promedio menor a 6 (${riesgo.length})</div>
+        <div class="sc-list">${riesgo.length===0?'<div class="sc-item" style="color:#aaa;font-style:italic;padding:14px 16px">¡Sin alumnos en esta categoría!</div>':riesgo.map(s=>`<div class="sc-item"><div class="nl-chip">${s.nl}</div><div class="sc-nombre">${s.nombre}</div><span class="sc-prom-badge prom-5">${(s.promedio||0).toFixed(2)}</span></div>`).join('')}</div>
+      </div>
+      <div class="semaforo-card sc-dorado">
+        <div class="sc-head">🟡 Atención — Promedio entre 6 y 7 (${alerta.length})</div>
+        <div class="sc-list">${alerta.length===0?'<div class="sc-item" style="color:#aaa;font-style:italic;padding:14px 16px">¡Sin alumnos en esta categoría!</div>':alerta.map(s=>`<div class="sc-item"><div class="nl-chip">${s.nl}</div><div class="sc-nombre">${s.nombre}</div><span class="sc-prom-badge prom-6">${(s.promedio||0).toFixed(2)}</span></div>`).join('')}</div>
+      </div>
+      <div class="semaforo-card sc-verde">
+        <div class="sc-head">🟢 Destacados — Promedio 9 o más (${top.length})</div>
+        <div class="sc-list">${top.length===0?'<div class="sc-item" style="color:#aaa;font-style:italic;padding:14px 16px">Sin alumnos en esta categoría</div>':top.map(s=>`<div class="sc-item"><div class="nl-chip">${s.nl}</div><div class="sc-nombre">${s.nombre}</div><span class="sc-prom-badge prom-9">${(s.promedio||0).toFixed(2)}</span></div>`).join('')}</div>
+      </div>
+    </div>
+
+    <div class="sec-header"><h2>Resultados por UAC / Materia</h2><div class="sec-line"></div></div>
+    <div class="materias-grid">${Object.entries(g.subj_stats).sort((a,b)=>a[1].reprobados-b[1].reprobados).map(([mat,st])=>{
+      const pct = st.reprobados/st.total*100;
+      const clr = matColor(st.promedio);
+      return `<div class="materia-card" style="border-color:${clr}">
+        <div class="materia-nombre">${mat}</div>
+        <div class="mat-stats">
+          <div class="mat-prom" style="color:${clr}">${st.promedio.toFixed(1)}</div>
+          <div class="mat-info">
+            <div class="mat-bar"><div class="mat-bar-fill" style="width:${st.promedio*10}%;background:${clr}"></div></div>
+            <div class="mat-rep">En riesgo: <span>${st.reprobados}</span> / ${st.total} (${pct.toFixed(0)}%)</div>
+          </div>
+        </div>
+      </div>`;
+    }).join('')}</div>
+
+    <div class="sec-header"><h2>Lista de Alumnos</h2><div class="sec-line"></div></div>
+    <div class="tabla-wrap">
+      <div class="tabla-header">
+        <h3>Grupo ${m.label} — ${g.total_alumnos} alumnos</h3>
+        <input class="busca" type="text" placeholder="Buscar alumno..." id="busca-${key}" oninput="filterTable('${key}')">
+      </div>
+      <table id="tabla-${key}">
+        <thead><tr><th>NL</th><th>Nombre</th><th onclick="sortTable('${key}',2)">Promedio ↕</th></tr></thead>
+        <tbody>
+          ${sortedStudents.map(s=>`<tr>
+            <td><span class="nl-chip">${s.nl}</span></td>
+            <td>${s.nombre}</td>
+            <td><span class="prom-chip ${promClass(s.promedio||0)}">${(s.promedio||0).toFixed(2)}</span></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// ======================== TABLA UTILS ========================
+let sortAsc = {};
+function sortTable(key, col) {
+  sortAsc[key] = !sortAsc[key];
+  const tbody = document.querySelector('#tabla-'+key+' tbody');
+  const rows = [...tbody.rows];
+  rows.sort((a,b)=>{
+    const va = parseFloat(a.cells[col].innerText) || 0;
+    const vb = parseFloat(b.cells[col].innerText) || 0;
+    return sortAsc[key] ? va-vb : vb-va;
+  });
+  rows.forEach(r=>tbody.appendChild(r));
+}
+function filterTable(key) {
+  const q = document.getElementById('busca-'+key).value.toLowerCase();
+  const rows = document.querySelectorAll('#tabla-'+key+' tbody tr');
+  rows.forEach(r=>{
+    r.style.display = r.cells[1].innerText.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+// ======================== NAV ========================
+// name puede ser 'general', 'busqueda', o 'g1o1','g1o2',etc. (con prefijo g)
+function showView(name, tabEl) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+
+  if (name === 'general') {
+    document.getElementById('view-general').classList.add('active');
+  } else if (name === 'busqueda') {
+    document.getElementById('view-busqueda').classList.add('active');
+  } else {
+    // name ya tiene forma 'g1o1' — el div tiene id 'view-g1o1'
+    const viewEl = document.getElementById('view-' + name);
+    if (viewEl) viewEl.classList.add('active');
+    // key del DATA es '1o1' etc — quitar la 'g' inicial
+    const key = name.slice(1);
+    renderGrupo(key);
+  }
+
+  if (tabEl) tabEl.classList.add('active');
+}
+
+
+// ======================== BÚSQUEDA ALUMNO ========================
+const GRUPO_KEYS = {
+  '1': {'A': '1o1', 'B': '1o2'},
+  '2': {'A': '2o1', 'B': '2o2'},
+  '3': {'A': '3o1', 'B': '3o2'}
+};
+const GRUPO_LABELS = {'A': 'Grupo A', 'B': 'Grupo B'};
+
+let currentBusqKey = null;
+let selectedAlumnoIdx = null;
+
+function onGradoChange() {
+  const grado = document.getElementById('sel-grado').value;
+  const selGrupo = document.getElementById('sel-grupo');
+  selGrupo.innerHTML = '<option value="">— Selecciona grupo —</option>';
+  if (grado) {
+    selGrupo.innerHTML += '<option value="A">A</option><option value="B">B</option>';
+  }
+  hideBusqResults();
+}
+
+function onGrupoChange() {
+  const grado = document.getElementById('sel-grado').value;
+  const grupo = document.getElementById('sel-grupo').value;
+  if (grado && grupo) {
+    const key = GRUPO_KEYS[grado][grupo];
+    renderBusquedaGrupo(key);
+  } else {
+    hideBusqResults();
+  }
+}
+
+function hideBusqResults() {
+  document.getElementById('busq-results').classList.remove('visible');
+  currentBusqKey = null;
+  selectedAlumnoIdx = null;
+}
+
+function renderBusquedaGrupo(key) {
+  currentBusqKey = key;
+  selectedAlumnoIdx = null;
+  const g = DATA[key];
+  const m = GRUPOS_META[key];
+
+  document.getElementById('busq-results').classList.add('visible');
+  document.getElementById('lista-titulo').textContent = `${m.grado} — ${m.label} (${g.total_alumnos} alumnos)`;
+  document.getElementById('lista-busca-input').value = '';
+
+  renderListaAlumnos(key, '');
+  document.getElementById('detalle-alumno').innerHTML = `
+    <div class="no-results" style="background:white;border-radius:14px;box-shadow:var(--sombra);padding:48px">
+      <div style="font-size:2rem;margin-bottom:12px">👆</div>
+      Selecciona un alumno de la lista para ver sus calificaciones
+    </div>`;
+}
+
+function renderListaAlumnos(key, filtro) {
+  const g = DATA[key];
+  const sorted = [...g.students].sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  const filtered = filtro ? sorted.filter(s => s.nombre.toLowerCase().includes(filtro.toLowerCase())) : sorted;
+
+  const body = document.getElementById('lista-alumnos-body');
+  if (!filtered.length) {
+    body.innerHTML = '<div class="no-results">Sin coincidencias</div>';
+    return;
+  }
+  body.innerHTML = filtered.map((s, i) => {
+    const prom = s.promedio != null ? s.promedio : 0;
+    const pc = promClass(prom);
+    const isSelected = selectedAlumnoIdx === s.nl;
+    return `<div class="alumno-row${isSelected?' selected':''}" onclick="mostrarDetalleAlumno('${key}',${s.nl})">
+      <div class="ar-nl">${s.nl}</div>
+      <div class="ar-nombre">${s.nombre}</div>
+      <span class="ar-prom prom-chip ${pc}">${prom.toFixed(2)}</span>
+    </div>`;
+  }).join('');
+}
+
+function filtrarListaAlumnos() {
+  if (!currentBusqKey) return;
+  const q = document.getElementById('lista-busca-input').value;
+  renderListaAlumnos(currentBusqKey, q);
+}
+
+function mostrarDetalleAlumno(key, nl) {
+  selectedAlumnoIdx = nl;
+  const g = DATA[key];
+  const m = GRUPOS_META[key];
+  const s = g.students.find(x => x.nl === nl);
+  if (!s) return;
+
+  // Re-render list to show selected
+  const q = document.getElementById('lista-busca-input').value;
+  renderListaAlumnos(key, q);
+
+  const califs = s.califs || {};
+  const materias = Object.entries(califs).filter(([mat,cal]) => cal !== null && cal !== undefined);
+  const numMaterias = materias.length;
+  const reprobadas = materias.filter(([m,c]) => c < 6);
+  const numRep = reprobadas.length;
+  const prom = s.promedio != null ? s.promedio : 0;
+  const pctAprob = numMaterias > 0 ? ((numMaterias - numRep) / numMaterias * 100).toFixed(0) : 0;
+
+  // Color de promedio
+  const promColor = prom >= 9 ? '#2ea84f' : prom >= 8 ? '#16a085' : prom >= 7 ? '#2980b9' : prom >= 6 ? '#c8860a' : '#c0392b';
+  const promBg = prom >= 9 ? '#d5f5e3' : prom >= 8 ? '#d0f0eb' : prom >= 7 ? '#d6eaf8' : prom >= 6 ? '#fef9e7' : '#fde8e8';
+
+  const rows = materias.map(([mat, cal]) => {
+    const isRep = cal < 6;
+    const calClr = cal >= 9 ? '#2ea84f' : cal >= 8 ? '#16a085' : cal >= 7 ? '#2980b9' : cal >= 6 ? '#c8860a' : '#c0392b';
+    const calBg = cal >= 9 ? '#d5f5e3' : cal >= 8 ? '#d0f0eb' : cal >= 7 ? '#d6eaf8' : cal >= 6 ? '#fef9e7' : '#fde8e8';
+    return `<tr class="${isRep?'reprobada':''}">
+      <td>${mat}${isRep?'<span class="calif-rep-badge">REPROBADA</span>':''}</td>
+      <td style="text-align:center"><span class="calif-num" style="background:${calBg};color:${calClr}">${cal.toFixed(0)}</span></td>
+      <td style="text-align:center;font-size:.78rem;color:${isRep?'var(--rojo)':'#999'}">${isRep?'Reprobada':'Aprobada'}</td>
+    </tr>`;
+  }).join('');
+
+  // Fila de resumen al final
+  const sumaRow = `<tr style="background:#f5f0fa;font-weight:700">
+    <td style="font-family:'DM Mono',monospace;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase">
+      Promedio parcial (${numMaterias} UAC)
+    </td>
+    <td style="text-align:center">
+      <span class="calif-num" style="background:${promBg};color:${promColor};font-size:.95rem">${prom.toFixed(2)}</span>
+    </td>
+    <td style="text-align:center;font-size:.78rem;color:${promColor}">${prom>=6?'Aprobado':'En riesgo'}</td>
+  </tr>`;
+
+  document.getElementById('detalle-alumno').innerHTML = `
+    <div class="alumno-header">
+      <div class="alumno-avatar">🎓</div>
+      <div class="alumno-info">
+        <h2>${s.nombre}</h2>
+        <div class="alumno-meta">NL ${s.nl} · ${m.grado} ${m.label} · 1er Parcial 2025-B</div>
+      </div>
+      <div class="alumno-stats">
+        <div class="alumno-stat">
+          <div class="alumno-stat-val">${prom.toFixed(2)}</div>
+          <div class="alumno-stat-lbl">Promedio</div>
+        </div>
+        <div class="alumno-stat">
+          <div class="alumno-stat-val" style="color:${numRep>0?'#fca5a5':'#86efac'}">${numRep}</div>
+          <div class="alumno-stat-lbl">Reprobadas</div>
+        </div>
+        <div class="alumno-stat">
+          <div class="alumno-stat-val">${pctAprob}%</div>
+          <div class="alumno-stat-lbl">% Aprobación</div>
+        </div>
+        <div class="alumno-stat">
+          <div class="alumno-stat-val">${numMaterias}</div>
+          <div class="alumno-stat-lbl">UAC</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="califs-table-wrap">
+      <div class="califs-table-head">
+        <h3>Relación de Calificaciones — Primer Parcial</h3>
+      </div>
+      <table class="califs-table">
+        <thead>
+          <tr>
+            <th>Unidad de Aprendizaje (UAC)</th>
+            <th style="text-align:center">Calificación</th>
+            <th style="text-align:center">Situación</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+          ${sumaRow}
+        </tbody>
+      </table>
+    </div>
+
+    ${numRep > 0 ? `
+    <div style="background:#fff5f5;border:2px solid #fecaca;border-radius:12px;padding:16px 20px;margin-bottom:16px">
+      <div style="font-weight:700;color:var(--rojo);margin-bottom:8px;font-size:.88rem">⚠️ UAC con calificación menor a 6:</div>
+      ${reprobadas.map(([mat,cal])=>`<div style="font-size:.82rem;padding:4px 0;color:var(--rojo)">• ${mat} — <strong>${cal}</strong></div>`).join('')}
+    </div>` : `
+    <div style="background:#f0fdf4;border:2px solid #bbf7d0;border-radius:12px;padding:16px 20px;margin-bottom:16px">
+      <div style="font-weight:700;color:var(--verde);font-size:.88rem">✅ Alumno aprueba todas las UAC del parcial</div>
+    </div>`}
+  `;
+}
+
+
+renderGeneral();
+</script>
+</body>
+</html>
