@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitácora de Vacaciones — EPO 135 × Claude</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #0f5e2f;
+    --verde-med: #1a7a3f;
+    --verde-claro: #2ea84f;
+    --azul: #0d3b6e;
+    --azul-med: #1a5ca0;
+    --dorado: #c8860a;
+    --dorado-claro: #f0a825;
+    --rojo: #c0392b;
+    --morado: #5c3a9e;
+    --gris-fondo: #f5f7f6;
+    --gris-borde: #d8e2dc;
+    --texto: #0f1f17;
+    --texto-suave: #4a6055;
+    --superficie: #ffffff;
+    --tag-completado: #e8f5ee;
+    --tag-completado-text: #0f5e2f;
+    --tag-progreso: #fff8e6;
+    --tag-progreso-text: #8a5c00;
+    --tag-propuesto: #edf2fb;
+    --tag-propuesto-text: #1a3a7a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--gris-fondo);
+    color: var(--texto);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* Header */
+  .header {
+    background: var(--verde);
+    color: white;
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 40%;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .header-escuela {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    opacity: 0.65;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+  .header h1 em {
+    font-style: italic;
+    color: var(--dorado-claro);
+  }
+  .header-sub {
+    font-size: 13px;
+    opacity: 0.75;
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+  }
+  .header-meta {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .meta-chip {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* Main layout */
+  .main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* Section titles */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+    margin: 2.5rem 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gris-borde);
+  }
+
+  /* Cards */
+  .card {
+    background: var(--superficie);
+    border: 1px solid var(--gris-borde);
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 0.75rem;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #b0c4b8; }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--texto);
+    line-height: 1.3;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: var(--texto-suave);
+    line-height: 1.6;
+    margin-top: 0.3rem;
+  }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .tag-completado { background: var(--tag-completado); color: var(--tag-completado-text); }
+  .tag-progreso   { background: var(--tag-progreso);   color: var(--tag-progreso-text); }
+  .tag-propuesto  { background: var(--tag-propuesto);  color: var(--tag-propuesto-text); }
+  .tag-prioridad  { background: #f9f0ff; color: var(--morado); }
+
+  /* Feature list */
+  .feature-list {
+    margin-top: 0.55rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .feature-pill {
+    font-size: 11.5px;
+    background: var(--gris-fondo);
+    border: 1px solid var(--gris-borde);
+    border-radius: 6px;
+    padding: 2px 8px;
+    color: var(--texto-suave);
+  }
+
+  /* Estrategia block */
+  .estrategia-block {
+    background: linear-gradient(135deg, #f0f7f3 0%, #edf4fb 100%);
+    border: 1px solid #c5d9cc;
+    border-radius: 14px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 0.75rem;
+  }
+  .estrategia-block h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--verde);
+    margin-bottom: 0.6rem;
+  }
+  .estrategia-block p {
+    font-size: 13px;
+    color: var(--texto-suave);
+    line-height: 1.65;
+  }
+  .estrategia-block strong {
+    color: var(--texto);
+    font-weight: 500;
+  }
+
+  /* Nota vacaciones */
+  .nota-vacaciones {
+    background: #fffbf0;
+    border: 1px solid #f0d88a;
+    border-left: 4px solid var(--dorado);
+    border-radius: 0 10px 10px 0;
+    padding: 1rem 1.2rem;
+    margin: 1.5rem 0;
+    font-size: 13px;
+    color: #5a4200;
+    line-height: 1.6;
+  }
+  .nota-vacaciones strong { font-weight: 600; }
+
+  /* Orden recomendado */
+  .orden-list {
+    counter-reset: orden;
+    list-style: none;
+  }
+  .orden-list li {
+    counter-increment: orden;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 0.65rem;
+    background: var(--superficie);
+    border: 1px solid var(--gris-borde);
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+  }
+  .orden-list li::before {
+    content: counter(orden);
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--verde-claro);
+    line-height: 1;
+    min-width: 24px;
+  }
+  .orden-item-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--texto);
+    margin-bottom: 2px;
+  }
+  .orden-item-desc {
+    font-size: 12px;
+    color: var(--texto-suave);
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 3rem;
+    border-top: 1px solid var(--gris-borde);
+    padding-top: 1.5rem;
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    color: var(--verde);
+    font-style: italic;
+    margin-bottom: 0.4rem;
+  }
+  .footer-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--texto-suave);
+    opacity: 0.7;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.5rem; }
+    .main { padding: 1.5rem 1rem 3rem; }
+    .card-header { flex-direction: column; gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-escuela">EPO 135 — Escuela Preparatoria Oficial Núm. 135 · CCT 15EBH0262Z · Río Frío de Juárez, Ixtapaluca</div>
+  <h1>Bitácora de <em>vacaciones</em><br>con Claude</h1>
+  <div class="header-sub">Subdirección Académica · Fer · Plan de trabajo digital 2025-B → 2026</div>
+  <div class="header-meta">
+    <span class="meta-chip">📅 Iniciado: marzo 2026</span>
+    <span class="meta-chip">🎯 Ciclo 2025-2026</span>
+    <span class="meta-chip">🌐 epo135-subdireccion.github.io/epo135</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="nota-vacaciones">
+    <strong>📌 Nota para cuando regreses:</strong> Estas vacaciones son el momento ideal para avanzar en el ecosistema digital de EPO 135. Tienes tiempo sin la presión institucional del día a día. El plan es construir herramienta por herramienta, priorizando las que tienen mayor impacto pedagógico y las que puedes mostrar a tus colegas de zona escolar como demostración de lo que Claude hace en la práctica.
+  </div>
+
+  <!-- HERRAMIENTAS COMPLETADAS -->
+  <div class="section-label">✓ Herramientas completadas</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Dashboard de calificaciones v3</div>
+      <span class="tag tag-completado">completado</span>
+    </div>
+    <div class="card-desc">Tablero interactivo HTML para el análisis del primer período 2025-B. Cubre 186 alumnos en 6 grupos. Muestra tasas de aprobación/reprobación, reprobadas por UAC, distribución por género y promedios grupales. Tema claro adoptado por sensibilidad al dato.</div>
+    <div class="feature-list">
+      <span class="feature-pill">186 alumnos</span>
+      <span class="feature-pill">6 grupos</span>
+      <span class="feature-pill">⚠️ métrica de reprobación</span>
+      <span class="feature-pill">tema claro</span>
+      <span class="feature-pill">dashboard_EPO135_v3.html</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Analizador de funciones matemáticas</div>
+      <span class="tag tag-completado">completado</span>
+    </div>
+    <div class="card-desc">Herramienta standalone offline desplegable por USB para el aula. 11 tipos de función con sliders, etiquetas de raíces, tablas de valores y exportación PNG con marca de agua EPO 135. Incluye módulo de sistemas de ecuaciones: 2×2, 3×3 lineales (Gauss) y mixtos (bisección numérica).</div>
+    <div class="feature-list">
+      <span class="feature-pill">11 tipos de función</span>
+      <span class="feature-pill">offline / USB</span>
+      <span class="feature-pill">export PNG + marca de agua</span>
+      <span class="feature-pill">sistemas 2×2 y 3×3</span>
+      <span class="feature-pill">pendiente: modo proyector</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Sitio web EPO 135 — GitHub Pages</div>
+      <span class="tag tag-completado">completado (parcial)</span>
+    </div>
+    <div class="card-desc">Sitio institucional en epo135-subdireccion.github.io/epo135. index.html y podcast.html ya actualizados con el sistema de diseño completo. Páginas pendientes de estandarizar: gestion.html, padres.html, docentes-snb.html, recursos.html.</div>
+    <div class="feature-list">
+      <span class="feature-pill">✓ index.html</span>
+      <span class="feature-pill">✓ podcast.html</span>
+      <span class="feature-pill">⟳ gestion.html</span>
+      <span class="feature-pill">⟳ padres.html</span>
+      <span class="feature-pill">⟳ docentes-snb.html</span>
+      <span class="feature-pill">⟳ recursos.html</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Minuta JAD — herramienta local</div>
+      <span class="tag tag-completado">completado</span>
+    </div>
+    <div class="card-desc">Herramienta local Windows: minuta-jad-epo135-local.html + servidor-minuta.js vía Node.js en localhost:3000. Usa el paquete npm <code>docx</code> para generar actas institucionales.</div>
+    <div class="feature-list">
+      <span class="feature-pill">Node.js local</span>
+      <span class="feature-pill">localhost:3000</span>
+      <span class="feature-pill">genera .docx</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Automatización n8n + Claude + Telegram</div>
+      <span class="tag tag-completado">en entrenamiento</span>
+    </div>
+    <div class="card-desc">Auto-capacitación en workflows institucionales. Cuenta gratuita de n8n.io iniciada ~mediados de marzo 2026. Combina Claude como motor de lenguaje natural con Telegram como canal de notificación/interacción.</div>
+    <div class="feature-list">
+      <span class="feature-pill">n8n free tier</span>
+      <span class="feature-pill">Claude API</span>
+      <span class="feature-pill">Telegram bot</span>
+    </div>
+  </div>
+
+  <!-- HERRAMIENTAS EN PROGRESO -->
+  <div class="section-label">⟳ En progreso — estos días de vacaciones</div>
+
+  <div class="card" style="border-color: #f0d8a0;">
+    <div class="card-header">
+      <div class="card-title">Simulador de tabla periódica con niveles cuánticos</div>
+      <span class="tag tag-progreso">prioridad alta</span>
+    </div>
+    <div class="card-desc">Herramienta interactiva para Química. Debe mostrar los 118 elementos con datos básicos (masa atómica, electronegatividad, radio atómico, estado físico, configuración electrónica) y visualización de los niveles cuánticos (n, l, ml, ms). Ideal para uso en aula con proyector.</div>
+    <div class="feature-list">
+      <span class="feature-pill">118 elementos</span>
+      <span class="feature-pill">configuración electrónica</span>
+      <span class="feature-pill">números cuánticos n, l, ml, ms</span>
+      <span class="feature-pill">datos básicos por elemento</span>
+      <span class="feature-pill">offline / HTML</span>
+    </div>
+  </div>
+
+  <div class="card" style="border-color: #f0d8a0;">
+    <div class="card-header">
+      <div class="card-title">Simulador del Teorema de Thales</div>
+      <span class="tag tag-progreso">prioridad alta</span>
+    </div>
+    <div class="card-desc">Simulador geométrico interactivo para Matemáticas. Permite manipular puntos y rectas para explorar la proporcionalidad en el teorema de Thales, con visualización dinámica de las razones y comprobación numérica en tiempo real.</div>
+    <div class="feature-list">
+      <span class="feature-pill">geometría interactiva</span>
+      <span class="feature-pill">proporcionalidad dinámica</span>
+      <span class="feature-pill">offline / HTML</span>
+    </div>
+  </div>
+
+  <div class="card" style="border-color: #f0d8a0;">
+    <div class="card-header">
+      <div class="card-title">Estrategia PMC — Proyecto de Mejora Continua</div>
+      <span class="tag tag-progreso">en estrategia</span>
+    </div>
+    <div class="card-desc">Desarrollo de herramientas y documentación de apoyo al PMC institucional. Claude puede ayudar tanto en la redacción y estructura del proyecto como en herramientas digitales de seguimiento.</div>
+  </div>
+
+  <!-- HERRAMIENTAS PROPUESTAS -->
+  <div class="section-label">→ Propuestas — qué sigue después</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Recurso de Inglés — simulador de conversación</div>
+      <span class="tag tag-propuesto">propuesto</span>
+    </div>
+    <div class="card-desc">El alumno escribe en inglés y Claude responde como interlocutor nativo con corrección integrada. Incluye generador de ejercicios fill-in-the-blanks y multiple choice basado en lecturas, más visualizador del alfabeto fonético IPA para pronunciación.</div>
+    <div class="feature-list">
+      <span class="feature-pill">conversación con Claude</span>
+      <span class="feature-pill">corrección automática</span>
+      <span class="feature-pill">IPA pronunciación</span>
+      <span class="feature-pill">ejercicios de lectura</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Recurso de Historia — línea de tiempo interactiva</div>
+      <span class="tag tag-propuesto">propuesto</span>
+    </div>
+    <div class="card-desc">Navegación por períodos históricos del programa (Porfiriato, Revolución, etc.) con eventos, personajes y fuentes. Complementado con un comparador de fuentes primarias vs. secundarias, alineado a competencias SNB.</div>
+    <div class="feature-list">
+      <span class="feature-pill">línea de tiempo navegable</span>
+      <span class="feature-pill">fuentes primarias vs. secundarias</span>
+      <span class="feature-pill">alineado SNB</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Recurso de Lectura — lector guiado con comprensión</div>
+      <span class="tag tag-propuesto">propuesto</span>
+    </div>
+    <div class="card-desc">Lector con preguntas de comprensión generadas automáticamente según nivel: literal, inferencial y crítico. Directamente alineado a estándares PLANEA/ENLACE.</div>
+    <div class="feature-list">
+      <span class="feature-pill">comprensión literal</span>
+      <span class="feature-pill">comprensión inferencial</span>
+      <span class="feature-pill">comprensión crítica</span>
+      <span class="feature-pill">alineado PLANEA</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Más herramientas de Ciencias</div>
+      <span class="tag tag-propuesto">propuesto</span>
+    </div>
+    <div class="card-desc">Simuladores adicionales para Física y Química: movimiento parabólico, leyes de Newton, equilibrio químico, estequiometría. Siguiendo el mismo modelo offline/HTML del analizador de funciones.</div>
+    <div class="feature-list">
+      <span class="feature-pill">física: movimiento y fuerzas</span>
+      <span class="feature-pill">química: equilibrio y estequiometría</span>
+      <span class="feature-pill">offline / USB</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Generador de exámenes con IA</div>
+      <span class="tag tag-propuesto">propuesto</span>
+    </div>
+    <div class="card-desc">Herramienta para docentes que genera reactivos de opción múltiple, verdadero/falso y respuesta corta a partir de un tema o texto dado. Exporta a Word o PDF listo para impresión.</div>
+    <div class="feature-list">
+      <span class="feature-pill">opción múltiple</span>
+      <span class="feature-pill">verdadero/falso</span>
+      <span class="feature-pill">export Word/PDF</span>
+      <span class="feature-pill">para docentes</span>
+    </div>
+  </div>
+
+  <!-- ORDEN RECOMENDADO -->
+  <div class="section-label">📋 Orden recomendado para estas vacaciones</div>
+
+  <ol class="orden-list">
+    <li>
+      <div>
+        <div class="orden-item-title">Tabla periódica con niveles cuánticos</div>
+        <div class="orden-item-desc">Mayor impacto transversal (Química). Es la herramienta más llamativa para mostrar a colegas de ciencias. Ideal para abrir con ella ante la zona escolar.</div>
+      </div>
+    </li>
+    <li>
+      <div>
+        <div class="orden-item-title">Simulador del Teorema de Thales</div>
+        <div class="orden-item-desc">Complementa el analizador de funciones. Demuestra que las matemáticas geométricas también tienen cabida en el ecosistema digital de EPO 135.</div>
+      </div>
+    </li>
+    <li>
+      <div>
+        <div class="orden-item-title">Estandarizar páginas web pendientes</div>
+        <div class="orden-item-desc">gestion.html, padres.html, docentes-snb.html y recursos.html. Aplicar SEO meta tags, hamburger JS, 4 breakpoints y CSS variables del sistema de diseño.</div>
+      </div>
+    </li>
+    <li>
+      <div>
+        <div class="orden-item-title">Recurso de Inglés o Historia</div>
+        <div class="orden-item-desc">Según el tiempo disponible: el simulador de conversación en inglés tiene mayor demanda entre alumnos; la línea de tiempo histórica es más fácil de construir. Elegir según energía del momento.</div>
+      </div>
+    </li>
+    <li>
+      <div>
+        <div class="orden-item-title">Lector guiado de comprensión</div>
+        <div class="orden-item-desc">Transversal a todas las materias. Puede crecer con el tiempo añadiendo textos y niveles. Buena inversión a largo plazo.</div>
+      </div>
+    </li>
+  </ol>
+
+  <!-- ESTRATEGIA DIFUSIÓN -->
+  <div class="section-label">🤝 Estrategia de difusión entre colegas</div>
+
+  <div class="estrategia-block">
+    <h3>El argumento más poderoso: mostrar, no explicar</h3>
+    <p>No hace falta hablar de Claude en abstracto. <strong>Un pendrive con todas las herramientas HTML offline</strong> que cualquier maestro pueda abrir sin internet es más convincente que cualquier presentación. El maestro de Química ve la tabla periódica, el de Matemáticas ve el simulador de Thales, el de Inglés ve el conversador. Cada uno ve su materia resuelta.</p>
+  </div>
+
+  <div class="estrategia-block">
+    <h3>Demostración en Academia o CTE</h3>
+    <p>Solicitar 15 minutos en la siguiente sesión de Academia o CTE para mostrar el ecosistema. <strong>Empezar por el dashboard de calificaciones</strong> — todos los maestros conocen el problema de las reprobatorias. Eso abre la puerta. Luego mostrar las herramientas de aula.</p>
+  </div>
+
+  <div class="estrategia-block">
+    <h3>Referencia institucional</h3>
+    <p>Todo lo construido lleva el <strong>sistema de diseño de EPO 135</strong>: fuentes Fraunces / Outfit / DM Mono, paleta verde-azul-dorado, datos de contacto y CCT. No son herramientas genéricas de internet — son herramientas de la escuela, hechas para la escuela.</p>
+  </div>
+
+  <!-- SISTEMA DE DISEÑO -->
+  <div class="section-label">🎨 Sistema de diseño EPO 135</div>
+
+  <div class="card">
+    <div class="card-desc" style="font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.9; color: var(--texto);">
+      <strong>Tipografía:</strong> Fraunces (headings) · Outfit (body) · DM Mono (labels/data)<br>
+      <strong>Verde:</strong> #0f5e2f · <strong>Verde med:</strong> #1a7a3f · <strong>Verde claro:</strong> #2ea84f<br>
+      <strong>Azul:</strong> #0d3b6e · <strong>Azul med:</strong> #1a5ca0 · <strong>Dorado:</strong> #c8860a<br>
+      <strong>Rojo:</strong> #c0392b · <strong>Morado:</strong> #5c3a9e<br>
+      <strong>Fondo:</strong> #f5f7f6 · <strong>Borde:</strong> #d8e2dc · <strong>Texto:</strong> #0f1f17<br><br>
+      <strong>Contacto:</strong> Calle Vista Hermosa s/n, Río Frío de Juárez, Ixtapaluca, Edo. Méx., C.P. 56590<br>
+      Tel: 555-942-0717 · epo135@edugem.mx · Ciclo 2025-2026<br>
+      <strong>Supervisión:</strong> BG 046 · <strong>Directora:</strong> Mtra. Gloria Rosiles
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-logo">EPO 135 × Claude</div>
+    <div class="footer-meta">Generado en conversación · Vacaciones marzo 2026 · Subdirección Académica</div>
+  </div>
+
+</div>
+</body>
+</html>

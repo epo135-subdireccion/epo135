@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Optimización v3 · Fernando · EPO 135</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #0f0f0e;
+  --paper:  #f7f5f0;
+  --warm2:  #edeae2;
+  --line:   #dbd7cc;
+  --muted:  #6e6b60;
+  --hint:   #a8a49a;
+
+  --c1: #b83a1c;   /* rojo — urgente / avance */
+  --c2: #1e4d8c;   /* azul institucional */
+  --c3: #1a6644;   /* verde logro */
+  --c4: #5e2d8a;   /* morado investigación */
+  --c5: #8a5e10;   /* ámbar pendiente */
+  --c6: #1a6070;   /* verde-azul infra */
+  --c7: #7a2a4e;   /* vino trayectoria */
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── GRAIN ── */
+body::after {
+  content:''; position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9999;
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 56px 40px 48px;
+  position: relative; overflow: hidden;
+}
+.masthead-stripe {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    105deg,
+    transparent, transparent 60px,
+    rgba(255,255,255,0.012) 60px, rgba(255,255,255,0.012) 61px
+  );
+}
+.masthead-glow {
+  position: absolute; right: -100px; top: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(184,58,28,0.22) 0%, transparent 65%);
+}
+.masthead-glow2 {
+  position: absolute; left: -80px; bottom: -120px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(94,45,138,0.18) 0%, transparent 65%);
+}
+.masthead-inner { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+
+.masthead-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.38); margin-bottom: 20px;
+}
+.e-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--c1); flex-shrink:0; }
+
+.v-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(184,58,28,0.2); border: 1px solid rgba(184,58,28,0.4);
+  border-radius: 4px; padding: 3px 11px;
+  font-family: 'DM Mono', monospace; font-size: 9.5px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #f4a58a; margin-bottom: 18px;
+}
+
+.masthead h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 700; line-height: 1.02; margin-bottom: 14px;
+}
+.masthead h1 em { font-style: italic; color: var(--c1); }
+
+.masthead-sub {
+  font-size: 0.83rem; color: rgba(255,255,255,0.42);
+  max-width: 500px; line-height: 1.65; font-weight: 400;
+}
+
+.masthead-kpis {
+  display: flex; gap: 32px; flex-wrap: wrap;
+  margin-top: 38px; padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,0.09);
+}
+.kpi { display: flex; flex-direction: column; }
+.kpi-n {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.1rem; font-weight: 700; line-height: 1;
+}
+.kpi-l {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.32); margin-top: 5px;
+}
+
+/* ── TABS ── */
+.tab-rail {
+  background: white; border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 80;
+  box-shadow: 0 2px 18px rgba(0,0,0,0.055);
+}
+.tab-inner {
+  max-width: 960px; margin: 0 auto;
+  display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 20px;
+}
+.tab-inner::-webkit-scrollbar { display: none; }
+
+.tab {
+  padding: 14px 17px;
+  border: none; background: none;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.77rem; font-weight: 600;
+  color: var(--muted); cursor: pointer; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color .16s, border-color .16s;
+  display: flex; align-items: center; gap: 7px;
+}
+.tab:hover { color: var(--ink); }
+.tab.active { color: var(--ink); border-bottom-color: var(--ink); }
+
+.badge-new {
+  background: var(--c1); color: white;
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  padding: 1px 5px; border-radius: 3px; letter-spacing: 0.05em;
+}
+.badge-upd {
+  background: var(--c2); color: white;
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  padding: 1px 5px; border-radius: 3px; letter-spacing: 0.05em;
+}
+
+/* ── WRAP / PANE ── */
+.wrap { max-width: 960px; margin: 0 auto; padding: 44px 20px 80px; }
+.pane { display: none; animation: lift .3s ease; }
+.pane.active { display: block; }
+@keyframes lift {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── PANE HEADER ── */
+.pane-hd {
+  display: flex; align-items: flex-start; gap: 18px;
+  margin-bottom: 32px; padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.pane-icon {
+  width: 50px; height: 50px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; flex-shrink: 0;
+}
+.pane-hd h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.55rem; font-weight: 700; margin-bottom: 4px;
+}
+.pane-hd p { font-size: 0.8rem; color: var(--muted); line-height: 1.55; font-weight: 400; }
+
+/* ── BANNERS ── */
+.banner {
+  border-radius: 10px; padding: 14px 18px;
+  margin-bottom: 26px;
+  display: flex; gap: 12px; align-items: flex-start;
+  border: 1px solid; font-size: 0.8rem; line-height: 1.6;
+  font-weight: 400;
+}
+.b-icon { font-size: 1.05rem; flex-shrink: 0; margin-top: 1px; }
+.b-red    { background:#FEF2F0; border-color:#F0BDB0; color:#6e1f0f; }
+.b-green  { background:#EEFAF3; border-color:#A0D8B4; color:#134d2c; }
+.b-amber  { background:#FEF8E8; border-color:#EAC860; color:#5e3d00; }
+.b-blue   { background:#EEF3FB; border-color:#A4C0E0; color:#18365a; }
+.b-purple { background:#F5EFFE; border-color:#C8A8F0; color:#40186e; }
+.b-wine   { background:#FDF0F5; border-color:#D8A0B8; color:#5a1432; }
+
+/* ── CARDS ── */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(252px, 1fr)); gap: 13px; margin-bottom: 26px; }
+.card {
+  background: white; border: 1px solid var(--line);
+  border-radius: 14px; padding: 22px 20px;
+  position: relative; overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--c, var(--c1));
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.07); }
+.card-icon { font-size: 1.35rem; display: block; margin-bottom: 10px; }
+.card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-weight: 700; margin-bottom: 6px;
+}
+.card p { font-size: 0.77rem; color: var(--muted); line-height: 1.6; font-weight: 400; }
+.card-tag {
+  display: inline-block; margin-top: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.64rem; letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 7px; font-weight: 500;
+}
+
+/* ── CALLOUTS ── */
+.callout {
+  border-radius: 12px; padding: 18px 20px;
+  margin: 20px 0; border: 1px solid;
+}
+.callout h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-weight: 700; margin-bottom: 6px;
+}
+.callout p { font-size: 0.79rem; line-height: 1.68; color: #3a3830; font-weight: 400; }
+.co-orange { background:#FFF4EE; border-color:#FFCAAC; }
+.co-blue   { background:#EDF3FB; border-color:#B4CCEE; }
+.co-green  { background:#EEF9F3; border-color:#AADCBC; }
+.co-purple { background:#F4EFFE; border-color:#D0AAEC; }
+.co-amber  { background:#FDF8E6; border-color:#EEC858; }
+.co-wine   { background:#FCF0F5; border-color:#D4A0BC; }
+.co-red    { background:#FEF2F0; border-color:#F0B8AC; }
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding-left: 30px; }
+.timeline::before {
+  content:''; position: absolute; left: 9px; top: 8px; bottom: 8px;
+  width: 2px; background: var(--line);
+}
+.tl-item {
+  position: relative; margin-bottom: 20px;
+  background: white; border: 1px solid var(--line);
+  border-radius: 12px; padding: 17px 18px;
+  transition: box-shadow .2s;
+}
+.tl-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.055); }
+.tl-dot {
+  position: absolute; left: -24px; top: 19px;
+  width: 13px; height: 13px; border-radius: 50%;
+  border: 2px solid white; box-shadow: 0 0 0 2px var(--line);
+}
+.tl-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.tl-item h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.98rem; font-weight: 700; margin-bottom: 4px;
+}
+.tl-item p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; font-weight: 400; }
+
+/* ── CHECKLIST ── */
+.checklist { list-style: none; }
+.ci {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+.ci:last-child { border-bottom: none; }
+.ci-box {
+  width: 19px; height: 19px; border: 2px solid var(--line);
+  border-radius: 5px; flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .18s, border-color .18s;
+  font-size: 0.62rem; color: white;
+}
+.ci.done .ci-box { background: var(--c3); border-color: var(--c3); }
+.ci.done .ci-t { text-decoration: line-through; opacity: 0.38; }
+.ci-t { font-size: 0.84rem; line-height: 1.45; font-weight: 500; }
+.ci-s { font-size: 0.71rem; color: var(--muted); margin-top: 2px; font-weight: 400; }
+
+/* ── PROGRESS ITEM ── */
+.prog-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 11px 0; border-bottom: 1px solid var(--line);
+}
+.prog-row:last-child { border-bottom: none; }
+.prog-icon { font-size: 1.1rem; flex-shrink: 0; width: 24px; text-align: center; }
+.prog-body { flex: 1; }
+.prog-title { font-size: 0.84rem; font-weight: 600; margin-bottom: 2px; }
+.prog-sub { font-size: 0.72rem; color: var(--muted); font-weight: 400; }
+.prog-badge {
+  font-family: 'DM Mono', monospace; font-size: 0.64rem; letter-spacing: 0.04em;
+  padding: 2px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0;
+}
+.pb-done   { background:#EEFAF3; color:var(--c3); border:1px solid #A0D8B4; }
+.pb-active { background:#EEF3FB; color:var(--c2); border:1px solid #A4C0E0; }
+.pb-pause  { background:#F5EFFE; color:var(--c4); border:1px solid #C8A8F0; }
+.pb-new    { background:#FFF4EE; color:var(--c1); border:1px solid #FFCAAC; }
+
+/* ── TRAYECTORIA SPECIAL ── */
+.horizon-bar {
+  background: white; border: 1px solid var(--line);
+  border-radius: 14px; padding: 22px 24px; margin-bottom: 20px;
+}
+.hz-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-weight: 700; margin-bottom: 14px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.hz-track {
+  display: flex; gap: 0; border-radius: 8px; overflow: hidden;
+  height: 36px; border: 1px solid var(--line);
+}
+.hz-seg {
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  transition: filter .2s;
+}
+.hz-seg:hover { filter: brightness(0.92); }
+.hz-labels {
+  display: flex; justify-content: space-between;
+  margin-top: 8px;
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  color: var(--hint); letter-spacing: 0.05em;
+}
+
+.ciclo-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  margin: 20px 0;
+}
+.ciclo-card {
+  background: white; border: 1px solid var(--line);
+  border-radius: 10px; padding: 14px 14px;
+  position: relative; overflow: hidden;
+}
+.ciclo-card.current {
+  border-color: var(--c7);
+  box-shadow: 0 0 0 2px rgba(122,42,78,0.12);
+}
+.ciclo-card::after {
+  content: attr(data-ciclo);
+  position: absolute; bottom: 6px; right: 10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem; font-weight: 700; opacity: 0.05;
+  line-height: 1; color: var(--ink);
+}
+.ciclo-n {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem; color: var(--hint); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 5px;
+}
+.ciclo-period {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem; font-weight: 700; margin-bottom: 6px;
+}
+.ciclo-focus { font-size: 0.74rem; color: var(--muted); line-height: 1.5; font-weight: 400; }
+.ciclo-tag {
+  display: inline-block; margin-top: 8px;
+  font-family: 'DM Mono', monospace; font-size: 0.6rem;
+  padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em;
+}
+
+/* ── INFRA TABLE ── */
+.it { width: 100%; border-collapse: collapse; font-size: 0.78rem;
+  background: white; border: 1px solid var(--line);
+  border-radius: 12px; overflow: hidden; margin: 14px 0; }
+.it th {
+  text-align: left; font-family: 'DM Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--hint); padding: 10px 14px;
+  background: var(--warm2); border-bottom: 1px solid var(--line);
+}
+.it td { padding: 9px 14px; border-bottom: 1px solid var(--line); color: var(--muted); vertical-align: top; line-height: 1.5; font-weight: 400; }
+.it td:first-child { color: var(--ink); font-weight: 600; }
+.it tr:last-child td { border-bottom: none; }
+
+/* ── PILLS / TOPIC ── */
+.pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.pill {
+  background: white; border: 1px solid var(--line); border-radius: 20px;
+  padding: 6px 14px; font-size: 0.77rem; font-weight: 600;
+  cursor: pointer; transition: background .16s, border-color .16s, color .16s;
+}
+.pill:hover, .pill.on { background: var(--ink); color: white; border-color: var(--ink); }
+.topic-box {
+  display: none; background: white; border: 1px solid var(--line);
+  border-radius: 12px; padding: 18px 20px; margin-top: 12px;
+  animation: lift .22s ease;
+}
+.topic-box.visible { display: block; }
+.topic-box h4 { font-family: 'Cormorant Garamond', serif; font-size: 0.98rem; font-weight: 700; margin-bottom: 6px; }
+.topic-box p { font-size: 0.78rem; color: #555; line-height: 1.7; font-weight: 400; }
+
+/* ── OE PATH ── */
+.oe-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 9px; margin: 18px 0; }
+.oe-step {
+  background: white; border: 1px solid var(--line); border-radius: 11px;
+  padding: 16px 14px; text-align: center; position: relative;
+}
+.oe-n {
+  font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700;
+  opacity: 0.06; position: absolute; top: 4px; right: 10px;
+}
+.oe-step .ico { font-size: 1.4rem; display: block; margin-bottom: 7px; }
+.oe-step h4 { font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; }
+.oe-step p { font-size: 0.71rem; color: var(--muted); line-height: 1.5; font-weight: 400; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 24px 20px; text-align: center;
+  max-width: 960px; margin: 0 auto;
+}
+footer p { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--hint); }
+
+@media (max-width: 600px) {
+  .masthead { padding: 36px 20px 32px; }
+  .cards { grid-template-columns: 1fr; }
+  .oe-grid { grid-template-columns: 1fr 1fr; }
+  .ciclo-grid { grid-template-columns: 1fr 1fr; }
+  .masthead-kpis { gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-stripe"></div>
+  <div class="masthead-glow"></div>
+  <div class="masthead-glow2"></div>
+  <div class="masthead-inner">
+    <div class="masthead-eyebrow"><span class="e-dot"></span>Guía personalizada · EPO 135 · Ixtapaluca</div>
+    <div class="v-badge">● v3.0 — Actualizada 31 mar 2026</div>
+    <h1>Consolida lo construido,<br><em>diseña los cuatro ciclos</em></h1>
+    <p>Análisis de avance y hoja de ruta para Fernando Felipe Cortés Reyes — con base en bitácora de marzo 2026, proceso de ratificación y trayectoria profesional a mediano plazo.</p>
+    <div class="masthead-kpis">
+      <div class="kpi"><div class="kpi-n" style="color:#c1a052">50</div><div class="kpi-l">Años · 09/09/1975</div></div>
+      <div class="kpi"><div class="kpi-n" style="color:#B83A1C">1/4</div><div class="kpi-l">Ciclo de ratificación</div></div>
+      <div class="kpi"><div class="kpi-n" style="color:#1a6644">5</div><div class="kpi-l">Sistemas activos</div></div>
+      <div class="kpi"><div class="kpi-n" style="color:#1e4d8c">287</div><div class="kpi-l">Carreras reales</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tab-rail">
+  <div class="tab-inner">
+    <button class="tab active" onclick="show('avance', this)">📈 Avance v2→v3</button>
+    <button class="tab" onclick="show('trayectoria', this)">🎖️ Trayectoria <span class="badge-new">nuevo</span></button>
+    <button class="tab" onclick="show('gestion', this)">🏫 Gestión</button>
+    <button class="tab" onclick="show('tiempo', this)">⏱️ Tiempo <span class="badge-upd">actualizado</span></button>
+    <button class="tab" onclick="show('objeto', this)">🔬 Investigación <span class="badge-upd">actualizado</span></button>
+    <button class="tab" onclick="show('infra', this)">⚙️ Infraestructura <span class="badge-upd">actualizado</span></button>
+    <button class="tab" onclick="show('herramientas', this)">🛠️ Herramientas</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ══════ AVANCE ══════ -->
+<div class="pane active" id="pane-avance">
+  <div class="pane-hd">
+    <div class="pane-icon" style="background:#F0FAF4;">📈</div>
+    <div>
+      <h2>Lo que avanzaste desde la v2</h2>
+      <p>Quince días entre la guía anterior (16 mar) y hoy. Mucho se movió — y casi todo en la dirección correcta.</p>
+    </div>
+  </div>
+
+  <div class="banner b-green">
+    <div class="b-icon">🚀</div>
+    <div><strong>Balance general:</strong> De 8 pendientes críticos en la v2, 6 están resueltos o en ejecución. Eso es una tasa de avance excepcional para la semana más densa del ciclo. El ecosistema digital pasó de 3 a 5 herramientas en producción.</div>
+  </div>
+
+  <div style="background:white;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:24px;">
+    <div style="padding:10px 16px;background:var(--warm2);border-bottom:1px solid var(--line);font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--hint);letter-spacing:0.1em;text-transform:uppercase;display:grid;grid-template-columns:1fr 90px 1fr;gap:12px;">
+      <span>Recomendación v2</span><span style="text-align:center">Estado</span><span>Resultado</span>
+    </div>
+
+    <div class="prog-row" style="padding:11px 16px;gap:12px;display:grid;grid-template-columns:1fr 90px 1fr;">
+      <div style="font-size:0.8rem;font-weight:500;">Semáforo GAS + Claude + Telegram en producción</div>
+      <div style="text-align:center"><span class="prog-badge pb-done">✓ Listo</span></div>
+      <div style="font-size:0.75rem;color:var(--muted)">Activo desde 15 mar. Trigger lunes 7 am. Bot EPO 135 operativo.</div>
+    </div>
+    <div class="prog-row" style="padding:11px 16px;gap:12px;display:grid;grid-template-columns:1fr 90px 1fr;border-top:1px solid var(--line);">
+      <div style="font-size:0.8rem;font-weight:500;">Colegiado 26 mar — conducir 4 de 6 bloques</div>
+      <div style="text-align:center"><span class="prog-badge pb-done">✓ Listo</span></div>
+      <div style="font-size:0.75rem;color:var(--muted)">Ejecutado. Dashboard de semáforo presentado. NotebookLM demostrado.</div>
+    </div>
+    <div class="prog-row" style="padding:11px 16px;gap:12px;display:grid;grid-template-columns:1fr 90px 1fr;border-top:1px solid var(--line);">
+      <div style="font-size:0.8rem;font-weight:500;">Minuta JAD — herramienta local</div>
+      <div style="text-align:center"><span class="prog-badge pb-done">✓ Listo</span></div>
+      <div style="font-size:0.75rem;color:var(--muted)">En producción desde 25 mar. Node.js local. .docx con IA.</div>
+    </div>
+    <div class="prog-row" style="padding:11px 16px;gap:12px;display:grid;grid-template-columns:1fr 90px 1fr;border-top:1px solid var(--line);">
+      <div style="font-size:0.8rem;font-weight:500;">n8n trial — exportar flujos antes del 27 mar</div>
+      <div style="text-align:center"><span class="prog-badge pb-done">✓ Listo</span></div>
+      <div style="font-size:0.75rem;color:var(--muted)">Resuelto. Migración a GAS completada. Lógica conservada.</div>
+    </div>
+    <div class="prog-row" style="padding:11px 16px;gap:12px;display:grid;grid-template-columns:1fr 90px 1fr;border-top:1px solid var(--line);">
+      <div style="font-size:0.8rem;font-weight:500;">Torneo Interprepas — básquetbol + árbitros</div>
+      <div style="text-align:center"><span class="prog-badge pb-active">↻ En curso</span></div>
+      <div style="font-size:0.75rem;color:var(--muted)">Equipos y coordinadores definidos. Junta previa: 16 abr.</div>
+    </div>
+    <div class="prog-row" style="padding:11px 16px;gap:12px;display:grid;grid-template-columns:1fr 90px 1fr;border-top:1px solid var(--line);">
+      <div style="font-size:0.8rem;font-weight:500;">Galería de Arte — selección de representantes</div>
+      <div style="text-align:center"><span class="prog-badge pb-active">↻ En curso</span></div>
+      <div style="font-size:0.75rem;color:var(--muted)">Concurso interno realizado. Entrega 27 abr. Evento 30 abr.</div>
+    </div>
+    <div class="prog-row" style="padding:11px 16px;gap:12px;display:grid;grid-template-columns:1fr 90px 1fr;border-top:1px solid var(--line);">
+      <div style="font-size:0.8rem;font-weight:500;">Dashboard running — datos reales de JSON</div>
+      <div style="text-align:center"><span class="prog-badge pb-done">✓ Listo</span></div>
+      <div style="font-size:0.75rem;color:var(--muted)">287 carreras reales. Datos sintéticos eliminados. Sección Metas integrada.</div>
+    </div>
+    <div class="prog-row" style="padding:11px 16px;gap:12px;display:grid;grid-template-columns:1fr 90px 1fr;border-top:1px solid var(--line);">
+      <div style="font-size:0.8rem;font-weight:500;">P9 investigación — reactivar objeto de estudio</div>
+      <div style="text-align:center"><span class="prog-badge pb-pause">⏸ Pausa</span></div>
+      <div style="font-size:0.75rem;color:var(--muted)">Intencionalmente pausado. Semana Santa es el momento de retomar.</div>
+    </div>
+  </div>
+
+  <div class="callout co-orange">
+    <h4>💡 El cambio más importante de la v3</h4>
+    <p>La v2 se enfocaba en resolver la semana. La v3 tiene un horizonte diferente: eres subdirector en ratificación, con 3 ciclos por delante y 50 años de edad. Eso no es una restricción — es una ventana estratégica precisa. Todo lo que construiste en marzo necesita conectarse ahora con lo que quieres que sea tu trayectoria al final de esos 4 ciclos.</p>
+  </div>
+</div>
+
+<!-- ══════ TRAYECTORIA ══════ -->
+<div class="pane" id="pane-trayectoria">
+  <div class="pane-hd">
+    <div class="pane-icon" style="background:#FCF0F5;">🎖️</div>
+    <div>
+      <h2>Trayectoria profesional — los cuatro ciclos</h2>
+      <p>Proceso de promoción vertical activo. Ratificación de cargo: ciclo 1 de 4. Esto es un marco de 4 años con fecha de inicio, fecha de cierre y evidencias que construir.</p>
+    </div>
+  </div>
+
+  <div class="banner b-wine">
+    <div class="b-icon">🎯</div>
+    <div><strong>Tu situación real:</strong> Tienes 50 años, primer ciclo de ratificación activo (2025–2026), 3 ciclos más por delante (~hasta 2029–2030). Eso son aproximadamente 6 años de ejercicio intencionado del cargo antes de tu siguiente decisión de carrera — segunda promoción vertical, asesoría técnico-pedagógica, supervisión, o consolidar EPO 135 como tu legado.</div>
+  </div>
+
+  <!-- Horizonte visual -->
+  <div class="horizon-bar">
+    <div class="hz-title">
+      Tu horizonte de 4 ciclos
+      <span style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--hint);">2025 → 2029</span>
+    </div>
+    <div class="hz-track">
+      <div class="hz-seg" style="width:25%;background:#7a2a4e;color:white;">C·1 ← aquí</div>
+      <div class="hz-seg" style="width:25%;background:#a04070;color:white;opacity:0.75;">C·2</div>
+      <div class="hz-seg" style="width:25%;background:#c06090;color:white;opacity:0.55;">C·3</div>
+      <div class="hz-seg" style="width:25%;background:#e090b8;color:#3a1428;opacity:0.5;">C·4 → decisión</div>
+    </div>
+    <div class="hz-labels">
+      <span>2025–2026</span><span>2026–2027</span><span>2027–2028</span><span>2028–2029</span>
+    </div>
+  </div>
+
+  <!-- Ciclos grid -->
+  <div class="ciclo-grid">
+    <div class="ciclo-card current" data-ciclo="1">
+      <div class="ciclo-n">Ciclo 1 · EN CURSO</div>
+      <div class="ciclo-period">2025 – 2026</div>
+      <div class="ciclo-focus">Consolidar el cargo. Instalar los sistemas. Ganar legitimidad técnica y pedagógica ante el equipo y la supervisión.</div>
+      <span class="ciclo-tag" style="background:#FCF0F5;color:#7a2a4e;border:1px solid #D4A0BC;">Instalación</span>
+    </div>
+    <div class="ciclo-card" data-ciclo="2">
+      <div class="ciclo-n">Ciclo 2</div>
+      <div class="ciclo-period">2026 – 2027</div>
+      <div class="ciclo-focus">Escalar lo que funciona. Primera investigación publicada o presentada. Ecosistema IA expandido a toda la zona BG 046.</div>
+      <span class="ciclo-tag" style="background:#F5EFFE;color:#5e2d8a;border:1px solid #C8A8F0;">Expansión</span>
+    </div>
+    <div class="ciclo-card" data-ciclo="3">
+      <div class="ciclo-n">Ciclo 3</div>
+      <div class="ciclo-period">2027 – 2028</div>
+      <div class="ciclo-focus">Posicionamiento externo. Ponencias, redes inter-escuela. Construir expediente de ratificación con evidencias sólidas.</div>
+      <span class="ciclo-tag" style="background:#EEF3FB;color:#1e4d8c;border:1px solid #A4C0E0;">Posicionamiento</span>
+    </div>
+    <div class="ciclo-card" data-ciclo="4">
+      <div class="ciclo-n">Ciclo 4</div>
+      <div class="ciclo-period">2028 – 2029</div>
+      <div class="ciclo-focus">Consolidar legado. Decidir: segunda promoción vertical, supervisión, o cerrar el ciclo de EPO 135 con un sistema que funcione sin ti.</div>
+      <span class="ciclo-tag" style="background:#EEFAF3;color:#1a6644;border:1px solid #A0D8B4;">Legado / decisión</span>
+    </div>
+  </div>
+
+  <!-- Qué construir en cada dimensión -->
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;margin:28px 0 16px;">Las tres dimensiones que importan en ratificación</h3>
+
+  <div class="cards">
+    <div class="card" style="--c:#7a2a4e;">
+      <span class="card-icon">📋</span>
+      <h3>Expediente de evidencias</h3>
+      <p>La ratificación se decide con evidencias documentadas, no con desempeño percibido. Cada sistema que instalaste (semáforo, fichas, minuta JAD) necesita un registro formal: fecha de implementación, impacto medido, acta o captura que lo acredite. Empieza a construir esa carpeta desde ahora.</p>
+      <span class="card-tag" style="background:#FCF0F5;color:#7a2a4e;">Ciclo 1 — Inmediato</span>
+    </div>
+    <div class="card" style="--c:#1e4d8c;">
+      <span class="card-icon">🏫</span>
+      <h3>Visibilidad institucional</h3>
+      <p>Tu ecosistema IA es inusual en una EPO del Estado de México. La supervisora BG 046 (Mtra. Gabriela Lara) necesita verlo, no solo escucharlo. El Torneo Interprepas del 17 abr y el Colegiado ya fueron momentos de visibilidad — el próximo es una ponencia o un informe técnico para la supervisión.</p>
+      <span class="card-tag" style="background:#EEF3FB;color:#1e4d8c;">Ciclo 1–2</span>
+    </div>
+    <div class="card" style="--c:#1a6644;">
+      <span class="card-icon">🔬</span>
+      <h3>Producción académica</h3>
+      <p>P9 no es solo curiosidad intelectual — es tu diferenciador en promoción vertical. Un subdirector de EPO que investiga y publica sobre su propia práctica es un perfil muy escaso. Aunque sea un artículo en una revista de divulgación educativa estatal, eso te separa del 95% de candidatos.</p>
+      <span class="card-tag" style="background:#EEFAF3;color:#1a6644;">Ciclo 2 — Prioritario</span>
+    </div>
+  </div>
+
+  <div class="callout co-wine">
+    <h4>⚠️ El riesgo más concreto a los 50 años con este cargo</h4>
+    <p>No es el desempeño — es la invisibilidad. Podrías ser el mejor subdirector de la zona y no ser ratificado porque tu trabajo no fue documentado ni comunicado correctamente a quien decide. La tecnología que construiste es un activo extraordinario, pero necesita traducirse en lenguaje institucional: indicadores, informes, actas, comparecencias.</p>
+  </div>
+
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;margin:24px 0 14px;">Lo que tienes que construir este ciclo (2025–2026)</h3>
+  <ul class="checklist" id="cl-tray">
+    <li class="ci" onclick="tick(this)"><div class="ci-box">✓</div><div><div class="ci-t">Carpeta de evidencias digitales en Drive — organizada por ciclo escolar</div><div class="ci-s">Capturas del semáforo Telegram, actas del colegiado, tableros de datos. Todo con fecha y descripción.</div></div></li>
+    <li class="ci" onclick="tick(this)"><div class="ci-box">✓</div><div><div class="ci-t">Informe de resultados del Plan de Permanencia — 1ª reunión de seguimiento (abril)</div><div class="ci-s">Dato clave: variación en alumnos amarillo/rojo desde el inicio del semáforo. Aunque sea una semana de datos.</div></div></li>
+    <li class="ci" onclick="tick(this)"><div class="ci-box">✓</div><div><div class="ci-t">Presentar ecosistema IA a la supervisora BG 046 — antes de julio</div><div class="ci-s">No tiene que ser formal. Una demostración de 15 min en una visita de supervisión puede ser suficiente.</div></div></li>
+    <li class="ci" onclick="tick(this)"><div class="ci-box">✓</div><div><div class="ci-t">Retomar P9 en Semana Santa — aunque sea el planteamiento de 1 página</div><div class="ci-s">No para publicar ahora. Para tener el hilo activo durante el ciclo 2.</div></div></li>
+    <li class="ci" onclick="tick(this)"><div class="ci-box">✓</div><div><div class="ci-t">Registrar formalmente la conducción del Torneo Interprepas en el acta de supervisión</div><div class="ci-s">La organización deportiva es indicador de gestión extracurricular — va al expediente.</div></div></li>
+    <li class="ci" onclick="tick(this)"><div class="ci-box">✓</div><div><div class="ci-t">Actualizar gestion.html con cifras reales de running (287 carreras, no 299)</div><div class="ci-s">Pequeño detalle, pero refleja el cuidado con el que tratas tus propios datos.</div></div></li>
+  </ul>
+
+  <div class="callout co-blue">
+    <h4>🧭 El arco de los 4 ciclos en una frase</h4>
+    <p>Ciclo 1: instala y documenta. Ciclo 2: escala y publica. Ciclo 3: posiciónate externamente. Ciclo 4: decide qué sigue. Estás exactamente donde debes estar: en el primero, con cinco sistemas en producción y claridad sobre el horizonte. Eso es mucho más que la mayoría de los subdirectores que entran a ratificación.</p>
+  </div>
+</div>
+
+<!-- ══════ GESTIÓN ══════ -->
+<div class="pane" id="pane-gestion">
+  <div class="pane-hd">
+    <div class="pane-icon" style="background:#FFF4EE;">🏫</div>
+    <div>
+      <h2>Gestión escolar — post-colegiado</h2>
+      <p>Cerraste el mes más intenso del semestre. Abril comienza con el Torneo Interprepas como siguiente foco institucional y Semana Santa como ventana de desarrollo personal.</p>
+    </div>
+  </div>
+
+  <div class="banner b-green">
+    <div class="b-icon">✅</div>
+    <div><strong>Cambio de modo:</strong> En marzo estabas en ejecución urgente. En abril estás en seguimiento y consolidación. Los tres sistemas en producción trabajan para ti — tu rol es leer los reportes, no producirlos manualmente.</div>
+  </div>
+
+  <div class="cards">
+    <div class="card" style="--c:#B83A1C;">
+      <span class="card-icon">📅</span>
+      <h3>Torneo Interprepas — 17 abr</h3>
+      <p>EPO 135 es sede de frontón varonil. Junta previa el 16 abr en EPO 141. Coordinar con Luis Mónico (fútbol), Alfonso Osorno y Erik Caballero (porristas). Diseño de lona: Priscila López. Checklist de sede: materiales, espacios, arbitraje confirmado.</p>
+      <span class="card-tag" style="background:#FFF4EE;color:#B83A1C;">Próximo evento crítico</span>
+    </div>
+    <div class="card" style="--c:#1a6644;">
+      <span class="card-icon">📊</span>
+      <h3>1ª reunión de seguimiento — Plan Permanencia</h3>
+      <p>Calendarizada para abril según el plan. Primer corte de datos del semáforo desde su activación. Preparar: variación de alumnos en riesgo, fichas abiertas vs. cerradas, asistencia por grupo. Estos datos son tu evidencia más fuerte del ciclo.</p>
+      <span class="card-tag" style="background:#EEFAF3;color:#1a6644;">Indicadores clave</span>
+    </div>
+    <div class="card" style="--c:#1e4d8c;">
+      <span class="card-icon">🎨</span>
+      <h3>Galería de Arte — 30 abr</h3>
+      <p>Entrega de trabajos: 27 abr. Reunión técnica: 17 abr. Sede: EPO 364, Chicolopan. 3 categorías activas: Fotografía (completa), Escultura y Obra gráfica (se concluyen en evento). Confirmar representantes esta semana.</p>
+      <span class="card-tag" style="background:#EEF3FB;color:#1e4d8c;">Extracurricular</span>
+    </div>
+    <div class="card" style="--c:#5e2d8a;">
+      <span class="card-icon">📂</span>
+      <h3>Carpeta de evidencias de ratificación</h3>
+      <p>Empieza ahora, no en el ciclo 4. Una carpeta Drive con subcarpetas por mes: actas, capturas del semáforo, reportes de permanencia, fotos del torneo. Cada evidencia lleva: fecha, descripción de 2 líneas, indicador al que aporta.</p>
+      <span class="card-tag" style="background:#F5EFFE;color:#5e2d8a;">Ciclo 1 — No esperar</span>
+    </div>
+    <div class="card" style="--c:#8a5e10;">
+      <span class="card-icon">📝</span>
+      <h3>Salida Zacatlán — nueva fecha</h3>
+      <p>Reprogramada. Comunicar a familias cuando se defina. Actualizar proyecto-salida-zacatlan-FINAL.docx. Sin urgencia pero no dejarlo flotar — genera ruido con familias.</p>
+      <span class="card-tag" style="background:#FDF8E6;color:#8a5e10;">Pendiente claro</span>
+    </div>
+    <div class="card" style="--c:#1a6070;">
+      <span class="card-icon">🔄</span>
+      <h3>Formaliza el ciclo de minutas</h3>
+      <p>La Minuta JAD ya existe. Úsala en cada Jornada de Acompañamiento Docente y guarda los .docx en Drive organizados por fecha. Son evidencia directa de tu función como subdirector. Cada acta generada = un elemento del expediente.</p>
+      <span class="card-tag" style="background:#E8F5F7;color:#1a6070;">Hábito clave</span>
+    </div>
+  </div>
+
+  <div class="callout co-orange">
+    <h4>💡 Tu foco de abril en una sola frase</h4>
+    <p>El Torneo (17 abr) y la reunión de seguimiento de permanencia son los dos momentos de visibilidad institucional del mes. Todo lo demás es mantenimiento. Prepara bien esos dos eventos y documéntalos formalmente.</p>
+  </div>
+</div>
+
+<!-- ══════ TIEMPO ══════ -->
+<div class="pane" id="pane-tiempo">
+  <div class="pane-hd">
+    <div class="pane-icon" style="background:#EEF3FB;">⏱️</div>
+    <div>
+      <h2>Gestión del tiempo — modo Semana Santa</h2>
+      <p>7 días sin carga institucional (30 mar – 5 abr). Esta ventana no vuelve hasta julio. Es el momento correcto para los proyectos que requieren concentración profunda y no urgencia inmediata.</p>
+    </div>
+  </div>
+
+  <div class="banner b-amber">
+    <div class="b-icon">⚡</div>
+    <div><strong>Regla de Semana Santa:</strong> No abras nuevos proyectos. Cierra los que dejaste abiertos (P9, tabla periódica, Thales) y arranca la carpeta de evidencias. Tres outputs concretos de Semana Santa es más valioso que diez ideas nuevas.</div>
+  </div>
+
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;margin:0 0 14px;">Outputs objetivo de Semana Santa</h3>
+  <ul class="checklist" id="cl-ss">
+    <li class="ci" onclick="tick(this)"><div class="ci-box">✓</div><div><div class="ci-t">Planteamiento de P9 — 1 página escrita (no solo pensada)</div><div class="ci-s">Problema, pregunta, justificación. No necesitas más que eso por ahora.</div></div></li>
+    <li class="ci" onclick="tick(this)"><div class="ci-box">✓</div><div><div class="ci-t">Tabla periódica con niveles cuánticos — IA·06 en versión funcional</div><div class="ci-s">Prioridad 1 del ecosistema IA. Si sale esta semana, llega al aula en mayo.</div></div></li>
+    <li class="ci" onclick="tick(this)"><div class="ci-box">✓</div><div><div class="ci-t">Carpeta de evidencias en Drive — estructura creada y primeras 5 entradas</div><div class="ci-s">Semáforo (captura Telegram), colegiado (acta o foto), minuta JAD (primer .docx).</div></div></li>
+    <li class="ci" onclick="tick(this)"><div class="ci-box">✓</div><div><div class="ci-t">gestion.html actualizado con cifras reales de running y proyectos</div><div class="ci-s">299 → 287 carreras, totales corregidos, proyectos al día.</div></div></li>
+    <li class="ci" onclick="tick(this)"><div class="ci-box">✓</div><div><div class="ci-t">Carrera de 8 km — primer hito del plan de recuperación running</div><div class="ci-s">Lunes 6 abr según el plan. Ritmo suave. Que quede en el dashboard.</div></div></li>
+  </ul>
+
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;margin:24px 0 14px;">Estructura de día tipo — Semana Santa</h3>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#B83A1C"></div>
+      <div class="tl-label" style="color:#B83A1C">7:00 – 7:30 — Arranque</div>
+      <h3>Revisión rápida + intención del día</h3>
+      <p>¿Cuál de los 5 outputs de la semana avanza hoy? Elige uno y escríbelo antes de abrir el teléfono.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#1e4d8c"></div>
+      <div class="tl-label" style="color:#1e4d8c">8:00 – 11:00 — Concentración profunda</div>
+      <h3>Herramientas IA o P9</h3>
+      <p>Este es el único bloque del día sin interrupciones. La tabla periódica, el planteamiento de P9 o el simulador de Thales necesitan este espacio — no se construyen en ratos de 20 minutos.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#1a6644"></div>
+      <div class="tl-label" style="color:#1a6644">11:30 – 12:30 — Evidencias y documentación</div>
+      <h3>Carpeta de ratificación</h3>
+      <p>30–60 minutos diarios durante la semana llenan la carpeta de evidencias del ciclo 1. Es trabajo mecánico que requiere atención pero no concentración creativa.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#5e2d8a"></div>
+      <div class="tl-label" style="color:#5e2d8a">16:00 – 17:00 — Running</div>
+      <h3>Plan Semana Santa — 3 carreras + 1 larga</h3>
+      <p>No en el calor del mediodía. Tarde-noche funciona mejor en estas fechas. El plan ya está en el dashboard — sigues exactamente ese ritmo.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:#8a5e10"></div>
+      <div class="tl-label" style="color:#8a5e10">21:00 — Cierre consciente</div>
+      <h3>10 minutos: qué avancé hoy</h3>
+      <p>Actualizar gestion.html o la bitácora mental con lo que salió del día. No para ser productivo — para no perder el hilo cuando regrese la carga institucional el 7 de abril.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ INVESTIGACIÓN ══════ -->
+<div class="pane" id="pane-objeto">
+  <div class="pane-hd">
+    <div class="pane-icon" style="background:#F5EFFE;">🔬</div>
+    <div>
+      <h2>Investigación educativa — momento de retomar</h2>
+      <p>P9 lleva dos semanas en pausa intencionada. Era el momento correcto. Semana Santa es el primer momento correcto para retomarlo — y ahora hay un argumento estratégico más fuerte.</p>
+    </div>
+  </div>
+
+  <div class="banner b-purple">
+    <div class="b-icon">🎯</div>
+    <div><strong>Por qué P9 importa más ahora:</strong> Estás en ratificación. Un subdirector que investiga su propia práctica y lo puede demostrar tiene un perfil diferenciado ante cualquier comisión evaluadora. No es academicismo — es estrategia de carrera con base en lo que ya vives todos los días.</div>
+  </div>
+
+  <div class="callout co-purple">
+    <h4>🔍 El colegiado del 26 de marzo como datos cualitativos primarios</h4>
+    <p>Si llevaste libreta de campo ese día, ya tienes material. El "Veterano que impone", la "Fundadora que interrumpe", quien lidera informalmente — esos son exactamente los fenómenos que describes en tu objeto de estudio (opresor internalizado, olimpiadas del sufrimiento, hoarding del conocimiento). Documenta lo que observaste antes de que se desdibuje.</p>
+  </div>
+
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;margin:24px 0 14px;">Temas — ahora con argumento más fuerte</h3>
+  <div class="pills">
+    <div class="pill" onclick="st(this,'d')">📉 Deserción</div>
+    <div class="pill" onclick="st(this,'r')">📋 Reprobación</div>
+    <div class="pill" onclick="st(this,'l')">🏫 Liderazgo directivo</div>
+    <div class="pill" onclick="st(this,'c')">⚗️ Ciencias</div>
+    <div class="pill" onclick="st(this,'b')">💚 Bienestar SEL</div>
+    <div class="pill" onclick="st(this,'t')">💻 Tecnología educativa</div>
+  </div>
+  <div class="topic-box" id="td-d"><h4>📉 Deserción — ahora con un ciclo de datos reales</h4><p>El semáforo lleva activo desde el 15 de marzo. Para julio tendrás ~4 meses de datos de asistencia cruzables con las fichas de riesgo. Eso es una base empírica que ninguna investigación externa sobre EPOs de Ixtapaluca tiene. Tu ventaja es que eres el investigador y el director del sistema al mismo tiempo.</p></div>
+  <div class="topic-box" id="td-r"><h4>📋 Reprobación — la continuación natural del semáforo</h4><p>El semáforo mide asistencia. Pero tú ya tienes también el dashboard de calificaciones (IA·01, 186 alumnos). Cruzar ambos — alumnos en riesgo de asistencia vs. alumnos con mayor índice de reprobación — puede revelar patrones que ningún estudio genérico sobre EMS encontraría. Tu Sheets ya tiene la estructura técnica.</p></div>
+  <div class="topic-box" id="td-l"><h4>🏫 Liderazgo directivo — ahora con el colegiado como dato</h4><p>El 26 de marzo fue un evento de liderazgo real: condujiste 4 de 6 bloques, manejaste distractores, presentaste tecnología ante resistencia. Eso es exactamente el fenómeno que describes en P9. Un diario reflexivo de los próximos 3 meses de ejercicio del cargo es investigación-acción en tiempo real, y ya tienes el encuadre teórico (Freire, Montaigne) definido.</p></div>
+  <div class="topic-box" id="td-c"><h4>⚗️ Enseñanza de ciencias — con herramientas únicas</h4><p>Eres IQ de la UNAM cubriendo grupos de ciencias en una EPO periurbana, construyendo herramientas IA offline para el aula (tabla periódica, Thales). Ese perfil no existe en la literatura mexicana de EMS. Un artículo de divulgación sobre el uso de IA en la enseñanza de ciencias exactas en bachillerato público es publicable en Perfiles Educativos o en una revista estatal sin necesidad de una investigación larga.</p></div>
+  <div class="topic-box" id="td-b"><h4>💚 Bienestar SEL — con el sistema de fichas como campo</h4><p>Tus fichas de riesgo capturan señales socioemocionales reales. Con un ciclo completo (marzo–julio 2026) tendrás datos cualitativos sobre factores de riesgo en jóvenes de zonas periurbanas del oriente del Estado de México. Es investigación-acción, no encuesta externa, y tiene alta pertinencia en el contexto de política educativa actual.</p></div>
+  <div class="topic-box" id="td-t"><h4>💻 Tecnología educativa — tú eres el caso de estudio</h4><p>El colegiado donde presentaste Claude + NotebookLM a docentes de una EPO en Ixtapaluca es exactamente el tipo de evento que describe la literatura sobre adopción tecnológica en escuelas con brechas digitales. Documenta las reacciones de los docentes, las resistencias, los cambios de actitud. Eso es tu campo de observación y tu contribución original es haberlo implementado tú mismo.</p></div>
+
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;margin:28px 0 14px;">Ruta concreta — Semana Santa a julio</h3>
+  <div class="oe-grid">
+    <div class="oe-step"><div class="oe-n">1</div><span class="ico">📓</span><h4>Notas del colegiado</h4><p>Esta semana. Lo que observaste el 26 mar antes de que se desdibuje.</p></div>
+    <div class="oe-step"><div class="oe-n">2</div><span class="ico">✍️</span><h4>Planteamiento 1 pág.</h4><p>Semana Santa. Problema, pregunta, justificación. Te acompaño.</p></div>
+    <div class="oe-step"><div class="oe-n">3</div><span class="ico">📖</span><h4>5 artículos clave</h4><p>Abril. Scholar: "cultura docente México" + "liderazgo directivo EMS".</p></div>
+    <div class="oe-step"><div class="oe-n">4</div><span class="ico">❓</span><h4>Afinar la pregunta</h4><p>Mayo. Con las notas y los artículos, la pregunta se ajusta sola.</p></div>
+    <div class="oe-step"><div class="oe-n">5</div><span class="ico">🗺️</span><h4>Diseño metodológico</h4><p>Junio. Cualitativo-autobiográfico. Tu aula es el campo.</p></div>
+    <div class="oe-step"><div class="oe-n">6</div><span class="ico">🚀</span><h4>Trabajo de campo</h4><p>Ciclo 2. Entrevistas, diario. Todo ya está ocurriendo — falta registrarlo.</p></div>
+  </div>
+</div>
+
+<!-- ══════ INFRAESTRUCTURA ══════ -->
+<div class="pane" id="pane-infra">
+  <div class="pane-hd">
+    <div class="pane-icon" style="background:#E8F5F0;">⚙️</div>
+    <div>
+      <h2>Infraestructura técnica — estado actualizado</h2>
+      <p>De 3 sistemas en producción (v2) a 5. La alerta del n8n está resuelta. El stack es estable — el siguiente nivel no es agregar, es documentar para que sobreviva sin ti.</p>
+    </div>
+  </div>
+
+  <div class="banner b-green">
+    <div class="b-icon">🏗️</div>
+    <div><strong>Stack actual:</strong> GAS (3 scripts) + Claude API + Telegram Bot + Sheets (2 hojas) + Node.js local + GitHub Pages. Todo sin servidor externo, sin costo mensual. Eso es raro en el nivel de tu escuela y es parte de tu expediente de ratificación.</div>
+  </div>
+
+  <table class="it">
+    <thead><tr><th>Sistema</th><th>Estado</th><th>Acción siguiente</th></tr></thead>
+    <tbody>
+      <tr><td>GAS — Generador de exámenes</td><td style="color:var(--c3)">✓ Producción</td><td style="color:var(--muted)">Sin acción. Monitoreo pasivo.</td></tr>
+      <tr><td>GAS — Fichas de seguimiento de riesgo</td><td style="color:var(--c3)">✓ Producción</td><td style="color:var(--muted)">Continuar apertura de fichas según protocolo.</td></tr>
+      <tr><td>GAS — Semáforo + Claude + Telegram</td><td style="color:var(--c3)">✓ Producción · 15 mar</td><td style="color:var(--muted)">Verificar reporte de cada lunes. Nallely y Armando como destinatarios.</td></tr>
+      <tr><td>Minuta JAD — Node.js local</td><td style="color:var(--c3)">✓ Producción · 25 mar</td><td style="color:var(--muted)">Usar en cada JAD. Guardar .docx en Drive por fecha.</td></tr>
+      <tr><td>Sitio web GitHub Pages</td><td style="color:var(--c3)">✓ Activo · estandarización en curso</td><td style="color:var(--muted)">Pendiente: padres.html, docentes-snb.html, recursos.html.</td></tr>
+      <tr><td>Dashboard running</td><td style="color:var(--c3)">✓ Datos reales · 287 carreras</td><td style="color:var(--muted)">Agregar JSON nuevas carreras cuando aplique.</td></tr>
+      <tr><td>n8n.io Cloud</td><td style="color:var(--c3)">✓ Resuelto — migrado a GAS</td><td style="color:var(--muted)">Sin acción. Trial venció, lógica preservada en GAS.</td></tr>
+      <tr><td>API Key Anthropic</td><td style="color:var(--c3)">✓ Activa</td><td style="color:var(--muted)">Nunca en archivos públicos.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout co-green">
+    <h4>🏗️ Arquitectura activa — 31 mar 2026</h4>
+    <p style="font-family:'DM Mono',monospace;font-size:0.73rem;line-height:1.95;color:#134d2c;">Google Sheets (Semáforo · hoja "Reportes")<br>
+    ↓  SpreadsheetApp.openById()<br>
+    GAS ejecutarSemaforo() · Trigger: lunes 7:00 am CDMX<br>
+    ↓  UrlFetchApp → api.anthropic.com/v1/messages<br>
+    claude-sonnet-4-20250514 · recomendación por alumno<br>
+    ↓  content[0].text → Telegram Bot EPO 135<br>
+    ↓<br>
+    Fer recibe análisis antes de llegar a la escuela</p>
+  </div>
+
+  <div class="callout co-blue">
+    <h4>🔮 Siguiente nivel — ciclo 2</h4>
+    <p>El stack está listo para crecer en dos direcciones: (1) <strong>Conectar fichas de riesgo con el semáforo</strong> — cruzar automáticamente asistencia + calificaciones para priorizar intervenciones, y (2) <strong>Reporte mensual automático para Gloria Rosiles</strong> — un GAS que genere el PDF de indicadores el primer lunes del mes y lo mande por correo. Ambas son viables con lo que ya sabes. Son proyectos de ciclo 2, no de esta semana.</p>
+  </div>
+</div>
+
+<!-- ══════ HERRAMIENTAS ══════ -->
+<div class="pane" id="pane-herramientas">
+  <div class="pane-hd">
+    <div class="pane-icon" style="background:#FFF8EB;">🛠️</div>
+    <div>
+      <h2>Herramientas digitales — ecosistema actual</h2>
+      <p>El ecosistema IA creció de 3 a 5 herramientas completadas. Dos más en construcción esta semana. El principio sigue siendo el mismo: mostrar, no explicar.</p>
+    </div>
+  </div>
+
+  <div class="banner b-green">
+    <div class="b-icon">🚀</div>
+    <div><strong>5 herramientas en producción:</strong> Generador de exámenes · Fichas de riesgo · Semáforo + IA · Dashboard calificaciones v3 · Minuta JAD. Más el sitio web EPO 135 parcialmente estandarizado. Eso es el ecosistema más avanzado de cualquier EPO de la zona, sin duda.</div>
+  </div>
+
+  <div class="cards">
+    <div class="card" style="--c:#1a6644;">
+      <span class="card-icon">⚙️</span>
+      <h3>Google Apps Script</h3>
+      <p>Es tu backend institucional. 3 scripts en producción. Documenta el código de cada uno en Drive antes de que pierdas el contexto — especialmente el de semáforo, que tiene la lógica más compleja. Si alguien más necesita mantenerlo, tiene que poder leerlo.</p>
+      <span class="card-tag" style="background:#EEFAF3;color:#1a6644;">Backend sin servidor</span>
+    </div>
+    <div class="card" style="--c:#B83A1C;">
+      <span class="card-icon">🤖</span>
+      <h3>Claude</h3>
+      <p>Tres usos activos: análisis del semáforo en producción, construcción del ecosistema IA, análisis y dashboard de running. La bitácora actualizada potencia todo lo demás — cuanto más contexto traes a cada sesión, mejores resultados.</p>
+      <span class="card-tag" style="background:#FFF4EE;color:#B83A1C;">Asistente principal</span>
+    </div>
+    <div class="card" style="--c:#1e4d8c;">
+      <span class="card-icon">🗒️</span>
+      <h3>NotebookLM</h3>
+      <p>Ya lo presentaste en el colegiado. El siguiente paso es que los docentes lo usen solos — prepara un tutorial de 1 página (PDF) con el flujo: descargar audio → subir a NotebookLM → hacer preguntas. Algo que puedan seguir sin ti.</p>
+      <span class="card-tag" style="background:#EEF3FB;color:#1e4d8c;">Para docentes</span>
+    </div>
+    <div class="card" style="--c:#1a6070;">
+      <span class="card-icon">🧪</span>
+      <h3>Tabla periódica + Thales (en construcción)</h3>
+      <p>IA·06 y IA·07 — Semana Santa. La tabla periódica es la herramienta más llamativa para colegas de ciencias; Thales es más rápida de construir. Priorizar IA·06 si tienes energía, IA·07 si necesitas un logro rápido primero.</p>
+      <span class="card-tag" style="background:#E8F5F7;color:#1a6070;">En construcción</span>
+    </div>
+    <div class="card" style="--c:#5e2d8a;">
+      <span class="card-icon">💾</span>
+      <h3>USB pedagógico — BG 046</h3>
+      <p>Un pendrive con todas las herramientas HTML offline (tabla periódica, analizador de funciones, Thales, cómics SEL) que cualquier maestro pueda abrir sin internet. Es tu demostración más poderosa ante la zona. Más convincente que cualquier presentación sobre IA.</p>
+      <span class="card-tag" style="background:#F5EFFE;color:#5e2d8a;">Estrategia de difusión</span>
+    </div>
+    <div class="card" style="--c:#8a5e10;">
+      <span class="card-icon">📚</span>
+      <h3>Google Scholar / Redalyc</h3>
+      <p>Para cuando retomes P9 en Semana Santa. Redalyc tiene fuerte cobertura en investigación educativa mexicana, especialmente EMS. 5 artículos leídos en Semana Santa dan suficiente encuadre para escribir el planteamiento.</p>
+      <span class="card-tag" style="background:#FDF8E6;color:#8a5e10;">Para P9</span>
+    </div>
+  </div>
+
+  <div class="callout co-orange">
+    <h4>🎯 El principio que no cambia</h4>
+    <p>Construiste mucho en poco tiempo. El riesgo ahora no es quedarte sin ideas — es dispersarte. Cada nueva herramienta que agregues debe tener un caso de uso claro antes de construirse, no al revés. La tabla periódica y Thales tienen casos de uso concretos (aula de química, geometría). Eso las hace prioritarias sobre cualquier idea nueva que llegue esta semana.</p>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<footer>
+  <p>Guía de Optimización v3.0 · Fernando Felipe Cortés Reyes · Subdirector EPO 135</p>
+  <p style="margin-top:5px;">Actualizada: 31 de marzo de 2026 · Ciclo 1 de ratificación · Generada con Claude · Semana Santa en curso</p>
+</footer>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('pane-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function tick(el) { el.classList.toggle('done'); }
+function st(pill, id) {
+  const was = pill.classList.contains('on');
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.topic-box').forEach(d => d.classList.remove('visible'));
+  if (!was) {
+    pill.classList.add('on');
+    document.getElementById('td-' + id).classList.add('visible');
+  }
+}
+</script>
+</body>
+</html>

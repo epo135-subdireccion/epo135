@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estrategia SOE · EPO 135 · Ciclo 2025–2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,900;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #1a6b3c;
+    --verde-claro: #2d9a5a;
+    --verde-palido: #e8f5ee;
+    --ocre: #c47d20;
+    --ocre-claro: #f5e6cc;
+    --rojo: #b53030;
+    --rojo-claro: #faeaea;
+    --azul: #1e4a7a;
+    --azul-claro: #e4edf8;
+    --gris: #3a3a3a;
+    --gris-med: #7a7a7a;
+    --gris-light: #f2f2f0;
+    --blanco: #fefefe;
+    --papel: #faf9f6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--papel);
+    color: var(--gris);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ══ PORTADA ══ */
+  .portada {
+    background: var(--verde);
+    color: white;
+    padding: 60px 80px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .portada::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .portada::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 200px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .portada-eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 18px;
+  }
+  .portada h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    max-width: 700px;
+  }
+  .portada h1 em {
+    font-style: italic;
+    color: #a8dfc0;
+  }
+  .portada-sub {
+    font-size: 16px;
+    opacity: 0.75;
+    max-width: 560px;
+    margin-bottom: 40px;
+  }
+  .portada-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .chip {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ══ LAYOUT PRINCIPAL ══ */
+  .contenedor {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ══ SECCIÓN INTRO ══ */
+  .intro {
+    background: white;
+    border-bottom: 3px solid var(--verde);
+    padding: 40px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+  .intro-item {
+    padding: 0 30px;
+    border-right: 1px solid #e5e5e5;
+  }
+  .intro-item:first-child { padding-left: 0; }
+  .intro-item:last-child { border-right: none; }
+  .intro-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gris-med);
+    margin-bottom: 6px;
+  }
+  .intro-valor {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--verde);
+  }
+
+  /* ══ SECCIONES ══ */
+  .seccion {
+    padding: 60px 80px;
+    border-bottom: 1px solid #e8e8e5;
+  }
+  .seccion:nth-child(even) { background: var(--gris-light); }
+  .seccion:nth-child(odd) { background: var(--blanco); }
+
+  .seccion-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .seccion-num {
+    font-family: 'Fraunces', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--verde);
+    opacity: 0.12;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .seccion-titulo {
+    font-family: 'Fraunces', serif;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--gris);
+    line-height: 1.2;
+  }
+  .seccion-desc {
+    color: var(--gris-med);
+    max-width: 700px;
+    margin-bottom: 30px;
+    font-size: 14.5px;
+  }
+
+  /* ══ TARJETAS ══ */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+  .tarjeta {
+    background: white;
+    border: 1px solid #e0e0db;
+    border-radius: 10px;
+    padding: 24px;
+    position: relative;
+  }
+  .tarjeta-verde { border-top: 4px solid var(--verde); }
+  .tarjeta-ocre { border-top: 4px solid var(--ocre); }
+  .tarjeta-azul { border-top: 4px solid var(--azul); }
+  .tarjeta-rojo { border-top: 4px solid var(--rojo); }
+
+  .tarjeta h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--gris);
+  }
+  .tarjeta p {
+    font-size: 13.5px;
+    color: var(--gris-med);
+    line-height: 1.5;
+  }
+  .tarjeta-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  /* ══ ESTRATEGIA CENTRAL ══ */
+  .estrategia-bloque {
+    background: var(--verde);
+    color: white;
+    border-radius: 14px;
+    padding: 40px 48px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .estrategia-bloque::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .estrategia-bloque h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+  .estrategia-bloque p {
+    opacity: 0.88;
+    max-width: 680px;
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+  .estrategia-num {
+    position: absolute;
+    top: 20px; right: 30px;
+    font-family: 'Fraunces', serif;
+    font-size: 100px;
+    font-weight: 900;
+    opacity: 0.06;
+    line-height: 1;
+  }
+
+  /* ══ CALENDARIO ══ */
+  .calendario {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+  }
+  .cal-header {
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr 1fr;
+    background: var(--verde);
+    color: white;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .cal-header > div, .cal-row > div {
+    padding: 12px 16px;
+    border-right: 1px solid rgba(255,255,255,0.15);
+  }
+  .cal-header > div:last-child, .cal-row > div:last-child { border-right: none; }
+  .cal-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr 1fr;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+  }
+  .cal-row:last-child { border-bottom: none; }
+  .cal-row:nth-child(even) { background: #fafaf8; }
+  .cal-mes {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--verde);
+    font-size: 14px;
+  }
+  .cal-corte {
+    background: var(--ocre-claro);
+    border-left: 3px solid var(--ocre) !important;
+  }
+  .cal-corte .cal-mes { color: var(--ocre); }
+
+  /* ══ DOCUMENTOS ══ */
+  .doc-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .doc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: white;
+    border: 1px solid #e5e5e0;
+    border-radius: 10px;
+    padding: 18px 20px;
+    transition: box-shadow 0.2s;
+  }
+  .doc-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+  .doc-icono {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .di-verde { background: var(--verde-palido); }
+  .di-ocre { background: var(--ocre-claro); }
+  .di-azul { background: var(--azul-claro); }
+  .di-rojo { background: var(--rojo-claro); }
+  .doc-info h5 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gris);
+    margin-bottom: 3px;
+  }
+  .doc-info p { font-size: 12.5px; color: var(--gris-med); }
+  .doc-badge {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  .badge-verde { background: var(--verde-palido); color: var(--verde); }
+  .badge-ocre { background: var(--ocre-claro); color: #8a5a00; }
+  .badge-azul { background: var(--azul-claro); color: var(--azul); }
+  .badge-rojo { background: var(--rojo-claro); color: var(--rojo); }
+
+  /* ══ SEMANA TIPO ══ */
+  .semana-tipo {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .dia-card {
+    border-radius: 10px;
+    padding: 18px 16px;
+    border: 1px solid #e0e0db;
+  }
+  .dia-nombre {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .dia-actividad {
+    font-size: 12px;
+    color: var(--gris-med);
+    margin-bottom: 8px;
+    padding-left: 10px;
+    border-left: 2px solid #ddd;
+    line-height: 1.4;
+  }
+  .dia-card.destacado {
+    background: var(--verde);
+    color: white;
+    border-color: var(--verde);
+  }
+  .dia-card.destacado .dia-nombre { color: rgba(255,255,255,0.7); }
+  .dia-card.destacado .dia-actividad { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.3); }
+
+  /* ══ INDICADORES ══ */
+  .indicadores-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .indicador-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #e5e5e0;
+    text-align: center;
+  }
+  .indicador-num {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--verde);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .indicador-label {
+    font-size: 12px;
+    color: var(--gris-med);
+    line-height: 1.4;
+  }
+  .indicador-freq {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--verde);
+    font-weight: 600;
+  }
+
+  /* ══ CAP ══ */
+  .cap-contenedor {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+  }
+  .cap-item {
+    padding: 28px 24px;
+    border-right: 1px solid #ddd;
+  }
+  .cap-item:last-child { border-right: none; }
+  .cap-letra {
+    font-family: 'Fraunces', serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .cap-item:nth-child(1) { background: var(--verde-palido); }
+  .cap-item:nth-child(1) .cap-letra { color: var(--verde); }
+  .cap-item:nth-child(2) { background: var(--ocre-claro); }
+  .cap-item:nth-child(2) .cap-letra { color: var(--ocre); }
+  .cap-item:nth-child(3) { background: var(--azul-claro); }
+  .cap-item:nth-child(3) .cap-letra { color: var(--azul); }
+  .cap-titulo { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+  .cap-desc { font-size: 13px; color: var(--gris-med); line-height: 1.5; }
+  .cap-ejemplo {
+    margin-top: 10px;
+    font-size: 12px;
+    font-style: italic;
+    opacity: 0.75;
+  }
+
+  /* ══ FLOW EVIDENCIAS ══ */
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+  }
+  .flow-paso {
+    flex: 1;
+    padding: 22px 18px;
+    border-right: 1px solid #ddd;
+    position: relative;
+  }
+  .flow-paso:last-child { border-right: none; }
+  .flow-paso::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gris-med);
+    font-size: 16px;
+    z-index: 2;
+  }
+  .flow-paso:last-child::after { display: none; }
+  .flow-paso:nth-child(1) { background: var(--verde-palido); }
+  .flow-paso:nth-child(2) { background: var(--ocre-claro); }
+  .flow-paso:nth-child(3) { background: var(--azul-claro); }
+  .flow-paso:nth-child(4) { background: var(--rojo-claro); }
+  .flow-paso-num { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: 0.6; margin-bottom: 6px; }
+  .flow-paso h5 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .flow-paso p { font-size: 12px; color: var(--gris-med); line-height: 1.4; }
+
+  /* ══ TABLA DOCUMENTOS EVIDENCIA ══ */
+  .tabla-evidencias {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    font-size: 13px;
+  }
+  .tabla-evidencias thead tr {
+    background: var(--verde);
+    color: white;
+  }
+  .tabla-evidencias thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .tabla-evidencias tbody tr {
+    border-bottom: 1px solid #eee;
+  }
+  .tabla-evidencias tbody tr:last-child { border-bottom: none; }
+  .tabla-evidencias tbody tr:nth-child(even) { background: #fafaf8; }
+  .tabla-evidencias td {
+    padding: 12px 16px;
+    vertical-align: top;
+    color: var(--gris);
+  }
+  .tabla-evidencias td:first-child {
+    font-weight: 600;
+    color: var(--verde);
+  }
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 2px 2px 2px 0;
+  }
+  .pill-verde { background: var(--verde-palido); color: var(--verde); }
+  .pill-ocre { background: var(--ocre-claro); color: #8a5a00; }
+  .pill-azul { background: var(--azul-claro); color: var(--azul); }
+  .pill-rojo { background: var(--rojo-claro); color: var(--rojo); }
+
+  /* ══ ALERTA / NOTA ══ */
+  .nota {
+    background: var(--ocre-claro);
+    border-left: 4px solid var(--ocre);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 13.5px;
+  }
+  .nota strong { color: var(--ocre); }
+
+  /* ══ COMPROMISOS ══ */
+  .compromiso-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .compromiso-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .compromiso-list li::before {
+    content: '✓';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--verde);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ══ FOOTER ══ */
+  .footer {
+    background: var(--gris);
+    color: white;
+    padding: 40px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-left { font-family: 'Fraunces', serif; font-size: 18px; }
+  .footer-right { font-size: 12px; opacity: 0.5; text-align: right; line-height: 1.8; }
+
+  /* ══ RESPONSIVE ══ */
+  @media (max-width: 900px) {
+    .portada, .seccion, .intro, .footer { padding: 40px 30px; }
+    .portada h1 { font-size: 32px; }
+    .grid-2, .grid-3, .grid-4, .semana-tipo, .indicadores-grid { grid-template-columns: 1fr 1fr; }
+    .cal-header, .cal-row { grid-template-columns: 90px 1fr 1fr; }
+    .cap-contenedor, .flow { flex-direction: column; }
+    .flow-paso::after { display: none; }
+    .intro { grid-template-columns: 1fr; gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ PORTADA ══════════════ -->
+<div class="portada">
+  <div class="portada-eyebrow">EPO 135 · Ixtapaluca · BG 046 · Ciclo 2025–2026</div>
+  <h1>Estrategia Operativa<br>del <em>Servicio de Orientación</em><br>Educativa</h1>
+  <p class="portada-sub">Propuesta concreta y alcanzable para Nallely y Armando · Articulación PMOE 2025 · PMC · Ruta Crítica USICAMM · GEPEA</p>
+  <div class="portada-chips">
+    <span class="chip">PMOE 2025</span>
+    <span class="chip">PMC Cat. III Acc. 2</span>
+    <span class="chip">Dominios D1–D4 USICAMM</span>
+    <span class="chip">GEPEA / ENAPEA</span>
+    <span class="chip">Semestre B · Ene–Jul 2026</span>
+  </div>
+</div>
+
+<!-- ══════════════ META-DATOS ══════════════ -->
+<div class="intro">
+  <div class="intro-item">
+    <div class="intro-label">Orientadores</div>
+    <div class="intro-valor">Nallely · Armando</div>
+  </div>
+  <div class="intro-item">
+    <div class="intro-label">Subdirector</div>
+    <div class="intro-valor">Fernando Felipe C. R.</div>
+  </div>
+  <div class="intro-item">
+    <div class="intro-label">Cortes PMC</div>
+    <div class="intro-valor">Mayo 66% · Julio 100%</div>
+  </div>
+</div>
+
+<!-- ══════════════ SECCIÓN 1: ESTRATEGIA CENTRAL ══════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <div class="seccion-num">01</div>
+    <div class="seccion-titulo">Estrategia Central del SOE</div>
+  </div>
+  <p class="seccion-desc">El servicio de orientación en la EPO 135 debe operar bajo tres principios simultáneos: <strong>Acción pedagógica real con estudiantes</strong>, <strong>Registro sistemático</strong> y <strong>Evidencia CAP válida</strong>. Cada actividad que no cumpla los tres se pierde para el PMC y para la ruta crítica.</p>
+
+  <div class="estrategia-bloque">
+    <span class="estrategia-num">1</span>
+    <h3>Principio rector: Una acción, tres registros</h3>
+    <p>Cada sesión, taller o intervención del orientador debe producir simultáneamente: (1) un beneficio real para el estudiante, (2) evidencia válida para el PMC Cat III / Acc 2, y (3) documentación para la ruta crítica subdirectiva D3–D4. Si alguno de los tres falta, la acción no cuenta como completa.</p>
+  </div>
+
+  <div class="estrategia-bloque" style="background: var(--azul);">
+    <span class="estrategia-num">2</span>
+    <h3>Regla de oro: Evidencia el mismo día</h3>
+    <p>La fotografía, la lista de asistencia y el breve reporte deben subirse a Drive el mismo día que ocurre la actividad. Una semana después es tarde: los metadatos pierden valor y el PMC puede rechazarla por falta de autenticidad demostrable. El calendario compartido debe incluir recordatorios de evidencia, no solo de la actividad.</p>
+  </div>
+
+  <div class="estrategia-bloque" style="background: var(--ocre);">
+    <span class="estrategia-num">3</span>
+    <h3>Núcleo mínimo no negociable por semana</h3>
+    <p>Sin importar la carga de trabajo o los imprevistos, cada semana debe garantizarse: 1 sesión grupal ejecutada por orientador · 1 revisión de fichas de riesgo actualizadas · 1 minuta de reunión miércoles generada. Este núcleo de tres es la base sobre la cual se construye todo lo demás.</p>
+  </div>
+
+  <div class="grid-3" style="margin-top: 8px;">
+    <div class="tarjeta tarjeta-verde">
+      <span class="tarjeta-icon">🎯</span>
+      <h4>Ámbito Institucional</h4>
+      <p>Diagnóstico, trabajo colegiado, reuniones de coordinación. Genera evidencia para D1 y D3 de la ruta crítica USICAMM.</p>
+    </div>
+    <div class="tarjeta tarjeta-ocre">
+      <span class="tarjeta-icon">📚</span>
+      <h4>Ámbito Académico</h4>
+      <p>Expedientes, semáforo de permanencia, prevención de deserción. Alimenta fichas de riesgo y el indicador CAT III / Acc 2.</p>
+    </div>
+    <div class="tarjeta tarjeta-azul">
+      <span class="tarjeta-icon">💙</span>
+      <h4>Ámbito Socioemocional</h4>
+      <p>Sesiones grupales, atención individual, talleres por semestre. Es el ámbito con mayor carga de sesiones y evidencias requeridas.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SECCIÓN 2: REGLA CAP ══════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <div class="seccion-num">02</div>
+    <div class="seccion-titulo">Regla CAP: Cómo validar cada evidencia</div>
+  </div>
+  <p class="seccion-desc">Toda evidencia generada por el SOE debe cumplir los tres criterios CAP para ser válida en el PMC. Una evidencia que falle en cualquiera de los tres no cuenta en los cortes de mayo o julio.</p>
+
+  <div class="cap-contenedor">
+    <div class="cap-item">
+      <div class="cap-letra">C</div>
+      <div class="cap-titulo">Correspondencia</div>
+      <div class="cap-desc">La evidencia responde exactamente a la acción del PMOE que ampara. Un taller GEPEA se archiva en carpeta GEPEA, no en la carpeta general del SOE.</div>
+      <div class="cap-ejemplo">❌ Taller embarazo → carpeta "socioemocional general"<br>✅ Taller embarazo → carpeta "GEPEA / OP1"</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-letra">A</div>
+      <div class="cap-titulo">Autenticidad</div>
+      <div class="cap-desc">Debe incluir: fecha visible, firma o sello, lista de asistencia o captura con metadatos. Una foto sin fecha no es evidencia válida.</div>
+      <div class="cap-ejemplo">❌ Foto del taller sin fecha ni lista<br>✅ Lista + foto con fecha + breve reporte firmado</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-letra">P</div>
+      <div class="cap-titulo">Progresión</div>
+      <div class="cap-desc">Muestra Inicio → Desarrollo → Cierre. Para cada actividad debe existir el programa/convocatoria, el registro de ejecución y el reporte de resultado.</div>
+      <div class="cap-ejemplo">❌ Solo la foto del evento<br>✅ Programa + lista + foto + reporte de 5 líneas</div>
+    </div>
+  </div>
+
+  <div class="nota" style="margin-top: 24px;">
+    <strong>⚠️ Nomenclatura obligatoria en Drive:</strong> Todos los archivos deben nombrarse como <code>AAAA-MM-DD_tipo-documento_descripcion-breve</code>. Ejemplo: <code>2026-04-15_lista-asistencia_taller-vocacional-3ero.pdf</code>
+  </div>
+</div>
+
+<!-- ══════════════ SECCIÓN 3: SEMANA TIPO ══════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <div class="seccion-num">03</div>
+    <div class="seccion-titulo">Estructura de la Semana Tipo</div>
+  </div>
+  <p class="seccion-desc">La semana del orientador debe tener una estructura predecible que garantice las acciones mínimas y genere evidencia de forma rutinaria, no extraordinaria.</p>
+
+  <div class="semana-tipo">
+    <div class="dia-card">
+      <div class="dia-nombre" style="color: var(--azul);">Lunes</div>
+      <div class="dia-actividad"><strong>07:00</strong> Revisar reporte del Semáforo Telegram</div>
+      <div class="dia-actividad">Identificar alumnos nuevos en rojo o amarillo</div>
+      <div class="dia-actividad">Preparar material para sesión grupal de la semana</div>
+    </div>
+    <div class="dia-card">
+      <div class="dia-nombre" style="color: var(--azul);">Martes</div>
+      <div class="dia-actividad">Sesión grupal (por grado asignado)</div>
+      <div class="dia-actividad">Atención individual: fichas activas</div>
+      <div class="dia-actividad">Subir evidencia de la sesión a Drive el mismo día</div>
+    </div>
+    <div class="dia-card destacado">
+      <div class="dia-nombre">Miércoles ⭐</div>
+      <div class="dia-actividad">Reunión semanal de coordinación (50 min)</div>
+      <div class="dia-actividad">Revisión semáforo + fichas abiertas</div>
+      <div class="dia-actividad">Planeación semanal + acciones GEPEA/PMC</div>
+      <div class="dia-actividad">Generar Minuta JAD al finalizar</div>
+    </div>
+    <div class="dia-card">
+      <div class="dia-nombre" style="color: var(--azul);">Jueves</div>
+      <div class="dia-actividad">Actualizar fichas de seguimiento en Google Sheets</div>
+      <div class="dia-actividad">Contacto con padres si hay casos en riesgo</div>
+      <div class="dia-actividad">Coordinación con docentes (10 min por caso)</div>
+    </div>
+    <div class="dia-card">
+      <div class="dia-nombre" style="color: var(--azul);">Viernes</div>
+      <div class="dia-actividad">Segunda sesión grupal o actividad GEPEA</div>
+      <div class="dia-actividad">Actualizar bitácora semanal en Drive</div>
+      <div class="dia-actividad">Revisar que todas las evidencias de la semana están subidas</div>
+    </div>
+  </div>
+
+  <div class="nota" style="margin-top: 24px;">
+    <strong>🗓️ El miércoles es el eje operativo de todo el sistema.</strong> La reunión semanal de coordinación con el subdirector genera la Minuta JAD que es evidencia directa del Dominio D3 de la ruta crítica USICAMM. Sin minuta = sin evidencia del dominio más importante para la ratificación.
+  </div>
+</div>
+
+<!-- ══════════════ SECCIÓN 4: CALENDARIO POR PERÍODO ══════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <div class="seccion-num">04</div>
+    <div class="seccion-titulo">Calendario Operativo · Semestre B (Ene–Jul 2026)</div>
+  </div>
+  <p class="seccion-desc">Distribución de acciones mes a mes con foco en los dos cortes del PMC: 66% en mayo y 100% en julio.</p>
+
+  <div class="calendario">
+    <div class="cal-header">
+      <div>Período</div>
+      <div>Acciones SOE Prioritarias</div>
+      <div>Acciones GEPEA</div>
+      <div>Evidencia a Producir</div>
+    </div>
+    <div class="cal-row">
+      <div class="cal-mes">Ene–Feb</div>
+      <div>Diagnóstico grupal semestre B · Planeación por grado · Sesiones autoconocimiento (5° y 6°) · Apertura de semáforo</div>
+      <div>Campaña Yo Decido (difusión) · Identificación alumnas embarazadas</div>
+      <div>Diagnóstico grupal firmado · Planeación semestral · Registro alumnas · Lista de asistencia sesiones</div>
+    </div>
+    <div class="cal-row">
+      <div class="cal-mes">Marzo</div>
+      <div>Semáforo activo 15/mar · Apertura fichas rojo/amarillo · Sesiones vocacionales 3° y 4° · Atención individual</div>
+      <div>Difusión PMOE en plantel · Escuela para padres sesión 1</div>
+      <div>Minuta semanal × 4 · Fichas abiertas con seguimiento · Lista asistencia Escuela para Padres</div>
+    </div>
+    <div class="cal-row">
+      <div class="cal-mes">Abril</div>
+      <div>Feria vocacional / contacto universidades · Taller habilidades blandas 2° · Sesiones vocacionales 3° y 4° · Entrega planeación semestral (antes del 15/abr)</div>
+      <div>Webinars EIS con estudiantes · Actividades culturales embarazo adolescente</div>
+      <div>Oficio convocatoria feria + lista + foto · Registro webinar captura pantalla · Planeación semestral firmada</div>
+    </div>
+    <div class="cal-row cal-corte">
+      <div class="cal-mes">Mayo ⚑<br><small style="font-size:10px;color:#8a5a00;">CORTE 66%</small></div>
+      <div>Revisión de bitácora y carpetas PMC · Sesiones plan de vida 5° y 6° · Seguimiento fichas de riesgo abiertas · Informe parcial orientador</div>
+      <div>Reporte parcial GEPEA · Capacitación docentes en EIS</div>
+      <div>Bitácora actualizada · Fichas con seguimiento activo · Reporte GEPEA parcial · Carpeta PMC Cat III al 66%</div>
+    </div>
+    <div class="cal-row">
+      <div class="cal-mes">Junio</div>
+      <div>Último bloque de sesiones · Evaluación del servicio (encuesta Google Forms) · Informe parcial orientador · Cierre de casos individuales</div>
+      <div>Campaña métodos anticonceptivos (redes/página) · Difusión protocolos violencia sexual</div>
+      <div>Encuesta aplicada + resultados · Publicación en redes documentada · Informe parcial firmado</div>
+    </div>
+    <div class="cal-row cal-corte">
+      <div class="cal-mes">Julio ⚑<br><small style="font-size:10px;color:#8a5a00;">CORTE 100%</small></div>
+      <div>Informe final del servicio · Cierre de expedientes · Evaluación semestral SOE · Entrega a supervisión antes del 15/jul</div>
+      <div>Informe final GEPEA · Reporte alumnos apoyados · Cierre de acciones</div>
+      <div>Informe final firmado · Carpetas con 3 niveles CAP completos · Reporte final GEPEA · Expediente ratificación</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SECCIÓN 5: PROPUESTA DE DOCUMENTOS ══════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <div class="seccion-num">05</div>
+    <div class="seccion-titulo">Propuesta de Documentos y Formatos de Trabajo</div>
+  </div>
+  <p class="seccion-desc">Catálogo de documentos concretos que el SOE debe producir durante el ciclo. Organizados por tipo y prioridad.</p>
+
+  <h3 style="font-family:'Fraunces',serif; font-size:18px; margin-bottom:16px; color:var(--verde);">📋 Documentos de Planeación</h3>
+  <div class="doc-lista" style="margin-bottom: 30px;">
+    <div class="doc-item">
+      <div class="doc-icono di-verde">📄</div>
+      <div class="doc-info">
+        <h5>Planeación Semestral por Orientador</h5>
+        <p>Un documento por orientador, por semestre. Incluye: grados y grupos a cargo, contenidos PMOE por semestre, calendario de sesiones grupales, acciones GEPEA asignadas. Debe estar firmado por el orientador y el subdirector. Entrega: antes del 15 de abril.</p>
+      </div>
+      <div class="doc-badge badge-verde">Prioritario</div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icono di-verde">📊</div>
+      <div class="doc-info">
+        <h5>Diagnóstico Grupal por Grado</h5>
+        <p>Instrumento aplicado al inicio del semestre. Incluye: detección de factores de riesgo, intereses vocacionales, situación socioemocional general del grupo. Una ficha de resultados por grupo atendido. Insumo clave para la planeación de sesiones.</p>
+      </div>
+      <div class="doc-badge badge-verde">Prioritario</div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icono di-ocre">🗓️</div>
+      <div class="doc-info">
+        <h5>Calendario Mensual de Sesiones (Google Calendar)</h5>
+        <p>Registro en el calendario compartido de cada sesión grupal, taller o evento, con recordatorio de evidencia. Se registra al inicio de cada mes. Permite al subdirector hacer seguimiento sin depender de reportes verbales.</p>
+      </div>
+      <div class="doc-badge badge-ocre">Mensual</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Fraunces',serif; font-size:18px; margin-bottom:16px; color:var(--verde);">📝 Registros de Ejecución (Evidencia CAP)</h3>
+  <div class="doc-lista" style="margin-bottom: 30px;">
+    <div class="doc-item">
+      <div class="doc-icono di-verde">✅</div>
+      <div class="doc-info">
+        <h5>Lista de Asistencia por Sesión Grupal</h5>
+        <p>Formato estándar con: nombre del orientador, fecha, grupo, tema de la sesión, número de alumnos. Firma del orientador. Debe subirse escaneada o fotografiada (legible) el mismo día de la sesión. Nomenclatura: <code>2026-MM-DD_lista-asistencia_tema-grupo.pdf</code></p>
+      </div>
+      <div class="doc-badge badge-verde">Semanal</div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icono di-verde">📷</div>
+      <div class="doc-info">
+        <h5>Registro Fotográfico con Metadatos</h5>
+        <p>Al menos 2 fotos por sesión o evento. La foto debe mostrar alumnos activos (no una sala vacía), fecha visible o metadato de la cámara. Se nombra igual que la lista de asistencia. Evitar fotos de espaldas de alumnos sin consentimiento documentado.</p>
+      </div>
+      <div class="doc-badge badge-verde">Semanal</div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icono di-azul">📋</div>
+      <div class="doc-info">
+        <h5>Reporte Breve de Sesión (5–8 líneas)</h5>
+        <p>No es una memoria académica. Es el Cierre de la evidencia CAP. Contenido mínimo: tema trabajado, dinámica usada, número de alumnos, principales reacciones o aprendizajes observados, acuerdos de seguimiento si los hay. Firmado por el orientador.</p>
+      </div>
+      <div class="doc-badge badge-azul">Por sesión</div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icono di-verde">📓</div>
+      <div class="doc-info">
+        <h5>Bitácora Semanal del Orientador</h5>
+        <p>Documento en Drive (Google Docs o Sheets) donde el orientador registra cada viernes: qué actividades ocurrieron, qué evidencias se generaron, qué fichas se actualizaron, observaciones relevantes. Es la memoria operativa del servicio y evidencia del D4 de la ruta crítica.</p>
+      </div>
+      <div class="doc-badge badge-verde">Semanal</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Fraunces',serif; font-size:18px; margin-bottom:16px; color:var(--verde);">👤 Documentos de Atención Individual</h3>
+  <div class="doc-lista" style="margin-bottom: 30px;">
+    <div class="doc-item">
+      <div class="doc-icono di-rojo">🚨</div>
+      <div class="doc-info">
+        <h5>Ficha de Seguimiento de Riesgo (Google Sheets)</h5>
+        <p>Una ficha por alumno en semáforo rojo. Campos: nombre, grado/grupo, motivo de apertura, fecha, estado actual, acciones tomadas, contacto con padres (fecha), canalización (si aplica), cierre. Se actualiza cada miércoles. Es la evidencia principal del D2 (liderazgo pedagógico).</p>
+      </div>
+      <div class="doc-badge badge-rojo">Urgente</div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icono di-ocre">📁</div>
+      <div class="doc-info">
+        <h5>Expediente Biopsicosocial por Estudiante</h5>
+        <p>Para casos que requieren seguimiento formal. Incluye: ficha de datos, historial de atención, acuerdos con padres (carta compromiso), canalizaciones documentadas. No todos los alumnos requieren expediente completo: priorizar semáforo rojo con más de 2 semanas de seguimiento.</p>
+      </div>
+      <div class="doc-badge badge-ocre">Por caso</div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icono di-azul">📞</div>
+      <div class="doc-info">
+        <h5>Registro de Contacto con Padres de Familia</h5>
+        <p>Formato sencillo: fecha, nombre del padre/tutor, alumno, motivo del contacto, acuerdos alcanzados, firma si fue presencial o captura si fue por mensaje. Este registro es evidencia tanto del D4 como del ámbito de integración del PMOE.</p>
+      </div>
+      <div class="doc-badge badge-azul">Por contacto</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Fraunces',serif; font-size:18px; margin-bottom:16px; color:var(--verde);">🤝 Documentos de Coordinación</h3>
+  <div class="doc-lista" style="margin-bottom: 30px;">
+    <div class="doc-item">
+      <div class="doc-icono di-verde">📝</div>
+      <div class="doc-info">
+        <h5>Minuta JAD de Reunión Semanal (Miércoles)</h5>
+        <p>Generada con la herramienta Minuta JAD al finalizar la reunión del miércoles. Contenido mínimo: fecha, participantes, revisión de semáforo, fichas actualizadas, actividades de la semana, acciones GEPEA/PMC, acuerdos con directivos. Compartida el mismo día por el canal institucional. Es evidencia directa del D3 de USICAMM.</p>
+      </div>
+      <div class="doc-badge badge-verde">Semanal</div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icono di-azul">🤝</div>
+      <div class="doc-info">
+        <h5>Acta de Colegiado con Docentes</h5>
+        <p>Al menos 1 por mes. Evidencia la vinculación del orientador con el equipo docente para la identificación de alumnos en riesgo académico. Incluye: fecha, docentes presentes, alumnos identificados, acuerdos de seguimiento. Firma de todos los participantes.</p>
+      </div>
+      <div class="doc-badge badge-azul">Mensual</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Fraunces',serif; font-size:18px; margin-bottom:16px; color:var(--verde);">🌱 Documentos GEPEA</h3>
+  <div class="doc-lista">
+    <div class="doc-item">
+      <div class="doc-icono di-ocre">🌺</div>
+      <div class="doc-info">
+        <h5>Carpeta GEPEA por Objetivo Operativo (OP1–OP4)</h5>
+        <p>Una subcarpeta en Drive por cada objetivo ENAPEA atendido. Cada acción GEPEA debe archivarse en la subcarpeta correspondiente (OP1, OP2, OP3 u OP4), no en una carpeta genérica. El reporte parcial de mayo y el informe final de julio se construyen desde estas carpetas.</p>
+      </div>
+      <div class="doc-badge badge-ocre">Organización</div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icono di-rojo">📊</div>
+      <div class="doc-info">
+        <h5>Reporte GEPEA Parcial (Mayo) y Final (Julio)</h5>
+        <p>Síntesis de las 4+ acciones GEPEA ejecutadas por orientador. Formato: objetivo ENAPEA, acción realizada, fecha, participantes, evidencia archivada (con ruta de Drive), observaciones. Firma del orientador y VoBo del subdirector. Entrega a supervisión en los cortes del PMC.</p>
+      </div>
+      <div class="doc-badge badge-rojo">Cortes</div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icono di-ocre">👩‍🎓</div>
+      <div class="doc-info">
+        <h5>Ficha de Seguimiento Alumnas Embarazadas</h5>
+        <p>Para cada alumna identificada: datos generales, semanas de gestación (si se comparte), fecha de identificación, acciones tomadas (coordinación con directivos, apoyo académico, contacto con ISEM), situación actual. Documento confidencial, acceso restringido al equipo directivo y orientadores.</p>
+      </div>
+      <div class="doc-badge badge-ocre">Confidencial</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SECCIÓN 6: FLUJO DE EVIDENCIAS ══════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <div class="seccion-num">06</div>
+    <div class="seccion-titulo">Flujo de Producción de Evidencias</div>
+  </div>
+  <p class="seccion-desc">Proceso estándar que el orientador debe seguir para que cada actividad quede correctamente documentada en el PMC.</p>
+
+  <div class="flow">
+    <div class="flow-paso">
+      <div class="flow-paso-num">Paso 1 · Inicio</div>
+      <h5>Programa / Convocatoria</h5>
+      <p>Antes de la actividad: lista de sesiones en Google Calendar, programa del evento o planeación del taller. Fecha futura visible. Esto es el "Inicio" de la Progresión CAP.</p>
+    </div>
+    <div class="flow-paso">
+      <div class="flow-paso-num">Paso 2 · Ejecución</div>
+      <h5>Lista + Foto</h5>
+      <p>Durante la actividad: tomar foto con fecha visible, capturar firma en lista de asistencia. Máx. 2 horas después subir a Drive en la carpeta correcta con nomenclatura.</p>
+    </div>
+    <div class="flow-paso">
+      <div class="flow-paso-num">Paso 3 · Cierre</div>
+      <h5>Reporte Breve</h5>
+      <p>Al terminar la jornada: 5–8 líneas describiendo lo trabajado, alumnos involucrados, aprendizajes observados. Firmado y subido a la misma carpeta. Esto cierra la Progresión CAP.</p>
+    </div>
+    <div class="flow-paso">
+      <div class="flow-paso-num">Paso 4 · Registro</div>
+      <h5>Bitácora Semanal</h5>
+      <p>Cada viernes: anotar en la bitácora del orientador que la actividad fue ejecutada y evidenciada. Incluir ruta de Drive. El miércoles siguiente se revisará en reunión de coordinación.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SECCIÓN 7: TABLA EVIDENCIAS VS DOMINIOS ══════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <div class="seccion-num">07</div>
+    <div class="seccion-titulo">Evidencias del SOE vs Dominios USICAMM</div>
+  </div>
+  <p class="seccion-desc">Mapa de correspondencia entre las actividades del orientador y los dominios de la ruta crítica subdirectiva que documentan.</p>
+
+  <table class="tabla-evidencias">
+    <thead>
+      <tr>
+        <th>Actividad del Orientador</th>
+        <th>Documento / Evidencia</th>
+        <th>Dominio USICAMM</th>
+        <th>PMC</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Reunión semanal miércoles</td>
+        <td>Minuta JAD con acuerdos</td>
+        <td><span class="pill pill-verde">D3</span></td>
+        <td><span class="pill pill-azul">Cat III Acc 2</span></td>
+      </tr>
+      <tr>
+        <td>Revisión y actualización de fichas de riesgo</td>
+        <td>Google Sheet actualizado · Nota en ficha individual</td>
+        <td><span class="pill pill-verde">D3</span> <span class="pill pill-ocre">D4</span></td>
+        <td><span class="pill pill-azul">Cat III Acc 2</span></td>
+      </tr>
+      <tr>
+        <td>Sesiones grupales por semestre</td>
+        <td>Lista asistencia + foto + reporte 5 líneas</td>
+        <td><span class="pill pill-ocre">D4</span></td>
+        <td><span class="pill pill-azul">Cat III Acc 2</span></td>
+      </tr>
+      <tr>
+        <td>Planeación semestral del SOE</td>
+        <td>Documento firmado orientador + subdirector</td>
+        <td><span class="pill pill-rojo">D1</span></td>
+        <td><span class="pill pill-azul">Cat III Acc 2</span></td>
+      </tr>
+      <tr>
+        <td>Atención individual alumnos en riesgo</td>
+        <td>Ficha de seguimiento actualizada · Registro de atención</td>
+        <td><span class="pill pill-verde">D2</span></td>
+        <td><span class="pill pill-azul">Cat III Acc 2</span></td>
+      </tr>
+      <tr>
+        <td>Colegiado con docentes</td>
+        <td>Acta de colegiado con firmas</td>
+        <td><span class="pill pill-verde">D3</span> <span class="pill pill-rojo">D1</span></td>
+        <td><span class="pill pill-azul">Cat I Acc 3</span></td>
+      </tr>
+      <tr>
+        <td>Feria vocacional / visita a universidades</td>
+        <td>Oficio + lista + fotos del evento</td>
+        <td><span class="pill pill-ocre">D4</span></td>
+        <td><span class="pill pill-verde">Cat II Met 2</span></td>
+      </tr>
+      <tr>
+        <td>Acciones GEPEA (talleres, webinars, campañas)</td>
+        <td>Programa + lista + foto/captura + reporte GEPEA</td>
+        <td><span class="pill pill-ocre">D4</span></td>
+        <td><span class="pill pill-azul">Cat III Acc 2</span></td>
+      </tr>
+      <tr>
+        <td>Escuela para padres</td>
+        <td>Acta + lista asistencia + programa</td>
+        <td><span class="pill pill-ocre">D4</span></td>
+        <td><span class="pill pill-azul">Cat III Acc 2</span></td>
+      </tr>
+      <tr>
+        <td>Informe semestral del SOE</td>
+        <td>Informe firmado + carpetas PMC completas</td>
+        <td><span class="pill pill-rojo">D1</span> <span class="pill pill-verde">D3</span> <span class="pill pill-ocre">D4</span></td>
+        <td><span class="pill pill-azul">Cat III 100%</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════ SECCIÓN 8: INDICADORES ══════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <div class="seccion-num">08</div>
+    <div class="seccion-titulo">Indicadores de Seguimiento</div>
+  </div>
+  <p class="seccion-desc">Métricas concretas que el subdirector verificará en los cortes internos de mayo y julio.</p>
+
+  <div class="indicadores-grid">
+    <div class="indicador-card">
+      <div class="indicador-num">100%</div>
+      <div class="indicador-label">Alumnos en semáforo rojo con ficha de seguimiento activa</div>
+      <span class="indicador-freq">Semanal · Lunes</span>
+    </div>
+    <div class="indicador-card">
+      <div class="indicador-num">−25%</div>
+      <div class="indicador-label">Reducción de alumnos en riesgo respecto al inicio del semestre</div>
+      <span class="indicador-freq">Mensual</span>
+    </div>
+    <div class="indicador-card">
+      <div class="indicador-num">2+</div>
+      <div class="indicador-label">Sesiones grupales ejecutadas por semana (1 por orientador)</div>
+      <span class="indicador-freq">Semanal</span>
+    </div>
+    <div class="indicador-card">
+      <div class="indicador-num">1</div>
+      <div class="indicador-label">Minuta JAD generada cada miércoles sin excepción</div>
+      <span class="indicador-freq">Semanal · Miércoles</span>
+    </div>
+    <div class="indicador-card">
+      <div class="indicador-num">66%</div>
+      <div class="indicador-label">Carpeta PMC Cat III Acc 2 completada en el corte de mayo</div>
+      <span class="indicador-freq">Corte Mayo</span>
+    </div>
+    <div class="indicador-card">
+      <div class="indicador-num">4+</div>
+      <div class="indicador-label">Acciones GEPEA documentadas por orientador en semestre B</div>
+      <span class="indicador-freq">Corte Julio</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SECCIÓN 9: COMPROMISOS ══════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <div class="seccion-num">09</div>
+    <div class="seccion-titulo">Compromisos Concretos por Actor</div>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="font-family:'Fraunces',serif; font-size:20px; color:var(--verde); margin-bottom:20px; padding-bottom:10px; border-bottom:2px solid var(--verde);">Nallely y Armando<br><small style="font-size:13px; font-weight:400; color:var(--gris-med);">Orientadores Educativos</small></h3>
+      <ul class="compromiso-list">
+        <li>Entregar planeación semestral individual firmada antes del <strong>15 de abril de 2026</strong></li>
+        <li>Ejecutar al menos <strong>una sesión grupal por semana</strong> con lista de asistencia y foto</li>
+        <li>Actualizar fichas de riesgo de alumnos en amarillo y rojo <strong>cada miércoles</strong></li>
+        <li>Subir evidencias a Drive con nomenclatura CAP <strong>el mismo día</strong> que ocurre la actividad</li>
+        <li>Ejecutar y documentar al menos <strong>4 acciones GEPEA</strong> durante el semestre B</li>
+        <li>Participar en colegiado con docentes <strong>al menos una vez por mes</strong></li>
+        <li>Mantener la bitácora semanal actualizada <strong>cada viernes</strong></li>
+        <li>Entregar el informe final del SOE antes del <strong>15 de julio de 2026</strong></li>
+        <li>Asistir puntualmente a la <strong>reunión de coordinación del miércoles</strong> con material de semáforo revisado</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="font-family:'Fraunces',serif; font-size:20px; color:var(--azul); margin-bottom:20px; padding-bottom:10px; border-bottom:2px solid var(--azul);">Fernando Felipe C. R.<br><small style="font-size:13px; font-weight:400; color:var(--gris-med);">Subdirector Escolar</small></h3>
+      <ul class="compromiso-list">
+        <li>Realizar la reunión de coordinación con orientadores <strong>todos los miércoles (50 min mínimo)</strong></li>
+        <li>Generar la Minuta JAD <strong>el mismo día</strong> y compartirla por el canal institucional</li>
+        <li>Revisar el semáforo de permanencia <strong>cada lunes</strong> y comunicar novedades</li>
+        <li>Verificar <strong>mensualmente</strong> que las carpetas PMC del SOE tengan evidencias actualizadas</li>
+        <li>Brindar retroalimentación a la planeación semestral antes del <strong>20 de abril</strong></li>
+        <li>Presentar el avance del SOE como parte del informe PMC en los <strong>cortes de mayo y julio</strong></li>
+        <li>Gestionar con la directora los recursos necesarios para la <strong>feria vocacional y Escuela para Padres</strong></li>
+        <li>Validar con firma los informes parcial y final <strong>antes de su entrega a supervisión</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SECCIÓN 10: ESTRUCTURA DE CARPETAS DRIVE ══════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <div class="seccion-num">10</div>
+    <div class="seccion-titulo">Estructura de Carpetas en Google Drive</div>
+  </div>
+  <p class="seccion-desc">Organización propuesta para las carpetas del SOE en el Drive institucional. Esta estructura permite cumplir la Regla CAP y facilita la revisión en los cortes del PMC.</p>
+
+  <div style="background:white; border:1px solid #ddd; border-radius:12px; padding:28px 32px; font-family: 'Courier New', monospace; font-size:13px; line-height:2; color:var(--gris);">
+    <div style="color:var(--verde); font-weight:700; font-size:14px;">📁 SOE_EPO135_2025-2026/</div>
+    <div style="padding-left:24px;">
+      <div>📁 <span style="color:var(--azul); font-weight:600;">PMC_CAT-III_ACC-2/</span></div>
+      <div style="padding-left:24px;">
+        <div>📁 01_Planeacion-Semestral/</div>
+        <div style="padding-left:24px; color:var(--gris-med);">📄 2026-01-31_planeacion-Nallely_semB.pdf</div>
+        <div style="padding-left:24px; color:var(--gris-med);">📄 2026-01-31_planeacion-Armando_semB.pdf</div>
+        <div>📁 02_Sesiones-Grupales/</div>
+        <div style="padding-left:24px; color:var(--gris-med);">📄 2026-03-10_lista-asistencia_autoconocimiento-1ero.pdf</div>
+        <div style="padding-left:24px; color:var(--gris-med);">📷 2026-03-10_foto_autoconocimiento-1ero.jpg</div>
+        <div style="padding-left:24px; color:var(--gris-med);">📄 2026-03-10_reporte-sesion_autoconocimiento-1ero.pdf</div>
+        <div>📁 03_Fichas-Seguimiento-Riesgo/</div>
+        <div>📁 04_Bitacoras/</div>
+        <div>📁 05_Informes-Semestrales/</div>
+      </div>
+      <div>📁 <span style="color:var(--ocre); font-weight:600;">GEPEA/</span></div>
+      <div style="padding-left:24px;">
+        <div>📁 OP1_Educacion-Inclusiva/</div>
+        <div>📁 OP1_Actividades-Culturales-Embarazo/</div>
+        <div>📁 OP2_Campana-Yo-Decido/</div>
+        <div>📁 OP3_ISEM-Prevencion/</div>
+        <div>📁 OP4_Protocolos-Violencia/</div>
+        <div>📁 Informes-GEPEA/</div>
+      </div>
+      <div>📁 <span style="color:var(--rojo); font-weight:600;">Coordinacion-Semanal/</span></div>
+      <div style="padding-left:24px;">
+        <div>📁 Minutas-JAD-2026/</div>
+        <div style="padding-left:24px; color:var(--gris-med);">📄 2026-03-11_minuta-jad_semana-11.pdf</div>
+        <div>📁 Actas-Colegiado/</div>
+      </div>
+      <div>📁 <span style="color:var(--azul); font-weight:600;">Vinculacion-Universidades/</span></div>
+      <div style="padding-left:24px;">
+        <div>📁 Feria-Vocacional-2026/</div>
+        <div>📁 Visitas-Universidades/</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<div class="footer">
+  <div class="footer-left">EPO 135 · Ixtapaluca<br><span style="font-style:italic; opacity:0.6; font-size:14px;">Servicio de Orientación Educativa</span></div>
+  <div class="footer-right">
+    PMOE 2025 · PMC Cat III Acc 2 · USICAMM 2024–2025 · GEPEA / ENAPEA<br>
+    Subdirector: Fernando Felipe Cortés Reyes<br>
+    Orientadores: Nallely · Armando<br>
+    Supervisión BG 046 · Mtra. Gabriela Lara Juárez<br>
+    Elaborado: 31 de marzo de 2026
+  </div>
+</div>
+
+</body>
+</html>

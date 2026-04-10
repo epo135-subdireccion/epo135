@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruta Crítica · Subdirección Escolar · EPO 135</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf9f7;
+  --surface: #ffffff;
+  --surface2: #f4f2ee;
+  --border: #e8e4dd;
+  --border2: #d4cfc6;
+  --text: #1a1917;
+  --muted: #6b6760;
+  --hint: #9c9890;
+  --verde: #1a6b3c;
+  --verde-bg: #edf7f2;
+  --verde-border: #a8d9be;
+  --azul: #1a3d6e;
+  --azul-med: #1a5ca0;
+  --azul-bg: #eef4fb;
+  --azul-border: #a8c4e0;
+  --dorado: #7a4f00;
+  --dorado-bg: #fef9ec;
+  --dorado-border: #f0d080;
+  --rojo: #8b1a1a;
+  --rojo-bg: #fdf2f2;
+  --rojo-border: #f0aaaa;
+  --morado: #4a1e78;
+  --morado-bg: #f5effe;
+  --morado-border: #c8a8f0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.7;}
+
+/* ── HEADER ── */
+.masthead{background:var(--azul);color:white;padding:3rem 0 2.5rem;position:relative;overflow:hidden;}
+.masthead::before{content:'';position:absolute;right:-80px;top:-80px;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,0.04);}
+.masthead::after{content:'';position:absolute;left:-40px;bottom:-60px;width:260px;height:260px;border-radius:50%;background:rgba(26,92,160,0.3);}
+.mast-inner{max-width:960px;margin:0 auto;padding:0 2rem;position:relative;z-index:1;}
+.mast-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.6rem;}
+.mast-title{font-family:'Instrument Serif',serif;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.1;margin-bottom:.5rem;}
+.mast-title em{font-style:italic;color:#90c4f8;}
+.mast-sub{font-size:.82rem;color:rgba(255,255,255,.5);font-weight:300;margin-bottom:1.8rem;}
+.mast-pills{display:flex;gap:.6rem;flex-wrap:wrap;}
+.mast-pill{font-family:'DM Mono',monospace;font-size:.6rem;padding:3px 10px;border-radius:3px;letter-spacing:.06em;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.75);}
+
+/* ── NAV ── */
+.nav{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.nav-inner{max-width:960px;margin:0 auto;padding:0 2rem;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+.nav-inner::-webkit-scrollbar{display:none;}
+.nav-item{padding:.7rem 1rem;font-size:.72rem;color:var(--muted);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;font-weight:500;}
+.nav-item:hover{color:var(--text);border-color:var(--border2);}
+.nav-item.active{color:var(--azul-med);border-color:var(--azul-med);}
+
+/* ── LAYOUT ── */
+.main{max-width:960px;margin:0 auto;padding:0 2rem 4rem;}
+
+/* ── SECTION ── */
+.section{padding:2.8rem 0 2rem;border-top:1px solid var(--border);}
+.section:first-child{border-top:none;padding-top:2.2rem;}
+.section-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--hint);margin-bottom:.4rem;}
+.section-title{font-family:'Instrument Serif',serif;font-size:clamp(1.2rem,2.2vw,1.6rem);color:var(--text);margin-bottom:1.2rem;line-height:1.2;}
+
+/* ── CALLOUTS ── */
+.callout{border-radius:8px;padding:12px 16px;font-size:.8rem;line-height:1.65;border:1px solid;display:flex;gap:10px;margin-bottom:12px;}
+.callout-icon{flex-shrink:0;font-size:1rem;}
+.co-verde{background:var(--verde-bg);border-color:var(--verde-border);color:var(--verde);}
+.co-azul{background:var(--azul-bg);border-color:var(--azul-border);color:var(--azul);}
+.co-dorado{background:var(--dorado-bg);border-color:var(--dorado-border);color:var(--dorado);}
+.co-rojo{background:var(--rojo-bg);border-color:var(--rojo-border);color:var(--rojo);}
+.co-morado{background:var(--morado-bg);border-color:var(--morado-border);color:var(--morado);}
+
+/* ── DOMINIO CARDS ── */
+.dom-grid{display:flex;flex-direction:column;gap:12px;}
+.dom-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.dom-header{padding:12px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;user-select:none;}
+.dom-header:hover{background:var(--surface2);}
+.dom-num{font-family:'DM Mono',monospace;font-size:.65rem;font-weight:600;padding:2px 8px;border-radius:3px;flex-shrink:0;}
+.dom-title{font-size:.85rem;font-weight:600;flex:1;}
+.dom-badge{font-family:'DM Mono',monospace;font-size:.58rem;padding:2px 8px;border-radius:3px;border:1px solid;flex-shrink:0;}
+.dom-body{padding:0 16px 16px;border-top:1px solid var(--border);}
+.dom-desc{font-size:.78rem;color:var(--muted);line-height:1.65;padding:12px 0 10px;}
+.indicador-list{display:flex;flex-direction:column;gap:4px;}
+.ind-row{display:grid;grid-template-columns:14px 1fr auto;gap:10px;align-items:start;padding:6px 0;border-bottom:1px solid var(--border);font-size:.76rem;}
+.ind-row:last-child{border-bottom:none;}
+.ind-num{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--hint);padding-top:1px;}
+.ind-text{color:var(--text);line-height:1.5;}
+.ind-evidencia{font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0;}
+
+/* ── RUTA CRÍTICA ── */
+.ruta-grid{display:grid;grid-template-columns:100px 1fr;gap:0;position:relative;}
+.ruta-grid::before{content:'';position:absolute;left:50px;top:0;bottom:0;width:2px;background:var(--border);}
+.ruta-mes{padding:16px 16px 16px 0;font-family:'DM Mono',monospace;font-size:.65rem;font-weight:600;color:var(--muted);text-align:right;position:relative;letter-spacing:.05em;text-transform:uppercase;}
+.ruta-mes::after{content:'';position:absolute;right:-8px;top:22px;width:14px;height:14px;border-radius:50%;border:2px solid white;box-shadow:0 0 0 2px var(--border2);}
+.ruta-mes.ext::after{background:var(--dorado);box-shadow:0 0 0 2px var(--dorado);}
+.ruta-mes.int::after{background:var(--azul-med);box-shadow:0 0 0 2px var(--azul-med);}
+.ruta-mes.now::after{background:var(--verde);box-shadow:0 0 0 2px var(--verde);}
+.ruta-content{padding:12px 0 12px 24px;}
+.ruta-items{display:flex;flex-direction:column;gap:6px;}
+.ruta-item{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:.76rem;}
+.ruta-item-title{font-weight:600;color:var(--text);margin-bottom:2px;}
+.ruta-item-sub{color:var(--muted);font-size:.71rem;}
+.ruta-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:.56rem;padding:1px 6px;border-radius:3px;margin-right:4px;margin-bottom:2px;}
+
+/* ── CONTRASTE TABLE ── */
+.ct{width:100%;border-collapse:collapse;font-size:.76rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.ct thead tr{background:var(--azul);color:white;}
+.ct th{padding:10px 14px;text-align:left;font-weight:500;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.06em;}
+.ct td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5;}
+.ct td:first-child{font-weight:500;color:var(--text);}
+.ct tr:last-child td{border-bottom:none;}
+.ct tr:nth-child(even) td{background:var(--bg);}
+.check{color:var(--verde);font-weight:600;}
+.gap{color:var(--rojo);}
+.warn{color:var(--dorado);}
+
+/* ── BLOQUES SEMANALES ── */
+.week-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0;}
+.week-slot{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:8px 10px;}
+.week-day{font-family:'DM Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);margin-bottom:5px;}
+.week-block{font-size:.7rem;color:var(--text);line-height:1.5;}
+.week-block strong{display:block;font-size:.68rem;margin-bottom:1px;}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:1.5rem 0;text-align:center;max-width:960px;margin:0 auto;padding-left:2rem;padding-right:2rem;}
+footer p{font-size:.7rem;color:var(--hint);font-family:'DM Mono',monospace;}
+
+@media(max-width:640px){
+  .mast-inner,.nav-inner,.main{padding-left:1rem;padding-right:1rem;}
+  .week-grid{grid-template-columns:1fr 1fr;}
+  .ruta-grid{grid-template-columns:70px 1fr;}
+  .ruta-grid::before{left:35px;}
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="mast-inner">
+    <div class="mast-eyebrow">EPO 135 · Ixtapaluca · Supervisión BG 046</div>
+    <h1 class="mast-title">Ruta crítica de la<br><em>práctica subdirectiva</em></h1>
+    <p class="mast-sub">Análisis de correspondencia entre el Marco para la Excelencia USICAMM 2024–2025, el Plan de Subdirección Escolar y la gestión documentada · Ciclo 2025–2026</p>
+    <div class="mast-pills">
+      <span class="mast-pill">5 dominios del perfil</span>
+      <span class="mast-pill">3 áreas del plan</span>
+      <span class="mast-pill">3 categorías PMC</span>
+      <span class="mast-pill">Ciclo 1 de ratificación</span>
+      <span class="mast-pill">31 mar 2026</span>
+    </div>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#lectura" class="nav-item active">📖 Lectura del marco</a>
+    <a href="#contraste" class="nav-item">⚖️ Contraste</a>
+    <a href="#dominios" class="nav-item">🎯 5 Dominios</a>
+    <a href="#ruta" class="nav-item">🗺️ Ruta crítica</a>
+    <a href="#semana" class="nav-item">⏱️ Semana tipo</a>
+    <a href="#evidencias" class="nav-item">📂 Evidencias clave</a>
+    <a href="#ratificacion" class="nav-item">🎖️ Ratificación</a>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ═══ 1. LECTURA DEL MARCO ═══ -->
+<section class="section" id="lectura">
+  <div class="section-label">Punto de partida</div>
+  <h2 class="section-title">Lo que el Marco para la Excelencia dice de tu cargo</h2>
+
+  <div class="callout co-azul">
+    <span class="callout-icon">📌</span>
+    <div><strong>Perfil aplicable:</strong> Subdirectora o Subdirector Académico (pp. 31–37 del Marco USICAMM 2024–2025). Este perfil tiene 5 dominios, 12 criterios y más de 40 indicadores. Es el referente normativo exacto contra el que se evaluará tu ratificación. Todo lo que hagas debe poder leerse a través de esa lente.</div>
+  </div>
+
+  <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.7;">El Marco define al subdirector como quien <strong style="color:var(--text)">coordina, gestiona y ejerce liderazgo</strong> para que el plantel opere con calidad. No es solo un ejecutor de instrucciones de la directora — es quien <em>establece el marco de referencia pedagógico</em> para el trabajo de aula. Tres ideas clave del perfil que son visibles en tu Plan de Subdirección:</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.2rem;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;">
+      <div style="font-family:'DM Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);margin-bottom:6px;">Dominio central</div>
+      <div style="font-size:.82rem;font-weight:600;margin-bottom:4px;">Liderazgo pedagógico</div>
+      <div style="font-size:.74rem;color:var(--muted);">El Marco lo pone en el Dominio 2. No es una actividad adicional — es la razón de ser del cargo. Supervisión de clase, retroalimentación de planeaciones, análisis colegiado de indicadores.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;">
+      <div style="font-family:'DM Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);margin-bottom:6px;">Obligación documentada</div>
+      <div style="font-size:.82rem;font-weight:600;margin-bottom:4px;">Transparencia y rendición de cuentas</div>
+      <div style="font-size:.74rem;color:var(--muted);">Dominio 4, criterio 4.4. No basta hacer — hay que informar. El marco normativo de transparencia aplica a tu función directamente. Las evidencias del PMC son parte de esto.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;">
+      <div style="font-family:'DM Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);margin-bottom:6px;">Trayectoria propia</div>
+      <div style="font-size:.82rem;font-weight:600;margin-bottom:4px;">Formación continua (Dominio 5)</div>
+      <div style="font-size:.74rem;color:var(--muted);">El Marco exige que el subdirector defina su propio trayecto formativo. La investigación P9 y el ecosistema IA no son accesorios — son evidencia directa del Dominio 5.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 2. CONTRASTE ═══ -->
+<section class="section" id="contraste">
+  <div class="section-label">Análisis cruzado</div>
+  <h2 class="section-title">Plan de Subdirección vs. Marco USICAMM vs. PMC</h2>
+
+  <div class="callout co-verde">
+    <span class="callout-icon">✓</span>
+    <div><strong>Conclusión del contraste:</strong> Tu Plan de Subdirección cubre de manera directa los 5 dominios del perfil USICAMM. No hay vacíos estructurales — el problema no es el diseño, es la <strong>documentación del cumplimiento</strong>. Cada actividad del plan necesita una evidencia que se pueda leer contra un indicador del Marco.</div>
+  </div>
+
+  <table class="ct" style="margin-bottom:1rem;">
+    <thead><tr><th>Área del plan</th><th>Dominio Marco USICAMM</th><th>Categoría PMC</th><th>Estado actual</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Área I · Normativa<br><small style="font-weight:400;color:var(--muted)">Leyes, NEM, MCCEMS, códigos</small></td>
+        <td>D1 · Identidad de la función<br>D2 · Liderazgo pedagógico</td>
+        <td>Cat I · Desarrollo académico</td>
+        <td><span class="check">✓ Planificado</span><br><small class="warn">⚠ Sin evidencia sistemática aún</small></td>
+      </tr>
+      <tr>
+        <td>Área II · Marco Curricular<br><small style="font-weight:400;color:var(--muted)">Carga, academias, planeaciones, supervisión de clase</small></td>
+        <td>D2 · Coord. enseñanza–aprendizaje<br>D3 · Servicios educativos</td>
+        <td>Cat I · Met 1, 2, 3<br>Cat II · Met 2</td>
+        <td><span class="check">✓ Activo</span><br><small class="warn">⚠ Classroom/Drive sin estructura de evidencias</small></td>
+      </tr>
+      <tr>
+        <td>Área III · Gestión directiva<br><small style="font-weight:400;color:var(--muted)">PAEC, PMC, Cultura de paz, PC, Orientación</small></td>
+        <td>D3 · Organización servicios<br>D4 · Comunidad escolar</td>
+        <td>Cat II · Met 1, 2<br>Cat III · Acc 1, 2, 3</td>
+        <td><span class="check">✓ Sistemas activos</span><br><small class="check">✓ Semáforo + fichas en producción</small></td>
+      </tr>
+      <tr>
+        <td>Semestre A y B · Actividades<br><small style="font-weight:400;color:var(--muted)">Concursos, proyectos, ferias, jornadas</small></td>
+        <td>D4 · Participación comunidad<br>D3 · Servicios estudiantes</td>
+        <td>Cat I · Met 3<br>Cat II · Met 2<br>Cat III · Acc 3</td>
+        <td><span class="warn">⚠ Coordinación definida</span><br><small class="gap">✗ Evidencias post-evento no sistematizadas</small></td>
+      </tr>
+      <tr>
+        <td>Ecosistema IA + investigación<br><small style="font-weight:400;color:var(--muted)">GAS, Claude, n8n, herramientas pedagógicas, P9</small></td>
+        <td>D5 · Trayectoria de formación<br>D2 · Liderazgo pedagógico (TIC)</td>
+        <td>No aplica directamente<br><small style="color:var(--verde);">→ Evidencia de ratificación</small></td>
+        <td><span class="check">✓ 5 herramientas en producción</span><br><small class="warn">⚠ P9 en pausa · documentar como trayecto formativo</small></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout co-dorado">
+    <span class="callout-icon">⚠</span>
+    <div><strong>Brecha crítica identificada:</strong> El plan existe, las actividades ocurren, los sistemas funcionan — pero la cadena <em>actividad → evidencia → indicador USICAMM</em> no está cerrada. Esa cadena es la que evalúa la comisión de ratificación. La ruta crítica a continuación cierra esa cadena.</div>
+  </div>
+</section>
+
+<!-- ═══ 3. DOMINIOS ═══ -->
+<section class="section" id="dominios">
+  <div class="section-label">Marco USICAMM · Perfil Subdirector Académico</div>
+  <h2 class="section-title">Los 5 dominios — qué hacen y cómo los cubres</h2>
+
+  <div class="dom-grid">
+
+    <!-- D1 -->
+    <div class="dom-card">
+      <div class="dom-header" onclick="toggle('d1')">
+        <span class="dom-num" style="background:var(--azul-bg);color:var(--azul-med);">D·1</span>
+        <span class="dom-title">Asume la identidad de su función</span>
+        <span class="dom-badge" style="background:var(--verde-bg);color:var(--verde);border-color:var(--verde-border);">Normativa · Valores · Liderazgo</span>
+        <span id="ch-d1" style="color:var(--hint);font-size:.8rem;margin-left:8px;">▼</span>
+      </div>
+      <div id="d1" style="display:none;" class="dom-body">
+        <p class="dom-desc">Actuar con apego normativo, ejercer influencia legítima en la comunidad escolar, promover sentido de pertenencia, aplicar el Código de Ética y el Código de Conducta SEP. Es el dominio de la legitimidad del cargo.</p>
+        <div class="indicador-list">
+          <div class="ind-row">
+            <span class="ind-num">1.1</span>
+            <span class="ind-text">Propone estrategias que favorecen ambientes inclusivos y socioemocionales — reconoce principios NEM, normatividad directiva, influencia en la comunidad.</span>
+            <span class="ind-evidencia" style="background:var(--verde-bg);color:var(--verde);border:1px solid var(--verde-border);">Actas colegiado · Estrategia permanencia</span>
+          </div>
+          <div class="ind-row">
+            <span class="ind-num">1.2</span>
+            <span class="ind-text">Participa en actividades de formación ciudadana — empatía con la comunidad, apoyo a gobernanza escolar, aplicar Código de Conducta SEP.</span>
+            <span class="ind-evidencia" style="background:var(--azul-bg);color:var(--azul-med);border:1px solid var(--azul-border);">Minuta JAD · Colegiado 26 mar</span>
+          </div>
+        </div>
+        <div class="callout co-verde" style="margin-top:10px;">
+          <span class="callout-icon">✓</span>
+          <div><strong>Lo que ya tienes:</strong> El colegiado del 26 de marzo, la estrategia de permanencia, el PMOE activo con Nallely y Armando, y el semáforo semanal son todos evidencia directa del D1. Necesitan acta o captura fechada.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D2 -->
+    <div class="dom-card">
+      <div class="dom-header" onclick="toggle('d2')">
+        <span class="dom-num" style="background:var(--morado-bg);color:var(--morado);">D·2</span>
+        <span class="dom-title">Coordina estrategias para equidad y excelencia en enseñanza–aprendizaje</span>
+        <span class="dom-badge" style="background:var(--morado-bg);color:var(--morado);border-color:var(--morado-border);">Liderazgo pedagógico</span>
+        <span id="ch-d2" style="color:var(--hint);font-size:.8rem;margin-left:8px;">▼</span>
+      </div>
+      <div id="d2" style="display:none;" class="dom-body">
+        <p class="dom-desc">El dominio más sustantivo del cargo: conoce el Marco Curricular Común, retroalimenta planeaciones, coordina el trabajo colegiado para construir ambientes de aprendizaje, promueve evaluación diversificada. Es donde se ejerce el liderazgo académico real.</p>
+        <div class="indicador-list">
+          <div class="ind-row">
+            <span class="ind-num">2.1</span>
+            <span class="ind-text">Comprende los componentes del MCC-EMS para implementarlos. Retroalimenta planeaciones didácticas considerando recursos socioemocionales e interdisciplinariedad.</span>
+            <span class="ind-evidencia" style="background:var(--morado-bg);color:var(--morado);border:1px solid var(--morado-border);">Registro supervisión de clase · Drive</span>
+          </div>
+          <div class="ind-row">
+            <span class="ind-num">2.2</span>
+            <span class="ind-text">Contribuye a los procesos de enseñanza para mejora continua del trayecto formativo. Ambientes sanos y seguros en colegiado. Seguimiento de planeación didáctica.</span>
+            <span class="ind-evidencia" style="background:var(--morado-bg);color:var(--morado);border:1px solid var(--morado-border);">Classroom · Actas academia</span>
+          </div>
+          <div class="ind-row">
+            <span class="ind-num">2.3</span>
+            <span class="ind-text">Promueve tipos de evaluación en las planeaciones. Propone ajustes basados en resultados. Autoevaluación, coevaluación y heteroevaluación en práctica docente.</span>
+            <span class="ind-evidencia" style="background:var(--dorado-bg);color:var(--dorado);border:1px solid var(--dorado-border);">Dashboard calificaciones · Semáforo</span>
+          </div>
+        </div>
+        <div class="callout co-dorado" style="margin-top:10px;">
+          <span class="callout-icon">⚠</span>
+          <div><strong>Brecha activa:</strong> El "Proyecto de Supervisión de Clase, Observaciones y Retroalimentación" de tu Plan (Semestre A y B, Sept–Jun, Classroom + Drive) es exactamente el indicador 2.2. Pero requiere registro sistemático de cada visita de aula: fecha, grupo, docente, observación, retroalimentación entregada. Sin ese registro, el liderazgo pedagógico es invisible.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D3 -->
+    <div class="dom-card">
+      <div class="dom-header" onclick="toggle('d3')">
+        <span class="dom-num" style="background:var(--verde-bg);color:var(--verde);">D·3</span>
+        <span class="dom-title">Organiza los servicios educativos para los estudiantes</span>
+        <span class="dom-badge" style="background:var(--verde-bg);color:var(--verde);border-color:var(--verde-border);">Servicios · Permanencia · Colegiado</span>
+        <span id="ch-d3" style="color:var(--hint);font-size:.8rem;margin-left:8px;">▼</span>
+      </div>
+      <div id="d3" style="display:none;" class="dom-body">
+        <p class="dom-desc">Coordina el trabajo colegiado, gestiona vínculos interinstitucionales, atiende necesidades de formación docente, organiza orientación educativa. El dominio de la operación escolar coordinada.</p>
+        <div class="indicador-list">
+          <div class="ind-row">
+            <span class="ind-num">3.1</span>
+            <span class="ind-text">Coordina trabajo colegiado entre docentes y técnico-docentes. Estrategias de prevención y mediación de conflictos. Seguimiento de acuerdos colegiados.</span>
+            <span class="ind-evidencia" style="background:var(--verde-bg);color:var(--verde);border:1px solid var(--verde-border);">Minuta JAD · Actas academia · Semáforo</span>
+          </div>
+          <div class="ind-row">
+            <span class="ind-num">3.2</span>
+            <span class="ind-text">Participa en trabajo colegiado con actores externos. Vínculos interinstitucionales (UMB, TESI). Gestión colaborativa mediante PAEC.</span>
+            <span class="ind-evidencia" style="background:var(--verde-bg);color:var(--verde);border:1px solid var(--verde-border);">Oficios · Acuerdos · Feria vocacional</span>
+          </div>
+          <div class="ind-row">
+            <span class="ind-num">3.3</span>
+            <span class="ind-text">Examina necesidades de formación del personal docente. Promueve participación en programas de capacitación y actualización.</span>
+            <span class="ind-evidencia" style="background:var(--dorado-bg);color:var(--dorado);border:1px solid var(--dorado-border);">Colegiado 26 mar · NotebookLM demo</span>
+          </div>
+        </div>
+        <div class="callout co-verde" style="margin-top:10px;">
+          <span class="callout-icon">✓</span>
+          <div><strong>Fuerte en D3:</strong> El sistema de fichas de riesgo, el PMOE con los orientadores, el semáforo GAS, el colegiado del 26 de marzo y la presentación de Claude/NotebookLM a docentes son todos evidencia directa del D3. Es tu dominio más robusto.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D4 -->
+    <div class="dom-card">
+      <div class="dom-header" onclick="toggle('d4')">
+        <span class="dom-num" style="background:var(--dorado-bg);color:var(--dorado);">D·4</span>
+        <span class="dom-title">Organiza la participación de la comunidad escolar</span>
+        <span class="dom-badge" style="background:var(--dorado-bg);color:var(--dorado);border-color:var(--dorado-border);">Comunidad · Permanencia · Transparencia</span>
+        <span id="ch-d4" style="color:var(--hint);font-size:.8rem;margin-left:8px;">▼</span>
+      </div>
+      <div id="d4" style="display:none;" class="dom-body">
+        <p class="dom-desc">Coordina programas de apoyo socioemocional, aplica normativa en servicios de atención a estudiantes, gestiona orientación educativa, promueve transparencia y rendición de cuentas.</p>
+        <div class="indicador-list">
+          <div class="ind-row">
+            <span class="ind-num">4.1</span>
+            <span class="ind-text">Coordina programas de apoyo a estudiantes en ambientes sanos. Estrategias para recursos socioemocionales.</span>
+            <span class="ind-evidencia" style="background:var(--dorado-bg);color:var(--dorado);border:1px solid var(--dorado-border);">Vive Saludable · PC · PMOE</span>
+          </div>
+          <div class="ind-row">
+            <span class="ind-num">4.2</span>
+            <span class="ind-text">Aplica marco normativo en servicios de atención para permanencia y egreso. Acciones para incrementar aprobación y reducir abandono.</span>
+            <span class="ind-evidencia" style="background:var(--rojo-bg);color:var(--rojo);border:1px solid var(--rojo-border);">Datos semáforo · Fichas riesgo</span>
+          </div>
+          <div class="ind-row">
+            <span class="ind-num">4.3–4.4</span>
+            <span class="ind-text">Servicios de fortalecimiento académico y orientación. Transparencia y rendición de cuentas: marco normativo aplicado en la función.</span>
+            <span class="ind-evidencia" style="background:var(--dorado-bg);color:var(--dorado);border:1px solid var(--dorado-border);">Informes PMC · Reporte indicadores</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D5 -->
+    <div class="dom-card">
+      <div class="dom-header" onclick="toggle('d5')">
+        <span class="dom-num" style="background:var(--rojo-bg);color:var(--rojo);">D·5</span>
+        <span class="dom-title">Define su trayectoria de formación y actualización</span>
+        <span class="dom-badge" style="background:var(--rojo-bg);color:var(--rojo);border-color:var(--rojo-border);">Formación continua · Reflexión · Colegiado</span>
+        <span id="ch-d5" style="color:var(--hint);font-size:.8rem;margin-left:8px;">▼</span>
+      </div>
+      <div id="d5" style="display:none;" class="dom-body">
+        <p class="dom-desc">Reconoce áreas de oportunidad en su función, participa en programas de formación, comparte con pares experiencias de buenas prácticas. El dominio donde P9 y el ecosistema IA son evidencia directa.</p>
+        <div class="indicador-list">
+          <div class="ind-row">
+            <span class="ind-num">5.1</span>
+            <span class="ind-text">Reconoce áreas de oportunidad en función directiva y recursos socioemocionales. Participa en programas de formación académica y administrativa.</span>
+            <span class="ind-evidencia" style="background:var(--rojo-bg);color:var(--rojo);border:1px solid var(--rojo-border);">Constancias · P9 planteamiento · Bitácora</span>
+          </div>
+          <div class="ind-row">
+            <span class="ind-num">5.2</span>
+            <span class="ind-text">Analiza con pares experiencias exitosas de gestión. Aplica conocimientos adquiridos en formación continua para fortalecer práctica directiva.</span>
+            <span class="ind-evidencia" style="background:var(--rojo-bg);color:var(--rojo);border:1px solid var(--rojo-border);">Ecosistema IA · Demo BG 046</span>
+          </div>
+        </div>
+        <div class="callout co-morado" style="margin-top:10px;">
+          <span class="callout-icon">💡</span>
+          <div><strong>Tu ventaja diferencial:</strong> El ecosistema IA (5 herramientas en producción, GAS + Claude + Telegram funcionando) es evidencia concreta del 5.2. Ningún otro subdirector de la zona BG 046 tiene esto. Para el D5 necesitas: (1) un registro escrito de tu trayecto formativo en autoformación, y (2) el planteamiento de P9 como evidencia de reflexión sobre tu práctica.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 4. RUTA CRÍTICA ═══ -->
+<section class="section" id="ruta">
+  <div class="section-label">Hoja de ruta</div>
+  <h2 class="section-title">Ruta crítica · Abril 2026 – Julio 2026</h2>
+
+  <div class="callout co-azul">
+    <span class="callout-icon">🗺️</span>
+    <div><strong>Lógica de la ruta:</strong> Tres carriles simultáneos que se retroalimentan. <strong>Carril A — Operación:</strong> lo que el plan exige semana a semana. <strong>Carril B — Documentación:</strong> convertir cada acción en evidencia con etiqueta USICAMM. <strong>Carril C — Desarrollo propio:</strong> trayecto formativo, P9 e investigación. Sin los tres carriles, el ciclo queda incompleto.</div>
+  </div>
+
+  <div class="ruta-grid">
+
+    <div class="ruta-mes now">Abr<br>2026</div>
+    <div class="ruta-content">
+      <div class="ruta-items">
+        <div class="ruta-item">
+          <div class="ruta-item-title">🏆 Torneo Interprepas — 17 abr (sede EPO 135)</div>
+          <div class="ruta-item-sub">Junta previa 16 abr · EPO 141. Coordinar Luis Mónico, Alfonso Osorno, Erik Caballero. Diseño Priscila López. <strong>Evidencia requerida:</strong> acta de junta previa + lista de asistencia del evento + foto del fuego olímpico. Etiqueta: D3.2 — vínculos interinstitucionales.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--verde-bg);color:var(--verde);border:1px solid var(--verde-border);">D3 · D4</span><span class="ruta-tag" style="background:var(--dorado-bg);color:var(--dorado);border:1px solid var(--dorado-border);">PMC Cat II · Met 2</span></div>
+        </div>
+        <div class="ruta-item">
+          <div class="ruta-item-title">📊 1ª Reunión de seguimiento del Plan de Permanencia</div>
+          <div class="ruta-item-sub">Primer corte de datos: variación de alumnos amarillo/rojo desde activación del semáforo (15 mar). Presentar a Gloria Rosiles. <strong>Evidencia:</strong> reporte con captura del semáforo Telegram + gráfica de variación. Etiqueta: D4.2 — permanencia y egreso.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--rojo-bg);color:var(--rojo);border:1px solid var(--rojo-border);">D4 · D3</span><span class="ruta-tag" style="background:var(--verde-bg);color:var(--verde);border:1px solid var(--verde-border);">PMC Cat III · Acc 2</span></div>
+        </div>
+        <div class="ruta-item">
+          <div class="ruta-item-title">🎨 Galería de Arte — preparación (entrega 27 abr, evento 30 abr)</div>
+          <div class="ruta-item-sub">Reunión técnica 17 abr · Confirmar 3 representantes. Categorías: Fotografía (lista), Escultura y Obra gráfica. <strong>Evidencia:</strong> acta de selección interna + oficios de participación. Etiqueta: D4.1 — programas de apoyo cultural.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--dorado-bg);color:var(--dorado);border:1px solid var(--dorado-border);">D4 · PMC Cat I · Met 3</span></div>
+        </div>
+        <div class="ruta-item" style="border-left:3px solid var(--morado);">
+          <div class="ruta-item-title">📓 Carril C — P9: notas del colegiado 26 mar + planteamiento 1 pág.</div>
+          <div class="ruta-item-sub">Semana Santa fue el momento. Si no se escribió, escribirlo ahora mientras el colegiado está fresco. <strong>Objetivo:</strong> 1 página con problema, pregunta, justificación. No para publicar — para tener el hilo activo. Etiqueta: D5.1 — reconoce áreas de oportunidad y se forma continuamente.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--morado-bg);color:var(--morado);border:1px solid var(--morado-border);">D5 · Expediente ratificación</span></div>
+        </div>
+        <div class="ruta-item" style="border-left:3px solid var(--azul-med);">
+          <div class="ruta-item-title">📁 Carril B — Arrancar carpeta de evidencias de ratificación</div>
+          <div class="ruta-item-sub">Drive: crear estructura por dominio USICAMM (D1 a D5) con subcarpetas por mes. Primeras 5 entradas: captura semáforo Telegram, acta colegiado 26 mar, primer reporte permanencia, foto Torneo Interprepas, constancia o nota del ecosistema IA.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--azul-bg);color:var(--azul-med);border:1px solid var(--azul-border);">Todos los dominios</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ruta-mes int">May<br>2026</div>
+    <div class="ruta-content">
+      <div class="ruta-items">
+        <div class="ruta-item">
+          <div class="ruta-item-title">📋 Corte interno PMC — Mayo (2° corte)</div>
+          <div class="ruta-item-sub">Todas las carpetas con los tres niveles (inicio, desarrollo, cierre). Revisar con custodios. Usar el tracker del gestion.html para verificar el % por categoría. <strong>Meta:</strong> Cat I ≥ 66%, Cat II ≥ 66%, Cat III ≥ 66%. Preparar informe de cierre semestre B para julio.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--dorado-bg);color:var(--dorado);border:1px solid var(--dorado-border);">PMC corte interno</span></div>
+        </div>
+        <div class="ruta-item">
+          <div class="ruta-item-title">🏫 Semana de 30+ km de running — primer hito de recuperación</div>
+          <div class="ruta-item-sub">Hito personal alineado al plan de metas running (gestion.html). No es ornamental: el bienestar sostenido es condición para mantener el ritmo de trabajo de los siguientes 3 ciclos.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--verde-bg);color:var(--verde);border:1px solid var(--verde-border);">Bienestar personal · Ciclo 4 activo</span></div>
+        </div>
+        <div class="ruta-item">
+          <div class="ruta-item-title">🤖 Tabla periódica con niveles cuánticos (IA·06) — en aula</div>
+          <div class="ruta-item-sub">Herramienta construida en Semana Santa → primera aplicación en clase de Química. Registrar: fecha, grupo, UAC, docente que la usó, reacción de estudiantes. Etiqueta: D2 — liderazgo pedagógico con uso de tecnología + D5 — formación continua aplicada.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--morado-bg);color:var(--morado);border:1px solid var(--morado-border);">D2 · D5</span></div>
+        </div>
+        <div class="ruta-item" style="border-left:3px solid var(--morado);">
+          <div class="ruta-item-title">📖 Carril C — Leer 5 artículos para P9</div>
+          <div class="ruta-item-sub">Google Scholar / Redalyc: "cultura docente México EMS" + "liderazgo directivo bachillerato". Con el planteamiento y los artículos, la pregunta de investigación se afina sola. Etiqueta: D5.2 — analiza con pares experiencias y aplica conocimientos de formación continua.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--morado-bg);color:var(--morado);border:1px solid var(--morado-border);">D5 · P9 activo</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ruta-mes int">Jun<br>2026</div>
+    <div class="ruta-content">
+      <div class="ruta-items">
+        <div class="ruta-item">
+          <div class="ruta-item-title">🏫 Demo ecosistema IA ante supervisora Mtra. Gabriela Lara Juárez</div>
+          <div class="ruta-item-sub">No necesita ser formal. Una visita de supervisión ordinaria donde se muestra: semáforo funcionando (captura Telegram), dashboard de calificaciones, herramienta de tabla periódica. 15 minutos. <strong>Evidencia:</strong> nota de la visita, captura de pantalla con fecha. Etiqueta: D3 — vínculos interinstitucionales + D5 — formación aplicada.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--azul-bg);color:var(--azul-med);border:1px solid var(--azul-border);">Visibilidad institucional · Ciclo 1</span></div>
+        </div>
+        <div class="ruta-item">
+          <div class="ruta-item-title">📊 3ª Reunión de seguimiento Plan de Permanencia</div>
+          <div class="ruta-item-sub">Indicadores finales del semestre B. Comparativa: alumnos en riesgo inicio vs. cierre del ciclo. Bajas vs. meta (−25%). <strong>Este reporte es el corazón del expediente de ratificación del ciclo 1.</strong></div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--rojo-bg);color:var(--rojo);border:1px solid var(--rojo-border);">D4 · Evidencia de ratificación clave</span></div>
+        </div>
+        <div class="ruta-item" style="border-left:3px solid var(--morado);">
+          <div class="ruta-item-title">📖 Carril C — Diseño metodológico P9</div>
+          <div class="ruta-item-sub">Cualitativo–autobiográfico. Tu aula es el campo. El diseño no necesita ser un capítulo de tesis — es un documento de 2 páginas que te permite empezar el trabajo de campo en el ciclo 2 con claridad.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--morado-bg);color:var(--morado);border:1px solid var(--morado-border);">D5 · P9</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ruta-mes ext">Jul<br>2026</div>
+    <div class="ruta-content">
+      <div class="ruta-items">
+        <div class="ruta-item" style="border:1px solid var(--dorado-border);background:var(--dorado-bg);">
+          <div class="ruta-item-title" style="color:var(--dorado);">⚠️ Corte externo PMC — Informe final a supervisión (julio)</div>
+          <div class="ruta-item-sub" style="color:var(--dorado);">Carpetas completas. Valoración ¿Qué se logró? / ¿Cómo? / ¿Por qué no? en Anexo del formato PMC. Este es el entregable normativo más importante del ciclo. El tracker de gestion.html debe mostrar ≥ 80% global antes de este corte.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:white;color:var(--dorado);border:1px solid var(--dorado-border);">PMC corte externo · Todos los dominios</span></div>
+        </div>
+        <div class="ruta-item">
+          <div class="ruta-item-title">📁 Informe final de la subdirección · Ciclo 1</div>
+          <div class="ruta-item-sub">Documento de síntesis que cruza: actividades del Plan de Subdirección ejecutadas + evidencias por dominio USICAMM + resultados del PMC + avance trayecto formativo. Este documento es el expediente de ratificación del ciclo 1. Si está bien armado, el ciclo 2 arranca con una base sólida.</div>
+          <div style="margin-top:5px;"><span class="ruta-tag" style="background:var(--azul-bg);color:var(--azul-med);border:1px solid var(--azul-border);">Todos los dominios · Ratificación</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 5. SEMANA TIPO ═══ -->
+<section class="section" id="semana">
+  <div class="section-label">Estructura operativa</div>
+  <h2 class="section-title">Semana tipo — tres carriles integrados</h2>
+
+  <div class="callout co-azul">
+    <span class="callout-icon">⚡</span>
+    <div><strong>Principio:</strong> La semana bien estructurada es la que convierte el caos institucional en práctica documentada. No se trata de trabajar más — se trata de que lo que ya ocurre quede registrado con la etiqueta correcta.</div>
+  </div>
+
+  <div class="week-grid">
+    <div class="week-slot">
+      <div class="week-day">Lunes</div>
+      <div class="week-block">
+        <strong>07:00 · Semáforo Telegram</strong>
+        Revisar reporte automático antes de llegar. Identificar alumnos nuevos en riesgo. Si hay caso rojo → abrir ficha ese día.<br><br>
+        <strong>08:00 · Blindaje</strong>
+        3 prioridades de la semana. Qué evidencia se va a generar esta semana. Qué dominio USICAMM cubre.
+      </div>
+    </div>
+    <div class="week-slot">
+      <div class="week-day">Martes</div>
+      <div class="week-block">
+        <strong>Alta concentración</strong>
+        Supervisión de clase (1 grupo / semana mínimo). Retroalimentación de planeación al docente observado.<br><br>
+        <strong>→ Evidencia D2:</strong> Captura o nota en Drive: fecha, grupo, docente, observación, retroalimentación entregada.
+      </div>
+    </div>
+    <div class="week-slot">
+      <div class="week-day">Miércoles</div>
+      <div class="week-block">
+        <strong>Coordinación y personas</strong>
+        Reunión con orientadores (Nallely / Armando). Seguimiento fichas abiertas. Acuerdos con la Directora.<br><br>
+        <strong>→ Evidencia D3:</strong> Minuta de 5 min con fecha y acuerdos. Se genera en segundos con la Minuta JAD.
+      </div>
+    </div>
+    <div class="week-slot">
+      <div class="week-day">Jueves</div>
+      <div class="week-block">
+        <strong>Gestión PMC + proyectos</strong>
+        Revisar tracker PMC. ¿Qué acción necesita evidencia esta semana? Avanzar en la herramienta IA prioritaria o en P9.<br><br>
+        <strong>→ Carril B + C:</strong> 45 min de trabajo propio sin interrupciones.
+      </div>
+    </div>
+    <div class="week-slot">
+      <div class="week-day">Viernes</div>
+      <div class="week-block">
+        <strong>Cierre consciente</strong>
+        15 min: ¿Qué hice esta semana que es evidencia de algún dominio? ¿Qué queda pendiente para la próxima? Actualizar Drive de evidencias si aplica.<br><br>
+        <strong>→ Bitácora semanal:</strong> 5 líneas en Drive. El hábito más valioso del ciclo.
+      </div>
+    </div>
+  </div>
+
+  <div class="callout co-dorado" style="margin-top:1rem;">
+    <span class="callout-icon">⚠</span>
+    <div><strong>Regla de los 2 minutos aplicada a evidencias:</strong> Si algo tarda menos de 2 minutos en documentarse (tomar foto, guardar PDF, escribir 3 líneas de contexto), hazlo en el momento. El 80% de la pérdida de evidencias ocurre porque se pospone "para después".</div>
+  </div>
+</section>
+
+<!-- ═══ 6. EVIDENCIAS ═══ -->
+<section class="section" id="evidencias">
+  <div class="section-label">Inventario de acciones → evidencias</div>
+  <h2 class="section-title">Las 12 evidencias más valiosas del ciclo 1</h2>
+
+  <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;">Ordenadas por impacto en ratificación, no por urgencia operativa.</p>
+
+  <table class="ct">
+    <thead><tr><th>#</th><th>Evidencia</th><th>Dominio USICAMM</th><th>PMC</th><th>Tipo</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--hint);">01</td>
+        <td><strong>Reporte de variación de alumnos en riesgo</strong> — desde activación del semáforo (mar) hasta cierre del ciclo (jul). Comparativa cuantitativa.</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">D4.2<br>D1.1</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">Cat III<br>Acc 2</td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;background:var(--rojo-bg);color:var(--rojo);border:1px solid var(--rojo-border);">Impacto máximo</span></td>
+      </tr>
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--hint);">02</td>
+        <td><strong>Informe parcial PMC — Diciembre + Informe final — Julio.</strong> Formato normativo con % de cumplimiento por categoría.</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">D3.1<br>D4.4</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">Todos</td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;background:var(--rojo-bg);color:var(--rojo);border:1px solid var(--rojo-border);">Normativo obligatorio</span></td>
+      </tr>
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--hint);">03</td>
+        <td><strong>Registro de supervisiones de clase</strong> — mínimo 1/semana por semestre. Fecha, grupo, docente, observación, retroalimentación entregada.</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">D2.1<br>D2.2</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">Cat I<br>Met 1</td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;background:var(--morado-bg);color:var(--morado);border:1px solid var(--morado-border);">Liderazgo pedagógico</span></td>
+      </tr>
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--hint);">04</td>
+        <td><strong>Actas y minutas de trabajo colegiado</strong> — academia por grado, consejos técnicos, colegiados de zona. Con lista de asistencia.</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">D3.1<br>D1.1</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">Cat I<br>Met 1</td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;background:var(--verde-bg);color:var(--verde);border:1px solid var(--verde-border);">Disponible ya</span></td>
+      </tr>
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--hint);">05</td>
+        <td><strong>Documentación del Torneo Interprepas como sede</strong> — acta previa, llave de competencia, resultado, fotografías con fecha.</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">D3.2<br>D4.1</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">Cat II<br>Met 2</td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;background:var(--dorado-bg);color:var(--dorado);border:1px solid var(--dorado-border);">Abril — urgente</span></td>
+      </tr>
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--hint);">06</td>
+        <td><strong>Planteamiento de P9 escrito</strong> — 1 página. Problema, pregunta, justificación. Fecha de elaboración visible.</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">D5.1<br>D5.2</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">—</td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;background:var(--morado-bg);color:var(--morado);border:1px solid var(--morado-border);">Trayecto propio</span></td>
+      </tr>
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--hint);">07</td>
+        <td><strong>Registro del ecosistema IA en producción</strong> — documento de 1 página: sistemas activos, fecha de implementación, impacto medido.</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">D5.2<br>D2.1</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">—</td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;background:var(--morado-bg);color:var(--morado);border:1px solid var(--morado-border);">Diferenciador único</span></td>
+      </tr>
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--hint);">08</td>
+        <td><strong>Drive NEM actualizado y difundido</strong> — captura con fecha + registro de sesión colegiada donde se difundió.</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">D2.1<br>D1.1</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">Cat I<br>Met 1, Acc 2</td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;background:var(--verde-bg);color:var(--verde);border:1px solid var(--verde-border);">Bajo costo · alto impacto</span></td>
+      </tr>
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--hint);">09</td>
+        <td><strong>Horarios de grupos + distribución de plantilla</strong> — ambos semestres. Documento formal con fecha y firma.</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">D3.1<br>D2.1</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">Cat I<br>Met 1</td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;background:var(--verde-bg);color:var(--verde);border:1px solid var(--verde-border);">Ya existe — organizar</span></td>
+      </tr>
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--hint);">10</td>
+        <td><strong>Protección Civil — plan + simulacros</strong> — acta de brigada actualizada, lista de asistencia de cada simulacro con tiempos de evacuación.</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">D4.1<br>D3.1</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">Cat III<br>Acc 1</td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;background:var(--dorado-bg);color:var(--dorado);border:1px solid var(--dorado-border);">Completar datos</span></td>
+      </tr>
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--hint);">11</td>
+        <td><strong>Nota de visita de supervisora BG 046</strong> — aunque sea informal, dejar registro de la fecha y qué se mostró del ecosistema IA.</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">D1.3<br>D5.2</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">—</td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;background:var(--azul-bg);color:var(--azul-med);border:1px solid var(--azul-border);">Visibilidad institucional</span></td>
+      </tr>
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--hint);">12</td>
+        <td><strong>Bitácora semanal del ciclo</strong> — 5 líneas por semana en Drive. Qué ocurrió, qué evidencia se generó, qué queda pendiente.</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">D5.1<br>D5.2</td>
+        <td style="font-family:'DM Mono',monospace;font-size:.62rem;">—</td>
+        <td><span style="font-family:'DM Mono',monospace;font-size:.58rem;padding:1px 6px;border-radius:3px;background:var(--morado-bg);color:var(--morado);border:1px solid var(--morado-border);">Hábito fundacional</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══ 7. RATIFICACIÓN ═══ -->
+<section class="section" id="ratificacion">
+  <div class="section-label">Horizonte estratégico</div>
+  <h2 class="section-title">Cómo conecta todo con la ratificación</h2>
+
+  <div class="callout co-morado">
+    <span class="callout-icon">🎖️</span>
+    <div><strong>La ecuación de la ratificación:</strong> <em>Plan bien diseñado + actividades ejecutadas + evidencias documentadas + trayectoria formativa propia</em> = expediente de ratificación excepcional. Ahora mismo tienes el primero y el segundo. La ruta crítica construye el tercero y el cuarto.</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.2rem;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;">
+      <div style="font-family:'DM Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);margin-bottom:8px;">Lo que tienes hoy (ciclo 1)</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:5px;font-size:.76rem;color:var(--muted);">
+        <li style="display:flex;gap:8px;"><span style="color:var(--verde);flex-shrink:0;">✓</span>Plan de Subdirección formalizado y ejecutándose</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--verde);flex-shrink:0;">✓</span>5 sistemas tecnológicos en producción (GAS, Claude, Telegram, Node.js, GitHub Pages)</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--verde);flex-shrink:0;">✓</span>Semáforo de permanencia activo desde 15 mar</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--verde);flex-shrink:0;">✓</span>Colegiado 26 mar ejecutado con 4 bloques</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--verde);flex-shrink:0;">✓</span>Estrategia de permanencia documentada</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--dorado);flex-shrink:0;">⚠</span>Evidencias dispersas, sin estructura Drive por dominio</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--dorado);flex-shrink:0;">⚠</span>P9 en pausa — planteamiento no escrito</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--rojo);flex-shrink:0;">✗</span>Registro sistematizado de supervisiones de clase</li>
+      </ul>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;">
+      <div style="font-family:'DM Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);margin-bottom:8px;">Lo que construye esta ruta (abr–jul)</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:5px;font-size:.76rem;color:var(--muted);">
+        <li style="display:flex;gap:8px;"><span style="color:var(--azul-med);flex-shrink:0;">→</span>Carpeta Drive por dominio USICAMM con evidencias fechadas</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--azul-med);flex-shrink:0;">→</span>Registro semanal de supervisiones de clase (Classroom)</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--azul-med);flex-shrink:0;">→</span>Reporte de variación de alumnos en riesgo (mar–jul)</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--azul-med);flex-shrink:0;">→</span>Informe PMC con % de cumplimiento por categoría</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--azul-med);flex-shrink:0;">→</span>Planteamiento P9 + 5 artículos leídos</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--azul-med);flex-shrink:0;">→</span>Nota de visita de supervisora BG 046</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--azul-med);flex-shrink:0;">→</span>Registro ecosistema IA como trayecto formativo D5</li>
+        <li style="display:flex;gap:8px;"><span style="color:var(--azul-med);flex-shrink:0;">→</span>Informe final subdirección ciclo 1</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout co-azul">
+    <span class="callout-icon">🧭</span>
+    <div><strong>El arco de los 4 ciclos desde aquí:</strong> Ciclo 1 (este) — instala y documenta. Ciclo 2 — escala el ecosistema IA a la zona, publica o presenta P9. Ciclo 3 — ponencias, redes entre escuelas, posicionamiento externo. Ciclo 4 — decide qué sigue. Cada acción de la ruta crítica es un ladrillo de ese arco. No es trabajo adicional — es el mismo trabajo, hecho con registro.</div>
+  </div>
+
+  <p style="font-size:.72rem;color:var(--hint);margin-top:1.2rem;font-family:'DM Mono',monospace;">Generado con Claude · 31 de marzo de 2026 · EPO 135 · Ciclo 1 de ratificación · Basado en Marco USICAMM 2024–2025 + Plan de Subdirección Escolar 2025–2026 + Sistema de gestión gestion.html</p>
+</section>
+
+</main>
+
+<footer>
+  <p>Ruta Crítica · Subdirección Escolar · EPO 135 · Fernando Felipe Cortés Reyes · Supervisión BG 046</p>
+</footer>
+
+<script>
+function toggle(id) {
+  const el = document.getElementById(id);
+  const ch = document.getElementById('ch-' + id);
+  const open = el.style.display === 'none';
+  el.style.display = open ? 'block' : 'none';
+  ch.style.transform = open ? 'rotate(180deg)' : 'rotate(0)';
+  ch.style.transition = 'transform .2s';
+}
+
+// Nav active on scroll
+const sections = document.querySelectorAll('.section');
+const navItems = document.querySelectorAll('.nav-item');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navItems.forEach(n => {
+    n.classList.toggle('active', n.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>
