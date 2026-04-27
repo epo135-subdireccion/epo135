@@ -7,243 +7,137 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;1,300&family=Outfit:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --verde: #0f5e2f;
-    --verde-med: #1a7a3f;
-    --verde-claro: #2ea84f;
-    --azul: #0d3b6e;
-    --dorado: #c8860a;
-    --gris-fondo: #f5f7f6;
-    --gris-borde: #d8e2dc;
-    --texto: #0f1f17;
+    --verde: #0f5e2f; --verde-med: #1a7a3f; --verde-claro: #2ea84f;
+    --azul: #0d3b6e; --dorado: #c8860a; --rojo: #c0392b; --morado: #5c3a9e;
+    --gris-fondo: #f5f7f6; --gris-borde: #d8e2dc; --texto: #0f1f17;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Outfit', sans-serif;
-    background: var(--gris-fondo);
-    color: var(--texto);
-    min-height: 100vh;
-  }
+  body { font-family: 'Outfit', sans-serif; background: var(--gris-fondo); color: var(--texto); min-height: 100vh; }
 
   header {
-    background: var(--verde);
-    color: white;
-    padding: 2rem 2rem 1.5rem;
+    background: var(--verde); color: white;
+    padding: 1.75rem 2rem 1.25rem;
     border-bottom: 4px solid var(--dorado);
   }
+  header h1 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.7rem; letter-spacing: -0.02em; }
+  header p { font-size: 0.8rem; opacity: 0.7; margin-top: 0.2rem; font-family: 'DM Mono', monospace; }
 
-  header h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 1.8rem;
-    letter-spacing: -0.02em;
-  }
+  .contenedor { max-width: 900px; margin: 0 auto; padding: 1.75rem 1.5rem; }
 
-  header p {
-    font-size: 0.85rem;
-    opacity: 0.75;
-    margin-top: 0.25rem;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .contenedor {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-  }
-
-  .buscador {
-    background: white;
-    border: 1px solid var(--gris-borde);
-    border-radius: 10px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+  .panel {
+    background: white; border: 1px solid var(--gris-borde);
+    border-radius: 12px; padding: 1.1rem 1.4rem;
+    margin-bottom: 0.9rem;
     box-shadow: 0 2px 8px rgba(15,94,47,0.06);
   }
-
-  .buscador label {
-    display: block;
-    font-size: 0.8rem;
-    font-family: 'DM Mono', monospace;
-    color: var(--verde);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.5rem;
+  .panel-titulo {
+    font-size: 0.7rem; font-family: 'DM Mono', monospace;
+    color: var(--verde); text-transform: uppercase;
+    letter-spacing: 0.07em; margin-bottom: 0.7rem;
   }
 
-  .input-wrap {
-    display: flex;
-    gap: 0.5rem;
+  .input-wrap { display: flex; gap: 0.5rem; }
+  .input-wrap input {
+    flex: 1; padding: 0.6rem 1rem;
+    border: 1.5px solid var(--gris-borde); border-radius: 6px;
+    font-family: 'Outfit', sans-serif; font-size: 0.95rem;
+    outline: none; transition: border-color 0.2s;
   }
-
-  .buscador input {
-    flex: 1;
-    padding: 0.65rem 1rem;
-    border: 1.5px solid var(--gris-borde);
-    border-radius: 6px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.95rem;
-    outline: none;
-    transition: border-color 0.2s;
+  .input-wrap input:focus { border-color: var(--verde-claro); }
+  .btn {
+    background: var(--verde); color: white; border: none;
+    padding: 0.6rem 1.3rem; border-radius: 6px;
+    font-family: 'Outfit', sans-serif; font-size: 0.9rem;
+    cursor: pointer; transition: background 0.2s; white-space: nowrap;
   }
-
-  .buscador input:focus { border-color: var(--verde-claro); }
-
-  .btn-buscar {
-    background: var(--verde);
-    color: white;
-    border: none;
-    padding: 0.65rem 1.4rem;
-    border-radius: 6px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .btn-buscar:hover { background: var(--verde-med); }
-
-  .ayuda {
-    margin-top: 0.75rem;
-    font-size: 0.78rem;
-    color: #666;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .ayuda span {
-    background: #eef5f0;
-    color: var(--verde);
-    padding: 0.1rem 0.4rem;
-    border-radius: 3px;
-    margin-right: 0.3rem;
-  }
-
-  .filtros {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-
-  .filtro-btn {
-    background: white;
-    border: 1.5px solid var(--gris-borde);
-    border-radius: 20px;
-    padding: 0.3rem 0.9rem;
+  .btn:hover { background: var(--verde-med); }
+  .btn.sec {
+    background: white; color: #666;
+    border: 1.5px solid var(--gris-borde); padding: 0.5rem 0.9rem;
     font-size: 0.82rem;
-    font-family: 'DM Mono', monospace;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--texto);
   }
+  .btn.sec:hover { border-color: #aaa; color: var(--texto); }
 
-  .filtro-btn:hover, .filtro-btn.activo {
-    background: var(--verde);
-    color: white;
-    border-color: var(--verde);
-  }
+  .ayuda { margin-top: 0.6rem; font-size: 0.74rem; color: #777; font-family: 'DM Mono', monospace; }
+  .ayuda span { background: #eef5f0; color: var(--verde); padding: 0.1rem 0.35rem; border-radius: 3px; margin-right: 0.25rem; }
 
-  .resultados-info {
-    font-size: 0.82rem;
-    color: #666;
-    font-family: 'DM Mono', monospace;
-    margin-bottom: 1rem;
-    padding-left: 0.25rem;
+  .fecha-row { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+  .fecha-row label { font-size: 0.8rem; color: #555; white-space: nowrap; }
+  .fecha-row input[type=number] {
+    width: 82px; padding: 0.45rem 0.6rem;
+    border: 1.5px solid var(--gris-borde); border-radius: 6px;
+    font-family: 'DM Mono', monospace; font-size: 0.85rem;
+    outline: none; transition: border-color 0.2s;
   }
+  .fecha-row input[type=number]:focus { border-color: var(--verde-claro); }
+  .sep { color: #bbb; }
+
+  .etiquetas-wrap { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .etiq-btn {
+    border-radius: 20px; padding: 0.25rem 0.75rem;
+    font-size: 0.75rem; font-family: 'DM Mono', monospace;
+    cursor: pointer; transition: all 0.15s;
+    border: 1.5px solid; background: white;
+  }
+  .etiq-btn[data-color="verde"]  { color: var(--verde);  border-color: #b0d8b8; }
+  .etiq-btn[data-color="azul"]   { color: var(--azul);   border-color: #a8c0dc; }
+  .etiq-btn[data-color="dorado"] { color: var(--dorado); border-color: #e0c070; }
+  .etiq-btn[data-color="morado"] { color: var(--morado); border-color: #c8b0e0; }
+  .etiq-btn[data-color="rojo"]   { color: var(--rojo);   border-color: #e0a8a8; }
+  .etiq-btn.activo[data-color="verde"]  { background: var(--verde);  color: white; border-color: var(--verde); }
+  .etiq-btn.activo[data-color="azul"]   { background: var(--azul);   color: white; border-color: var(--azul); }
+  .etiq-btn.activo[data-color="dorado"] { background: var(--dorado); color: white; border-color: var(--dorado); }
+  .etiq-btn.activo[data-color="morado"] { background: var(--morado); color: white; border-color: var(--morado); }
+  .etiq-btn.activo[data-color="rojo"]   { background: var(--rojo);   color: white; border-color: var(--rojo); }
+
+  .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.9rem; flex-wrap: wrap; gap: 0.5rem; }
+  .resultados-info { font-size: 0.79rem; color: #666; font-family: 'DM Mono', monospace; }
+  .ordenar { display: flex; gap: 0.35rem; align-items: center; }
+  .ord-lbl { font-size: 0.73rem; color: #999; font-family: 'DM Mono', monospace; margin-right: 0.1rem; }
+  .ord-btn {
+    font-size: 0.73rem; font-family: 'DM Mono', monospace;
+    padding: 0.22rem 0.6rem; border-radius: 4px;
+    border: 1.5px solid var(--gris-borde); background: white;
+    cursor: pointer; color: #555; transition: all 0.15s;
+  }
+  .ord-btn.activo { background: var(--azul); color: white; border-color: var(--azul); }
 
   .libro {
-    background: white;
-    border: 1px solid var(--gris-borde);
-    border-radius: 10px;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
+    background: white; border: 1px solid var(--gris-borde);
+    border-radius: 10px; padding: 1.05rem 1.35rem;
+    margin-bottom: 0.6rem;
+    display: flex; align-items: flex-start; gap: 1rem;
     box-shadow: 0 1px 4px rgba(15,94,47,0.04);
     transition: box-shadow 0.2s, border-color 0.2s;
-    text-decoration: none;
-    color: inherit;
+    text-decoration: none; color: inherit;
   }
+  .libro:hover { box-shadow: 0 4px 16px rgba(15,94,47,0.1); border-color: var(--verde-claro); }
+  .libro-icono { font-size: 1.85rem; flex-shrink: 0; line-height: 1; padding-top: 0.1rem; }
+  .libro-info { flex: 1; min-width: 0; }
+  .libro-titulo { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 600; color: var(--azul); margin-bottom: 0.18rem; line-height: 1.3; }
+  .libro-autor { font-size: 0.82rem; color: #555; margin-bottom: 0.42rem; }
+  .libro-meta { display: flex; gap: 0.35rem; flex-wrap: wrap; align-items: center; }
 
-  .libro:hover {
-    box-shadow: 0 4px 16px rgba(15,94,47,0.1);
-    border-color: var(--verde-claro);
-  }
+  .tag { font-size: 0.68rem; font-family: 'DM Mono', monospace; padding: 0.11rem 0.42rem; border-radius: 3px; border: 1px solid; }
+  .tag.cat    { background: #eef5f0; color: var(--verde);  border-color: #c8dfd0; }
+  .tag.año    { background: #fdf3e3; color: #a06010;       border-color: #f0d090; }
+  .tag.e-verde  { background: #eef5f0; color: var(--verde);  border-color: #b0d8b8; }
+  .tag.e-azul   { background: #e8f0f8; color: var(--azul);   border-color: #a8c0dc; }
+  .tag.e-dorado { background: #fdf3e3; color: var(--dorado); border-color: #e0c070; }
+  .tag.e-morado { background: #f3eef8; color: var(--morado); border-color: #c8b0e0; }
+  .tag.e-rojo   { background: #fdecea; color: var(--rojo);   border-color: #e0a8a8; }
 
-  .libro-icono {
-    font-size: 2rem;
-    flex-shrink: 0;
-    line-height: 1;
-    margin-top: 0.1rem;
-  }
-
-  .libro-info { flex: 1; }
-
-  .libro-titulo {
-    font-family: 'Fraunces', serif;
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--azul);
-    margin-bottom: 0.25rem;
-    line-height: 1.3;
-  }
-
-  .libro-autor {
-    font-size: 0.85rem;
-    color: #555;
-    margin-bottom: 0.4rem;
-  }
-
-  .libro-meta {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .tag {
-    font-size: 0.72rem;
-    font-family: 'DM Mono', monospace;
-    padding: 0.15rem 0.5rem;
-    border-radius: 3px;
-    background: #eef5f0;
-    color: var(--verde);
-    border: 1px solid #c8dfd0;
-  }
-
-  .tag.año { background: #fdf3e3; color: #a06010; border-color: #f0d090; }
-
-  .libro-accion {
-    font-size: 0.8rem;
-    font-family: 'DM Mono', monospace;
-    color: var(--verde-claro);
-    flex-shrink: 0;
-    align-self: center;
-    white-space: nowrap;
-  }
-
-  .sin-resultados {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: #888;
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 1.1rem;
-  }
-
-  mark {
-    background: #fff3b0;
-    border-radius: 2px;
-    padding: 0 1px;
-  }
+  .libro-accion { font-size: 0.77rem; font-family: 'DM Mono', monospace; color: var(--verde-claro); flex-shrink: 0; align-self: center; }
+  .sin-resultados { text-align: center; padding: 3rem 1rem; color: #999; font-family: 'Fraunces', serif; font-style: italic; font-size: 1.05rem; }
+  mark { background: #fff3b0; border-radius: 2px; padding: 0 1px; }
 
   @media (max-width: 600px) {
-    header h1 { font-size: 1.4rem; }
-    .libro { flex-direction: column; gap: 0.5rem; }
+    header h1 { font-size: 1.35rem; }
+    .libro { flex-direction: column; gap: 0.4rem; }
     .libro-accion { align-self: flex-start; }
     .input-wrap { flex-direction: column; }
-    .btn-buscar { width: 100%; }
+    .btn { width: 100%; text-align: center; }
+    .fecha-row { flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
@@ -256,190 +150,230 @@
 
 <div class="contenedor">
 
-  <div class="buscador">
-    <label>Búsqueda de recursos</label>
+  <div class="panel">
+    <div class="panel-titulo">Búsqueda booleana</div>
     <div class="input-wrap">
-      <input type="text" id="campo" placeholder='Ej: cálculo AND Franco, comunicación OR financiera, NOT SEP' autocomplete="off">
-      <button class="btn-buscar" onclick="buscar()">Buscar</button>
+      <input type="text" id="campo" placeholder='Ej: cálculo AND Franco · comunicación OR financiera · NOT SEP' autocomplete="off">
+      <button class="btn" onclick="aplicar()">Buscar</button>
+      <button class="btn sec" onclick="limpiar()" title="Limpiar filtros">✕</button>
     </div>
-    <div class="ayuda">
-      Operadores: <span>AND</span> ambas palabras · <span>OR</span> cualquiera · <span>NOT</span> excluir
+    <div class="ayuda">Operadores: <span>AND</span> ambas · <span>OR</span> cualquiera · <span>NOT</span> excluir</div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-titulo">Rango de año de publicación</div>
+    <div class="fecha-row">
+      <label>Desde</label>
+      <input type="number" id="anio-desde" placeholder="1990" min="1900" max="2099">
+      <span class="sep">—</span>
+      <label>Hasta</label>
+      <input type="number" id="anio-hasta" placeholder="2026" min="1900" max="2099">
+      <button class="btn sec" onclick="aplicar()">Aplicar</button>
     </div>
   </div>
 
-  <div class="filtros">
-    <button class="filtro-btn activo" onclick="filtrarCategoria('', this)">Todos</button>
-    <button class="filtro-btn" onclick="filtrarCategoria('cálculo', this)">Cálculo</button>
-    <button class="filtro-btn" onclick="filtrarCategoria('comunicación', this)">Comunicación</button>
-    <button class="filtro-btn" onclick="filtrarCategoria('financiera', this)">Financiera</button>
+  <div class="panel">
+    <div class="panel-titulo">Etiquetas <span style="font-size:0.62rem;color:#bbb;font-family:'DM Mono',monospace">(selección múltiple · AND)</span></div>
+    <div class="etiquetas-wrap" id="etiquetas-panel"></div>
   </div>
 
-  <div class="resultados-info" id="info">Mostrando todos los recursos</div>
+  <div class="toolbar">
+    <div class="resultados-info" id="info">Mostrando todos los recursos</div>
+    <div class="ordenar">
+      <span class="ord-lbl">Ordenar:</span>
+      <button class="ord-btn activo" onclick="ordenar('titulo',this)">A–Z</button>
+      <button class="ord-btn" onclick="ordenar('año',this)">Año</button>
+      <button class="ord-btn" onclick="ordenar('categoria',this)">Categoría</button>
+    </div>
+  </div>
+
   <div id="lista"></div>
-
 </div>
 
 <script>
 const BASE = 'https://epo135-subdireccion.github.io/epo135/';
 
+// ── DATOS ──────────────────────────────────────────────────────────────────
+// Para agregar un libro: copia un bloque { ... } y ajusta los campos.
+// año: número entero, o null si se desconoce.
+// etiquetas: array; usa las definidas en ETIQUETAS o agrega nuevas ahí.
 const libros = [
   {
     titulo: 'Introducción al Cálculo',
     autor: 'Franco, J.',
     categoria: 'cálculo',
-    año: '',
+    año: null,
     ruta: 'biblioteca/calculo/FrancoJ-Introduccion-al-calculo.pdf',
     icono: '📐',
-    palabras: 'calculo introduccion franco matematicas'
+    palabras: 'calculo introduccion franco matematicas limite derivada',
+    etiquetas: ['matemáticas', '1er semestre', 'SEP recomendado']
   },
   {
     titulo: 'Cálculo Integral I',
     autor: 'Mora, V. · SEP',
     categoria: 'cálculo',
-    año: '2000',
+    año: 2000,
     ruta: 'biblioteca/calculo/MoraV.SEP(2000)Cálculo Integral I.pdf',
     icono: '📐',
-    palabras: 'calculo integral mora sep matematicas'
+    palabras: 'calculo integral mora sep matematicas area volumen',
+    etiquetas: ['matemáticas', 'SEP recomendado']
   },
   {
     titulo: 'Ciencias de la Comunicación 1',
     autor: 'Navarro, D.',
     categoria: 'comunicación',
-    año: '',
+    año: null,
     ruta: 'biblioteca/comunicacion/NavarroD-Ciencias-de-la-comunicacion-1.pdf',
     icono: '📡',
-    palabras: 'comunicacion ciencias navarro lenguaje medios'
+    palabras: 'comunicacion ciencias navarro lenguaje medios periodismo',
+    etiquetas: ['humanidades', '1er semestre']
   },
   {
     titulo: 'Administración Financiera',
     autor: 'Barragán, G.',
     categoria: 'financiera',
-    año: '',
+    año: null,
     ruta: 'biblioteca/financiera/BarraganG-Administracion-financiera.pdf',
     icono: '💰',
-    palabras: 'administracion financiera barragan economia contabilidad'
+    palabras: 'administracion financiera barragan economia contabilidad presupuesto',
+    etiquetas: ['economía', '3er semestre']
   }
 ];
 
-let categoriaActiva = '';
+// Catálogo de etiquetas → color
+const ETIQUETAS = {
+  'matemáticas':     'verde',
+  'humanidades':     'azul',
+  'economía':        'dorado',
+  'SEP recomendado': 'morado',
+  '1er semestre':    'rojo',
+  '3er semestre':    'rojo'
+};
 
-function normalizar(str) {
-  return str.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+// ── ESTADO ─────────────────────────────────────────────────────────────────
+let etiquetasActivas = new Set();
+let ordenActivo = 'titulo';
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+(function init() {
+  const panel = document.getElementById('etiquetas-panel');
+  Object.entries(ETIQUETAS).forEach(([etiq, color]) => {
+    const btn = document.createElement('button');
+    btn.className = 'etiq-btn';
+    btn.dataset.color = color;
+    btn.textContent = etiq;
+    btn.onclick = () => {
+      etiquetasActivas.has(etiq) ? etiquetasActivas.delete(etiq) : etiquetasActivas.add(etiq);
+      btn.classList.toggle('activo');
+      aplicar();
+    };
+    panel.appendChild(btn);
+  });
+  ['campo','anio-desde','anio-hasta'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') aplicar(); });
+  });
+  renderizar(libros, '');
+})();
+
+function limpiar() {
+  ['campo','anio-desde','anio-hasta'].forEach(id => document.getElementById(id).value = '');
+  etiquetasActivas.clear();
+  document.querySelectorAll('.etiq-btn').forEach(b => b.classList.remove('activo'));
+  aplicar();
 }
 
-function tokenizar(texto) {
-  return normalizar(texto).split(/\s+/).filter(Boolean);
+function ordenar(clave, btn) {
+  ordenActivo = clave;
+  document.querySelectorAll('.ord-btn').forEach(b => b.classList.remove('activo'));
+  btn.classList.add('activo');
+  aplicar();
 }
 
-function coincide(libro, termino) {
-  const haystack = normalizar(
-    libro.titulo + ' ' + libro.autor + ' ' + libro.categoria + ' ' + libro.año + ' ' + libro.palabras
-  );
-  return haystack.includes(normalizar(termino));
+function aplicar() {
+  const query = document.getElementById('campo').value.trim();
+  const desde = parseInt(document.getElementById('anio-desde').value) || null;
+  const hasta = parseInt(document.getElementById('anio-hasta').value) || null;
+
+  let items = [...libros];
+  if (query)           items = items.filter(l => evaluarBooleano(l, query));
+  if (desde !== null)  items = items.filter(l => l.año !== null && l.año >= desde);
+  if (hasta !== null)  items = items.filter(l => l.año !== null && l.año <= hasta);
+  if (etiquetasActivas.size > 0)
+    items = items.filter(l => [...etiquetasActivas].every(e => l.etiquetas.includes(e)));
+
+  items.sort((a, b) => {
+    if (ordenActivo === 'año') {
+      if (a.año === b.año) return 0;
+      if (a.año === null) return 1;
+      if (b.año === null) return -1;
+      return a.año - b.año;
+    }
+    if (ordenActivo === 'categoria') return a.categoria.localeCompare(b.categoria, 'es');
+    return norm(a.titulo).localeCompare(norm(b.titulo), 'es');
+  });
+
+  renderizar(items, query);
 }
 
-function evaluarBooleano(libro, query) {
-  // Soporta: AND, OR, NOT (en mayúsculas como operadores)
-  // Ejemplo: "calculo AND NOT SEP", "comunicacion OR financiera"
-  
-  // Dividir por OR primero (menor precedencia)
-  if (/\bOR\b/.test(query)) {
-    const partes = query.split(/\bOR\b/);
-    return partes.some(p => evaluarBooleano(libro, p.trim()));
-  }
+// ── HELPERS ────────────────────────────────────────────────────────────────
+function norm(s) { return (s||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
 
-  // Dividir por AND
-  if (/\bAND\b/.test(query)) {
-    const partes = query.split(/\bAND\b/);
-    return partes.every(p => evaluarBooleano(libro, p.trim()));
-  }
+function coincide(libro, t) {
+  const hay = norm([libro.titulo, libro.autor, libro.categoria, libro.año, libro.palabras, ...libro.etiquetas].join(' '));
+  return hay.includes(norm(t));
+}
 
-  // NOT
-  if (/^NOT\s+/i.test(query)) {
-    const termino = query.replace(/^NOT\s+/i, '').trim();
-    return !coincide(libro, termino);
-  }
-
-  // Término simple
-  return coincide(libro, query.trim());
+function evaluarBooleano(libro, q) {
+  if (/\bOR\b/.test(q))  return q.split(/\bOR\b/).some(p => evaluarBooleano(libro, p.trim()));
+  if (/\bAND\b/.test(q)) return q.split(/\bAND\b/).every(p => evaluarBooleano(libro, p.trim()));
+  if (/^NOT\s+/i.test(q)) return !coincide(libro, q.replace(/^NOT\s+/i,'').trim());
+  return coincide(libro, q.trim());
 }
 
 function resaltar(texto, query) {
-  // Extraer palabras no operadoras para resaltar
-  const palabras = query.split(/\b(AND|OR|NOT)\b/i)
+  if (!query) return texto;
+  const pals = query.split(/\b(AND|OR|NOT)\b/i)
     .map(p => p.trim())
     .filter(p => p && !['AND','OR','NOT'].includes(p.toUpperCase()) && p.length > 1);
-  
-  let resultado = texto;
-  palabras.forEach(p => {
-    const re = new RegExp(`(${p})`, 'gi');
-    resultado = resultado.replace(re, '<mark>$1</mark>');
-  });
-  return resultado;
+  let r = texto;
+  pals.forEach(p => { r = r.replace(new RegExp(`(${p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'), '<mark>$1</mark>'); });
+  return r;
 }
 
 function renderizar(items, query) {
   const lista = document.getElementById('lista');
-  const info = document.getElementById('info');
+  const info  = document.getElementById('info');
 
-  if (items.length === 0) {
+  if (!items.length) {
     lista.innerHTML = '<div class="sin-resultados">No se encontraron recursos con esos criterios.</div>';
     info.textContent = 'Sin resultados';
     return;
   }
 
-  info.textContent = `${items.length} recurso${items.length > 1 ? 's' : ''} encontrado${items.length > 1 ? 's' : ''}`;
+  info.textContent = `${items.length} recurso${items.length !== 1 ? 's' : ''} encontrado${items.length !== 1 ? 's' : ''}`;
 
   lista.innerHTML = items.map(libro => {
-    const titulo = query ? resaltar(libro.titulo, query) : libro.titulo;
-    const autor = query ? resaltar(libro.autor, query) : libro.autor;
+    const etiqsHTML = libro.etiquetas.map(e => {
+      const c = ETIQUETAS[e] || 'verde';
+      return `<span class="tag e-${c}">${e}</span>`;
+    }).join('');
+
     return `
       <a class="libro" href="${BASE}${libro.ruta}" target="_blank" rel="noopener">
         <div class="libro-icono">${libro.icono}</div>
         <div class="libro-info">
-          <div class="libro-titulo">${titulo}</div>
-          <div class="libro-autor">${autor}</div>
+          <div class="libro-titulo">${resaltar(libro.titulo, query)}</div>
+          <div class="libro-autor">${resaltar(libro.autor, query)}</div>
           <div class="libro-meta">
-            <span class="tag">${libro.categoria}</span>
+            <span class="tag cat">${libro.categoria}</span>
             ${libro.año ? `<span class="tag año">${libro.año}</span>` : ''}
+            ${etiqsHTML}
           </div>
         </div>
         <div class="libro-accion">Ver PDF →</div>
       </a>`;
   }).join('');
 }
-
-function buscar() {
-  const query = document.getElementById('campo').value.trim();
-
-  let items = libros;
-
-  if (categoriaActiva) {
-    items = items.filter(l => l.categoria === categoriaActiva);
-  }
-
-  if (query) {
-    items = items.filter(l => evaluarBooleano(l, query));
-  }
-
-  renderizar(items, query);
-}
-
-function filtrarCategoria(cat, btn) {
-  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('activo'));
-  btn.classList.add('activo');
-  categoriaActiva = cat;
-  buscar();
-}
-
-// Enter para buscar
-document.getElementById('campo').addEventListener('keydown', e => {
-  if (e.key === 'Enter') buscar();
-});
-
-// Carga inicial
-renderizar(libros, '');
 </script>
 </body>
 </html>
