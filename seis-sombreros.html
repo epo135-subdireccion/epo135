@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seis Sombreros — Marco Pedagógico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --surface2: #F0EDE6;
+    --border: rgba(0,0,0,0.10);
+    --border-strong: rgba(0,0,0,0.18);
+    --text: #1A1814;
+    --text-2: #4A4640;
+    --text-3: #8A857D;
+    --accent: #2C5F8A;
+    --accent-light: #E6EFF6;
+    --accent2: #7A4A8A;
+    --hat1: #4A90D9;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--surface);
+    border-bottom: 0.5px solid var(--border);
+    padding: 20px 32px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--text);
+    font-weight: 400;
+  }
+  header span {
+    font-size: 12px;
+    color: var(--text-3);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── Layout ── */
+  .layout {
+    display: flex;
+    min-height: calc(100vh - 65px);
+  }
+
+  /* ── Sidebar tabs ── */
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 0.5px solid var(--border);
+    padding: 20px 0;
+  }
+  .sidebar-label {
+    font-size: 10px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    padding: 0 20px 10px;
+    font-weight: 500;
+  }
+  .tab-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .tab-btn:hover { background: var(--surface2); }
+  .tab-btn.active {
+    background: var(--accent-light);
+    border-left-color: var(--hat1);
+  }
+  .tab-btn.active .tab-title { color: var(--accent); font-weight: 500; }
+  .hat-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .tab-meta { display: flex; flex-direction: column; gap: 1px; }
+  .tab-num { font-size: 10px; color: var(--text-3); letter-spacing: 0.04em; }
+  .tab-title { font-size: 13px; color: var(--text-2); line-height: 1.4; }
+
+  .sidebar-divider {
+    height: 0.5px;
+    background: var(--border);
+    margin: 12px 20px;
+  }
+  .add-hint {
+    padding: 10px 20px;
+    font-size: 12px;
+    color: var(--text-3);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ── Main content ── */
+  main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 40px;
+    max-width: 820px;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── Prompt card ── */
+  .prompt-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-left: 3px solid var(--hat1);
+    border-radius: var(--radius-lg);
+    padding: 14px 18px;
+    margin-bottom: 28px;
+  }
+  .prompt-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 6px;
+  }
+  .prompt-text {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 28px; }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .body-text {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.8;
+  }
+  .body-text strong { font-weight: 500; color: var(--text); }
+
+  /* ── Concept grid ── */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .concept-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .concept-card .c-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 5px;
+  }
+  .concept-card .c-value {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  /* ── Supuestos list ── */
+  .supuesto-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .supuesto-list li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+  .sup-num {
+    min-width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    border: 0.5px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .supuesto-list strong { font-weight: 500; color: var(--text); }
+
+  /* ── Tension boxes ── */
+  .tension-box {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 13px 16px;
+    margin-top: 10px;
+  }
+  .tension-box .t-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .tension-box .t-body {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.65;
+  }
+
+  /* ── Placeholder ── */
+  .placeholder-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    gap: 12px;
+    color: var(--text-3);
+  }
+  .placeholder-panel svg { opacity: 0.35; }
+  .placeholder-panel p { font-size: 14px; }
+
+  /* ── Responsive ── */
+  @media (max-width: 680px) {
+    .layout { flex-direction: column; }
+    .sidebar { width: 100%; border-right: none; border-bottom: 0.5px solid var(--border); padding: 12px 0; }
+    .sidebar-label { display: none; }
+    .tab-btn { padding: 8px 16px; }
+    main { padding: 20px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Seis Sombreros para Pensar</h1>
+  <span>Preparatoria · Estado de México</span>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" aria-label="Prompts">
+    <div class="sidebar-label">Prompts analizados</div>
+
+    <button class="tab-btn active" onclick="switchTab('tab1', this)">
+      <span class="hat-dot" style="background:#4A90D9;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 1 · Sombrero blanco</span>
+        <span class="tab-title">Marco pedagógico y epistemológico</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab2', this)">
+      <span class="hat-dot" style="background:#C8C4BE; border: 1px solid #A0998F;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 2 · Sombrero blanco</span>
+        <span class="tab-title">Fuentes, metodologías y recursos</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab3', this)">
+      <span class="hat-dot" style="background:#C8C4BE; border: 1px solid #A0998F;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 3 · Sombrero blanco</span>
+        <span class="tab-title">Evaluación, estándares y límites institucionales</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab4', this)">
+      <span class="hat-dot" style="background:#C0392B;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 4 · Sombrero rojo</span>
+        <span class="tab-title">Tensiones entre currículo y diversidad epistémica</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab5', this)">
+      <span class="hat-dot" style="background:#C0392B;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 5 · Sombrero rojo</span>
+        <span class="tab-title">Sesgos, acceso desigual y desigualdades</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab6', this)">
+      <span class="hat-dot" style="background:#C0392B;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 6 · Sombrero rojo</span>
+        <span class="tab-title">Resistencias institucionales y culturales</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab7', this)">
+      <span class="hat-dot" style="background:#2C2C2A;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 7 · Sombrero negro</span>
+        <span class="tab-title">Dependencia excesiva de IA y pérdida de agencia</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab8', this)">
+      <span class="hat-dot" style="background:#2C2C2A;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 8 · Sombrero negro</span>
+        <span class="tab-title">Desigualdades reproducidas por acceso y datos sesgados</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab9', this)">
+      <span class="hat-dot" style="background:#2C2C2A;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 9 · Sombrero negro</span>
+        <span class="tab-title">Transparencia e influencia de la IA en decisiones pedagógicas</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab10', this)">
+      <span class="hat-dot" style="background:#E8A838;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 10 · Sombrero amarillo</span>
+        <span class="tab-title">Interdisciplinariedad y personalización bien gestionadas</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab11', this)">
+      <span class="hat-dot" style="background:#E8A838;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 11 · Sombrero amarillo</span>
+        <span class="tab-title">Equidad epistemológica y reconocimiento de saberes</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab12', this)">
+      <span class="hat-dot" style="background:#E8A838;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 12 · Sombrero amarillo</span>
+        <span class="tab-title">Comunidades de aprendizaje y justicia epistémica</span>
+      </span>
+    </button>
+
+    <div class="sidebar-divider"></div>
+    <span class="sidebar-label">Sombrero verde: soluciones</span>
+
+    <button class="tab-btn" onclick="switchTab('tab13', this)">
+      <span class="hat-dot" style="background:#2D8659;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 13 · Sombrero verde</span>
+        <span class="tab-title">Marco pedagógico inclusivo y ético</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab14', this)">
+      <span class="hat-dot" style="background:#2D8659;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 14 · Sombrero verde</span>
+        <span class="tab-title">Alfabetización mediática y pensamiento crítico</span>
+      </span>
+    </button>
+
+    <button class="tab-btn" onclick="switchTab('tab15', this)">
+      <span class="hat-dot" style="background:#2D8659;"></span>
+      <span class="tab-meta">
+        <span class="tab-num">Prompt 15 · Sombrero verde</span>
+        <span class="tab-title">Co-diseño de estándares y rúbricas</span>
+      </span>
+    </button>
+
+    <div class="sidebar-divider"></div>
+    <div class="add-hint">Los siguientes prompts aparecerán aquí conforme los compartas.</div>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- PANEL 1 -->
+    <div class="panel active" id="tab1">
+
+      <div class="prompt-card">
+        <div class="prompt-label">Prompt 1 · Sombrero blanco — información</div>
+        <div class="prompt-text">Clarifica qué se entiende por marco pedagógico y epistemológico en el contexto de una preparatoria del Estado de México y qué supuestos subyacen a ese marco.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">¿Qué es un marco pedagógico?</div>
+        <div class="body-text">
+          Un <strong>marco pedagógico</strong> es el conjunto de principios, enfoques y metodologías que orientan cómo se enseña y cómo se espera que los estudiantes aprendan. En una preparatoria del Estado de México —ya sea del sistema COBAEM, EMSAD, CECYTEM o Bachillerato General Oficial— este marco se articula principalmente alrededor del <strong>enfoque por competencias</strong> promovido por la Reforma Integral de la Educación Media Superior (RIEMS, 2008) y, más recientemente, por el Marco Curricular Común de la Nueva Escuela Mexicana (NEM).
+        </div>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="c-label">Enfoque central</div>
+            <div class="c-value">Competencias para la vida: genéricas, disciplinares básicas y extendidas</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Rol del docente</div>
+            <div class="c-value">Facilitador de aprendizajes situados, no transmisor de contenidos</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Rol del estudiante</div>
+            <div class="c-value">Sujeto activo, constructor de su propio conocimiento</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Referente normativo</div>
+            <div class="c-value">SEP / SEMS, lineamientos COPEEMS y planes de estudio estatales</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">¿Qué es el marco epistemológico?</div>
+        <div class="body-text">
+          El marco epistemológico define <em>qué cuenta como conocimiento válido</em> dentro de la institución: cómo se legitima el saber, qué relación se establece entre teoría y práctica, y quién tiene autoridad para producir o validar conocimiento. En las preparatorias mexiquenses predomina una epistemología de corte <strong>constructivista-social</strong> (Vygotsky, Ausubel, Piaget en sus versiones didácticas), aunque en la práctica cotidiana coexiste con residuos de un modelo transmisivo-enciclopédico.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Supuestos subyacentes al marco</div>
+        <ul class="supuesto-list">
+          <li>
+            <span class="sup-num">1</span>
+            <span><strong>El aprendizaje es universal y lineal:</strong> se asume que todos los estudiantes pueden alcanzar las mismas competencias si reciben la instrucción adecuada, sin cuestionar diferencias culturales, lingüísticas o socioeconómicas propias del Estado de México.</span>
+          </li>
+          <li>
+            <span class="sup-num">2</span>
+            <span><strong>El conocimiento científico-occidental es neutro:</strong> los contenidos disciplinares se presentan como objetivos y universales, ocultando su origen histórico, cultural y de poder.</span>
+          </li>
+          <li>
+            <span class="sup-num">3</span>
+            <span><strong>La competencia garantiza la empleabilidad:</strong> el marco vincula el logro académico con la inserción laboral, asumiendo que el mercado es el destino natural del egresado.</span>
+          </li>
+          <li>
+            <span class="sup-num">4</span>
+            <span><strong>El docente es el garante del aprendizaje:</strong> se centraliza la responsabilidad en el profesor, invisibilizando factores estructurales —pobreza, violencia, distancia escolar— que afectan el aprendizaje en municipios como Chimalhuacán, Ecatepec o Texcoco.</span>
+          </li>
+          <li>
+            <span class="sup-num">5</span>
+            <span><strong>La evaluación mide objetivamente el aprendizaje:</strong> los instrumentos estandarizados (PLANEA, EXANI-I) se asumen como indicadores fiables, sin cuestionar su sesgo cultural o su reducción del aprendizaje a lo medible.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Tensiones críticas a considerar</div>
+        <div class="tension-box">
+          <div class="t-title">Prescripción vs. autonomía</div>
+          <div class="t-body">El marco oficial prescribe lo que debe enseñarse, pero la práctica docente real en el Estado de México opera con márgenes de autonomía que muchas veces lo reinterpretan o subvierten según el contexto local.</div>
+        </div>
+        <div class="tension-box">
+          <div class="t-title">Discurso constructivista, práctica transmisiva</div>
+          <div class="t-body">Existe una brecha documentada entre el lenguaje oficial del marco (aprendizaje significativo, ABP, aprendizaje colaborativo) y la realidad del aula, donde predominan clases expositivas, cuadernos de apuntes y exámenes de opción múltiple.</div>
+        </div>
+        <div class="tension-box">
+          <div class="t-title">Contexto mexiquense específico</div>
+          <div class="t-body">El Estado de México alberga realidades muy distintas: preparatorias urbano-marginales (Neza, Valle de Chalco), semirrurales (Tejupilco, Ixtapan) e indígenas (Temoaya, San Felipe del Progreso). El marco único no siempre da cuenta de esa diversidad.</div>
+        </div>
+      </div>
+
+    </div><!-- /tab1 -->
+
+    <!-- PANEL 2 -->
+    <div class="panel" id="tab2">
+
+      <div class="prompt-card" style="border-left-color:#4A90D9;">
+        <div class="prompt-label">Prompt 2 · Sombrero blanco — información</div>
+        <div class="prompt-text">Identifica las fuentes de conocimiento y las metodologías de enseñanza previstas, así como los recursos disponibles (tiempo, personal, tecnología) para implementarlas.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Fuentes de conocimiento reconocidas</div>
+        <div class="body-text">En el marco curricular de las preparatorias mexiquenses, las fuentes de conocimiento no se enuncian de forma explícita como categoría, pero pueden inferirse de los programas de estudio, libros de texto autorizados y orientaciones didácticas oficiales. Se identifican tres grandes tipos:</div>
+        <div class="concept-grid" style="margin-top:14px;">
+          <div class="concept-card">
+            <div class="c-label">Fuente disciplinar</div>
+            <div class="c-value">Libros de texto SEP, acervos de la biblioteca escolar, plataformas como Khan Academy y Prepa en Línea-SEP</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Fuente experiencial</div>
+            <div class="c-value">Saberes previos del alumno, entorno comunitario, proyectos de vinculación con la comunidad local</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Fuente docente</div>
+            <div class="c-value">Experiencia profesional del profesor, actualización vía SEMS/COBAEM, redes de maestros y CTE (Consejo Técnico Escolar)</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Fuente digital</div>
+            <div class="c-value">Internet (cuando hay acceso), YouTube educativo, recursos de la Estrategia Nacional Digital y, en algunas escuelas, plataformas LMS como Moodle</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Metodologías de enseñanza previstas</div>
+        <div class="body-text" style="margin-bottom:12px;">El discurso oficial promueve metodologías activas y centradas en el estudiante. Las más mencionadas en los programas de estudio y guías didácticas son:</div>
+        <ul class="supuesto-list">
+          <li>
+            <span class="sup-num" style="background:#FEF3DC;border-color:#E8A838;color:#7A5010;">ABP</span>
+            <span><strong>Aprendizaje Basado en Proyectos:</strong> los alumnos desarrollan un producto o solución a un problema real del entorno. Es la metodología más promovida por la NEM, aunque requiere planificación transversal que pocas escuelas logran sostener.</span>
+          </li>
+          <li>
+            <span class="sup-num" style="background:#FEF3DC;border-color:#E8A838;color:#7A5010;">AC</span>
+            <span><strong>Aprendizaje Colaborativo:</strong> trabajo en equipos con roles definidos y producción conjunta. Se recomienda en casi todas las asignaturas, pero su implementación efectiva depende del tamaño del grupo (frecuentemente de 40–50 alumnos).</span>
+          </li>
+          <li>
+            <span class="sup-num" style="background:#FEF3DC;border-color:#E8A838;color:#7A5010;">AS</span>
+            <span><strong>Aprendizaje Situado:</strong> actividades ancladas en contextos reales o simulados del entorno del estudiante. Requiere que el docente conozca la comunidad y adapte los ejemplos y problemas a la realidad local.</span>
+          </li>
+          <li>
+            <span class="sup-num" style="background:#FEF3DC;border-color:#E8A838;color:#7A5010;">IC</span>
+            <span><strong>Instrucción diferenciada:</strong> atender distintos ritmos y estilos de aprendizaje dentro del mismo grupo. Metodología aspiracional: raramente se implementa de forma sistemática sin apoyo de orientación escolar.</span>
+          </li>
+          <li>
+            <span class="sup-num" style="background:#FEF3DC;border-color:#E8A838;color:#7A5010;">TIC</span>
+            <span><strong>Integración de tecnología educativa:</strong> uso de recursos digitales para investigación, presentación y colaboración. Su alcance real varía enormemente según infraestructura escolar disponible.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Recursos disponibles: un diagnóstico realista</div>
+
+        <div class="tension-box" style="border-left:3px solid #4A90D9;">
+          <div class="t-title">⏱ Tiempo</div>
+          <div class="t-body">Los planes de estudio asignan entre 3 y 5 horas semanales por asignatura. Con grupos de 40–50 alumnos y semestres de 18 semanas efectivas (descontando puentes, evaluaciones y eventos), el tiempo real de contacto pedagógico suele rondar las 60–70 horas por semestre —insuficiente para metodologías que requieren ciclos largos como ABP.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #5BAD72; margin-top:10px;">
+          <div class="t-title">👥 Personal docente</div>
+          <div class="t-body">En la mayoría de planteles del Estado de México, el profesorado tiene contrato por horas (docentes "de asignatura"), lo que limita su disponibilidad para planeación colegiada, tutorías individualizadas y proyectos transversales. Solo una fracción cuenta con plaza de tiempo completo y formación pedagógica formal. El personal de orientación escolar —clave para la instrucción diferenciada— es escaso: un orientador para 300–500 estudiantes es común.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #E8A838; margin-top:10px;">
+          <div class="t-title">💻 Tecnología</div>
+          <div class="t-body">La brecha digital es marcada. Escuelas urbanas de municipios como Toluca o Naucalpan pueden contar con aulas de medios, proyectores y acceso a internet, mientras que planteles de zonas como Sultepec, Zumpahuacán o comunidades otomíes operan sin conectividad estable. El programa Conecta T y las tablets distribuidas por la SEP resolvieron parcialmente el acceso individual, pero no la infraestructura de red institucional. Muchos docentes usan WhatsApp como plataforma de facto.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C56060; margin-top:10px;">
+          <div class="t-title">📦 Infraestructura física</div>
+          <div class="t-body">Los espacios físicos —laboratorios, talleres, bibliotecas— son heterogéneos. Algunos planteles tienen aulas bien equipadas; otros comparten espacios con telesecundarias o carecen de laboratorio funcional. El mantenimiento de equipos depende en gran parte de las cuotas voluntarias de padres de familia, lo que genera desigualdad entre planteles.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Síntesis: brecha entre lo previsto y lo posible</div>
+        <div class="body-text">
+          Existe una distancia significativa entre las metodologías que el marco pedagógico <em>prescribe</em> y los recursos con que los planteles <em>cuentan</em> para implementarlas. Las escuelas con mejores condiciones (personal estable, conectividad, grupos pequeños) pueden aproximarse al modelo; las más vulnerables adaptan las metodologías a sus posibilidades reales, a veces de forma creativa y otras simplemente regresando al modelo transmisivo por necesidad, no por convicción.
+        </div>
+      </div>
+
+    </div><!-- /tab2 -->
+
+    <!-- PANEL 3 -->
+    <div class="panel" id="tab3">
+
+      <div class="prompt-card" style="border-left-color:#4A90D9;">
+        <div class="prompt-label">Prompt 3 · Sombrero blanco — información</div>
+        <div class="prompt-text">Describe las necesidades de evaluación, estándares curriculares y límites institucionales que deben considerar para apoyar la justicia epistémica mediante IA.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Necesidades de evaluación</div>
+        <div class="body-text" style="margin-bottom:12px;">Para que la IA pueda apoyar la justicia epistémica —es decir, el reconocimiento equitativo de los saberes de todos los estudiantes, independientemente de su origen cultural, lingüístico o socioeconómico— es necesario primero entender qué evalúa actualmente el sistema y dónde están sus vacíos.</div>
+        <ul class="supuesto-list">
+          <li>
+            <span class="sup-num">1</span>
+            <span><strong>Evaluación diagnóstica contextualizada:</strong> se necesita conocer no solo el nivel académico de entrada, sino los saberes culturales, lingüísticos y comunitarios con los que el estudiante llega. Las pruebas actuales (EXANI-I, diagnósticos internos) no capturan esta dimensión.</span>
+          </li>
+          <li>
+            <span class="sup-num">2</span>
+            <span><strong>Evaluación formativa continua:</strong> el sistema privilegia la evaluación sumativa (exámenes parciales y finales). Para apoyar la justicia epistémica, se requieren mecanismos de retroalimentación frecuente que permitan ajustar la enseñanza al ritmo y contexto de cada grupo.</span>
+          </li>
+          <li>
+            <span class="sup-num">3</span>
+            <span><strong>Evaluación de competencias no académicas:</strong> habilidades socioemocionales, pensamiento crítico situado, ciudadanía digital y liderazgo comunitario rara vez se evalúan formalmente, aunque el marco NEM las declara centrales.</span>
+          </li>
+          <li>
+            <span class="sup-num">4</span>
+            <span><strong>Autoevaluación y coevaluación:</strong> metodologías que devuelven al estudiante agencia sobre su propio proceso de aprendizaje, reconocidas en los programas pero ausentes en la práctica evaluativa cotidiana.</span>
+          </li>
+          <li>
+            <span class="sup-num">5</span>
+            <span><strong>Evidencia de aprendizaje diversificada:</strong> portafolios, proyectos, producciones orales o en lengua materna deberían coexistir con los exámenes escritos. Sin esto, la IA que solo optimiza hacia lo estandarizado reproduce la injusticia epistémica en lugar de combatirla.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Estándares curriculares vigentes</div>
+        <div class="body-text" style="margin-bottom:12px;">Cualquier implementación de IA debe operar dentro —o explícitamente negociar con— los siguientes estándares que rigen la EMS en el Estado de México:</div>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="c-label">Marco Curricular Común (MCC)</div>
+            <div class="c-value">Define las competencias genéricas (11) y disciplinares básicas compartidas por todos los subsistemas. Es el piso normativo mínimo que la IA no puede ignorar ni contradecir.</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Nueva Escuela Mexicana (NEM)</div>
+            <div class="c-value">Incorpora el enfoque de "aprendizaje comunitario" y proyectos integradores. Abre espacio para reconocer saberes locales, lo que es aliado de la justicia epistémica, pero su instrumentación curricular aún es incipiente.</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">COPEEMS</div>
+            <div class="c-value">Consejo para la Evaluación de la EMS. Certifica la calidad de los planteles y exige cumplimiento de indicadores de cobertura, eficiencia terminal y evaluación docente. Ninguna innovación con IA puede comprometer estos indicadores.</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Planes de estudio estatales</div>
+            <div class="c-value">COBAEM, CECYTEM y Bachillerato General tienen programas propios alineados al MCC pero con variantes locales. La IA debe poder adaptarse a cada subsistema, no asumir un currículo único.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Límites institucionales que acotar desde el inicio</div>
+
+        <div class="tension-box" style="border-left:3px solid #C56060;">
+          <div class="t-title">Límite normativo — protección de datos de menores</div>
+          <div class="t-body">La Ley General de Protección de Datos Personales y la Ley General de Educación prohíben el uso de datos personales de estudiantes sin consentimiento informado. Cualquier herramienta de IA que procese información de alumnos menores de edad en escuelas públicas mexiquenses debe cumplir con estos marcos y contar con aval de la SEMx o la dirección del plantel.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C56060; margin-top:10px;">
+          <div class="t-title">Límite tecnológico — conectividad y dispositivos</div>
+          <div class="t-body">Como se señaló en el prompt anterior, una fracción significativa de planteles carece de internet estable. Una IA que requiera conexión permanente a la nube es inviable en esos contextos. Se necesitan soluciones que funcionen offline o con baja latencia.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C56060; margin-top:10px;">
+          <div class="t-title">Límite presupuestal — modelo de financiamiento</div>
+          <div class="t-body">Los planteles públicos no tienen presupuesto discrecional para contratar plataformas o licencias de IA. Cualquier implementación debe ser gratuita, financiada por la SEP/SEMx, o parte de un proyecto de investigación o innovación con fondos externos (CONAHCyT, fundaciones, etc.).</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C56060; margin-top:10px;">
+          <div class="t-title">Límite de formación docente</div>
+          <div class="t-body">La mayoría del profesorado no tiene formación en IA ni en pedagogía crítica digital. Introducir herramientas sin acompañamiento formativo genera rechazo, mal uso o dependencia acrítica. La capacitación no puede ser optativa ni reducirse a un taller de 3 horas.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C56060; margin-top:10px;">
+          <div class="t-title">Límite cultural — resistencia institucional al cambio</div>
+          <div class="t-body">Las estructuras sindicales (SNTE, CNTE en el Estado de México) y las culturas institucionales de los planteles pueden interpretar la IA como una amenaza al empleo docente o a la autonomía pedagógica. Sin diálogo y negociación con estos actores, cualquier implementación enfrenta resistencia pasiva o activa.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Lo que la IA necesita saber para no reproducir injusticia epistémica</div>
+        <div class="body-text">Una IA que no conoce los estándares curriculares locales puede proponer actividades incompatibles con los programas. Una IA entrenada solo en contenidos académicos occidentales invisibiliza los saberes de comunidades mazahuas, otomíes o nahuas presentes en el Estado de México. Una IA evaluadora que optimiza hacia métricas estandarizadas premia a quienes ya tienen ventaja cultural. Por eso, el diseño de cualquier herramienta de IA para este contexto debe partir de estas restricciones —no como obstáculos sino como condiciones de posibilidad de una tecnología éticamente situada.</div>
+      </div>
+
+    </div><!-- /tab3 -->
+
+    <!-- PANEL 4 -->
+    <div class="panel" id="tab4">
+
+      <div class="prompt-card" style="border-left-color:#C0392B;">
+        <div class="prompt-label">Prompt 4 · Sombrero rojo — emociones e intuiciones</div>
+        <div class="prompt-text">Señala posibles tensiones entre el dominio de contenidos curriculares y la inclusión de enfoques epistemológicos que promuevan la diversidad de saberes.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Lo que el sombrero rojo pone sobre la mesa</div>
+        <div class="body-text">El sombrero rojo no pide argumentos: pide nombrar lo que se siente, lo que inquieta, lo que genera resistencia visceral o entusiasmo inmediato. Estas son las tensiones que producen incomodidad real en docentes, directivos, estudiantes y diseñadores curriculares cuando se plantea incorporar la diversidad epistémica en una preparatoria mexiquense.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Tensiones que se sienten, no solo se piensan</div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B;">
+          <div class="t-title">«Si no entra en el examen, no vale»</div>
+          <div class="t-body">Hay una presión emocional real sobre docentes y estudiantes: lo que no se evalúa en EXANI-I o en los parciales parece no existir. Incluir saberes comunitarios o indígenas genera la sensación de perder tiempo valioso, aunque nadie lo diga abiertamente. El currículo estandarizado produce ansiedad cuando se le desafía.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B; margin-top:10px;">
+          <div class="t-title">El malestar del docente que siente que pierde autoridad</div>
+          <div class="t-body">Reconocer que los saberes del estudiante —su comunidad, su lengua, su experiencia— son fuentes legítimas de conocimiento puede vivirse como una amenaza a la identidad profesional del maestro. Si el alumno también sabe, ¿qué lugar ocupa el docente? Esta tensión no es lógica, es identitaria.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B; margin-top:10px;">
+          <div class="t-title">El miedo a relativizar todo</div>
+          <div class="t-body">Entre directivos y algunos docentes existe el temor de que abrir la puerta a «otros saberes» lleve al relativismo total: si todos los conocimientos valen igual, ¿cómo enseñamos matemáticas o química? Esta angustia, aunque epistemológicamente imprecisa, es genuina y bloquea la conversación antes de que empiece.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B; margin-top:10px;">
+          <div class="t-title">La incomodidad de nombrarse «occidental»</div>
+          <div class="t-body">Decirle a un docente que su currículo es de origen occidental y que eso implica una posición de poder genera reacción defensiva. No porque sea falso, sino porque implica responsabilidad. La mayoría del profesorado no se formó para pensar en esos términos y la incomodidad puede convertirse en rechazo al proyecto completo.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B; margin-top:10px;">
+          <div class="t-title">La sensación de traición al estudiante que quiere «salir adelante»</div>
+          <div class="t-body">Hay una tensión emocional profunda: muchas familias mandan a sus hijos a la preparatoria precisamente para que accedan al conocimiento que les permita moverse en el mundo formal —universidad, empleo, movilidad social. Enfatizar los saberes locales puede sentirse, para ellas, como negarles esa escalera. Aunque la dicotomía es falsa, el sentimiento es real y legítimo.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B; margin-top:10px;">
+          <div class="t-title">El entusiasmo que asusta: «¿y si funciona?»</div>
+          <div class="t-body">No todas las tensiones son negativas. Algunos docentes sienten un entusiasmo genuino al imaginar un aula donde el conocimiento del estudiante mazahua o del estudiante de Valle de Chalco sea punto de partida, no ruido de fondo. Pero ese entusiasmo también genera vértigo: romper con lo conocido implica asumir riesgos institucionales y pedagógicos reales.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B; margin-top:10px;">
+          <div class="t-title">La IA como nuevo portador de la misma episteme dominante</div>
+          <div class="t-body">Hay una intuición incómoda que muchos no saben cómo articular: si la IA fue entrenada con textos mayoritariamente en inglés, producidos por instituciones del norte global, ¿no es simplemente otro vehículo del mismo conocimiento que ya domina el currículo? Usar IA para «diversificar epistémicamente» puede sentirse contradictorio, casi irónico.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Lo que estas tensiones le piden al diseño</div>
+        <div class="body-text">El sombrero rojo no resuelve, señala. Estas tensiones emocionales son datos de diseño tan válidos como los normativos. Ignorarlas produce herramientas bien intencionadas que nadie usa, propuestas curriculares que se archivan, y proyectos de IA que generan más resistencia que transformación. Cualquier propuesta de justicia epistémica con IA en preparatorias mexiquenses necesita tomar en serio estos miedos, malestares y entusiasmos — no como obstáculos que superar, sino como el terreno real donde todo ocurrirá.</div>
+      </div>
+
+    </div><!-- /tab4 -->
+
+    <!-- PANEL 5 -->
+    <div class="panel" id="tab5">
+
+      <div class="prompt-card" style="border-left-color:#C0392B;">
+        <div class="prompt-label">Prompt 5 · Sombrero rojo — emociones e intuiciones</div>
+        <div class="prompt-text">Expresa preocupaciones sobre sesgos algorítmicos, acceso desigual a tecnología y posibles desigualdades entre estudiantes de diferentes zonas o contextos.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Lo que inquieta antes de que haya datos</div>
+        <div class="body-text">El sombrero rojo vuelve a hablar. Esta vez no desde la incomodidad identitaria del docente, sino desde una preocupación más visceral y colectiva: el miedo a que la tecnología que se promete como solución sea en realidad una capa más de injusticia. Estas son las angustias que circulan —a veces en voz alta, a veces solo en la sala de maestros o en la mente del investigador— cuando se habla de IA en preparatorias mexiquenses.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Preocupaciones sobre sesgos algorítmicos</div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B;">
+          <div class="t-title">La IA no conoce a mi estudiante</div>
+          <div class="t-body">Los modelos de lenguaje e IA educativa fueron entrenados mayoritariamente con textos en inglés, producidos en contextos anglosajones, europeos o de élite latinoamericana. Cuando un alumno de San Felipe del Progreso escribe en español con interferencia del mazahua, o usa expresiones del valle de Toluca, el modelo puede interpretarlo como error, no como variedad legítima. El sesgo no es intencional — pero el daño es real.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B; margin-top:10px;">
+          <div class="t-title">Los algoritmos premian lo que ya está premiado</div>
+          <div class="t-body">Los sistemas de recomendación y retroalimentación automatizada tienden a reforzar patrones dominantes: el estudiante que ya escribe «bien» recibe sugerencias útiles; el que escribe desde otra norma recibe correcciones que erosionan su voz. Hay algo perturbador en la idea de que una IA pueda silenciar formas de expresión que el currículo oficial ya marginaba.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B; margin-top:10px;">
+          <div class="t-title">¿Quién decide qué es una respuesta correcta?</div>
+          <div class="t-body">Cuando la IA evalúa o clasifica respuestas de estudiantes, hay un juicio implícito sobre qué cuenta como conocimiento válido. Ese juicio no es neutral: está codificado por quienes diseñaron el sistema. La preocupación es que ese diseño nunca consultó a una preparatoria de Sultepec ni a un docente otomí.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B; margin-top:10px;">
+          <div class="t-title">El sesgo invisible es el más peligroso</div>
+          <div class="t-body">Con un libro de texto sesgado, al menos el docente puede contradecirlo, contextualizarlo, cerrar el libro. Con un sistema de IA que emite retroalimentación personalizada en tiempo real, el sesgo llega directamente al estudiante envuelto en la apariencia de objetividad. Eso produce una forma de daño más difícil de detectar y contestar.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Preocupaciones sobre acceso desigual a tecnología</div>
+
+        <div class="tension-box" style="border-left:3px solid #8B1A1A;">
+          <div class="t-title">La brecha digital como brecha epistémica</div>
+          <div class="t-body">Si la IA solo está disponible donde hay internet estable y dispositivos funcionales, entonces solo llega a los planteles que ya tienen más recursos. El estudiante de Ecatepec con wifi en casa y el de Amatepec sin señal de celular no son solo casos tecnológicos distintos — son trayectorias educativas que se separan aún más. La tecnología prometida como igualadora puede convertirse en nuevo vector de estratificación.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #8B1A1A; margin-top:10px;">
+          <div class="t-title">La tablet que llegó pero no funciona</div>
+          <div class="t-body">Hay una memoria amarga en muchos planteles mexiquenses con los programas de dotación de dispositivos: tablets que se entregaron sin actualizaciones, laptops que no tienen soporte técnico, aulas de medios con equipos obsoletos. La IA propuesta puede despertar ese mismo escepticismo: «ya nos prometieron tecnología antes».</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #8B1A1A; margin-top:10px;">
+          <div class="t-title">El acceso en casa no es acceso igual</div>
+          <div class="t-body">Incluso cuando los estudiantes tienen dispositivo propio, las condiciones domésticas varían enormemente: el alumno que comparte el celular con tres hermanos, que no tiene cuarto propio para concentrarse, o que trabaja por las tardes no puede aprovechar herramientas de IA de la misma manera que quien tiene computadora propia y conexión de banda ancha. Hablar de «acceso» sin hablar de estas condiciones es una abstracción que invisibiliza la desigualdad.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Preocupaciones sobre desigualdades entre zonas y contextos</div>
+
+        <div class="tension-box" style="border-left:3px solid #6B2E2E;">
+          <div class="t-title">No todas las preparatorias del Estado de México son iguales</div>
+          <div class="t-body">La distancia entre un plantel del corredor Toluca-Metepec y uno de la zona mazahua o de la sierra de Tejupilco no es solo geográfica: es de recursos, de expectativas institucionales, de capital cultural del profesorado y de las familias. Una política de IA que trate a todos los planteles como equivalentes profundiza esa distancia al dar más a quienes ya tienen más.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #6B2E2E; margin-top:10px;">
+          <div class="t-title">El riesgo de la solución universal para problemas locales</div>
+          <div class="t-body">Hay algo que produce desconfianza instintiva ante propuestas de IA «para todos»: la sensación de que quien las diseña nunca ha pisado una preparatoria de zona indígena en invierno, sin calefacción, con grupos multigrado, donde el docente es el único profesionista del pueblo. La solución universal que no parte del contexto específico tiene historia de fracasar — y de culpar al maestro o al alumno cuando lo hace.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #6B2E2E; margin-top:10px;">
+          <div class="t-title">¿Quién se beneficia realmente?</div>
+          <div class="t-body">Una preocupación que pocos verbalizan pero muchos sienten: los proyectos de IA educativa suelen beneficiar primero a las escuelas piloto seleccionadas —generalmente las más equipadas, las que ya tienen docentes entusiastas, las que están cerca de las universidades que investigan— y los resultados se generalizan como si aplicaran a todo el sistema. El estudiante de la periferia aparece en el discurso pero raramente en el diseño.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Lo que estas preocupaciones exigen</div>
+        <div class="body-text">No son objeciones para descartar la IA — son condiciones para que valga la pena. Si una propuesta de IA para la justicia epistémica en preparatorias mexiquenses no tiene una respuesta honesta para cada una de estas preocupaciones, entonces no está lista. El sombrero rojo no veta, advierte: la tecnología bien intencionada sin diseño situado tiene historia de hacer daño con buena conciencia.</div>
+      </div>
+
+    </div><!-- /tab5 -->
+
+    <!-- PANEL 6 -->
+    <div class="panel" id="tab6">
+
+      <div class="prompt-card" style="border-left-color:#C0392B;">
+        <div class="prompt-label">Prompt 6 · Sombrero rojo — emociones e intuiciones</div>
+        <div class="prompt-text">Detecta resistencias institucionales o culturales que podrían oponerse a cambios en la pedagogía o en la evaluación basada en IA.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Resistencia no es obstáculo — es información</div>
+        <div class="body-text">El sombrero rojo cierra su turno con la pregunta más incómoda para cualquier proyecto de innovación: ¿quién no quiere que esto pase, y por qué? Detectar resistencias no es para superarlas por la fuerza sino para entender qué intereses, miedos e identidades están en juego. En las preparatorias mexiquenses, las resistencias tienen capas — institucionales, sindicales, culturales, pedagógicas — y todas son reales.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Resistencias institucionales</div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B;">
+          <div class="t-title">La burocracia como mecanismo de conservación</div>
+          <div class="t-body">Las instituciones educativas del Estado de México operan con estructuras administrativas que valoran la estabilidad sobre la innovación. Cualquier cambio pedagógico requiere autorización de múltiples niveles: dirección de plantel, supervisión de zona, jefatura de sector, coordinación estatal. Cada nivel puede detener o diluir una propuesta sin necesidad de oponerse explícitamente — basta con no tramitarla.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B; margin-top:10px;">
+          <div class="t-title">El calendario escolar como camisa de fuerza</div>
+          <div class="t-body">Introducir nuevas metodologías o sistemas de evaluación basados en IA requiere tiempo de capacitación, pilotaje y ajuste. El calendario oficial — con sus fechas de exámenes, consejos técnicos, semanas de inscripción y eventos cívicos — deja márgenes mínimos. La institución no bloquea activamente: simplemente no tiene espacio para lo nuevo.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B; margin-top:10px;">
+          <div class="t-title">Los indicadores de desempeño institucional no miden lo que importa</div>
+          <div class="t-body">Los planteles son evaluados por eficiencia terminal, índice de reprobación y resultados en pruebas estandarizadas. Un director que adopta una metodología innovadora asume el riesgo de que sus indicadores bajen durante la transición. No hay incentivo institucional para experimentar — y sí hay consecuencias visibles si algo sale mal.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #C0392B; margin-top:10px;">
+          <div class="t-title">La memoria institucional de los proyectos fallidos</div>
+          <div class="t-body">Enciclomedia, HDT (Habilidades Digitales para Todos), el programa de tablets, Aprende 2.0: cada generación de docentes mexiquenses vivió al menos un programa tecnológico que llegó con promesas, generó trabajo extra de adaptación y luego desapareció sin continuidad ni rendición de cuentas. Esa historia produce un escepticismo legítimo, casi defensivo, ante cualquier nueva propuesta tecnológica.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Resistencias sindicales</div>
+
+        <div class="tension-box" style="border-left:3px solid #922B21;">
+          <div class="t-title">La IA como amenaza al empleo docente</div>
+          <div class="t-body">Aunque la narrativa oficial enmarca la IA como «apoyo al docente», el SNTE y sectores de la CNTE en el Estado de México pueden leerla como primer paso hacia la automatización de funciones docentes. Esa lectura no es irracional: en otros sectores laborales, «apoyo tecnológico» precedió a la reducción de plazas. La resistencia sindical ante la IA educativa puede no tener nombre propio aún, pero el terreno emocional está preparado.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #922B21; margin-top:10px;">
+          <div class="t-title">Cambios en la evaluación docente</div>
+          <div class="t-body">Si la IA comienza a producir datos sobre desempeño estudiantil desagregados por aula o por docente, esos datos pueden usarse — o temerse que se usen — para evaluar al maestro. La experiencia de la reforma educativa de 2013 dejó una herida profunda en el magisterio mexiquense: la evaluación punitiva como instrumento de control. Cualquier propuesta que involucre datos de aula activa esa memoria de forma inmediata.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Resistencias culturales y pedagógicas</div>
+
+        <div class="tension-box" style="border-left:3px solid #6B2E2E;">
+          <div class="t-title">La cultura de la clase magistral como identidad profesional</div>
+          <div class="t-body">Para muchos docentes de preparatoria, la clase expositiva no es solo una metodología: es la forma en que aprendieron, en que fueron formados y en que construyeron su autoridad. Cuestionar ese modelo con IA o con pedagogías activas no se vive como actualización — se vive como invalidación de años de práctica. La resistencia no es pereza: es protección de la identidad.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #6B2E2E; margin-top:10px;">
+          <div class="t-title">El rechazo a ser monitoreado</div>
+          <div class="t-body">Herramientas de IA que registran interacciones, tiempos de respuesta o patrones de uso generan la sensación de vigilancia constante. En una cultura docente que valora la autonomía dentro del aula — «cuando cierro la puerta, el salón es mío» — esa sensación produce rechazo visceral, independientemente de los argumentos pedagógicos a favor.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #6B2E2E; margin-top:10px;">
+          <div class="t-title">La desconfianza hacia lo que viene de afuera</div>
+          <div class="t-body">En comunidades educativas con fuerte identidad local — especialmente en zonas indígenas o rurales del Estado de México — las propuestas que llegan desde la SEP central, desde universidades urbanas o desde empresas tecnológicas cargan con una historia de imposición. La resistencia cultural a lo externo no es cerrazón: es memoria colectiva de cuántas veces «lo de afuera» llegó sin preguntar y se fue sin quedarse.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #6B2E2E; margin-top:10px;">
+          <div class="t-title">El estudiante que prefiere al maestro de carne y hueso</div>
+          <div class="t-body">No toda la resistencia viene de adultos. Hay estudiantes — especialmente en contextos de alta vulnerabilidad emocional o social — para quienes el vínculo con el docente es el principal factor de permanencia escolar. Una evaluación o tutoría mediada por IA puede sentirse fría, impersonal, o incluso humillante cuando lo que el alumno necesita es ser visto por alguien que lo conoce.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Lo que el sombrero rojo deja como herencia</div>
+        <div class="body-text">Tres prompts de sombrero rojo después, el patrón es claro: las resistencias no son irracionales, son racionales desde dentro de sus propios sistemas de experiencia y memoria. El proyecto de justicia epistémica con IA que no dialogue con estas resistencias desde el inicio — no para vencerlas sino para entenderlas — está construyendo sobre arena. La pregunta que hereda al siguiente sombrero es esta: ¿qué de todo esto puede convertirse en ventaja, en aliado, en punto de partida?</div>
+      </div>
+
+    </div><!-- /tab6 -->
+
+    <!-- PANEL 7 -->
+    <div class="panel" id="tab7">
+
+      <div class="prompt-card" style="border-left-color:#2C2C2A;">
+        <div class="prompt-label">Prompt 7 · Sombrero negro — juicio crítico y precaución</div>
+        <div class="prompt-text">Riesgo de dependencia excesiva de IA que reduzca la agencia docente y la reflexión crítica de los estudiantes.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">El sombrero negro: pensar lo que puede salir mal</div>
+        <div class="body-text">El sombrero negro no es pesimismo — es rigor. Su función es identificar con precisión los riesgos reales antes de que ocurran, para diseñar salvaguardas. En el caso de la dependencia excesiva de IA en preparatorias mexiquenses, los riesgos no son especulativos: tienen precedentes documentados en otros contextos educativos y raíces estructurales propias del sistema local.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Riesgos sobre la agencia docente</div>
+
+        <div class="tension-box" style="border-left:3px solid #2C2C2A;">
+          <div class="t-title">El docente que delega el juicio pedagógico a la máquina</div>
+          <div class="t-body">Cuando una herramienta de IA genera planeaciones, sugiere actividades, produce rúbricas y retroalimenta trabajos, el docente puede pasar de ser autor de su práctica pedagógica a ser ejecutor de lo que el sistema propone. El riesgo no es que la IA lo reemplace formalmente — es que el maestro deje de ejercer su juicio profesional por comodidad, carga de trabajo o falta de formación crítica sobre la herramienta.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2C2C2A; margin-top:10px;">
+          <div class="t-title">La automatización del vínculo pedagógico</div>
+          <div class="t-body">La retroalimentación personalizada que ofrece la IA puede parecer más eficiente que la del docente con cuarenta y cinco alumnos. Pero la retroalimentación pedagógica no es solo información: es relación, contexto, tono, historia compartida. Un sistema que retroalimenta sin conocer al estudiante como persona produce respuestas técnicamente correctas y pedagógicamente vacías. El riesgo es que esa vacuidad se normalice.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2C2C2A; margin-top:10px;">
+          <div class="t-title">La erosión de la formación docente continua</div>
+          <div class="t-body">Si la IA resuelve el problema de la planeación y la evaluación, ¿para qué seguir formándose pedagógicamente? El riesgo de mediano plazo es que la dependencia tecnológica sustituya la reflexión sobre la práctica: cursos, lecturas, investigación-acción, intercambio entre pares. Un magisterio que delega el pensamiento pedagógico a la IA se vuelve más frágil, no más competente, ante los retos del aula real.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2C2C2A; margin-top:10px;">
+          <div class="t-title">La homogeneización disfrazada de personalización</div>
+          <div class="t-body">Los sistemas de IA «personalizan» dentro de los parámetros que fueron programados. Si esos parámetros reflejan un perfil de estudiante estándar —hispanohablante urbano, de clase media, con acceso a internet— la «personalización» que ofrecen a un alumno de contexto indígena o rural es en realidad una adaptación superficial de lo mismo. El docente que conoce a su grupo puede detectar esa insuficiencia; el que delega en la IA, no.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Riesgos sobre la reflexión crítica del estudiante</div>
+
+        <div class="tension-box" style="border-left:3px solid #444441;">
+          <div class="t-title">El pensamiento como proceso externalizado</div>
+          <div class="t-body">Cuando la IA genera el borrador, estructura el argumento, sugiere los ejemplos y corrige la redacción, el estudiante puede completar tareas complejas sin haber atravesado el proceso cognitivo que las hace formativas. El riesgo no es el plagio —que también existe— sino algo más sutil: la atrofia de la capacidad de pensar en dificultad, de tolerar la incertidumbre, de construir ideas propias desde cero.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #444441; margin-top:10px;">
+          <div class="t-title">La respuesta correcta como destino, no el razonamiento</div>
+          <div class="t-body">Los sistemas de IA tienden a converger hacia respuestas aceptables. Un estudiante que aprende a usar la IA para obtener la respuesta correcta aprende también que el camino no importa — importa el resultado que el sistema valida. Esto es la antítesis de la reflexión crítica y del pensamiento epistémicamente diverso, que valora precisamente el proceso, la pregunta y la incertidumbre productiva.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #444441; margin-top:10px;">
+          <div class="t-title">La voz propia disuelta en el estilo del modelo</div>
+          <div class="t-body">Los modelos de lenguaje tienen una voz reconocible: fluida, moderada, bien estructurada, sin aristas. Cuando los estudiantes usan IA para escribir de forma habitual, sus textos tienden a parecerse entre sí y a perder las marcas de su propia experiencia, contexto y forma de pensar. Para un proyecto de justicia epistémica, esto es una pérdida específica: la voz del estudiante mazahua, del que creció en Valle de Chalco, del que trabaja en el mercado por las tardes — esas voces son irreemplazables y la IA las puede disolver sin proponérselo.</span></div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #444441; margin-top:10px;">
+          <div class="t-title">Dependencia sin comprensión del instrumento</div>
+          <div class="t-body">El estudiante que usa IA sin entender cómo funciona, qué sesgos contiene, quién la diseñó y con qué datos, es un usuario pasivo de una tecnología que toma decisiones sobre él. La reflexión crítica sobre la IA es tan urgente como la reflexión crítica con la IA. Sin esa dimensión metacognitiva, la herramienta forma consumidores de respuestas, no productores de preguntas.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">El riesgo sistémico de fondo</div>
+        <div class="body-text">Detrás de todos estos riesgos hay uno mayor y más difícil de nombrar: que el sistema educativo adopte la IA como solución a sus problemas estructurales —grupos numerosos, docentes sobrecargados, recursos insuficientes— sin resolver esos problemas, y que la dependencia resultante haga aún más difícil imaginar alternativas. La IA usada como parche institucional no solo no resuelve la injusticia epistémica: puede consolidarla bajo una capa de eficiencia aparente. El sombrero negro no dice que no se haga — dice que si se hace sin estas salvaguardas, el remedio puede ser peor que la enfermedad.</div>
+      </div>
+
+    </div><!-- /tab7 -->
+
+    <!-- PANEL 8 -->
+    <div class="panel" id="tab8">
+
+      <div class="prompt-card" style="border-left-color:#2C2C2A;">
+        <div class="prompt-label">Prompt 8 · Sombrero negro — juicio crítico y precaución</div>
+        <div class="prompt-text">Amenaza de reproducir desigualdades si la IA no es accesible o si los datos utilizados sesgan los resultados educativos.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">El mecanismo por el que la IA puede amplificar lo que dice combatir</div>
+        <div class="body-text">El sombrero negro exige precisión: no basta con decir que la IA «puede reproducir desigualdades» — hay que señalar exactamente cómo, en qué momento del proceso, a través de qué mecanismo. En el contexto de las preparatorias mexiquenses, la amenaza opera en dos planos interdependientes: el de la infraestructura de acceso y el de la infraestructura de datos. Ambos se refuerzan mutuamente.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">La desigualdad de acceso como primer filtro de exclusión</div>
+
+        <div class="tension-box" style="border-left:3px solid #2C2C2A;">
+          <div class="t-title">La IA que solo existe donde ya hay condiciones</div>
+          <div class="t-body">Una herramienta de IA educativa que requiere conexión estable, dispositivo propio y tiempo fuera del horario escolar es, estructuralmente, una herramienta para estudiantes con recursos. En el Estado de México, eso significa que los planteles del corredor Toluca-Naucalpan-Tlalnepantla acceden a la herramienta mientras los de la zona mazahua, la sierra sur o los municipios de muy alta marginación como Luvianos o Texcatitlán quedan fuera. No por decisión explícita — por omisión de diseño.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2C2C2A; margin-top:10px;">
+          <div class="t-title">El efecto Mateo en educación digital</div>
+          <div class="t-body">En sociología de la educación se documenta el «efecto Mateo»: los que más tienen, más reciben. Aplicado a la IA educativa, significa que los estudiantes con mayor capital cultural y digital aprenden más rápido a usar las herramientas, obtienen mejores resultados de ellas, y amplían su ventaja sobre quienes parten de condiciones más precarias. La IA no crea esta dinámica — la hereda y la escala.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2C2C2A; margin-top:10px;">
+          <div class="t-title">El acceso parcial como peor escenario</div>
+          <div class="t-body">Más peligroso que la ausencia total de acceso es el acceso intermitente o de baja calidad: el estudiante que puede usar la herramienta una vez a la semana en el aula de medios, sin continuidad ni acompañamiento, aprende lo suficiente para saber que existe pero no lo suficiente para beneficiarse de ella. Mientras tanto, su compañero con acceso cotidiano desarrolla una competencia real. La brecha se ensancha precisamente porque ambos «tienen acceso».</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">La desigualdad inscrita en los datos</div>
+
+        <div class="tension-box" style="border-left:3px solid #444441;">
+          <div class="t-title">Los datos de entrenamiento como historia de exclusión</div>
+          <div class="t-body">Los modelos de IA aprenden de los datos con que fueron entrenados. Si esos datos son mayoritariamente textos académicos en inglés, producidos por instituciones del norte global, con representación mínima de contextos latinoamericanos rurales o indígenas, el modelo aprende a reconocer como «correcto» y «competente» lo que se parece a esos textos. El estudiante que escribe desde otra experiencia cultural no es evaluado con justicia — es evaluado por su distancia al patrón dominante.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #444441; margin-top:10px;">
+          <div class="t-title">Los datos locales que no existen o no se usan</div>
+          <div class="t-body">Para que un sistema de IA funcione bien en el contexto de una preparatoria de Jilotepec o de Chimalhuacán, necesitaría datos de ese contexto: cómo escriben esos estudiantes, qué saberes previos tienen, qué errores cometen y por qué, qué funciona pedagógicamente ahí. Esos datos no existen en formato digital, o si existen no han sido incorporados a ningún sistema de IA. La consecuencia es que el modelo opera con una imagen del estudiante mexiquense que no corresponde a su realidad.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #444441; margin-top:10px;">
+          <div class="t-title">El sesgo de retroalimentación: los errores del modelo se vuelven verdad</div>
+          <div class="t-body">Cuando un sistema de IA evalúa trabajos estudiantiles y sus juicios se acumulan como datos de desempeño, los sesgos del modelo se convierten en registros oficiales. Un alumno cuya forma de argumentar es culturalmente distinta a la norma del modelo puede acumular evaluaciones negativas que definen su trayectoria escolar — no porque su pensamiento sea deficiente, sino porque el modelo no lo reconoce. Este es el mecanismo por el que el sesgo algorítmico se vuelve desigualdad estructural documentada.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #444441; margin-top:10px;">
+          <div class="t-title">La opacidad como protección del sesgo</div>
+          <div class="t-body">La mayoría de los sistemas de IA educativa son cajas negras: ni el docente ni el estudiante ni el director pueden ver por qué el sistema tomó la decisión que tomó. Sin transparencia algorítmica, el sesgo no puede ser detectado, cuestionado ni corregido. En un contexto de justicia epistémica, la opacidad no es un problema técnico menor — es una condición que hace imposible la rendición de cuentas.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">El círculo que se cierra: acceso + datos = desigualdad compuesta</div>
+        <div class="body-text" style="margin-bottom:12px;">La amenaza más grave no es la suma de ambos problemas sino su interacción. El escenario concreto:</div>
+        <ul class="supuesto-list">
+          <li>
+            <span class="sup-num">1</span>
+            <span>Los planteles con menos recursos no acceden a la herramienta o lo hacen de forma precaria.</span>
+          </li>
+          <li>
+            <span class="sup-num">2</span>
+            <span>Los datos que el sistema acumula provienen mayoritariamente de planteles con más recursos, consolidando un modelo sesgado hacia ese perfil.</span>
+          </li>
+          <li>
+            <span class="sup-num">3</span>
+            <span>Cuando los planteles marginados eventualmente acceden, son evaluados con un modelo entrenado sin ellos — y sus resultados son peores, lo que se interpreta como déficit del estudiante, no del modelo.</span>
+          </li>
+          <li>
+            <span class="sup-num">4</span>
+            <span>Esos resultados negativos justifican menos inversión en esos planteles, cerrando el círculo.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Lo que el sombrero negro exige como condición mínima</div>
+        <div class="body-text">Ninguna implementación de IA en preparatorias mexiquenses debería avanzar sin responder estas preguntas: ¿Con qué datos fue entrenado el sistema y qué poblaciones representan? ¿Existe un mecanismo de auditoría de sesgo accesible para actores no técnicos? ¿Hay un plan diferenciado para planteles sin conectividad? ¿Los resultados del sistema pueden ser impugnados por docentes y estudiantes? Sin respuestas concretas a estas preguntas, la promesa de justicia epistémica mediante IA es, en el mejor caso, una intención bien documentada y, en el peor, una forma sofisticada de reproducir lo que dice combatir.</div>
+      </div>
+
+    </div><!-- /tab8 -->
+
+    <!-- PANEL 9 -->
+    <div class="panel" id="tab9">
+
+      <div class="prompt-card" style="border-left-color:#2C2C2A;">
+        <div class="prompt-label">Prompt 9 · Sombrero negro — juicio crítico y precaución</div>
+        <div class="prompt-text">Problemas de transparencia y comprensión de cómo la IA influencia las decisiones pedagógicas y epistemológicas.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">El problema de lo que no se ve pero decide</div>
+        <div class="body-text">La opacidad algorítmica no es un defecto técnico corregible con mejor documentación — es una condición estructural de los sistemas de IA actuales que tiene consecuencias pedagógicas y epistemológicas específicas. En una preparatoria mexiquense, donde ni docentes ni directivos ni estudiantes tienen formación para interrogar un modelo de aprendizaje automático, la influencia de la IA sobre las decisiones educativas ocurre de forma invisible, continua y difícilmente reversible. El sombrero negro señala exactamente cómo.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Problemas de transparencia técnica</div>
+
+        <div class="tension-box" style="border-left:3px solid #2C2C2A;">
+          <div class="t-title">La caja negra que nadie puede abrir</div>
+          <div class="t-body">Los modelos de lenguaje e IA educativa basados en redes neuronales profundas no producen explicaciones de sus decisiones — producen resultados. Cuando el sistema dice que un ensayo «es insuficiente» o que un estudiante «tiene riesgo de abandono», no puede articular los pasos de ese razonamiento en términos que un docente pueda verificar, cuestionar o enseñar. La decisión existe; su lógica, no.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2C2C2A; margin-top:10px;">
+          <div class="t-title">La documentación técnica que no llega al aula</div>
+          <div class="t-body">Algunos sistemas de IA publican fichas técnicas, políticas de uso de datos y documentación sobre sesgos identificados. Pero esa documentación está escrita en inglés técnico, dirigida a desarrolladores, y jamás llega a la dirección del plantel ni al docente frente al grupo. La transparencia formal no equivale a transparencia operativa. Existe en algún servidor; no existe en la práctica pedagógica cotidiana.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2C2C2A; margin-top:10px;">
+          <div class="t-title">La actualización silenciosa que cambia las reglas</div>
+          <div class="t-body">Los sistemas de IA se actualizan de forma continua. Un modelo que hoy evalúa de una manera puede evaluarlo diferente en seis meses sin que el docente o el estudiante reciban notificación comprensible del cambio. En evaluación educativa, donde la consistencia y la previsibilidad son condiciones de justicia, esto es un riesgo grave: las reglas del juego cambian sin avisar.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Problemas de transparencia pedagógica</div>
+
+        <div class="tension-box" style="border-left:3px solid #444441;">
+          <div class="t-title">El docente que no sabe qué le dijo la IA a su alumno</div>
+          <div class="t-body">Cuando un sistema de IA proporciona retroalimentación directa al estudiante —sin que el docente la vea, la valide o la conozca— se rompe la cadena pedagógica. El maestro pierde visibilidad sobre qué información está recibiendo su alumno, si esa información es correcta, si contradice lo que él enseñó, o si está modelando expectativas que el propio docente no compartiría. La relación pedagógica se fragmenta.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #444441; margin-top:10px;">
+          <div class="t-title">La recomendación que se vuelve prescripción</div>
+          <div class="t-body">Los sistemas de IA «recomiendan» actividades, rutas de aprendizaje o recursos. En la práctica, cuando esa recomendación llega de una plataforma institucional y el docente tiene cuarenta y cinco alumnos y tres grupos más, la recomendación se convierte en prescripción por omisión: se sigue porque no hay tiempo ni energía para cuestionarla. La influencia de la IA sobre la práctica pedagógica opera así — no por imposición sino por defecto.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #444441; margin-top:10px;">
+          <div class="t-title">La evaluación que el sistema hace sin que nadie la pidió</div>
+          <div class="t-body">Muchos sistemas de IA educativa producen perfiles de estudiantes, predicciones de riesgo y clasificaciones de desempeño de forma automática, como subproducto de su uso. Esos datos pueden influir en decisiones de orientación, acreditación o permanencia sin que haya un proceso explícito de evaluación docente detrás. La decisión pedagógica se toma, pero nadie la firma.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Problemas de transparencia epistemológica</div>
+
+        <div class="tension-box" style="border-left:3px solid #5F5E5A;">
+          <div class="t-title">Los valores codificados como si fueran hechos</div>
+          <div class="t-body">Toda decisión de diseño de un sistema de IA implica juicios de valor: qué tipo de argumento es más sólido, qué estructura textual es más «clara», qué evidencia es suficiente, qué cuenta como comprensión profunda. Esos juicios son epistemológicos, no técnicos. Pero al estar codificados en un algoritmo, se presentan como resultados objetivos. El sistema no dice «desde mi perspectiva epistemológica, este texto es débil» — dice «este texto es débil». La diferencia es enorme y desaparece en la interfaz.</span></div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #5F5E5A; margin-top:10px;">
+          <div class="t-title">La epistemología que no se puede negociar</div>
+          <div class="t-body">En una clase, el docente y el estudiante pueden negociar qué cuenta como argumento válido, qué tipo de evidencia es aceptable, cómo se relacionan la experiencia personal y el conocimiento académico. Con un sistema de IA, esa negociación no existe: los criterios son los del modelo, y la única respuesta disponible es usarlo o no usarlo. Para un proyecto de justicia epistémica, esto es la contradicción central: una herramienta diseñada para diversificar saberes que no puede, por su naturaleza, abrirse a saberes que no anticipó.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #5F5E5A; margin-top:10px;">
+          <div class="t-title">La ilusión de neutralidad como forma de autoridad</div>
+          <div class="t-body">La apariencia de objetividad es la forma más poderosa de autoridad epistémica porque no puede ser cuestionada en los mismos términos que la autoridad humana. Un docente puede estar equivocado y el estudiante puede decírselo; un algoritmo que produce resultados «basados en datos» construye una forma de verdad que se siente inapelable. En contextos de baja alfabetización algorítmica — que describe a la mayoría de los actores del sistema educativo mexiquense — esa autoridad opera sin contrapeso.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Cierre del sombrero negro: el inventario de lo que falta</div>
+        <div class="body-text">Tres prompts de sombrero negro construyen un diagnóstico coherente: la dependencia erosiona la agencia; el acceso desigual y los datos sesgados reproducen la exclusión; y la opacidad hace que todo ocurra sin que nadie pueda verlo, cuestionarlo ni corregirlo. Lo que falta, y que el siguiente sombrero deberá imaginar, es el diseño de condiciones bajo las cuales ninguno de estos riesgos se materialice — o al menos, bajo las cuales sean detectables, impugnables y corregibles. Un sistema de IA que no puede ser interrogado por quienes más lo necesitan no es una herramienta de justicia epistémica. Es su contrario con mejor presentación.</div>
+      </div>
+
+    </div><!-- /tab9 -->
+
+    <!-- PANEL 10 -->
+    <div class="panel" id="tab10">
+
+      <div class="prompt-card" style="border-left-color:#E8A838;">
+        <div class="prompt-label">Prompt 10 · Sombrero amarillo — optimismo y valor</div>
+        <div class="prompt-text">Potencial para enriquecer la enseñanza con enfoques interdisciplinarios y personalización del aprendizaje cuando se gestionan adecuadamente.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">El sombrero amarillo: buscar lo que puede funcionar</div>
+        <div class="body-text">Después de tres sombreros que nombraron riesgos, resistencias y opacidades, el sombrero amarillo tiene una tarea distinta y exigente: identificar los beneficios reales —no ingenuos, no abstractos— que la IA bien gestionada puede aportar a la enseñanza en preparatorias mexiquenses. El optimismo del sombrero amarillo no ignora los problemas señalados; los toma como condiciones de diseño y pregunta qué es posible dentro de esos límites.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Potencial para enfoques interdisciplinarios</div>
+
+        <div class="tension-box" style="border-left:3px solid #E8A838;">
+          <div class="t-title">La IA como articulador de saberes que el currículo mantiene separados</div>
+          <div class="t-body">Una de las limitaciones más reconocidas del currículo por asignaturas es la fragmentación artificial del conocimiento: matemáticas, biología, historia y lengua operan como compartimentos estancos. La IA puede actuar como articulador: cuando un estudiante trabaja un proyecto sobre el agua en su comunidad, una herramienta bien diseñada puede conectar las dimensiones química, histórica, geográfica, económica y narrativa del problema sin que el docente de cada asignatura tenga que coordinarse en tiempo real. Esto es especialmente valioso en planteles donde la planeación colegiada es difícil por la estructura de contratación por horas.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #E8A838; margin-top:10px;">
+          <div class="t-title">Proyectos situados en el contexto mexiquense con soporte disciplinar múltiple</div>
+          <div class="t-body">Imaginar un sistema de IA que, ante un proyecto sobre la milpa en Temoaya o sobre el transporte informal en Ecatepec, pueda ofrecer al estudiante recursos de ecología, economía, historia regional y expresión escrita simultáneamente — sin requerir que el docente sea experto en todo eso — no es fantasía: es lo que herramientas de IA bien configuradas pueden hacer hoy si se les da el contexto adecuado. El potencial interdisciplinario de la IA reside precisamente en su capacidad de no estar atrapada en una sola disciplina.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #E8A838; margin-top:10px;">
+          <div class="t-title">Apoyo a docentes que enseñan fuera de su formación</div>
+          <div class="t-body">En muchas preparatorias del Estado de México — especialmente en zonas rurales y semiurbanas — los docentes imparten asignaturas para las que no fueron formados, por necesidad de cobertura. Una herramienta de IA que ayude al maestro de matemáticas que cubre filosofía, o al de biología que cubre taller de lectura, no sustituye la formación disciplinar: la compensa parcialmente mientras se resuelven los problemas estructurales de personal. Esto es un beneficio real, concreto y urgente.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Potencial para la personalización del aprendizaje</div>
+
+        <div class="tension-box" style="border-left:3px solid #BA7517;">
+          <div class="t-title">Atender ritmos distintos sin dejar a nadie atrás ni detener al grupo</div>
+          <div class="t-body">El problema pedagógico más frecuente en grupos de cuarenta y cinco estudiantes es la imposibilidad de avanzar al ritmo de cada quien: si el docente espera a los más lentos, pierde a los más rápidos; si avanza con los más rápidos, excluye a los más lentos. Una herramienta de IA que ofrezca ejercicios de refuerzo a quienes necesitan consolidar y desafíos adicionales a quienes ya dominaron el contenido puede operar en paralelo a la clase, sin reemplazarla, ampliando efectivamente el tiempo pedagógico disponible.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #BA7517; margin-top:10px;">
+          <div class="t-title">Retroalimentación inmediata donde el docente no puede llegar</div>
+          <div class="t-body">En grupos numerosos, el docente puede revisar un trabajo por alumno cada dos o tres semanas. Una herramienta de IA puede dar retroalimentación el mismo día, sobre el borrador, antes de que el estudiante lo entregue. Si esa retroalimentación está bien diseñada — orientada a preguntas, no a respuestas; al proceso, no solo al producto — puede multiplicar las oportunidades de mejora sin reemplazar la evaluación docente final. El valor no está en la velocidad sino en la frecuencia.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #BA7517; margin-top:10px;">
+          <div class="t-title">Reconocimiento de saberes previos como punto de partida</div>
+          <div class="t-body">Una herramienta de IA diseñada con enfoque de justicia epistémica puede hacer algo que el currículo estandarizado rara vez hace: preguntar antes de enseñar. Si al inicio de una unidad el sistema recoge lo que el estudiante ya sabe — desde su experiencia, su comunidad, su lengua — y usa eso como andamiaje para los contenidos curriculares, la personalización deja de ser ajuste de velocidad y se convierte en reconocimiento de la persona. Esto es técnicamente posible y pedagógicamente transformador.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #BA7517; margin-top:10px;">
+          <div class="t-title">Apoyo a estudiantes con necesidades específicas sin estigmatización</div>
+          <div class="t-body">Para estudiantes con dislexia, con español como segunda lengua, con rezago por ausentismo laboral o familiar, o con necesidades de educación especial no diagnosticadas, la IA puede ofrecer apoyos diferenciados —textos en distinto formato, explicaciones en otro registro, tiempos extendidos— sin que eso requiera que el estudiante se identifique públicamente como «el que necesita ayuda». La privacidad de la interacción con la herramienta puede ser, en ciertos contextos, una ventaja real frente al estigma del apoyo visible en el aula.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">La condición que hace posible todo lo anterior</div>
+        <div class="body-text">El sombrero amarillo no es ciego: sabe que cada uno de estos beneficios tiene una condición. Interdisciplinariedad real requiere que la herramienta conozca el contexto local. Personalización auténtica requiere que el modelo no imponga una norma única. Retroalimentación formativa requiere que esté orientada a preguntas y proceso, no a respuestas y producto. Reconocimiento de saberes previos requiere que el diseño haya consultado a comunidades, no solo a expertos. Ninguno de estos beneficios es automático — todos son posibles. Y la diferencia entre automático y posible es exactamente el espacio donde el diseño situado, ético y participativo tiene que ocurrir.</div>
+      </div>
+
+    </div><!-- /tab10 -->
+
+    <!-- PANEL 11 -->
+    <div class="panel" id="tab11">
+
+      <div class="prompt-card" style="border-left-color:#E8A838;">
+        <div class="prompt-label">Prompt 11 · Sombrero amarillo — equidad epistemológica</div>
+        <div class="prompt-text">Posibilidad de fortalecer la equidad epistemológica al reconocer diversas formas de saber y de evaluar críticamente el conocimiento.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Equidad epistemológica: reconocer sin jerarquizar</div>
+        <div class="body-text">El sombrero amarillo aquí enfrenta una paradoja: la IA está entrenada en un corpus sesgado hacia saberes académicos, formales y occidentales. Pero precisamente porque esa limitación es conocida, es posible diseñar un sistema que reconozca sus límites y que, en lugar de ocultarlos, los ponga al servicio de una pedagogía más justa. El potencial no está en que la IA sea neutra o equitativa por defecto — no lo es — sino en que puede ser configurada para amplificar voces y saberes que el currículo estándar invisibiliza.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Reconocimiento de saberes previos como patrimonio del estudiante</div>
+
+        <div class="tension-box" style="border-left:3px solid #E8A838;">
+          <div class="t-title">Saberes comunitarios y prácticos como punto de entrada al currículo</div>
+          <div class="t-body">Un estudiante en Temoaya sabe de milpa porque su familia la cultiva. Un estudiante en Ecatepec sabe de movilidad porque usa transporte informal. Un estudiante hablante de otomí o mazahua sabe de lengua en contextos que la escuela no valora. La IA bien diseñada puede hacer lo que el currículo pocas veces permite: partir del saber que el estudiante ya tiene y usarlo como puente hacia contenidos formales. Cuando una herramienta reconoce el saber comunitario no como curiosidad sino como punto de partida legítimo, cambia el estatus epistémico de quien lo posee: deja de ser estudiante que «llega atrasado» y se convierte en estudiante que «conoce algo».</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #E8A838; margin-top:10px;">
+          <div class="t-title">La evaluación que comienza con preguntas sobre lo que el estudiante sabe</div>
+          <div class="t-body">La evaluación diagnóstica tradicional busca lo que falta. Una herramienta de IA orientada a equidad epistemológica busca primero lo que está presente: qué sabe, cómo lo sabe, en qué contextos ese saber funciona. Solo desde ahí pregunta qué falta. Este cambio de óptica — de déficit a presencia — transforma la relación entre el estudiante y el aprendizaje. No es un cambio técnico menor: es un cambio en la autoridad epistémica. Cuando la herramienta dice «veo lo que sabes», antes de decir «falta esto», valida al estudiante como productor de conocimiento, no solo como consumidor.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #E8A838; margin-top:10px;">
+          <div class="t-title">Documentación de saberes informales en lenguaje que el currículo reconoce</div>
+          <div class="t-body">Hay una tarea pedagógica específica que la IA puede realizar: ayudar al estudiante a traducir su saber informal a lenguaje académico sin que pierda su origen ni su sentido. El estudiante sabe de economía porque ha visto negociar precios en la tienda familiar, sabe de política porque ha escuchado debates en su comunidad sobre agua y servicios, sabe de narrativa porque cuenta historias. La IA puede actuar como traductora: documenta eso que el estudiante sabe «de verdad» en formulaciones que el currículo académico reconoce como válidas. Esto no es descontextualizar — es hacer visible lo que ya estaba ahí.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Pluralismo en formas de saber y argumentación</div>
+
+        <div class="tension-box" style="border-left:3px solid #BA7517;">
+          <div class="t-title">La IA como mediadora entre formas distintas de razonamiento</div>
+          <div class="t-body">Un argumento puede ser válido por ser lógicamente consistente, por enraizarse en la experiencia, por contar con consenso comunitario, por mantener equilibrio relacional, por crear armonía con el entorno. El currículo académico privilegia la lógica deductiva. Pero una herramienta bien diseñada puede reconocer que existen múltiples formas de razonamiento válidas y puede ayudar al estudiante a transitar entre ellas: cómo traducir un razonamiento basado en relaciones comunitarias a un formato de argumento académico; cómo reconocer cuándo una forma de saber es más adecuada que otra según el contexto. La IA no impone una sola forma de ser inteligente.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #BA7517; margin-top:10px;">
+          <div class="t-title">Validación de múltiples evidencias según el tipo de pregunta</div>
+          <div class="t-body">No toda pregunta requiere investigación cuantitativa. Algunas preguntas — sobre el significado, sobre qué le importa a un grupo, sobre cómo cambia la vida cuando algo ocurre — requieren observación etnográfica, relato testimonial, narrativa. Una herramienta de IA configurada con pluralismo epistemológico puede ayudar al estudiante a identificar qué tipo de evidencia es apropiada para qué tipo de pregunta. Un sistema que acepta que la respuesta a «¿cómo experimentan los agricultores la sequía?» puede venir de entrevistas, videos de la comunidad, o registros históricos locales — no solo de datos del INEGI — amplía lo que cuenta como conocimiento válido.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #BA7517; margin-top:10px;">
+          <div class="t-title">Espacios para la duda, la contraargumentación y la negociación del saber</div>
+          <div class="t-body">El sombrero amarillo reconoce algo que el negro ya advirtió: la IA tiende a responder con autoridad. Pero puede ser diseñada para hacer lo contrario: para dejar espacio a la pregunta sin respuesta, a la contraargumentación, a la negociación. Cuando una herramienta pregunta «¿de verdad estás de acuerdo con esto?» o propone argumentos alternativos a los que el estudiante presentó, o reconoce «esto depende de cómo lo mires», está validando que el conocimiento no es un depósito que se transfiere sino un territorio que se construye en diálogo. La incertidumbre, bien gestionada, es una posición epistemica, no un fracaso.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Crítica del conocimiento sin reproducir la jerarquía académica</div>
+
+        <div class="tension-box" style="border-left:3px solid #D4A043;">
+          <div class="t-title">Análisis crítico del saber que el estudiante ya trae</div>
+          <div class="t-body">La educación crítica no comienza con el currículo oficial — comienza con los saberes que el estudiante da por sentado. ¿Por qué cree lo que cree? ¿De dónde viene eso? ¿Quién se beneficia si sigue siendo así? Una herramienta de IA orientada a justicia epistémica puede ayudar al estudiante a examinar sus propias creencias no como defectos a corregir sino como saberes a analizar: dónde vienen, en qué contextos funcionan, qué supuestos cargan, qué alternativas existen. Esto requiere un tipo de IA que no compite con lo que el estudiante piensa sino que lo ayuda a pensarlo con mayor profundidad y conciencia.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #D4A043; margin-top:10px;">
+          <div class="t-title">Decodificación del currículo: reconocer qué saberes la escuela valoriza y por qué</div>
+          <div class="t-body">Parte de la inequidad epistémica es que el estudiante no suele saber por qué se valora cierto tipo de saber en la escuela. Por qué el ensayo académico, no la narrativa. Por qué la estadística, no el registro etnográfico. Por qué la citación formal, no la tradición oral. Una herramienta de IA puede hacer visible la epistemología del currículo: explicar al estudiante que esas formas de saber están conectadas a historias, a poderes, a decisiones que alguien tomó — y que no son neutras ni eternas. Cuando el estudiante entiende eso, puede aprender las formas académicas sin perder sus propias formas, porque entiende que está aprendiendo a traducir, no a reemplazar.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #D4A043; margin-top:10px;">
+          <div class="t-title">Crítica colectiva del conocimiento para fortalecer la autoridad epistémica del grupo</div>
+          <div class="t-body">La justicia epistémica no es solo individual — es colectiva. Una herramienta de IA puede facilitar que grupos de estudiantes, juntos, critiquen un texto, analicen una noticia, examinen un concepto. En eso, el sistema actúa no como juez sino como facilitador: presenta preguntas, recoge perspectivas, ayuda a cartografiar desacuerdos, visibiliza puntos de encuentro. Cuando el grupo desarrolla esa capacidad de análisis colectivo, se fortalece algo que la escuela rara vez cultiva: la autoridad epistémica compartida. El grupo sabe que puede pensar junto, que su pensamiento vale, que puede cuestionar.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">El límite del sombrero amarillo: lo que la IA no puede resolver sola</div>
+        <div class="body-text">El sombrero amarillo es honesto sobre sus límites. La equidad epistémica depende, en última instancia, de decisiones humanas: qué saberes se valorizan en la institución, qué se acredita, qué se reconoce en boletines y certificados. La IA puede amplificar saberes, puede facilitarlos, puede dejarlos visibles. Pero no puede cambiar una estructura que dice «lo que cuenta es solo lo que está en el currículo oficial» o «equidad epistemológica se valida solo con calificación numérica». El potencial de la IA para fortalecer equidad epistémica existe — pero es frágil. Se mantiene solo si está acompañado de cambios en lo que la institución realmente valora.</div>
+      </div>
+
+    </div><!-- /tab11 -->
+
+    <!-- PANEL 12 -->
+    <div class="panel" id="tab12">
+
+      <div class="prompt-card" style="border-left-color:#E8A838;">
+        <div class="prompt-label">Prompt 12 · Sombrero amarillo — comunidades de aprendizaje</div>
+        <div class="prompt-text">Oportunidad de construir comunidades de aprendizaje con docentes y estudiantes vía IA que promuevan la justicia epistémica dentro de la escuela.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">La IA como infraestructura para la conversación epistémica</div>
+        <div class="body-text">Hasta aquí, el sombrero amarillo ha hablado de la IA como herramienta para el aprendizaje individual. Pero su potencial más transformador está en lo que no es visible en una plataforma: la capacidad de generar conversaciones entre actores que rara vez dialogan sobre qué cuentan como saber, por qué, y cómo eso afecta a quién. La IA bien configurada puede ser la infraestructura que hace posible esa comunidad de indagación — no como reemplazo de la conversación humana, sino como facilitadora de las preguntas que la comunidad necesita hacer.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Comunidades de docentes como productores de conocimiento pedagógico</div>
+
+        <div class="tension-box" style="border-left:3px solid #E8A838;">
+          <div class="t-title">La IA como espacio de documentación del saber docente</div>
+          <div class="t-body">Los docentes en una preparatoria mexiquense saben cosas que nunca se escriben: qué estrategias funcionan con estudiantes que trabajan y estudian, cómo adaptar un proyecto de ABP cuando faltan recursos, cómo conectar la lengua materna de un estudiante con el currículo oficial. Ese saber es clandestino — existe en conversaciones de pasillo, en la experiencia de veinte años de enseñanza, pero nunca se documenta ni se comparte institucionalmente. Una herramienta de IA diseñada para capturar, sistematizar y hacer visible ese conocimiento pedagógico puede transformar lo que hoy es experiencia privada en patrimonio colectivo de la escuela. Docentes pueden documentar, otros docentes pueden acceder, todos aprenden de la práctica situada de cada uno.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #E8A838; margin-top:10px;">
+          <div class="t-title">Espacios de reflexión colectiva sobre decisiones pedagógicas</div>
+          <div class="t-body">Cuando un docente usa la IA en una clase — para generar preguntas, para analizar respuestas, para diseñar actividades — puede registrar esa experiencia: qué pasó, qué funcionó, qué no. Si eso está disponible para que otros docentes lo lean, critiquen, adapten, se forma una comunidad de práctica. Más aún: si la IA sintetiza esas experiencias documentadas, puede identificar patrones — «cuando usamos la estrategia X con proyectos situados en la comunidad, esto ocurre» — y presentarlos de nuevo a la comunidad para que reflexione. Es un ciclo de reflexión colectiva que rara vez existe en escuelas donde los docentes están fragmentados por disciplina y horario.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #E8A838; margin-top:10px;">
+          <div class="t-title">Formación docente situada, generada por y desde la comunidad</div>
+          <div class="t-body">La formación docente en el sistema oficial tiende a venir de arriba hacia abajo: capacitadores externos llegan con modelos genéricos. Pero la IA puede invertir ese flujo. Si la comunidad docente de EPO 135, por ejemplo, documentan lo que aprenden usando herramientas de IA con sus estudiantes, eso puede convertirse en material de formación que otros docentes de la región — enfrentados a contextos similares — pueden estudiar. No es teoría abstracta sino conocimiento producido en Ixtapaluca, para problemas de Ixtapaluca, por docentes que enseñan en esa realidad. La IA es el medio que hace eso sistematizable y transferible.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Comunidades de estudiantes como pensadores epistémicos</div>
+
+        <div class="tension-box" style="border-left:3px solid #BA7517;">
+          <div class="t-title">Círculos de lectura y análisis colectivo mediados por IA</div>
+          <div class="t-body">Un grupo de estudiantes lee un texto, mira un video, examina datos sobre un problema de su comunidad. La IA puede actuar como moderadora del diálogo: presenta preguntas, recoge perspectivas, visibiliza desacuerdos productivos, conecta lo que dice un estudiante con lo que dijo otro. El resultado no es que todos lleguen a la misma conclusión — es que el grupo desarrolla una capacidad de pensar junto. Se aprende a escuchar un argumento diferente no como competencia sino como oportunidad. Eso, multiplicado en varias comunidades de estudiantes dentro de la escuela, cambia la cultura epistémica de la institución.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #BA7517; margin-top:10px;">
+          <div class="t-title">Proyectos colaborativos entre estudiantes de distintos grupos y generaciones</div>
+          <div class="t-body">La estructura de una preparatoria fragmenta a los estudiantes: grupos cerrados, una asignatura por docente, generaciones que pocas veces se mezclan. La IA puede conectarlos en torno a preguntas e indagaciones colectivas. Estudiantes de 1o1 y 3o2 pueden trabajar juntos en un proyecto sobre la historia del agua en Ixtapaluca, porque la IA facilita el diálogo entre perspectivas de distintas edades y experiencias. Cuando estudiantes con saberes diferentes colaboran en un objeto de investigación común, sucede algo específico: aprenden que la diversidad de perspectivas es necesaria para entender lo complejo. Eso no se enseña — se experimenta.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #BA7517; margin-top:10px;">
+          <div class="t-title">Voz de estudiantes en decisiones sobre cómo se usa la IA en su escuela</div>
+          <div class="t-body">Pocas veces los estudiantes son consultados sobre cómo quieren que la IA los apoye. La decisión viene de arriba: «vamos a implementar esto». Una comunidad de aprendizaje con justicia epistémica incluye a los estudiantes como diseñadores, no solo como usuarios. ¿Qué tipo de retroalimentación quieren? ¿Cómo les gustaría que se reconocieran sus saberes previos? ¿Cuáles son sus preocupaciones sobre privacidad y vigilancia? Cuando la escuela consulta a estudiantes — no de forma cosmética sino genuina — sobre cómo usar la IA, los estudiantes se convierten en pensadores críticos sobre tecnología. Y eso es quizá el aprendizaje más valioso que una escuela puede promover en 2026.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Ecosistema de justicia epistémica: docentes, estudiantes y comunidad</div>
+
+        <div class="tension-box" style="border-left:3px solid #D4A043;">
+          <div class="t-title">Puentes entre saberes académicos y saberes comunitarios</div>
+          <div class="t-body">Una comunidad de aprendizaje con justicia epistémica no termina en el aula. Cuando la escuela usa IA para documentar proyectos sobre el agua, la milpa, o la movilidad — con participación de estudiantes que conocen esos temas desde su vida — esos documentos pueden circular hacia la comunidad: familias, asambleas locales, actores comunitarios. Y desde ahí, pueden volver a la escuela retroalimentación que hace el proyecto más rico. La IA facilita ese ciclo de diálogo escuela-comunidad porque puede ayudar a traducir entre lenguajes: lo que un sociólogo escribió, lo que una abuela sabe, lo que un estudiante descubrió. La justicia epistémica deja de ser un valor interno de la escuela y se convierte en práctica relacional con la comunidad.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #D4A043; margin-top:10px;">
+          <div class="t-title">Memoria institucional: lo que la escuela aprende sobre sí misma</div>
+          <div class="t-body">Cuando docentes y estudiantes documentan experiencias pedagógicas usando IA, la escuela comienza a tener memoria de lo que intenta, de lo que funciona, de lo que no. Esa memoria es escasa en instituciones educativas: cuando se va un director, cuando se retira un docente con experiencia, eso saber se evapora. Una comunidad de aprendizaje que usa IA para documentar su propia práctica crea un acervo: «EPO 135 en 2026 intentó esto con estos resultados». Eso es un capital pedagógico invaluable para la próxima generación de docentes y directivos que lleguen a la escuela.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #D4A043; margin-top:10px;">
+          <div class="t-title">Horizontalidad en la autoridad epistémica: de la jerarquía a la conversación</div>
+          <div class="t-body">En una escuela tradicional, el director sabe qué es buena pedagogía, el supervisor regional lo valida, el docente lo implementa, el estudiante lo aprende. Es una cadena jerárquica de autoridad epistémica. Una comunidad de aprendizaje con justicia epistémica invierte eso: el estudiante que conoce la economía informal porque su familia la vive, el docente que ha experimentado cuarenta años de enseñanza en contextos de pobreza, el director que observa qué realmente pasa en las aulas, todos tienen autoridad epistémica para hablar de qué funciona aquí, en esta escuela, con estos estudiantes. La IA no crea esa horizontalidad — pero puede ser el espacio donde esa conversación ocurre sin que la jerarquía formal la sofoque.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Condiciones estructurales para que esta comunidad sea posible</div>
+
+        <div class="tension-box" style="border-left:3px solid #E8B341;">
+          <div class="t-title">Tiempo de trabajo colectivo dentro del horario laboral</div>
+          <div class="t-body">Para que docentes documenten, reflexionen y aprendan juntos, necesitan tiempo. Hoy, los docentes de hora están fragmentados, sin espacios formales de encuentro. Los docentes de base tienen reuniones burocráticas que ocupan el poco espacio colectivo que existe. Una comunidad de aprendizaje requiere que el director proteja tiempo estructurado — dentro de las jornadas colegiadas o en espacios nuevos — para que docentes se sienten a reflexionar sobre qué está ocurriendo con la IA en sus aulas. Sin eso, la herramienta es solo una herramienta.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #E8B341; margin-top:10px;">
+          <div class="t-title">Liderazgo compartido, no centralizado en la dirección</div>
+          <div class="t-body">Comunidades de aprendizaje genuinas requieren que varios actores — docentes líderes, estudiantes con voz, orientadores, padres — comparta la responsabilidad de sostenerla. Si la IA está bajo control solo de la dirección o solo de un docente tecnológico, se convierte en instrumento de poder. Si hay espacios donde docentes pueden proponer usos, donde estudiantes pueden cuestionar, donde la comunidad puede hacer aportes, la IA deja de ser algo que «se hace a la gente» y se convierte en algo que «la gente hace juntos».</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #E8B341; margin-top:10px;">
+          <div class="t-title">Infraestructura tecnológica confiable pero simple</div>
+          <div class="t-body">La comunidad no necesita sistemas sofisticados. Necesita algo que funcione: una plataforma donde se documenten experiencias, donde se recojan preguntas de estudiantes, donde se sistematice lo que aprenden juntos. No tiene que ser complejo. Puede ser un Google Site, un repositorio simple, un formulario que capture reflexiones docentes. Lo importante es que sea accesible, que no requiera capacitación técnica, y que alguien de la comunidad (no un proveedor externo) pueda mantenerlo. La sobrecarga tecnológica mata las comunidades de aprendizaje antes de que naczan.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">El sombrero amarillo cierra: la IA al servicio de la justicia epistémica</div>
+        <div class="body-text">Los tres prompts del sombrero amarillo han costruido un argumento: la IA tiene potencial para enriquecer la enseñanza — si se diseña y se implementa en comunidad, si se orienta a reconocer y amplificar saberes diversos, si se mantiene bajo control de quienes la usan, no de quienes la venden. La IA no es justa por naturaleza. Pero tiene un potencial que ninguna herramienta pedagógica anterior tenía: la capacidad de documentar, de sintetizar, de conectar perspectivas, de facilitar diálogos a escala. Ese potencial es real. Y está ahí para ser tomado — o desperdiciado — según las decisiones que tome la comunidad de EPO 135, y cada escuela mexiquense que se atreva a preguntar: ¿cómo usamos la IA no para control, no para eficiencia, sino para justicia epistémica?</div>
+      </div>
+
+    </div><!-- /tab12 -->
+
+    <!-- PANEL 13 -->
+    <div class="panel" id="tab13">
+
+      <div class="prompt-card" style="border-left-color:#2D8659;">
+        <div class="prompt-label">Prompt 13 · Sombrero verde — soluciones constructivas</div>
+        <div class="prompt-text">Propuestas para diseñar un marco pedagógico-epistemológico inclusivo que incorpore IA de forma ética y centrada en el estudiante.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">El sombrero verde: de la crítica a la construcción</div>
+        <div class="body-text">Después de tres sombreros que nombraron riesgos, tres que imaginaron potenciales, ahora el sombrero verde toma responsabilidad constructiva. No se trata de negociar entre blanco, negro y amarillo — se trata de tejer un marco que reconozca lo que hemos aprendido en los primeros nueve prompts y que diga: así, con estas decisiones específicas, es posible. El sombrero verde no es ingenuo: sabe que la IA trae el sesgo occidental, que la opacidad es un riesgo real, que la equidad no es automática. Pero pregunta: ¿cómo diseñamos de tal forma que estos riesgos sean gestionables y estos potenciales sean realizables?</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Pilares del marco: cuatro ejes de construcción</div>
+
+        <div class="concept-grid" style="margin-top:14px;">
+          <div class="concept-card">
+            <div class="c-label">Eje 1: Epistemología pluralista</div>
+            <div class="c-value">Reconocer múltiples formas de saber (académica, comunitaria, experiencial, narrativa) como válidas y necesarias para comprender la realidad.</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Eje 2: Agencia estudiantil</div>
+            <div class="c-value">El estudiante como productor de conocimiento, no consumidor. Diseño participativo en decisiones sobre cómo la IA lo apoya.</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Eje 3: Transparencia y control</div>
+            <div class="c-value">La IA opera bajo escrutinio constante. Qué datos usa, por qué, cómo se decide. Control comunitario, no corporativo.</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Eje 4: Comunidad como contexto</div>
+            <div class="c-value">La escuela no es un contenedor aislado. La IA conecta saberes académicos con saberes comunitarios en diálogo permanente.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Principios de diseño ético centrado en el estudiante</div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659;">
+          <div class="t-title">1. Consentimiento informado y participativo desde el inicio</div>
+          <div class="t-body">Antes de que un estudiante interactúe con IA, la escuela — en consulta genuina con estudiantes, padres y docentes — define qué datos se recopilan, para qué, quién los ve y por cuánto tiempo. No es un formulario que se firma. Es un diálogo: ¿qué preocupaciones tienen los estudiantes? ¿Qué garantías necesitan? ¿En qué términos están de acuerdo en usar estas herramientas? El resultado es un documento vivo que puede cambiar. Si en marzo descubrimos que la IA está siendo usada de forma que los estudiantes no imaginaban, se renegocia. El consentimiento no es firma única — es conversación permanente.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659; margin-top:10px;">
+          <div class="t-title">2. Mínimos datos, máximo valor pedagógico</div>
+          <div class="t-body">La tentación con la IA es recopilar todo lo que se pueda: cada click, cada pausa, cada corrección. Eso crea perfiles de estudiantes que pueden predecir comportamiento futuro — y eso es vigilancia, no pedagógía. El marco propone lo inverso: ¿cuál es el dato mínimo que necesitamos para apoyar este aprendizaje? Si necesitamos saber qué tipo de retroalimentación funciona para María, recopilamos eso. No recopilamos dónde vive, cuál es su situación económica o qué páginas visita fuera de la escuela. La austeridad en datos es un principio ético: menos información significa menos riesgo, menos tentación de vigilancia, menos poder asimétrico.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659; margin-top:10px;">
+          <div class="t-title">3. Derecho a ser olvidado: borrabilidad de datos estudiantiles</div>
+          <div class="t-body">Cuando un estudiante se gradúa de EPO 135, o cuando la familia solicita que sus datos sean eliminados, eso debe ocurrir completamente. No «anonimizados» — eliminados. El modelo de IA no debe estar entrenado en datos de estudiantes reales de la escuela. Los datos que genera la IA (análisis de respuestas, retroalimentación) se borran según un cronograma: después de que se acredita la materia, después de que el estudiante se va. La escuela no es un banco de datos para entrenar modelos más sofisticados. Es una comunidad de aprendizaje que usa herramientas, no un laboratorio donde se extraen datos.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659; margin-top:10px;">
+          <div class="t-title">4. Ningún algoritmo cierra puertas: transparencia en decisiones que afectan el futuro</div>
+          <div class="t-body">Si la IA genera un perfil que dice «esta estudiante tiene dificultades en matemática», eso puede usarse de dos formas: para ofrecerle apoyo, o para excluirla de opciones de carrera. El marco prohíbe la segunda. Cualquier dato o conclusión de IA que afecte decisiones sobre orientación, acreditación o oportunidades futuras del estudiante debe: (a) ser explícitamente comunicado al estudiante, (b) poder ser cuestionado por el estudiante o su familia, (c) nunca ser determinante — siempre hay una apelación humana. La IA informa la decisión; no la toma.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659; margin-top:10px;">
+          <div class="t-title">5. Diversidad en el entrenamiento: saberes que la IA debe reconocer</div>
+          <div class="t-body">La IA estándar está entrenada en corpus académicos occidentales. El marco propone que la escuela — en colaboración con comunidades — produce datasets de entrenamiento locales que incluyan: narrativas de la comunidad mexiquense, textos en lenguas indígenas, formas de argumentación comunitarias, problemas situados en Ixtapaluca. No para reemplazar la IA genérica, sino para calibrarla, para que cuando analice un argumento de un estudiante, reconozca múltiples formas válidas de razonamiento. Eso requiere trabajo: documentación participativa, pero es el trabajo que construye una herramienta verdaderamente situada.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Estructura institucional: quién decide y cómo</div>
+
+        <div class="tension-box" style="border-left:3px solid #44A96A;">
+          <div class="t-title">Comité de ética y IA: participación de múltiples voces</div>
+          <div class="t-body">La escuela constituye un comité que incluye: (1) docentes de distintas disciplinas, (2) estudiantes representantes (rotativos, para que no sea siempre los mismos), (3) uno o dos padres, (4) la dirección, (5) un orientador o trabajador social. Este comité se reúne mensualmente para revisar: ¿cómo se está usando la IA? ¿Alguien ha reportado una preocupación? ¿Hay nuevos riesgos que hemos detectado? ¿Funcionan las garantías que establecimos? El comité tiene poder: puede recomendar cambios, puede pedir que se detenga una práctica, puede solicitar auditorías externas. Esto no es simulación de participación — es participación con consecuencias reales.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #44A96A; margin-top:10px;">
+          <div class="t-title">Auditoría externa independiente, anual</div>
+          <div class="t-body">Una vez al año, una persona o equipo externo a la escuela revisa cómo se está usando la IA. No es un inspector burocrático — es un auditor ético que pregunta: ¿se están respetando los principios del marco? ¿Hay estudiantes siendo excluidos o vigilados? ¿Se está filtrando información? El informe es público: la escuela, los padres, los estudiantes y la comunidad leen qué encontró. Si hay problemas, la escuela tiene plazo para corregir. La auditoría no es castigo — es mecanismo de rendición de cuentas.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #44A96A; margin-top:10px;">
+          <div class="t-title">Rol del subdirector: facilitador, no controlador de la IA</div>
+          <div class="t-body">En EPO 135, el subdirector (Fernando) no es quien «decide» si se usa IA. Es quien crea condiciones para que la comunidad decida. Documenta las experiencias, facilita que docentes reflexionen juntos, asegura que hay tiempo para que el comité se reúna, conecta a la escuela con expertos externos cuando hay dudas técnicas. Es un rol de liderazgo distribuido: el subdirector lidera, pero no concentra poder. Esto requiere cambio de mentalidad: de «yo sé qué es mejor» a «mi rol es crear espacio para que juntos hagamos lo correcto».</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Incorporación de IA en el currículo: por dónde empezar</div>
+
+        <div class="tension-box" style="border-left:3px solid #4DB88B;">
+          <div class="t-title">Fase 1 (Meses 1-3): Documentación y diagnóstico participativo</div>
+          <div class="t-body">Antes de usar IA, la comunidad mapea: ¿qué necesidades pedagógicas reales existen? ¿Dónde se concentran los desafíos? No es «queremos IA porque es moderno». Es «en 3o1, hay dificultades para que estudiantes que trabajan completen proyectos; ¿cómo podría apoyarlos una herramienta?» La documentación incluye: entrevistas con docentes, grupos focales con estudiantes, revisión de evidencia de aprendizaje, mapeo de recursos disponibles. Resultado: diagnóstico claro de dos o tres necesidades específicas donde la IA podría ayudar.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #4DB88B; margin-top:10px;">
+          <div class="t-title">Fase 2 (Meses 4-6): Diseño participativo de la solución</div>
+          <div class="t-body">Con las necesidades claras, se diseña la solución — no con consultores externos, sino con la comunidad. Un docente, estudiantes, el subdirector, orientadores — trabajan juntos definiendo: ¿qué tipo de IA? (análisis de textos, generación de preguntas, síntesis de información, otro). ¿Qué datos necesita? ¿Qué no debe ver? ¿Cómo se comunican los resultados? ¿Quién tiene acceso? Este diseño es documentado en un protocolo específico de EPO 135 — no es genérico. Es nuestro, para nuestro contexto.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #4DB88B; margin-top:10px;">
+          <div class="t-title">Fase 3 (Meses 7-9): Piloto con un grupo, reflexión constante</div>
+          <div class="t-body">Se implementa con un grupo voluntario (no obligatorio). Docente y estudiantes usan la herramienta durante una unidad o un bimestre. Cada semana hay registro: ¿qué pasó? ¿Funcionó? ¿Qué preocupaciones surgieron? El comité se reúne quincenalmente para revisar. Si aparece un problema, se pausa, se analiza, se ajusta. No hay prisa. Lo importante es aprender de la práctica, no de la teoría.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #4DB88B; margin-top:10px;">
+          <div class="t-title">Fase 4 (Meses 10-12): Decisión de escala, con condiciones</div>
+          <div class="t-body">Al final del año, el comité decide: ¿seguimos con esta herramienta? ¿Expandimos a otros grupos? ¿Hacemos cambios? La decisión no es automática. Es consciente: «funcionó para esto, pero cuidado con esto, necesitamos revisar aquello». Si hay acuerdo en escalar, se hace en fases — no de golpe en toda la escuela. Se mantiene el piloto activo como espacio de reflexión permanente.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Formación docente como base del marco</div>
+
+        <div class="tension-box" style="border-left:3px solid #5CC99C;">
+          <div class="t-title">Docentes como diseñadores de prompts y preguntas pedagógicas</div>
+          <div class="t-body">La IA no reemplaza al docente, pero tampoco el docente simplemente «usa la IA». El docente es diseñador: crea los prompts específicos para sus estudiantes, define qué preguntas la IA debe ayudar a explorar, diseña el flujo de aprendizaje. Esto requiere formación: aprender a pensar en qué preguntas son productivas, cómo construir un prompt que abre posibilidades en lugar de cerrarlas, cómo usar la IA como aliada en la indagación pedagógica. Esta formación no es charla de dos horas — es trabajo de comunidad docente durante meses, facilitado por el subdirector y con apoyo externo cuando sea necesario.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #5CC99C; margin-top:10px;">
+          <div class="t-title">Literacidad crítica en IA para todos los actores</div>
+          <div class="t-body">Estudiantes, docentes y padres necesitan entender qué es IA, qué puede y no puede hacer, cuáles son sus riesgos. No para ser expertos técnicos — para ser usuarios informados y críticos. La escuela dedica tiempo (en asambleas, en clase de tecnología, en reuniones con padres) a esta conversación: ¿cómo funciona un modelo de lenguaje? ¿Por qué puede tener sesgos? ¿Qué significa entrenamiento en datos? ¿Cuáles son las preocupaciones de privacidad? Cuando la comunidad entiende estos básicos, puede tomar decisiones más autónomas sobre cómo usar la IA.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Cierre del primer sombrero verde: diseño como responsabilidad colectiva</div>
+        <div class="body-text">Este marco no es un documento que se implementa de arriba hacia abajo. Es una propuesta que dice: si EPO 135 decide usar IA, que sea con estas garantías. Si la escuela respeta estos cinco principios, si constituye un comité de ética genuino, si forma docentes como diseñadores, si avanza en fases con reflexión constante, entonces es posible que la IA sirva a justicia epistémica. No está garantizado — nada lo está. Pero la probabilidad aumenta dramáticamente cuando hay intención, transparencia y control comunitario. El sombrero verde no es ingenuo. Es optimista informado: sabemos los riesgos, y por eso diseñamos así.</div>
+      </div>
+
+    </div><!-- /tab13 -->
+
+    <!-- PANEL 14 -->
+    <div class="panel" id="tab14">
+
+      <div class="prompt-card" style="border-left-color:#2D8659;">
+        <div class="prompt-label">Prompt 14 · Sombrero verde — alfabetización y pensamiento crítico</div>
+        <div class="prompt-text">Ideas para cursos y prácticas que desarrollen alfabetización mediática, pensamiento crítico y evaluación de evidencias con apoyos de IA.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Alfabetización crítica en la era de la IA: necesidad y oportunidad</div>
+        <div class="body-text">Si la IA se introduce en una escuela sin que estudiantes y docentes desarrollen capacidades de pensamiento crítico sobre cómo funciona, qué puede y no puede hacer, y cuáles son sus sesgos, entonces la herramienta reemplaza la capacidad de pensar en lugar de ampliarla. El sombrero verde propone lo inverso: usar la IA como laboratorio vivo para que estudiantes aprendan a ser críticos. No es teoría sobre algoritmos — es práctica de interrogación: ¿por qué la IA respondió esto? ¿Qué datos la entrenan? ¿Quién se beneficia? ¿Cómo hubiera respondido diferente si fuera entrenada en otro contexto?</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Eje 1: Alfabetización mediática situada en contexto local</div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659;">
+          <div class="t-title">Unidad: «Mensajes, máquinas y poder» — cómo la comunicación siempre sirve a alguien</div>
+          <div class="t-body">La alfabetización mediática tradicional enseña a detectar propaganda y publicidad. Pero en el contexto de EPO 135, en Ixtapaluca, hay una pregunta más viva: ¿quién controla las narrativas sobre nuestra comunidad? Estudiantes y docentes analizan noticias sobre agua, transporte, conflictos locales — no solo en medios nacionales, sino también en redes comunitarias, grupos de WhatsApp, comunicados de líderes locales. Para cada mensaje, preguntan: ¿quién lo produjo? ¿Qué perspectiva omite? ¿A quién le conviene que creamos esto? Aquí entra la IA: ayuda a mapear narrativas, a detectar que la misma noticia se cuenta de tres formas distintas en tres fuentes, a documentar cómo el lenguaje cambia según quién habla. La herramienta no resuelve la pregunta — pero la hace visible.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659; margin-top:10px;">
+          <div class="t-title">Práctica: «Deconstrucción de narrativas sobre mi comunidad»</div>
+          <div class="t-body">Estudiantes seleccionan un tema que importa localmente: la milpa, la migración, el agua, la educación en zonas rurales. Buscan cómo ese tema aparece en: (1) noticias de medios nacionales, (2) redes sociales de la comunidad, (3) reportes de ONGs, (4) pronunciamientos oficiales. Usan una herramienta de IA para: (a) extraer las palabras clave de cada fuente, (b) identificar qué emociones evoca cada versión, (c) detectar qué información falta en cada relato. El resultado no es que aprendan que «los medios mienten» — es que aprendan que todo relato es perspectiva, y que necesitan múltiples perspectivas para pensar. La IA es el instrumento que hace visible esa multiplicidad.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659; margin-top:10px;">
+          <div class="t-title">Análisis de sesgo en la IA: «¿Qué ve y qué no ve esta herramienta?»</div>
+          <div class="t-body">Se propone un experimento pedagógico: estudiantes dan a la IA el mismo texto — una descripción de una situación social compleja — pero con variables que cambian (género del personaje, localidad mencionada, contexto económico). ¿La IA responde igual? ¿Qué cambios? ¿Por qué? Descubren que la IA trata diferente a un «agricultor en Temoaya» que a un «empresario agrícola en Nayarit». O que genera consejos distintos para un «joven de comunidad indígena» que para un «estudiante de ciudad». Estos descubrimientos no son abstractos — son experiencias. Los estudiantes practican: toda herramienta que parece neutral carrega decisiones sobre quién es normal, quién es marginal, qué merece atención y qué se ignora.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Eje 2: Evaluación rigurosa de evidencias y fuentes</div>
+
+        <div class="tension-box" style="border-left:3px solid #44A96A;">
+          <div class="t-title">Curso: «Anatomía de un argumento» — estructura lógica y contexto social</div>
+          <div class="t-body">Estudiantes aprenden a deconstruir argumentos: premisas, conclusión, evidencia. Pero no solo forma lógica — también contexto: ¿quién lo dice? ¿Cuál es su posición en el tema? ¿Qué interés tiene en convencerme? Aquí la IA ayuda de forma específica: estudiantes le pasan un argumento, y la herramienta genera preguntas que obligan a pensar críticamente. «Esta premisa asume que... ¿es verdad?» «Para que esta conclusión sea válida, sería necesario que... ¿está probado?» La IA no da respuestas — genera preguntas que desglosan el argumento. El estudiante aprende a pensar con la herramienta, no a dejar que la herramienta piense.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #44A96A; margin-top:10px;">
+          <div class="t-title">Práctica: «Cacería de fuentes primarias vs. secundarias vs. interpretaciones»</div>
+          <div class="t-body">Se propone una pregunta de investigación: «¿Cuál es la situación del agua en Ixtapaluca?» Estudiantes buscan: (1) datos oficiales (fuente primaria: CONAGUA, SEDAM), (2) reportes periodísticos (fuente secundaria), (3) análisis académicos (interpretación), (4) testimonios de comunidad (saber situado). Usan IA para: mapear lo que cada tipo de fuente dice, detectar dónde coinciden y dónde contradicen, evaluar qué evidencia es más sólida según el tipo de pregunta. No concluyen que «hay que creer a la comunidad» o «hay que confiar en los datos oficiales». Concluyen: «para entender esto, necesito todos los tipos, porque cada uno me cuenta algo diferente que importa».</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #44A96A; margin-top:10px;">
+          <div class="t-title">Seminario: «¿Puede mentir la estadística?» — sesgos en los datos</div>
+          <div class="t-body">Estudiantes analizan casos donde estadísticas correctas llevan a conclusiones engañosas. Ejemplo: «El 90% de delitos en esta zona son robos» vs. «El 90% de detenidos en esta zona son de cierta comunidad». Los datos pueden ser exactos, pero ¿qué preguntas responden? ¿Cuáles omiten? Usan IA para: (a) generar diferentes conclusiones del mismo dataset, (b) detectar qué variables están incluidas y cuáles no, (c) imaginar cómo cambiaría el relato si incluyéramos otras variables. La conclusión es que la evaluación de evidencia no es técnica — es política. Siempre hay alguien decidiendo qué contar y qué ocultar.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Eje 3: Pensamiento crítico sobre la IA misma como fuente</div>
+
+        <div class="tension-box" style="border-left:3px solid #5CC99C;">
+          <div class="t-title">Taller: «¿Qué es lo que la IA está haciendo cuando responde?»</div>
+          <div class="t-body">Antes de usar la IA para nada, estudiantes aprenden qué es. No la magia, sino el mecanismo: cómo un modelo de lenguaje predice la siguiente palabra basándose en probabilidades. Eso significa: (1) la IA no «sabe», predice, (2) es tan buena como el corpus en el que fue entrenada, (3) tiende a reproducir lo más común, no lo más verdadero, (4) puede sonar confiada y estar equivocada. Practican con ejemplos: piden a la IA que responda sobre temas donde saben qué es verdad — historia local, datos escolares — y descubren dónde se equivoca. El objetivo es que pierdan el miedo y también la confianza ingenua. La IA es una herramienta útil, sesgada, y que necesita ser constantemente interrogada.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #5CC99C; margin-top:10px;">
+          <div class="t-title">Práctica: «Batalla de prompts» — cómo la pregunta que hago determina la respuesta</div>
+          <div class="t-body">Estudiantes trabajan en equipos. Todos hacen la misma pregunta a la IA, pero con variaciones pequeñas: «¿Qué es desarrollo?» vs. «¿Qué significa desarrollo para una comunidad agrícola?» vs. «¿Cuáles son las críticas al concepto de desarrollo?» Comparan respuestas. Descubren que los resultados son dramáticamente distintos. Aprenden que el prompt es un acto pedagógico: cómo formulo la pregunta determina qué tipo de respuesta recibo. No hay pregunta «neutral» a la IA — cada pregunta lleva supuestos. Cuando entienden eso, aprenden a usar la IA como herramienta: diseño mi pregunta para obtener la evidencia que necesito, y sé que debo buscar múltiples formas de la misma pregunta para tener perspectivas variadas.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #5CC99C; margin-top:10px;">
+          <div class="t-title">Seminario: «Cuando la IA nos devuelve nuestros propios prejuicios» — el espejo de la tecnología</div>
+          <div class="t-body">Estudiantes descubren que si le piden a la IA descripciones de «lo típico» de ciertos grupos (profesiones, características, origen), la IA reproduce estereotipos. No porque la IA sea malvada, sino porque fue entrenada en internet, donde los estereotipos abundan. Esto es una oportunidad pedagógica: la IA se convierte en espejo que visibiliza los prejuicios de nuestra sociedad. Conversación de clase: ¿por qué la IA sabe estos estereotipos? ¿De dónde vienen? ¿Cómo nos afectan? ¿Qué pasa cuando una herramienta que supuestamente es «objetiva» reproduce lo que nosotros ya pensamos? Aprenden que la imparcialidad es mito, y que necesitan vigilancia constante.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Eje 4: Construcción colectiva de criterios de calidad</div>
+
+        <div class="tension-box" style="border-left:3px solid #6DD4B0;">
+          <div class="t-title">Proyecto: «Rúbrica colaborativa para evaluar fuentes de información»</div>
+          <div class="t-body">Docente y estudiantes construyen juntos un instrumento para evaluar fuentes: ¿Quién la produjo? ¿Qué evidencia presenta? ¿Cómo trata perspectivas alternativas? ¿Qué datos omite? ¿Cuál es su interés? La rúbrica no es genérica — es diseñada para la pregunta de investigación específica en la que están trabajando. Cuando la comunidad escolar define qué cuenta como «buena fuente» en su contexto, desarrollan autoridad epistémica. No es que el docente diga «confía en esto». Es que juntos decidieron: «para entender esto, buscamos esto». La rúbrica puede cambiar conforme aprenden — es documento vivo, no verdad eterna.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #6DD4B0; margin-top:10px;">
+          <div class="t-title">Diálogo: «¿Cómo decidimos qué es verdad en nuestra comunidad?»</div>
+          <div class="t-body">Preguntas incómodas para estudiantes y docentes: en Ixtapaluca, ¿qué cuenta como prueba? ¿Confían más en un reportero, en un investigador académico, en un vecino que lo vio, en datos del gobierno? ¿Por qué? No hay respuestas correctas — hay respuestas situadas. Un estudiante de comunidad agrícola puede confiar en el conocimiento de generaciones sobre cuándo sembrar, mientras otro confía en datos meteorológicos. Ambos son válidos para distintas preguntas. El diálogo ayuda a que reconozcan que la evaluación de evidencia es siempre situada, siempre contextual. No hay punto de vista desde ningún lado. Toda evaluación de evidencia es desde una posición — y es mejor hacerlo consciente.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Cursos propuestos: estructura anual</div>
+
+        <div class="concept-grid" style="margin-top:14px;">
+          <div class="concept-card">
+            <div class="c-label">1o (Primero)</div>
+            <div class="c-value"><strong>Semestre 1:</strong> Narrativas mediáticas y poder. <strong>Semestre 2:</strong> Estructura de argumentos y lógica básica.</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">2o (Segundo)</div>
+            <div class="c-value"><strong>Semestre 1:</strong> Evaluación de fuentes y evidencia. <strong>Semestre 2:</strong> Sesgos en datos y estadística.</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">3o (Tercero)</div>
+            <div class="c-value"><strong>Semestre 1:</strong> IA como herramienta y como espejo. <strong>Semestre 2:</strong> Proyecto final: investigación con múltiples fuentes y herramientas.</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Transversal</div>
+            <div class="c-value">Cada curso incluye: prácticas con IA, deconstrucción de ejemplos locales, diálogos en comunidad, construcción colectiva de criterios.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Prácticas específicas mediadas por IA</div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659;">
+          <div class="t-title">1. «Comparador de narrativas»: cómo la IA ayuda a ver lo invisible</div>
+          <div class="t-body">Estudiantes suministran a la IA textos sobre el mismo tema desde fuentes distintas. La IA: (a) extrae los temas principales de cada texto, (b) identifica qué se repite y qué es exclusivo de cada fuente, (c) detecta palabras clave y tono emocional. El resultado es una tabla comparativa que estudiantes no hubieran hecho manualmente. La práctica: aprenden a ver que no hay neutralidad — cada fuente enfatiza, omite, colorea. La IA hace visible lo que la lectura rápida oculta.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659; margin-top:10px;">
+          <div class="t-title">2. «Generador de contraargumentos»: obligar a pensar desde la otra perspectiva</div>
+          <div class="t-body">Estudiante presenta un argumento sobre un tema local (educación, agua, economía). Pide a la IA que genere un argumento válido desde la perspectiva opuesta. No porque la perspectiva opuesta sea correcta, sino porque entender cómo alguien llegó a conclusión distinta con evidencia distinta es un acto de humildad y pensamiento crítico. Comparar los dos argumentos obliga a: identificar dónde fundamentalmente no se puede estar de acuerdo (valores), dónde sí (hechos), dónde es necesario más investigación. Practican nuance — aprender que es posible que dos personas racionales lleguen a conclusiones diferentes.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659; margin-top:10px;">
+          <div class="t-title">3. «Auditador de datos»: qué se ve cuando se pregunta de otra forma</div>
+          <div class="t-body">Se proporciona a estudiantes un dataset sobre algo que les importa (desempeño académico por grupo, recursos por zona, acceso a servicios). Piden a la IA que: (a) resuma qué dicen los datos, (b) proponga preguntas alternativas que los mismos datos podrían responder, (c) identifique qué información sería necesaria para llegar a conclusiones diferentes. Descubren que todo dataset es parcial — cuenta algunas historias e ignora otras. El trabajo de ciudadanía es reconocer eso, no pretender que los números dicen la verdad.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659; margin-top:10px;">
+          <div class="t-title">4. «Verificador de hechos: ¿en qué me apoyo para saber esto?»</div>
+          <div class="t-body">Estudiante afirma un hecho sobre su comunidad («en Ixtapaluca hay X cantidad de agua disponible», «Y% de estudiantes trabajan», «el transporte cuesta Z»). Pide a la IA que: (a) le ayude a encontrar fuentes que lo validen, (b) identifique si hay datos que lo contradicen, (c) liste qué supuestos lleva ese hecho. Aprenden que decir «eso es verdad» sin saber de dónde viene es peligroso. La verdad no es lo que sentimos, sino lo que podemos mostrar — con cuidado de saber qué mostramos y qué no.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Evaluación: no es nota, es desarrollo de capacidad</div>
+        <div class="body-text">Estos cursos no se califican con número. Se evalúan con evidencia de crecimiento: ¿el estudiante hace preguntas más sofisticadas que hace tres meses? ¿Reconoce múltiples perspectivas donde antes veía blanco y negro? ¿Puede explicar por qué confía en una fuente y no en otra? ¿Usa la IA de forma estratégica, sabiendo sus limitaciones? La evaluación es un diálogo: docente y estudiante conversan sobre qué está aprendiendo, qué sigue siendo difícil, cómo seguir desarrollando pensamiento crítico. Es práctica de autoridad epistémica compartida: aprenden juntos evaluando juntos.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Cierre: alfabetización para quién y para qué</div>
+        <div class="body-text">Estos cursos y prácticas tienen un propósito político explícito: desarrollar estudiantes que no sean fácilmente manipulados, que pregunten por quién se beneficia, que demanden transparencia, que reconozcan que toda información es perspectiva. Es educación para ciudadanía — no para reproducción del sistema, sino para posibilidad de transformarlo. La IA no es el agente de transformación. Los estudiantes lo son. Pero cuando usan herramientas inteligentemente para interrogar el mundo, se convierten en pensadores críticos de su propia realidad. Y eso es el punto.</div>
+      </div>
+
+    </div><!-- /tab14 -->
+
+    <!-- PANEL 15 -->
+    <div class="panel" id="tab15">
+
+      <div class="prompt-card" style="border-left-color:#2D8659;">
+        <div class="prompt-label">Prompt 15 · Sombrero verde — co-diseño de evaluación</div>
+        <div class="prompt-text">Estrategias para co-diseñar estándares, rúbricas y criterios de evaluación que reflejen múltiples perspectivas y saberes.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Evaluación como acto de justicia epistémica</div>
+        <div class="body-text">La evaluación en las escuelas tradicionales expresa jerarquías de saber: lo que el currículo oficial valora es lo que se califica, y lo que importa a estudiantes, comunidades y docentes queda afuera. El sombrero verde propone una inversión radical: si la justicia epistémica es uno de los propósitos de la escuela, entonces la evaluación debe ser un espacio donde múltiples formas de saber se hacen visibles, se reconocen, se valoran. Eso no significa que «todo es válido» — significa que los criterios para evaluar qué es válido se construyen en comunidad, no desde un escritorio de diseño curricular lejano. La IA puede facilitar ese proceso: documenta perspectivas, ayuda a que docentes y estudiantes vean dónde coinciden y dónde divergen, propone criterios alternativos que nadie había pensado.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Principio 1: Evaluación como conversación, no como sentencia</div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659;">
+          <div class="t-title">De la calificación al feedback formativo situado</div>
+          <div class="t-body">Una calificación (8, 9, 10) es una sentencia: esto está bien, esto está mal, fin. Feedback formativo es conversación: «veo que entendiste esto, falta claridad en esto otro, ¿cómo lo ves tú?» El feedback situado va más allá: reconoce el contexto en que el estudiante produce. Si un estudiante de comunidad migrante escribe un ensayo que mezcla español y narrativa oral, el feedback no dice «no respeta estructura académica». Dice: «veo que usas dos formas de lenguaje para expresar tu idea; ayúdame a entender por qué elegiste esta forma; aquí está cómo se ve eso traducido a forma académica; ¿cuál usarías para cuál propósito?» La evaluación deja de ser juicio sobre defectos y se convierte en diálogo sobre propósito, contexto, elecciones.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659; margin-top:10px;">
+          <div class="t-title">Estudiantes como evaluadores: co-construcción de criterios</div>
+          <div class="t-body">Antes de que docente evalúe un trabajo, estudiantes han participado en definir qué cuenta como trabajo de calidad para esta tarea específica. No es que el docente imponga: «un buen ensayo tiene introducción, tres argumentos, conclusión». Es que juntos pregunta: ¿qué pretendo con este ensayo? ¿A quién lo dirijo? ¿Qué cambios quiero que ocurran en quien lo lea? Una vez clara esa intención, pregunta: ¿cómo me daré cuenta de que lo logré? La lista de criterios que emergen son nuestros — del docente y los estudiantes juntos. Cuando estudiantes son diseñadores de criterios de evaluación, se convierten en pensadores sobre qué significa hacer trabajo de calidad. Y cuando eventualmente son evaluados, saben qué se está mirando y por qué.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659; margin-top:10px;">
+          <div class="t-title">IA como facilitadora de diálogo sobre lo que importa</div>
+          <div class="t-body">En una sesión de co-diseño de criterios, docente y estudiantes generan ideas — a veces contradictorias — sobre qué es importante. Un docente dice «claridad en la estructura», un estudiante dice «que sienta la emoción de quien escribió», otro dice «que sea comprensible para mi tía que no fue a la escuela». La IA aquí puede sintetizar: extrae los temas recurrentes, agrupa ideas similares, propone preguntas que conectan lo que parece contradictorio. No resuelve — clarifica. Y en ese acto de aclaración, emerge una rúbrica que no es de nadie en particular, sino de todos.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Principio 2: Rúbricas multidimensionales que reconocen saberes diversos</div>
+
+        <div class="tension-box" style="border-left:3px solid #44A96A;">
+          <div class="t-title">Más allá de lo binario: rúbricas que ven complejidad</div>
+          <div class="t-body">Las rúbricas tradicionales son escalaras: 1-4, insuficiente a excelente, dicotomía clara. El sombrero verde propone rúbricas que capturan complejidad: una respuesta puede ser rigurosa en lógica pero estrecha en perspectiva; profunda en comprensión comunitaria pero débil en formulación académica; original en pensamiento pero difícil de comunicar. Una rúbrica multidimensional permite evaluar cada aspecto por separado y, luego, en conversación, entender el conjunto. Para esto, la IA es herramienta útil: ayuda a construir rúbricas con múltiples dimensiones, a aplicarlas sin que sea tedioso, a visibilizar patrones (¿hay estudiantes que son fuertes en algunas dimensiones pero no en otras? ¿cuál es el patrón?).</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #44A96A; margin-top:10px;">
+          <div class="t-title">Rúbricas que reconocen formas distintas de llegar a lo mismo</div>
+          <div class="t-body">La tarea es que el estudiante dmuestre comprensión de cómo la milpa funciona como sistema ecológico y social. Un estudiante lo hace escribiendo un análisis. Otro lo hace entrevistando a abuelos, recopilando textos de historia local y ensambla un documento multimedia. Otro lo hace diseñando un diagrama que conecta variables. Otro lo hace creando un protocolo para que su comunidad monitoree la salud del suelo. ¿Son todos válidos? Sí, si la comprensión que demuestran es genuina. Una rúbrica que reconoce esto tiene una columna que pregunta: «¿cómo el estudiante demostró comprensión?» Las opciones incluyen múltiples formas de expresión. Y hay una columna que pregunta: «¿es la evidencia de comprensión clara en este medio que eligió?» Eso permite que cada estudiante juegue a su fuerza mientras aprende nuevas formas.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #44A96A; margin-top:10px;">
+          <div class="t-title">Rúbricas como artefactos vivientes: se adaptan conforme aprendemos</div>
+          <div class="t-body">Una rúbrica no es verdad eterna. Es herramienta que se diseña, se usa, se prueba, se mejora. A mitad de semestre, docente y estudiantes revisan: ¿esta rúbrica está capturando lo que importa? ¿Hay algo que no vemos que deberíamos ver? ¿Hay algo que no importa tanto como creíamos? La rúbrica se revisa. Esto es especialmente importante cuando estudiantes con saberes distintos interactúan con la rúbrica: puede que una categoría tenga sentido para unos pero no para otros. En lugar de imposición, hay conversación. La rúbrica se adapta. Esto requiere que docente y estudiantes estén dispuestos a flexibilidad — y requiere que la administración no insista en criterios únicos y fijos para toda la escuela.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Principio 3: Estándares como preguntas, no como respuestas</div>
+
+        <div class="tension-box" style="border-left:3px solid #5CC99C;">
+          <div class="t-title">De «esto es lo que debes alcanzar» a «esto es lo que queremos explorar juntos»</div>
+          <div class="t-body">Un estándar curricular dice: «el estudiante comprenderá cómo funciona el sistema político mexicano». Es enunciado como logro a alcanzar, respuesta final. El sombrero verde lo reinterpreta: ese estándar es una pregunta inicial: ¿cómo funciona el sistema político mexicano? Y esa pregunta tiene múltiples respuestas legítimas según desde dónde se observe. El estudiante de comunidad indígena verá funcionalidades distintas que el estudiante de ciudad. El que participa en asambleas comunitarias verá dinámicas que el que vota cada tres años no ve. Los estándares como preguntas reconocen que el aprendizaje es indagación abierta, no destino fijo. Todos están explorando la misma pregunta, pero desde posiciones distintas.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #5CC99C; margin-top:10px;">
+          <div class="t-title">Estándares co-diseñados con comunidad: qué importa aquí, en Ixtapaluca</div>
+          <div class="t-body">Los estándares curriculares nacionales tienen sentido — pero no aplican igual en todas partes. En EPO 135, docentes y comunidad pueden preguntarse: de los estándares del currículo oficial, ¿cuáles importan para nuestra realidad? ¿Hay otros que debería importar? Resultado: una versión localizada de estándares. Ejemplo: el estándar nacional dice «el estudiante comprenderá relaciones comerciales». En Ixtapaluca, eso podría ampliarse: «el estudiante comprenderá cómo funciona el comercio formal, el comercio informal, las transacciones entre vecinos, la relación con distribuidores y mayoristas». Estas especificaciones emergen cuando la comunidad participa en definición de qué es importante aprender.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #5CC99C; margin-top:10px;">
+          <div class="t-title">IA como traductora entre estándares de distintas epistemologías</div>
+          <div class="t-body">Hay estándares del currículo oficial (académicos), hay estándares que comunidades valoran (saber hacer, vivir bien, mantener relaciones), hay estándares que docentes han aprendido en su experiencia (lo que realmente transforma a los estudiantes). ¿Cómo se conectan? La IA puede mapear: identifica que el estándar académico «comprender sistemas complejos» se conecta con el saber comunitario «reconocer cómo todo está relacionado» y con la experiencia docente «cuando el estudiante ve el problema en su casa, aprende». Cuando se visualizan esas conexiones, emerge una comprensión más rica: no están en competencia, sino en diálogo. Y el estudiante puede moverse entre registros epistemológicos con fluidez.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Proceso de co-diseño: paso a paso</div>
+
+        <div class="tension-box" style="border-left:3px solid #6DD4B0;">
+          <div class="t-title">Fase 1 (Mes 1): Escucha — ¿qué importa a cada actor?</div>
+          <div class="t-body">Docente recopila perspectivas. Entrevista con estudiantes (individualmente y en grupos): ¿qué crees que es importante aprender en esta materia? ¿Por qué? Conversa con padres: ¿qué esperan que sus hijos aprendan? Consulta con la comunidad (si es relevante): ¿qué saberes valoramos? Lee y sintetiza perspectivas de actores que no están presentes: expertos en el campo, comunidades que enfrentan los problemas que la materia aborda, movimientos sociales que cuestionan supuestos del currículo. La IA aquí ayuda a organizar: docente registra las conversaciones, IA sintetiza temas recurrentes, formula preguntas de seguimiento, identifica donde hay acuerdo y donde hay tensión.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #6DD4B0; margin-top:10px;">
+          <div class="t-title">Fase 2 (Mes 2): Diálogo — ¿cómo se conectan estas perspectivas?</div>
+          <div class="t-body">Docente convoca sesiones de trabajo donde estudiantes, padres, y docentes dialogan: hemos escuchado esto que importa a cada quien; ¿hay conexiones? ¿hay tensiones? ¿cómo aprendemos juntos de eso? La IA puede facilitar: presenta los diferentes puntos de vista de forma neutral, genera preguntas que conectan perspectivas que parecen contradictorias, propone síntesis que nadie había visto. El resultado no es consenso forzado — es claridad sobre dónde divergemos y por qué, y reconocimiento de esos «por qué» como legítimos.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #6DD4B0; margin-top:10px;">
+          <div class="t-title">Fase 3 (Mes 3): Diseño — rúbricas y estándares que reflejan el diálogo</div>
+          <div class="t-body">Con toda la información de fases anteriores, equipo de docentes (apoyados por estudiantes líderes y representantes de padres) diseña rúbricas y estándares. Cada rúbrica tiene múltiples dimensiones, cada una valida y ninguna subordinada a otra. Los estándares están formulados como preguntas o como exploración, no como destinos. Hay versión de estándar «académica», versión «situada en comunidad», versión «que respeeta formas de saber alternativas». Estos no compiten — son lentes distintos sobre lo mismo. La IA documenta el proceso, identifica patrones en el diseño, propone refinamientos.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #6DD4B0; margin-top:10px;">
+          <div class="t-title">Fase 4 (Trimestre/semestre): Prueba — ¿funcionan estos criterios?</div>
+          <div class="t-body">Se implementan las rúbricas co-diseñadas. Docente y estudiantes documentan: ¿son claros los criterios? ¿capturan lo que importa? ¿hay algún grupo de estudiantes para los que estas rúbricas no funcionan bien? Cada semana, reflexión breve. Al final del período, sesión de revisión: ¿qué cambiaría? La rúbrica se ajusta. Esto no es falla de diseño — es confirmación de que el diseño es flexible. En educación, los mejores criterios emergen de la práctica, no de la teoría.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #6DD4B0; margin-top:10px;">
+          <div class="t-title">Fase 5 (Anual/bienal): Revisión — ¿qué aprendemos del proceso?</div>
+          <div class="t-body">Una vez al año, la comunidad educativa se reúne para reflexionar: ¿qué hemos aprendido evaluando así? ¿qué hemos aprendido de los estudiantes? ¿qué hemos aprendido de nosotros mismos como docentes? ¿cómo el proceso de co-diseño cambió nuestra relación con la evaluación? Esa reflexión informa diseño del siguiente ciclo. La evaluación deja de ser algo que «hacemos a los estudiantes» y se convierte en aprendizaje compartido sobre cómo aprendemos juntos.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Estrategias de inclusión: voces que típicamente se silencian</div>
+
+        <div class="tension-box" style="border-left:3px solid #7AE3C6;">
+          <div class="t-title">Estudiantes con mayor dificultad: co-diseñadores de criterios que los visibilicen</div>
+          <div class="t-body">Estudiantes con dificultades académicas típicamente son evaluados sobre lo que no pueden hacer. El co-diseño los invita a preguntar: ¿hay formas de demostrar comprensión o capacidad que yo puedo hacer bien? Un estudiante con dislexia, en conversación con docente, puede decir: «yo sé mucho de plantas pero escribir es difícil; ¿podría demostrar lo que sé en una entrevista grabada?» Ese aporte no solo beneficia a ese estudiante — beneficia a todos, porque la rúbrica se enriquece con nuevas formas de demostración. El co-diseño es entonces un acto de inclusión genuina: no adaptación de criterios que permanecen iguales, sino transformación de criterios para que reconozcan capacidades que el sistema tradicional ocultaba.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #7AE3C6; margin-top:10px;">
+          <div class="t-title">Padres y familias: sus expectativas como insumo legítimo</div>
+          <div class="t-body">Muchas veces la escuela y familias hablan de «calidad educativa» pero no dialoguen realmente. El co-diseño requiere que la escuela convoque a padres (no como público que recibe información, sino como participantes) para preguntar: ¿qué esperan que sus hijos aprendan? ¿Por qué? Las respuestas pueden variar: algunos quieren que sus hijos accedan a universidad, otros quieren que aprendan a vivir bien en la comunidad, otros quieren que dominen ciertas habilidades prácticas. Esa diversidad de expectativas no es problema a resolver — es realidad a reconocer. Los criterios de evaluación pueden tener múltiples caminos de satisfacción, reconociendo que distintas familias valorizan distintos aprendizajes.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #7AE3C6; margin-top:10px;">
+          <div class="t-title">Voz de docentes principiantes: sus perspectivas frescas en diálogo con experiencia</div>
+          <div class="t-body">Docentes nuevos a menudo sienten que no pueden cuestionar criterios que docentes con décadas de experiencia defienden. Pero el co-diseño deliberado crea espacio seguro para que pregunten: «¿por qué valoramos esto? ¿hay otras formas?» A menudo docentes principiantes traen perspectivas frescas — formación actualizada, acceso a nuevas metodologías, menor arraigo en «así siempre se ha hecho». Cuando su voz es genuinamente escuchada (no solo tolerada), el diálogo es más rico. Y docentes experimentados aprenden, también.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #7AE3C6; margin-top:10px;">
+          <div class="t-title">Estudiantes líderes académicamente débiles: múltiples formas de liderazgo</div>
+          <div class="t-body">El co-diseño no requiere que solo los estudiantes de mejores calificaciones participen. De hecho, la perspectiva de estudiantes que luchan académicamente es invaluable: ellos saben qué criterios son justos porque viven los criterios injustos. Un estudiante que trabaja y estudia puede aportar: «en mi experiencia, el aprendizaje profundo toma más tiempo; ¿cómo la rúbrica reconoce ritmos distintos?» Cuando docente invita explícitamente a estos estudiantes a ser co-diseñadores, se convierten en líderes — no de calificaciones, sino de justicia educativa.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Documentación: memoria del proceso como herramienta pedagógica</div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659;">
+          <div class="t-title">IA como archivista del proceso: documentación que permite reflexión</div>
+          <div class="t-body">El co-diseño genera mucha conversación. Sin documentación, esa conversación desaparece. Una herramienta de IA (o un docente ayudado por IA) puede: grabar conversaciones (con consentimiento), sintetizar puntos principales, identificar momentos donde la perspectiva cambió, reconocer aportes de cada voz. Esa documentación se devuelve a la comunidad: aquí está lo que conversamos, aquí está lo que aprendimos juntos. Eso reconoce a cada participante — su aporte quedó registrado, importó, influyó en lo que decidimos. Es acto de validación epistémica: lo que pensaste fue escuchado, considerado, integrado.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2D8659; margin-top:10px;">
+          <div class="t-title">Devolución de resultados: transparencia sobre cómo se usan los aportes</div>
+          <div class="t-body">Docente convoca a la comunidad nuevamente para presentar: esto fue lo que escuchamos, esto es lo que diseñamos, esto es cómo su aporte aparece en la rúbrica final. No es «gracias por sus comentarios», es «aquí están sus comentarios reflejados». Padre reconoce: «yo dije que importaba que el estudiante sepa trabajar en equipo, y aquí está en la rúbrica como dimensión». Estudiante ve: «nosotros dijimos que la rúbrica fuera clara, y está escrita en lenguaje que entendemos». Es transparencia sobre cómo el co-diseño realmente funcionó.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Ejemplos concretos de rúbricas co-diseñadas</div>
+
+        <div class="concept-grid" style="margin-top:14px;">
+          <div class="concept-card">
+            <div class="c-label">Rúbrica: Ensayo sobre problema local</div>
+            <div class="c-value"><strong>Dim. 1:</strong> Comprensión del problema (académica + comunitaria) | <strong>Dim. 2:</strong> Integración de múltiples perspectivas | <strong>Dim. 3:</strong> Calidad de la argumentación | <strong>Dim. 4:</strong> Claridad en la comunicación para audiencia específica</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Rúbrica: Proyecto de investigación</div>
+            <div class="c-value"><strong>Dim. 1:</strong> Pregunta de investigación (profunda, abierta a múltiples respuestas) | <strong>Dim. 2:</strong> Diversidad de fuentes consultadas | <strong>Dim. 3:</strong> Análisis crítico de evidencia | <strong>Dim. 4:</strong> Reflexión sobre límites del propio análisis</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Rúbrica: Demostración de comprensión</div>
+            <div class="c-value"><strong>Dim. 1:</strong> Comprensión demostrada (en cualquier forma: ensayo, entrevista, artefacto, etc.) | <strong>Dim. 2:</strong> Profundidad del pensamiento | <strong>Dim. 3:</strong> Conexión con saber previo del estudiante | <strong>Dim. 4:</strong> Capacidad de explicar el pensamiento propio</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Rúbrica: Colaboración y diálogo</div>
+            <div class="c-value"><strong>Dim. 1:</strong> Aporte sustantivo al trabajo colectivo | <strong>Dim. 2:</strong> Escucha genuina de perspectivas diferentes | <strong>Dim. 3:</strong> Capacidad de integrar perspectivas (no solo tolerar) | <strong>Dim. 4:</strong> Reflexión sobre aprendizaje de trabajar en diversidad</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Cierre: evaluación como justicia epistémica</div>
+        <div class="body-text">Cuando estándares, rúbricas y criterios de evaluación se co-diseñan con múltiples voces — estudiantes, docentes, padres, comunidad — entonces la evaluación deja de ser instrumento de selección y se convierte en instrumento de reconocimiento. No es perfecta: siempre hay tensiones, siempre hay quien queda invisible. Pero la dirección es clara: de «estos estudiantes cumplen estos criterios» a «estos criterios reflejan lo que nuestra comunidad educativa valora». Y cuando los criterios reflejan lo que todos valoramos, la evaluación que emerge es más justa, más humana, y más capaz de verdaderamente apoyar el aprendizaje. Este es el sombrero verde en su expresión más completa: no es imposición desde arriba, sino construcción desde el diálogo.</div>
+      </div>
+
+    </div><!-- /tab15 -->
+
+    <!-- PANEL 16 -->
+    <div class="panel" id="tab16">
+
+      <div class="prompt-card" style="border-left-color:#1A5F7A;">
+        <div class="prompt-label">Prompt 16 · Sombrero azul — control y coordinación</div>
+        <div class="prompt-text">Enfoque para coordinar a docentes, directivos y estudiantes en un plan de implementación con fases, hitos y métricas de justicia epistémica.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">El sombrero azul: orquestación de la complejidad</div>
+        <div class="body-text">Después de imaginar potenciales (amarillo) y diseñar soluciones (verde), el sombrero azul pregunta: ¿cómo hacemos esto real, en tiempo, con gente, con recursos limitados? No es pregunta técnica solamente — es pregunta de liderazgo, de sincronización, de seguimiento. El sombrero azul reconoce que la justicia epistémica no es destino al que se llega de una vez, sino proceso que requiere ajustes constantes, comunicación clara, y métricas que miden lo que realmente importa. El sombrero azul es el que asegura que la visión no queda solo en papel, que se ejecuta, que se aprende en el camino.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Principio fundamental: liderazgo distribuido, responsabilidad compartida</div>
+
+        <div class="tension-box" style="border-left:3px solid #1A5F7A;">
+          <div class="t-title">No es proyecto del director, sino proyecto de la comunidad</div>
+          <div class="t-body">Muchas reformas educativas fallan porque están asociadas a una persona — cuando el director se va, o cuando un docente líder se cansa, el proyecto colapsa. El sombrero azul propone distribución: hay un coordinador de implementación (podría ser el subdirector, Fernando), pero su rol es facilitar, no controlar. Hay líderes en cada grupo de grado, líderes entre docentes, representantes estudiantiles que participan en decisiones. Hay padres que conocen el plan. Cuando el proyecto está distribuido en la red de relaciones de la escuela, es más resiliente. Si Fernando se ausenta, otros pueden continuar. Si un grupo de docentes se resiste, no paraliza a todos.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #1A5F7A; margin-top:10px;">
+          <div class="t-title">Roles claros pero flexibles: ajustes según el contexto</div>
+          <div class="t-body">El plan define quién es responsable de qué — pero «responsable» no significa «tiene poder absoluto». Significa «es quien coordina que esto ocurra, escuchando a otros». Ejemplo: docente de 1o1 es responsable de que se implemente la unidad de alfabetización mediática — pero diseña esa unidad con sus estudiantes, consulta a otros docentes de 1o sobre qué funcionó, ajusta según el contexto de su grupo. La responsabilidad viene acompañada de autonomía para adaptar. Esto requiere confianza institucional: la dirección dice «confío en que harás esto de forma que tenga sentido en tu contexto» en lugar de «aquí está exactamente cómo lo haces».</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Estructura de coordinación: comités y espacios de diálogo</div>
+
+        <div class="concept-grid" style="margin-top:14px;">
+          <div class="concept-card">
+            <div class="c-label">Comité de implementación</div>
+            <div class="c-value">Subdirector, líderes docentes (1 por grado), representante estudiantil, padre, orientador. Reúne quincenalmente. Revisa avance, resuelve obstáculos, toma decisiones sobre ajustes.</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Círculos de docentes por disciplina</div>
+            <div class="c-value">Docentes de matemáticas, lenguaje, ciencias, etc. Reúnen mensualmente. Diseñan cómo su disciplina integra justicia epistémica, comparten prácticas, resuelven desafíos pedagógicos específicos.</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Asamblea de estudiantes</div>
+            <div class="c-value">Representantes de cada grupo (3-4 por grupo). Reúnen cada dos semanas. Reportan qué están experimentando, qué está funcionando, qué necesita cambiar desde perspectiva estudiantil.</div>
+          </div>
+          <div class="concept-card">
+            <div class="c-label">Consejo de padres expandido</div>
+            <div class="c-value">Padres representantes + abierto a participación. Reúne mensualmente. Se enteran de avance, dan feedback, ayudan a comunicar a otras familias.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Plan de implementación: cuatro años, cinco fases</div>
+
+        <div class="tension-box" style="border-left:3px solid #2C7A9F;">
+          <div class="t-title">AÑO 0 (Año escolar actual): Fase 0 — Preparación y diagnóstico</div>
+          <div class="t-body"><strong>Meses 1-3:</strong> Constitución de comités, capacitación de líderes, diagnóstico participativo de necesidades y recursos. <strong>Meses 4-6:</strong> Diseño colaborativo del marco de justicia epistémica (adaptar lo que están haciendo aquí), definición de estándares y rúbricas para primer curso piloto. <strong>Meses 7-9:</strong> Formación inicial de docentes pilotos, inicio de trabajo con primer grupo voluntario (1 grupo de 1o). <strong>Meses 10-12:</strong> Reflexión sobre piloto, ajustes, preparación para expansión a siguiente año. <br><strong>Hito:</strong> Documento de marco institucional co-diseñado, aprobado por comunidad educativa.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2C7A9F; margin-top:10px;">
+          <div class="t-title">AÑO 1: Fase 1 — Expansión a todos 1os</div>
+          <div class="t-body"><strong>Semestre 1:</strong> Implementación de alfabetización mediática en todos los grupos de 1o (6 grupos). Docentes piloto actúan como líderes pedagógicos, apoyan a otros. Reuniones semanales de círculo de 1o para resolver desafíos en tiempo real. <strong>Semestre 2:</strong> Continuación de alfabetización mediática, inicio de curso de estructura de argumentos. Documentación constante de lo que funciona, dificultades, adaptaciones. <br><strong>Hitos:</strong> 80% de estudiantes de 1o completan alfabetización mediática. Rúbrica de evaluación de pensamiento crítico co-diseñada. 3 docentes certificados como facilitadores de procesos de justicia epistémica.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2C7A9F; margin-top:10px;">
+          <div class="t-title">AÑO 2: Fase 2 — Consolidación de 1o, expansión a 2o</div>
+          <div class="t-body"><strong>Semestre 1:</strong> En 1o, introducción de evaluación co-diseñada y estándares localizados en todas las asignaturas. En 2o, inicio de evaluación de fuentes y análisis de datos. <strong>Semestre 2:</strong> Docentes de 2o documentan impacto de implementación, ajustan rúbricas, participan en revisión anual de marco. Inicio de formación para docentes de 3o sobre último ciclo de cursos. <br><strong>Hitos:</strong> Comité de ética y IA funcionando con auditoría trimestral. 100% de docentes de 1o y 2o integran mínimo una práctica de justicia epistémica en su clase. 5 investigaciones estudiantiles documentadas que demuestran pensamiento crítico sofisticado.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2C7A9F; margin-top:10px;">
+          <div class="t-title">AÑO 3: Fase 3 — Sistema completo y consolidación</div>
+          <div class="t-body"><strong>Semestre 1:</strong> Implementación en 3o de IA como herramienta y espejo, proyectos de investigación final. Todos los grados participan en co-diseño de evaluación. <strong>Semestre 2:</strong> Evaluación integral del ciclo completo de tres años. ¿Qué cambió en cómo estudiantes piensan, cómo docentes enseñan, cómo se valora el saber? Documentación final para compartir con otras escuelas. <br><strong>Hitos:</strong> 100% de estudiantes de EPO 135 han participado en mínimo 2 espacios de co-diseño (estándares, rúbricas, o diseño de proyectos). Métricas cualitativas muestran aumento en capacidad de pensamiento crítico. Plan de sostenibilidad diseñado para próximos años.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Coordinación operativa: sincronización en tres niveles</div>
+
+        <div class="tension-box" style="border-left:3px solid #3A94B5;">
+          <div class="t-title">Nivel 1: Clase — Docente como diseñador y facilitador</div>
+          <div class="t-body">Cada docente tiene libertad de cómo implementar en su grupo. Pero respeta protocolo: (1) al inicio de la unidad, consulta a estudiantes sobre criterios de evaluación, (2) durante, documenta prácticas de justicia epistémica, (3) al cierre, reflexiona con estudiantes sobre qué aprendieron de trabajar así. Docente reporta quincenalmente al círculo de su disciplina: «en matemática de 1o1, cuando pido que argumenten por qué un procedimiento funciona, emerge pensamiento matemático más profundo». Esos reportes se compilan, se analizan, se comparten. La clase no es isla.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #3A94B5; margin-top:10px;">
+          <div class="t-title">Nivel 2: Círculos — Docentes como comunidad de práctica</div>
+          <div class="t-body">Docentes de lenguaje (primero), de ciencias (segundo), de humanidades (tercero) se reúnen mensualmente. Comparten qué funcionó, dónde hay dificultades, piden ayuda. Un docente puede decir: «me cuesta que estudiantes hagan preguntas auténticas, no solo respuestas que creen que quiero». Otros docentes aportan estrategias que han usado. El círculo es espacio de formación continua, de iguales con iguales. La IA (o un documentador) sintetiza conversaciones: «hay consenso en que preguntar bien requiere modelar preguntas primero». Eso se comunica al comité de implementación.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #3A94B5; margin-top:10px;">
+          <div class="t-title">Nivel 3: Coordinación central — Comité que asegura coherencia y adaptación</div>
+          <div class="t-body">Comité de implementación reúne quincenalmente. Revisa reportes de círculos de docentes, reportes de asamblea estudiantil, feedback de padres. Pregunta: ¿hay coherencia en la implementación? ¿hay grupos de estudiantes no siendo alcanzados? ¿hay obstáculos sistémicos que requieren decisión de dirección? El comité NO reemplaza a círculos — los escucha. El comité toma decisiones sobre ajustes al plan general, sobre comunicación a la comunidad, sobre recursos necesarios. Y reporta regularmente a la comunidad: aquí está lo que está pasando, aquí están los cambios que estamos haciendo y por qué.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Métricas de justicia epistémica: qué medimos y cómo</div>
+
+        <div class="tension-box" style="border-left:3px solid #4BA8CC;">
+          <div class="t-title">Métrica 1: Participación en espacios de co-diseño</div>
+          <div class="t-body"><strong>¿Qué medimos?</strong> ¿Qué % de estudiantes han participado en mínimo 1 sesión de co-diseño de estándares, rúbricas, o evaluación? ¿Qué % de docentes? ¿Qué % de padres? <strong>Meta año 1:</strong> 50% | <strong>Meta año 2:</strong> 75% | <strong>Meta año 3:</strong> 100% <strong>¿Cómo?</strong> Registro de asistencia + categorización de participación (presente, contribuyó, lideró). <strong>¿Por qué importa?</strong> Justicia epistémica requiere que voces participen. Sin participación, no hay justicia, hay imposición con buenos discursos.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #4BA8CC; margin-top:10px;">
+          <div class="t-title">Métrica 2: Diversidad de epistemologías reconocidas en rúbricas</div>
+          <div class="t-body"><strong>¿Qué medimos?</strong> En rúbricas de evaluación, ¿cuántas dimensiones reconocen formas de saber no-académicas (comunitaria, experiencial, narrativa)? ¿En cuántas asignaturas? <strong>Meta año 1:</strong> Mínimo 1 rúbrica con 2+ dimensiones no-académicas | <strong>Meta año 3:</strong> 80% de rúbricas tienen múltiples epistemologías <strong>¿Cómo?</strong> Análisis de rúbricas por comité. <strong>¿Por qué importa?</strong> Si solo académico se valora, no hay justicia epistémica — hay reproducción.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #4BA8CC; margin-top:10px;">
+          <div class="t-title">Métrica 3: Sofisticación de pensamiento crítico estudiantil</div>
+          <div class="t-body"><strong>¿Qué medimos?</strong> Capacidad de estudiantes de reconocer múltiples perspectivas, de evaluar fuentes, de hacer preguntas incómodas. Evaluación cualitativa de evidencia de pensamiento. <strong>Meta año 1:</strong> Mínimo 30% de estudiantes demuestra pensamiento que reconoce perspectivas alternativas | <strong>Meta año 3:</strong> 70% <strong>¿Cómo?</strong> Análisis de trabajos estudiantiles (ensayos, proyectos, respuestas) usando rúbrica de pensamiento crítico co-diseñada. <strong>¿Por qué importa?</strong> Este es el resultado final — que estudiantes piensen críticamente, no solo reproduzcan.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #4BA8CC; margin-top:10px;">
+          <div class="t-title">Métrica 4: Transparencia en uso de IA</div>
+          <div class="t-body"><strong>¿Qué medimos?</strong> ¿Documentos sobre uso de IA están públicos y accesibles? ¿Comité de ética reúne regularmente? ¿Auditoría se realiza? ¿Estudiantes pueden explicar cómo se usan sus datos? <strong>Meta año 1:</strong> 60% de estudiantes sabe qué IA usa la escuela y para qué | <strong>Meta año 3:</strong> 90% <strong>¿Cómo?</strong> Encuesta anual + revisión de documentación. <strong>¿Por qué importa?</strong> Transparencia es condición para confianza y para que comunidad pueda ejercer control.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #4BA8CC; margin-top:10px;">
+          <div class="t-title">Métrica 5: Equidad en acceso a recursos de aprendizaje</div>
+          <div class="t-body"><strong>¿Qué medimos?</strong> ¿Hay disparidad entre grupos de estudiantes en acceso a: (a) cursos de alfabetización mediática, (b) espacios de co-diseño, (c) IA como apoyo pedagógico? <strong>Meta año 1:</strong> Acceso similar (diferencia <10%) entre grupos | <strong>Meta año 3:</strong> Equidad alcanzada en todos los indicadores <strong>¿Cómo?</strong> Desglose de datos por grupo, por género, por situación de trabajo/no trabajo. <strong>¿Por qué importa?</strong> Justicia epistémica requiere que nadie quede excluido. Si hay patrones de quién participa y quién no, eso es síntoma de inequidad.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #4BA8CC; margin-top:10px;">
+          <div class="t-title">Métrica 6: Voz estudiantil en decisiones institucionales</div>
+          <div class="t-body"><strong>¿Qué medimos?</strong> ¿Cuántas decisiones sobre implementación fueron influenciadas por feedback estudiantil? ¿Cambios se hicieron en respuesta a propuestas de estudiantes? <strong>Meta año 1:</strong> Mínimo 3 decisiones cambiadas por input estudiantil | <strong>Meta año 3:</strong> Mínimo 10 <strong>¿Cómo?</strong> Documento público que registra: propuesta estudiantil → decisión → resultado. <strong>¿Por qué importa?</strong> Si estudiantes no ven que su voz importa, dejan de hablar.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Instrumentos de coordinación: tecnología al servicio de la sincronización</div>
+
+        <div class="tension-box" style="border-left:3px solid #1A5F7A;">
+          <div class="t-title">Tablero de implementación: visibilidad en tiempo real</div>
+          <div class="t-body">Google Sheet o herramienta simple que permite que todos vean: (1) estado de cada hito (completado, en progreso, bloqueado), (2) métricas (% de participación, diversidad de epistemologías en rúbricas, etc.), (3) cambios recientes, (4) próximas reuniones. No es herramienta complicada — es transparencia. Subdirector actualiza semanalmente. Cualquiera puede ver: ah, la métrica de pensamiento crítico está en 28%, la meta era 30%, estamos cerca. O: hay 3 docentes reportando dificultad con cierto protocolo, necesitamos sesión de apoyo. El tablero hace visible dónde estamos, permite que comunidad se sienta parte de proyecto (no solo sometida a él).</div>
+        </thinking>
+
+        <div class="tension-box" style="border-left:3px solid #1A5F7A; margin-top:10px;">
+          <div class="t-title">Calendario de reuniones: ritmo predecible, propósito claro</div>
+          <div class="t-body">Cada tipo de reunión tiene día, hora, propósito fijo. Ej: Círculos de docentes primer jueves de cada mes, 1:00 PM, propósito: reflexionar sobre práctica. Asamblea de estudiantes segundo y cuarto miércoles, propósito: reportar desde el estudiante, proponer cambios. Comité de implementación cada dos semanas, propósito: resolver obstáculos y tomar decisiones. Este ritmo permite que gente planifique, que se habitúe, que sepa cuándo hablar. No es burocracia — es contenedor que facilita trabajo genuino.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #1A5F7A; margin-top:10px;">
+          <div class="t-title">Documentación colaborativa: memoria que no desaparece</div>
+          <div class="t-body">Cada reunión genera actas breves: qué decidimos, quién es responsable, cuándo se reporta. No son actas burocráticas, son registro para que comunidad sepa qué ocurrió, por qué se decidió así, cómo pueden aportar. Documentación también incluye: decisiones pedagógicas tomadas en círculos (qué estrategia de enseñanza funciona), cambios en rúbricas (por qué adaptamos esto), feedback estudiantil actuado (propusieron esto y lo hicimos). Esa documentación es patrimonio pedagógico de la escuela: queda, se puede revisar, se aprende de ella.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Manejo de resistencia y obstáculos: realismo sobre cambio</div>
+
+        <div class="tension-box" style="border-left:3px solid #2C7A9F;">
+          <div class="t-title">Reconocer la resistencia como información, no como rechazo</div>
+          <div class="t-body">Habrá docentes que digan: «esto es mucho trabajo», «los estudiantes no están listos», «nunca hemos hecho así». Eso no es maldad — es miedo legítimo frente a cambio. El comité de implementación escucha: ¿qué está generando esa preocupación? ¿hay recursos que faltan? ¿hay sesión de formación necesaria? ¿el ritmo es muy rápido? El manejo de resistencia no es convencimiento ideológico («justicia epistémica es lo correcto»). Es solución de problemas: «entiendo que sientes que es mucho; aquí están los apoyos disponibles; podemos hacer esto más lentamente en tu grupo si necesitas». Cuando resistencia se trata con respeto, a menudo se convierte en compromiso genuino.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2C7A9F; margin-top:10px;">
+          <div class="t-title">Obstáculos estructurales: no toda solución es pedagógica</div>
+          <div class="t-body">A veces el obstáculo no es pedagógico sino estructural. Docentes dicen: «quiero hacer co-diseño de evaluación pero tengo 50 estudiantes y 1 hora de clase». Eso es verdadero obstáculo. La solución no es «hazlo de todas formas», es pregunta a dirección: ¿podemos reorganizar horarios? ¿Pueden algunos espacios ser de doble docente? ¿Hay recursos para esto? Si la escuela realmente cree en justicia epistémica, necesita invertir tiempo y recursos. Si no invierte, no es reforma pedagógica, es agotamiento de docentes.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #2C7A9F; margin-top:10px;">
+          <div class="t-title">Cambios en el plan: cuando la realidad enseña algo que el diseño no vio</div>
+          <div class="t-body">Seis meses en, tal vez docentes descubren que el cronograma es demasiado ambicioso, o que ciertos grupos de estudiantes necesitan más apoyo. El comité puede decidir: ajustamos. Expandimos la Fase 1 otro semestre. Detenemos la expansión a 2o hasta que 1o esté más consolidado. Esto no es fracaso — es aprendizaje. De hecho, la capacidad de ajustar planes según la realidad es marca de liderazgo maduro. Es decir: el plan es herramienta para lograr justicia epistémica, no fin en sí mismo.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Comunicación a la comunidad: mantener a todos informados</div>
+
+        <div class="tension-box" style="border-left:3px solid #3A94B5;">
+          <div class="t-title">Boletín mensual: qué está pasando, por qué, cómo pueden participar</div>
+          <div class="t-body">Subdirector escribe (con inputs de comité) boletín breve, accesible, que explica: este mes iniciamos esto, aprendimos esto, esto es lo siguiente. Lenguaje claro, sin jargón. Ejemplos concretos: «en 1o1, estudiantes de lenguaje analizaron cómo dos periódicos diferentes contaban la misma noticia sobre el agua. Descubrieron que no hay información «neutra». Ahora saben hacer eso con cualquier noticia». Boletín se comparte con padres, se pone en muro de la escuela, se envía por WhatsApp. Cuando comunidad sabe qué está pasando, confía más — y puede ayudar.</div>
+        </div>
+
+        <div class="tension-box" style="border-left:3px solid #3A94B5; margin-top:10px;">
+          <div class="t-title">Sesiones abiertas: invitar a padres a ver qué ocurre</div>
+          <div class="t-body">Cada bimestre, hay sesión donde padres están invitados a presenciar o participar en algo: observan un diálogo de estudiantes analizando un texto, participan en una sesión pequeña de co-diseño de rúbrica, ven ejemplos de trabajo estudiantil. Esto no es «rendición de cuentas» formal. Es invitación genuina: vengan a ver qué los estudiantes están haciendo, qué estamos aprendiendo todos. Cuando padres ven a sus hijos pensando críticamente, participando en decisiones, su confianza en el proceso aumenta.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Cierre: implementación como aprendizaje permanente</div>
+        <div class="body-text">El sombrero azul asegura que justicia epistémica no queda en promesa, sino que se concreta en acciones, en tiempo, con gente, medible. Pero lo hace sin rigidez: planes están diseñados para aprender y ajustar. Métricas son herramientas de reflexión, no de castigo. Coordinación existe para facilitar trabajo genuino, no para imponer conformidad. Cuando estructura y flexibilidad coexisten así — cuando hay claridad sobre qué buscamos (justicia epistémica), cómo lo hacemos (fases, hitos, métricas), y apertura a que la realidad nos enseñe a ajustar — entonces es posible transformación profunda. No es garantía. Pero es la mejor condición que podemos crear.</div>
+      </div>
+
+    </div><!-- /tab16 -->
+
+    <!-- PLACEHOLDER para futuros paneles -->
+    <div class="panel" id="tab-placeholder">
+      <div class="placeholder-panel">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <p>Comparte el siguiente prompt para agregar una nueva pestaña.</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById(id);
+  if (panel) panel.classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
