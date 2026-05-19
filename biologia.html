@@ -582,8 +582,10 @@ IMPORTANTE: Responde ÚNICAMENTE con un objeto JSON válido, sin texto adicional
 
     // Si Google Apps Script capturó un error de la API
     if (data.error) {
-       throw new Error(data.error);
-    }
+   // Si el error es un objeto, lo convertimos a texto para poder leerlo
+   let detalleError = typeof data.error === 'object' ? JSON.stringify(data.error) : data.error;
+   throw new Error("Respuesta de Claude: " + detalleError);
+}
 
     // Extraemos la respuesta (limpiando posibles etiquetas markdown que devuelva Claude)
     let raw = data.content?.map(b => b.text || "").join("") || "";
