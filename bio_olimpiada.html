@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BioOlimpiada · EPO 135</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+/* ── CONFIGURACIÓN: pega aquí la URL de tu Web App ── */
+/* Ver variable GAS_URL en el script al final           */
+
+:root {
+  --verde:#0f5e2f;--verde-med:#1a7a3f;--verde-claro:#2ea84f;
+  --verde-light:#e8f5ee;--azul:#0d3b6e;--dorado:#c8860a;
+  --dorado-light:#fdf3e0;--bg:#f4f6f5;--surface:#ffffff;
+  --text:#0f1f17;--text-sec:#4a6355;--border:#d0ddd6;
+  --radius:12px;--shadow:0 2px 12px rgba(15,94,47,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+header{
+  background:var(--verde);color:white;padding:1rem 1.5rem;
+  display:flex;align-items:center;gap:1rem;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 16px rgba(15,94,47,0.3);
+}
+.logo{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;}
+.logo span{color:#6ef0a0;}
+.subtitle{font-size:0.72rem;opacity:0.7;margin-top:2px;}
+.dot{width:7px;height:7px;border-radius:50%;background:#6ef0a0;animation:pulse 2s infinite;display:inline-block;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.api-badge{
+  margin-left:auto;background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+  padding:0.3rem 0.9rem;font-size:0.72rem;display:flex;align-items:center;gap:6px;
+}
+
+.layout{display:grid;grid-template-columns:270px 1fr;min-height:calc(100vh - 58px);}
+
+/* SIDEBAR */
+.sidebar{
+  background:var(--surface);border-right:1px solid var(--border);
+  padding:1.2rem 0.8rem;overflow-y:auto;
+}
+.sidebar-section{margin-bottom:1.2rem;}
+.sidebar h3{
+  font-size:0.65rem;text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--text-sec);margin-bottom:0.6rem;padding:0 0.4rem;
+}
+.unit-btn{
+  display:flex;align-items:flex-start;gap:8px;width:100%;
+  background:none;border:none;border-radius:9px;
+  padding:0.6rem 0.7rem;cursor:pointer;text-align:left;
+  transition:all 0.15s;margin-bottom:2px;color:var(--text);font-family:inherit;
+}
+.unit-btn:hover{background:var(--verde-light);}
+.unit-btn.active{background:var(--verde-light);border-left:3px solid var(--verde-med);}
+.pct{
+  font-size:0.65rem;font-weight:600;color:white;
+  background:var(--verde-med);border-radius:4px;
+  padding:2px 5px;min-width:32px;text-align:center;margin-top:2px;flex-shrink:0;
+}
+.pct.high{background:var(--dorado);}
+.unit-name{font-size:0.8rem;font-weight:500;line-height:1.3;}
+.divider{height:1px;background:var(--border);margin:0.8rem 0;}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 0.2rem;}
+.res-btn{
+  background:var(--bg);border:1px solid var(--border);border-radius:9px;
+  padding:0.7rem 0.4rem;cursor:pointer;text-align:center;
+  transition:all 0.15s;color:var(--text);font-family:inherit;
+}
+.res-btn:hover{background:var(--verde-light);border-color:var(--verde-claro);}
+.res-btn.sel{background:var(--verde);color:white;border-color:var(--verde);}
+.res-btn .ico{font-size:1.2rem;display:block;margin-bottom:3px;}
+.res-btn .lbl{font-size:0.7rem;font-weight:500;}
+
+/* MAIN */
+.main{padding:1.5rem;overflow-y:auto;}
+.ctrl{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1rem 1.2rem;
+  margin-bottom:1.2rem;display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;
+}
+.ctrl h2{font-family:'Syne',sans-serif;font-size:1rem;flex:1;min-width:120px;}
+.topic-input{
+  flex:2;min-width:180px;border:1px solid var(--border);border-radius:8px;
+  padding:0.5rem 0.8rem;font-family:inherit;font-size:0.83rem;
+  background:var(--bg);color:var(--text);outline:none;transition:border-color 0.15s;
+}
+.topic-input:focus{border-color:var(--verde-med);}
+.btn-gen{
+  background:var(--verde);color:white;border:none;border-radius:8px;
+  padding:0.5rem 1.2rem;font-family:inherit;font-size:0.83rem;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;gap:5px;transition:background 0.15s;white-space:nowrap;
+}
+.btn-gen:hover{background:var(--verde-med);}
+.btn-gen:disabled{opacity:0.5;cursor:not-allowed;}
+
+.hist-bar{display:flex;gap:6px;margin-bottom:1rem;overflow-x:auto;padding-bottom:4px;}
+.hist-chip{
+  background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  padding:0.25rem 0.8rem;font-size:0.72rem;white-space:nowrap;
+  cursor:pointer;transition:all 0.15s;color:var(--text-sec);
+}
+.hist-chip:hover{background:var(--verde-light);color:var(--verde);border-color:var(--verde-claro);}
+
+.placeholder{
+  background:var(--surface);border:2px dashed var(--border);border-radius:var(--radius);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:4rem 2rem;text-align:center;color:var(--text-sec);min-height:350px;
+}
+.placeholder .big{font-size:2.5rem;margin-bottom:1rem;}
+.placeholder p{font-size:0.88rem;max-width:300px;line-height:1.6;}
+
+.loading-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:3rem;text-align:center;min-height:350px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.spinner{
+  width:42px;height:42px;border:3px solid var(--verde-light);
+  border-top-color:var(--verde);border-radius:50%;
+  animation:spin 0.8s linear infinite;margin-bottom:1rem;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.load-tip{color:var(--text-sec);font-size:0.85rem;}
+.load-note{
+  margin-top:1rem;font-size:0.75rem;color:var(--dorado);
+  background:var(--dorado-light);border-radius:8px;padding:0.4rem 1rem;
+}
+
+.result-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.4rem;box-shadow:var(--shadow);
+}
+.result-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border);
+  flex-wrap:wrap;gap:0.5rem;
+}
+.result-type{
+  font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;
+  color:white;background:var(--verde-med);border-radius:5px;padding:3px 9px;
+}
+.result-meta{font-size:0.78rem;color:var(--text-sec);margin-left:8px;}
+.btn-copy{
+  background:none;border:1px solid var(--border);border-radius:7px;
+  padding:0.35rem 0.8rem;font-family:inherit;font-size:0.76rem;
+  cursor:pointer;color:var(--text-sec);transition:all 0.15s;
+  display:flex;align-items:center;gap:4px;
+}
+.btn-copy:hover{background:var(--verde-light);color:var(--verde);border-color:var(--verde-claro);}
+
+/* Markdown renderizado */
+.rc{line-height:1.7;font-size:0.88rem;}
+.rc h1,.rc h2,.rc h3{font-family:'Syne',sans-serif;color:var(--verde);margin:1.1rem 0 0.4rem;}
+.rc h1{font-size:1.15rem;}
+.rc h2{font-size:1rem;}
+.rc h3{font-size:0.92rem;}
+.rc strong{color:var(--verde-med);}
+.rc em{color:var(--dorado);font-style:normal;background:var(--dorado-light);border-radius:3px;padding:0 3px;}
+.rc ul,.rc ol{padding-left:1.4rem;margin:0.4rem 0;}
+.rc li{margin-bottom:0.25rem;}
+.rc table{width:100%;border-collapse:collapse;margin:0.8rem 0;font-size:0.82rem;}
+.rc th{background:var(--verde-light);color:var(--verde);padding:0.5rem 0.7rem;text-align:left;}
+.rc td{padding:0.45rem 0.7rem;border-bottom:1px solid var(--border);}
+.rc tr:hover td{background:var(--bg);}
+.rc blockquote{border-left:4px solid var(--verde-claro);background:var(--verde-light);padding:0.7rem 1rem;border-radius:0 8px 8px 0;margin:0.8rem 0;}
+.rc code{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:0 4px;font-size:0.8rem;}
+.rc hr{border:none;border-top:1px solid var(--border);margin:0.8rem 0;}
+
+/* Aviso GAS */
+.gas-warning{
+  background:#fff8e1;border:1px solid #ffe082;border-radius:var(--radius);
+  padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:0.82rem;color:#5c4200;
+  display:none;
+}
+.gas-warning a{color:var(--azul);font-weight:600;}
+
+@media(max-width:700px){
+  .layout{grid-template-columns:1fr;}
+  .sidebar{border-right:none;border-bottom:1px solid var(--border);max-height:340px;}
+  .ctrl{flex-direction:column;align-items:stretch;}
+  .topic-input,.btn-gen{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">Bio<span>Olimpiada</span></div>
+    <div class="subtitle">Recursos de estudio con IA · EPO 135 · UAEM Fac. Ciencias</div>
+  </div>
+  <div class="api-badge"><div class="dot"></div>Conectado</div>
+</header>
+
+<div class="layout">
+
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <h3>Unidades del examen</h3>
+      <div id="unitList"></div>
+    </div>
+    <div class="divider"></div>
+    <div class="sidebar-section">
+      <h3>Tipo de recurso</h3>
+      <div class="res-grid" id="resGrid"></div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="gas-warning" id="gasWarning">
+      ⚠️ <strong>Falta configurar la URL del servidor.</strong>
+      Abre el archivo HTML, busca la variable <code>GAS_URL</code> al final y pega la URL de tu Web App de Google Apps Script.
+      <a href="https://script.google.com" target="_blank">Ir a Apps Script →</a>
+    </div>
+
+    <div class="ctrl">
+      <div style="flex:1;min-width:120px">
+        <h2 id="ctrlTitle">Selecciona una unidad</h2>
+        <p style="font-size:0.75rem;color:var(--text-sec);margin-top:2px" id="ctrlSub">Elige unidad y tipo de recurso</p>
+      </div>
+      <input type="text" class="topic-input" id="topicInput" placeholder="Subtema específico (opcional)…" />
+      <button class="btn-gen" id="genBtn" onclick="generate()">✨ Generar</button>
+    </div>
+
+    <div class="hist-bar" id="histBar" style="display:none"></div>
+    <div id="output">
+      <div class="placeholder">
+        <div class="big">🧬</div>
+        <p>Elige una <strong>unidad</strong> y un <strong>tipo de recurso</strong> en el panel izquierdo, luego presiona <strong>Generar</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// ⬇️  PEGA AQUÍ LA URL DE TU WEB APP DE GOOGLE APPS SCRIPT
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzrgEWk3fdE4WRaY7JfooPUvVD-1sWcudNooYkG2SfWdgyxyta-yhFOs1SQbteKcMpYbQ/exec';
+// ════════════════════════════════════════════════════════════════
+
+const UNITS = [
+  { id:'cel', name:'Biología Celular',              pct:'25%', high:true,
+    sub:'macromoléculas · organelos · metabolismo · fotosíntesis · mitosis' },
+  { id:'veg', name:'Anatomía y Fisiología Vegetal', pct:'15%', high:false,
+    sub:'estomas · hormonas vegetales · reproducción vegetal' },
+  { id:'ani', name:'Anatomía y Fisiología Animal',  pct:'25%', high:true,
+    sub:'digestión · circulación · sistema nervioso · inmunidad' },
+  { id:'eto', name:'Etología',                      pct:'5%',  high:false,
+    sub:'comportamiento · aprendizaje · biorritmo' },
+  { id:'bio', name:'Bioestadística',                pct:'10%', high:false,
+    sub:'probabilidad · Test T · Chi cuadrado · desviación estándar' },
+  { id:'gen', name:'Genética y Evolución',          pct:'5%',  high:false,
+    sub:'Mendel · Hardy-Weinberg · selección natural · especiación' },
+  { id:'eco', name:'Ecología',                      pct:'10%', high:false,
+    sub:'poblaciones · ecosistemas · ciclos biogeoquímicos · flujo de energía' },
+  { id:'sys', name:'Biosistemática',                pct:'5%',  high:false,
+    sub:'dominios · reinos · taxonomía · clasificación' }
+];
+
+const RESOURCES = [
+  { id:'infografia', ico:'🗺️', lbl:'Infografía' },
+  { id:'flashcards', ico:'🃏', lbl:'Flashcards' },
+  { id:'mapa',       ico:'🕸️', lbl:'Mapa conceptual' },
+  { id:'preguntas',  ico:'❓', lbl:'Preguntas' },
+  { id:'resumen',    ico:'📄', lbl:'Resumen' },
+  { id:'cuadro',     ico:'📊', lbl:'Cuadro comparativo' }
+];
+
+let selectedUnit = null;
+let selectedResource = 'infografia';
+let history = [];
+
+// Verificar URL configurada
+if (!GAS_URL || GAS_URL.includes('PEGA-TU-URL')) {
+  document.getElementById('gasWarning').style.display = 'block';
+}
+
+// Construir sidebar
+(function buildSidebar() {
+  const ul = document.getElementById('unitList');
+  UNITS.forEach(u => {
+    const b = document.createElement('button');
+    b.className = 'unit-btn';
+    b.id = 'u_' + u.id;
+    b.innerHTML = `<span class="pct ${u.high?'high':''}">${u.pct}</span><span class="unit-name">${u.name}</span>`;
+    b.onclick = () => selectUnit(u);
+    ul.appendChild(b);
+  });
+
+  const rg = document.getElementById('resGrid');
+  RESOURCES.forEach(r => {
+    const b = document.createElement('button');
+    b.className = 'res-btn' + (r.id === selectedResource ? ' sel' : '');
+    b.id = 'r_' + r.id;
+    b.innerHTML = `<span class="ico">${r.ico}</span><span class="lbl">${r.lbl}</span>`;
+    b.onclick = () => {
+      document.querySelectorAll('.res-btn').forEach(x => x.classList.remove('sel'));
+      b.classList.add('sel');
+      selectedResource = r.id;
+    };
+    rg.appendChild(b);
+  });
+})();
+
+function selectUnit(u) {
+  selectedUnit = u;
+  document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('u_' + u.id).classList.add('active');
+  document.getElementById('ctrlTitle').textContent = u.name;
+  document.getElementById('ctrlSub').textContent = u.sub;
+}
+
+async function generate() {
+  if (GAS_URL.includes('PEGA-TU-URL')) {
+    document.getElementById('gasWarning').style.display = 'block';
+    document.getElementById('gasWarning').scrollIntoView({ behavior:'smooth' });
+    return;
+  }
+  if (!selectedUnit) {
+    alert('Selecciona primero una unidad temática.');
+    return;
+  }
+
+  const tema  = document.getElementById('topicInput').value.trim() || selectedUnit.name;
+  const btn   = document.getElementById('genBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Generando…';
+
+  const tips = [
+    'Consultando biología molecular…',
+    'Estructurando contenido de olimpiada…',
+    'Organizando conceptos clave…',
+    'Casi listo…'
+  ];
+  let ti = 0;
+  setOutput(`<div class="loading-card">
+    <div class="spinner"></div>
+    <p class="load-tip" id="lt">${tips[0]}</p>
+    <span class="load-note">💡 Biología Celular y Anatomía Animal = 50% del examen</span>
+  </div>`);
+  const tipTimer = setInterval(() => {
+    ti = (ti+1) % tips.length;
+    const el = document.getElementById('lt');
+    if (el) el.textContent = tips[ti];
+  }, 2000);
+
+  try {
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ unidad: selectedUnit.name, tipo: selectedResource, tema })
+    });
+
+    clearInterval(tipTimer);
+
+    if (!res.ok) throw new Error('Error HTTP ' + res.status);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    const resLabel = RESOURCES.find(r => r.id === selectedResource)?.lbl || selectedResource;
+    pushHistory(selectedUnit.name, resLabel, tema, data.content);
+    renderResult(data.content, resLabel, tema, data.tokens);
+
+  } catch(err) {
+    clearInterval(tipTimer);
+    setOutput(`<div class="result-card" style="border-color:#f0a0a0">
+      <p style="color:#c0392b;font-size:0.88rem">⚠️ <strong>Error:</strong> ${err.message}</p>
+      <p style="font-size:0.8rem;color:var(--text-sec);margin-top:0.5rem">
+        Verifica que tu Web App de GAS esté desplegada y la URL sea correcta.
+      </p>
+    </div>`);
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '✨ Generar';
+}
+
+function renderResult(text, label, tema, tokens) {
+  setOutput(`<div class="result-card">
+    <div class="result-header">
+      <div>
+        <span class="result-type">${label}</span>
+        <span class="result-meta">${tema}${tokens ? ' · ~'+tokens+' tokens' : ''}</span>
+      </div>
+      <button class="btn-copy" onclick="copyText()">📋 Copiar</button>
+    </div>
+    <div class="rc" id="rc">${md2html(text)}</div>
+  </div>`);
+}
+
+function setOutput(html) { document.getElementById('output').innerHTML = html; }
+
+function copyText() {
+  const el = document.getElementById('rc');
+  if (!el) return;
+  navigator.clipboard.writeText(el.innerText).then(() => {
+    const b = document.querySelector('.btn-copy');
+    if (b) { b.textContent = '✅ Copiado'; setTimeout(() => b.innerHTML = '📋 Copiar', 2000); }
+  });
+}
+
+function pushHistory(unit, label, tema, text) {
+  history.unshift({ unit, label, tema, text });
+  if (history.length > 6) history.pop();
+  const bar = document.getElementById('histBar');
+  bar.style.display = 'flex';
+  bar.innerHTML = '<span style="font-size:0.7rem;color:var(--text-sec);white-space:nowrap;align-self:center">Recientes:</span>';
+  history.forEach(h => {
+    const c = document.createElement('div');
+    c.className = 'hist-chip';
+    c.textContent = (h.tema.length > 22 ? h.tema.slice(0,20)+'…' : h.tema);
+    c.title = h.label + ' · ' + h.unit;
+    c.onclick = () => renderResult(h.text, h.label, h.tema, null);
+    bar.appendChild(c);
+  });
+}
+
+function md2html(md) {
+  return md
+    .replace(/^### (.+)$/gm,'<h3>$1</h3>')
+    .replace(/^## (.+)$/gm,'<h2>$1</h2>')
+    .replace(/^# (.+)$/gm,'<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/`(.+?)`/g,'<code>$1</code>')
+    .replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>')
+    .replace(/^---$/gm,'<hr>')
+    .replace(/^\| (.+) \|$/gm, row => {
+      const cells = row.split('|').filter(c=>c.trim()!=='');
+      if (cells.every(c=>/^[-: ]+$/.test(c))) return '';
+      const isH = row.includes('---');
+      return isH ? '' : '<tr>'+cells.map(c=>`<td>${c.trim()}</td>`).join('')+'</tr>';
+    })
+    .replace(/(<tr>[\s\S]*?<\/tr>)+/g, m=>`<table><thead></thead><tbody>${m}</tbody></table>`)
+    .replace(/^- (.+)$/gm,'<li>$1</li>')
+    .replace(/(<li>[\s\S]*?<\/li>\n?)+/g,m=>`<ul>${m}</ul>`)
+    .replace(/^\d+\. (.+)$/gm,'<li>$1</li>')
+    .replace(/\n\n+/g,'<br><br>');
+}
+</script>
+</body>
+</html>
