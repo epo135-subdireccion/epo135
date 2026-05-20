@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/html-docx-js/dist/html-docx.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body class="p-5">
+  <h3>Selecciona un tema de investigación</h3>
+  <div class="d-grid gap-2 my-4">
+    <button class="btn btn-primary" onclick="procesar('energias')">Fuentes de Energía Renovable</button>
+    <button class="btn btn-primary" onclick="procesar('ingles')">Presentarse en Inglés</button>
+    <button class="btn btn-primary" onclick="procesar('seguridad')">Seguridad Digital</button>
+  </div>
+  <div id="status"></div>
+
+  <script>
+    function procesar(tema) {
+      document.getElementById('status').innerText = "Generando... espera un momento.";
+      
+      const prompts = {
+        'energias': "Redacta una investigación breve sobre energías renovables, tono formal académico, nivel bachillerato, incluye introducción, desarrollo en 3 puntos, conclusión y 3 referencias APA.",
+        'ingles': "Redacta una guía pedagógica sobre cómo presentarse en inglés, tono formal, nivel bachillerato, incluye saludos, frases clave, ejemplos y consejos prácticos.",
+        'seguridad': "Redacta una investigación sobre hábitos de seguridad digital, tono formal, nivel bachillerato, incluye protección de identidad, contraseñas y riesgos, y referencias APA."
+      };
+
+      google.script.run
+        .withSuccessHandler(crearWord)
+        .generarInvestigacion(prompts[tema]);
+    }
+
+    function crearWord(contenidoMarkdown) {
+      // Convertir Markdown simple a HTML para el docx
+      const htmlContent = `<div>${contenidoMarkdown.replace(/\n/g, '<br>')}</div>`;
+      const converted = htmlDocx.asBlob(htmlContent);
+      saveAs(converted, 'Investigacion_Escolar.docx');
+      document.getElementById('status').innerText = "¡Archivo descargado!";
+    }
+  </script>
+</body>
+</html>
